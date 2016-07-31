@@ -1,0 +1,81 @@
+{#header}
+
+<section id="login">
+	<div class="sub-title">회원로그인</div>
+	<form name="login_form" action="{_cfg.rootDir}/member/login_ok_shopTouch.php" method="post" onSubmit="chk_save(this);return chkForm(this);">
+	<input type=hidden name=returnUrl value="{_returnUrl}">
+		<fieldset>
+			<legend class="hidden">로그인 폼</legend>
+			<div class="login_left">
+			<div class="login_b">
+				<div class="login_l">
+				<label class="input_id">
+					<span>아이디 </span>
+					<input type="text" class="m_id" name="m_id" value="<?=$_COOKIE['save_id']?>" maxlength="12" title="아이디" required="required" msgR="아이디를 입력하세요." onfocus="if(this.value=='회원아이디'){this.value='';}" tabindex="1" />
+				</label>
+				<label class="input_pw">
+					<span>비밀번호 </span>
+					<input type="password" name="password" value="<?=base64_decode($_COOKIE['save_pw'])?>" maxlength="34" title="비밀번호" required="required" msgR="비밀번호를 입력하세요." tabindex="2" />
+				</label>
+				</div>
+				<div class="login_btn"><button type="submit" tabindex="5"><img src="../common/img/btn_t2_login.png" /><span class="hidden">로그인</span></button></div>
+				<h3 class="hidden">로그인 옵션</h3>
+				<div style="position:absolute;margin-top:5px;">
+					<label style=""><input type="checkbox" name="save_id" value="y" onclick="chk_save_id(this.checked);" <? if($_COOKIE['save_id']){ ?> checked <? } ?> tabindex="3" /> 아이디 저장</label>
+					<label><input type="checkbox" name="save_pw" value="y" onclick="chk_save_pw(this.checked);" tabindex="4" <? if($_COOKIE['save_pw']){ ?> checked <? } ?> /> 비밀번호 저장</label>
+				</div>
+			</div>
+			</div>
+			<div class="login_right">
+				<div class="join">
+					<div class="join_text">아직 회원이 아니세요?</div><div class="join_btn"><div onclick="document.location.replace('vumall://vercoop.com/popup_page?url={=url.join}&mode=browser');"><img src="../common/img/btn_t3_join.png" /></div></div>
+				</div>
+				<div class="join">
+					<div class="join_text">회원 아이디를 잊으셨나요?</div><div class="join_btn"><div onclick="document.location.replace('vumall://vercoop.com/popup_page?url={=url.id}&mode=browser');"><img src="../common/img/btn_t3_id.png" /></div></div>
+				</div>
+				<div class="join">
+					<div class="join_text">비밀번호가 생각 안나세요?</div><div class="join_btn"><div onclick="document.location.replace('vumall://vercoop.com/popup_page?url={=url.pwd}&mode=browser');"><img src="../common/img/btn_t3_pw.png" /></div></div>
+				</div>
+			</div>
+		</fieldset>
+	</form>
+	<div style="width:100%;height:10px;"></div>
+	<div class="sub-title">비회원주문/주문확인</div>
+	<!--{ ? _GET.guest }-->
+	<form action="{_cfg.rootDir}/member/login_ok_shopTouch.php" method="post" onSubmit="chkForm(this);">
+	<div class="search_ord">
+	<div class="search_t">비회원으로 구매하시길 원하시면 아래 비회원으로 구매하기 버튼을 눌러주시기 바랍니다.</div>
+	<div class="search_b" style="height:20px;">
+		<a href="../shopTouch_ord/order.php?guest=1"><span style="color:#666;">비회원으로 구매하기</span></a>
+	</div>
+	</div>
+	</form>
+	<!--{ : }-->
+	<form action="{_cfg.rootDir}/member/login_ok_shopTouch.php" method="post" onSubmit="chkForm(this);">
+	<input type="hidden" name="mode" value="guest" />
+	<div class="search_ord">
+		<div class="search_t">
+			상품을 구매하셨거나 구입을 원하시면 아래에 주문자명과 주문번호를 입력하여 주시기 바랍니다.
+		</div>
+		<div class="search_b">
+		<label class="input_name">
+			<div style="height:30px;line-height:30px;float:left;">주문자명</div>
+			<div style="height:30px;float:left;margin-left:10px;"> <input type="text" class="ord_name" name="nameOrder" value="" maxlength="12" title="주문자명" required="required" msgR="주문자명을 입력하세요." tabindex="3" /></div>
+		</label>
+		<label class="input_ordno">
+			<div style="height:30px;line-height:30px;float:left;margin-left:20px;">주문번호</div>
+			<div style="height:30px;float:left;margin-left:10px;"><input type="text" name="ordno" maxlength="34" title="주문번호" required="required" msgR="주문번호를 입력하세요." tabindex="4" /></div>
+		</label>
+		<div class="search_btn"><button type="submit" tabindex="5"><img src="../common/img/btn_t4_enter.png" /></button></div>
+		</div>
+		
+	</div>
+	</form>
+	<!--{ / }-->
+</section>
+
+<script type="text/javascript">var shop_key = "<?php echo $_SERVER['HTTP_HOST'];?>";</script>
+<script src="../common/js/base64.js"></script>
+<script src="../common/js/login.js"></script>
+
+{#footer}

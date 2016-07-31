@@ -1,0 +1,35 @@
+{#header}
+
+<!--{ ? _cfgMobileShop.mobileShopMainBanner }-->
+<div class="main_banner"><img src="{_cfg.rootDir}/data/skin_mobile/{_cfgMobileShop.tplSkinMobile}/{_cfgMobileShop.mobileShopMainBanner}" alt="메인배너이미지" /></div>
+<hr class="hidden" />
+<!--{ / }-->
+
+
+
+<!-- 상품 리스트 #1 -->
+<!--{ ? _cfg_mobile_step[0].chk  }-->
+<section id="main_goods_display_1" class="goods_display">
+<div class="title"><img src="./common/img/main_newitem.gif"></div>
+<!--<h4>{_cfg_mobile_step[0].title}</h4>-->
+<!--{ = this->assign( 'loop', dataDisplayGoodsMobile( 0, _cfg_mobile_step[0].img, _cfg_mobile_step[0].page_num ) ) // 데이타 호출 }-->
+<!--{ = this->assign( 'size', _cfg[_cfg_mobile_step[0].img] ) // 이미지 사이즈 }-->
+<!--{ = this->assign( 'id', "main_list_01" ) // 고유 ID }-->
+<!--{ = include_file( "goods/list/" + _cfg_mobile_step[0].tpl + ".htm" ) }-->	
+</section>
+<!--{ / }-->
+
+<!-- 상품 리스트 #2 -->
+<!--{ ? _cfg_mobile_step[1].chk  }-->
+<section id="main_goods_display_2" class="goods_display">
+<div class="title"><img src="./common/img/main_bestitem.gif"></div>
+<!--<h4>{_cfg_mobile_step[1].title}</h4>-->
+<!--{ = this->assign( 'loop', dataDisplayGoodsMobile( 1, _cfg_mobile_step[1].img, _cfg_mobile_step[1].page_num ) ) // 데이타 호출 }-->
+<!--{ = this->assign( 'size', _cfg[_cfg_mobile_step[1].img] ) // 이미지 사이즈 }-->
+<!--{ = this->assign( 'id', "main_list_02" ) // 고유 ID }-->
+<!--{ = include_file( "goods/list/" + _cfg_mobile_step[1].tpl + ".htm" ) }-->	
+</section>
+<!--{ / }-->
+
+
+{#footer}

@@ -1,0 +1,32 @@
+{*** 코디아이템 | setGoods/main/main_list_item.php ***}
+	<!--{? count < 1 && pg == 1 }-->	
+		<div style="width:100%;margin:150px 0 150px 0;font:24px arial;color:#0077b5;">진열된 코디(Set) 상품이 없습니다.</div>
+	<!--{:}-->	
+		<!--{@ obj}-->				
+			<div class="codyDiv" >			
+				<div class="codiBox">
+					<div class="codiBox-area">
+						<div class="ImageDiv"><a href="{.url}" ><img class="Image" src="{.thumnail_image}" /></a></div>
+						<div class="codiInfo" >{.cody_name}</div>
+						<div class="codiInfo" >￦{=number_format(.setCost)}</div>
+						<div class="codiLine" ></div>
+						<div class="codiMemo">{=nl2br(.memo)}</div>
+						<div class="codiSymbol">
+							<span class="icon"><img src='../img/front/icon_comment.gif' style="vertical-align:text-bottom;" />{.recody_cnt}</span>
+							<span class="icon"><img src='../img/front/icon_likeit.gif' style="vertical-align:text-bottom;" />{.like_cnt}</span>
+						</div> 
+					</div>
+					<div class="codiComment">
+						<table width="100%" border=0 cellspacing=0 cellpadding=0 class="tblComment" >
+						<!--{@ .comment_nickname}-->
+							<tr>
+								<td class="td1"><b>{.comment_nickname[..index_]}</b>님</td>
+								<td class="td2">{.comment_memo[..index_]}</td>
+							</tr>
+						<!--{/}-->								 
+						</table>
+					</div>
+				</div>		
+			</div>		
+		<!--{/}-->
+	<!--{/}-->

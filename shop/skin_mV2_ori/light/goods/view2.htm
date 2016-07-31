@@ -1,0 +1,1087 @@
+{*** 상품페이지2 | goods/view.php ***}
+{#header}
+
+{#sub_header}
+<script src="../../../../lib/js/countdown.js"></script>
+<script>
+
+var price = new Array();
+var reserve = new Array();
+var consumer = new Array();
+var memberdc = new Array();
+var realprice = new Array();
+var couponprice = new Array();
+var special_discount_amount = new Array();
+var coupon = new Array();
+var cemoney = new Array();
+var opt1img = new Array();
+var opt2icon = new Array();
+var oldborder = "";
+var opt2kind = "{optkind[1]}";
+var strprice = '{strprice}';
+var runout = {?runout}true{:}false{/};
+
+<!--{ ? _opt }-->
+	<!--{ @ _opt }-->
+		<!--{ @ .value_ }-->
+			<!--{ ? .index_ == 0 && ..index_ == 0 }-->
+			var fkey = '{=get_js_compatible_key(..opt1)}{?..opt2}|{=get_js_compatible_key(..opt2)}{/}';
+			<!--{ / }-->
+			price['{=get_js_compatible_key(..opt1)}{?..opt2}|{=get_js_compatible_key(..opt2)}{/}'] = {..price};
+			reserve['{=get_js_compatible_key(..opt1)}{?..opt2}|{=get_js_compatible_key(..opt2)}{/}'] = {..reserve};
+			consumer['{=get_js_compatible_key(..opt1)}{?..opt2}|{=get_js_compatible_key(..opt2)}{/}'] = {..consumer};
+			memberdc['{=get_js_compatible_key(..opt1)}{?..opt2}|{=get_js_compatible_key(..opt2)}{/}'] = {..memberdc};
+			realprice['{=get_js_compatible_key(..opt1)}{?..opt2}|{=get_js_compatible_key(..opt2)}{/}'] = {..realprice};
+			coupon['{=get_js_compatible_key(..opt1)}{?..opt2}|{=get_js_compatible_key(..opt2)}{/}'] = {..coupon};
+			couponprice['{=get_js_compatible_key(..opt1)}{?..opt2}|{=get_js_compatible_key(..opt2)}{/}'] = {..couponprice};
+			cemoney['{=get_js_compatible_key(..opt1)}{?..opt2}|{=get_js_compatible_key(..opt2)}{/}'] = {..coupon_emoney};
+			special_discount_amount['{=get_js_compatible_key(..opt1)}{?..opt2}|{=get_js_compatible_key(..opt2)}{/}'] = {..special_discount_amount};
+		<!--{ / }-->
+	<!--{ / }-->
+<!--{ : }-->
+		price['base'] = {?price}{price}{:}0{/}; // 가격
+		reserve['base'] = {?reserve}{reserve}{:}0{/}; // 적립금
+		consumer['base'] = {?consumer}{consumer}{:}0{/}; // 소비자가
+		memberdc['base'] = {?memberdc}{memberdc}{:}0{/}; // 회원할인율
+		realprice['base'] = {?realprice}{realprice}{:}0{/}; // 회원할인가
+		coupon['base'] = {?coupon}{coupon}{:}0{/}; // 쿠폰
+		couponprice['base'] = {?couponprice}{couponprice}{:}0{/}; // 쿠폰 할인가
+		cemoney['base'] = {?coupon_emoney}{coupon_emoney}{:}0{/}; // 쿠폰 적립금
+		special_discount_amount['base'] = {?special_discount_amount}{special_discount_amount}{:}0{/}; // 상품할인가
+<!--{ / }-->
+
+var opt = new Array();
+opt[0] = new Array("('1차옵션을 먼저 선택해주세요','')");
+<!--{ @ _opt }-->
+opt['{.index_+1}'] = new Array("('== 옵션선택 ==','')",<!--{ @ .value_ }-->"('{=addslashes(addslashes(..opt2))}{?..price!=price} ({=number_format(..price)}원){/}{?usestock&&!..stock} [품절]{/}','{=addslashes(addslashes(..opt2))}','{?usestock&&!..stock}soldout{/}')"{?..index_!=..size_-1},{/}<!--{ / }-->);
+<!--{ / }-->
+
+function getCouponlist_scroll(){
+	<!--{ ? coupon || coupon_emoney }-->
+	couponlist_scroll = new iScroll('scroll-area');
+	<!--{ / }-->
+}
+
+function review_qna_tab(){
+	var view_area = $("[name=view_area]").val();
+
+	if(view_area == 'review') {
+		changeTab('review');
+		var area_pos = $(".goods-info-area").offset();
+		$('html, body').animate( { scrollTop:area_pos.top }, 300);
+	}
+	else if(view_area == 'qna') {
+		changeTab('qna');
+		var area_pos = $(".goods-info-area").offset();
+		$('html, body').animate( { scrollTop:area_pos.top }, 300);
+
+	}
+
+	$('.goods-item').each(function(idx){
+		$(this).width(($(this).width() - 10) + 'px');
+	});
+	$('#relativegoods > .inner-wrapper').css({width: (($('.goods-item').eq(0).width() + 15) * $('.goods-item').length) + 'px'});
+}
+
+function buyableMember(buyable) // 회원 전용 구매 상품 - 일반결제
+{
+	if(buyable == 'buyable2')
+	{
+		if(confirm("회원 전용 구매 상품입니다. 로그인 화면으로 이동합니다.")){
+			var returnUrl = "{=urlencode(returnUrl)}";
+			location.href = "../mem/login.php?returnUrl=" + returnUrl;
+		}
+		else {
+			return;
+		}
+	}
+	else if(buyable == 'buyable3') {
+		alert("특정 회원 전용 구매 상품입니다.");
+	}
+}
+
+$(function() {
+	$("#kakaoStory").click(function() {
+		var post		= "{msg_kakaoStory_goodsurl}";
+		var appid		= "http://{__SERVER.HTTP_HOST}";
+		var appver		= "1.0";
+		var appname		= "{msg_kakaoStory_shopnm}";
+		var imageurl	= "{msg_kakaoStory_img_l}";
+		var title		= "{msg_kakaoStory_goodsnm}";
+
+		kakao.link("story").send({
+			post : post,
+			appid : appid,
+			appver : appver,
+			appname : appname,
+			urlinfo : JSON.stringify({title: title, imageurl: [imageurl], type: "website"})
+		});
+	});
+});
+
+function changeTab(tab_type) {
+	var thisUrl = location.href.replace(location.hash,"");
+
+	$("[class=^tab-]").removeClass('active-tab');
+	$(".tab-basic").removeClass('active-tab');
+	$(".tab-review").removeClass('active-tab');
+	$(".tab-qna").removeClass('active-tab');
+
+	$(".tab-basic .bar-area").removeClass('active-bar').removeClass('active-bar2');
+	$(".tab-review .bar-area").removeClass('active-bar').removeClass('active-bar2');
+
+	$(".content-basic").hide();
+	$(".content-review").hide();
+	$(".content-qna").hide();
+
+	if(tab_type == 'basic') {
+		$(".tab-basic").addClass('active-tab');
+		$(".tab-basic .bar-area").addClass('active-bar');
+		location.href = thisUrl + "#purchase";
+
+		$(".content-basic").show();
+	}
+	else if(tab_type == 'review') {
+		$(".tab-review").addClass('active-tab');
+		$(".tab-basic .bar-area").addClass('active-bar').addClass('active-bar2');
+		$(".tab-review .bar-area").addClass('active-bar');
+		location.href = thisUrl + "#goods-review";
+
+		$(".content-review").show();
+	}
+	else if(tab_type == 'qna') {
+		$(".tab-qna").addClass('active-tab');
+		$(".tab-review .bar-area").addClass('active-bar').addClass('active-bar2');
+		location.href = thisUrl + "#goods-qna";
+
+		$(".content-qna").show();
+	}
+}
+
+function delete_qnaReview( mode, m_no, sno )
+{
+	if ( m_no > 0 ){
+		if(confirm("삭제하시겠습니까?"))
+			if (mode == 'delete_qna') frmTitle = '상품문의 삭제';
+			else if (mode == 'del_review') frmTitle = '상품후기 삭제';
+			else frmTitle = '게시글삭제';
+			frmMake("../goods/indb.php?mode=" + mode + "&sno=" + sno + "&m_no=" + m_no,mode,frmTitle,false,true,200);
+	}
+	else if(mode === 'del_qna') {
+		frmMake("../goods/goods_qna_delete.php?mode=" + mode + "&sno=" + sno + "&m_no=" + m_no,'delete_qna','상품문의 삭제',false,true,200);
+	}
+	else if(mode === 'del_review') {
+		frmMake("../goods/review_delete.php?mode=" + mode + "&sno=" + sno + "&m_no=" + m_no,'delete_review','상품후기 삭제',false,true,200);
+	}
+}
+
+</script>
+<script src="../goods/goods_detail.js"></script>
+<style type="text/css">
+
+.swipe {
+  overflow: hidden;
+  visibility: hidden;
+  position: relative;
+}
+.swipe-wrap {
+  overflow: hidden;
+  position: relative;
+}
+.swipe-wrap > div {
+  float:left;
+  width:100%;
+  position: relative;
+}
+
+.goods_price2 {height:20px;line-height:20px;text-align:right;}
+.goods_dc {height:20px;line-height:20px;text-align:right;color:#88eeff;}
+section#goodsview2 {background:#FFFFFF;}
+section#goodsview2 .top_title{clear:both; height:36px; line-height:36px; background:#f9f9f9; color:#222222; font-size:14px; font-weight:bold; text-align:left; font-family:dotum; border-bottom:solid 1px #969ca3; padding-left:10px;  white-space: nowrap;overflow: hidden;}
+section#goodsview2 .top_btn{clear:both; height:40px;background:#FFFFFF; line-height:40px; border-bottom:solid 1px #dbdcde;}
+section#goodsview2 .top_btn .left_list_btn{ float:left; width:58px; height:27px; background:url('../common/img/new/btn_list_view.png') no-repeat; background-size:58px 27px; line-height:27px; color:#FFFFFF; font-size:12px; text-align:center; margin-left:7px; margin-top:7px;}
+section#goodsview2 .top_btn .right_other_btn{float:right; width:104px; height:27px; background:url('../common/img/new/btn_more_view.png') no-repeat; background-size:104px 27px; line-height:27px; color:#FFFFFF; font-size:12px; text-align:center; margin-right:7px; margin-top:7px;}
+section#goodsview2 .top_btn .right_other_btn2{float:right; width:104px; height:27px; background:url('../common/img/new/btn_more_view_up.png') no-repeat; background-size:104px 27px; line-height:27px; color:#FFFFFF; font-size:12px; text-align:center; margin-right:7px; margin-top:7px;}
+
+
+section#goodsview2 .goods-other-wrap { height:76px; background:#FFFFFF; border-bottom:solid 1px #dbdcde;}
+section#goodsview2 .goods-other-area { width:320px; margin:auto;}
+section#goodsview2 .goods-other-area .goods-other-content { width:320px; margin:auto; }
+section#goodsview2 .goods-other-area .goods-other-content .goods-other-item{ width:50px; height:50px; float:left; margin-top:13px;}
+section#goodsview2 .goods-other-area .goods-other-content .left-margin{ margin-left:11px;}
+section#goodsview2 .goods-other-area .goods-other-content .right-margin{ margin-right:12px;}
+section#goodsview2 .goods-other-area .goods-other-content .goods-other-item img{ width:100%; height:100%;}
+
+section#goodsview2 .goods-other-wrap { height:76px; background:#FFFFFF;}
+section#goodsview2 .goods-other-wrap .goods-other-arrow { position:absolute; width:100%;}
+section#goodsview2 .goods-other-wrap .goods-other-arrow-left {position:absolute; width:27px; z-index:99; float:left;}
+section#goodsview2 .goods-other-wrap .goods-other-arrow .left-arrow{ width:27px; height:37px; margin-top:20px; float:left; background:url('../common/img/detailp/btn_arrow_pre.png') no-repeat; z-index:99;}
+section#goodsview2 .goods-other-wrap .goods-other-arrow-right {position:absolute; width:27px; z-index:99; float:right; right:0px;}
+section#goodsview2 .goods-other-wrap .goods-other-arrow .right-arrow{  width:27px; height:37px; margin-top:20px; float:right; background:url('../common/img/detailp/btn_arrow_next.png') no-repeat; z-index:99;}
+
+section#goodsview2 .goods-contents-area {padding-bottom:26px;}
+section#goodsview2 .goods-contents-area .goods-contents-area-top{padding:12px;}
+section#goodsview2 .goods-contents-area .thumbnail-area{border:solid 1px #d9d9d9;}
+section#goodsview2 .goods-contents-area .thumbnail-area .thumbnail-img{padding:0 0 11px;margin:none;}
+section#goodsview2 .goods-contents-area .thumbnail-area .thumbnail-img img{width:100%; margin:none; margin-bottom:-3px;}
+section#goodsview2 .goods-contents-area .thumbnail-area .goods-speach-description{background-image: url('../common/img/goods/btn_goods_play.png'); background-size: 65px 65px; background-position: -8.5px -4px; z-index: 99; position: relative; height: 50px; width: 50px; color: #ffffff; text-align: center; float: left; margin-top: -50px;}
+section#goodsview2 .goods-contents-area .thumbnail-area .goods-speach-description.playing{background-image: url('../common/img/goods/btn_goods_stop.png');}
+section#goodsview2 .goods-contents-area .thumbnail-area .goods-speach-description .speach-description-play{display: block; width: 100%; height: 100%; font-size: 0;}
+section#goodsview2 .goods-contents-area .thumbnail-area .goods-speach-description .speach-description-timer{position: absolute; left: 0; right: 0; bottom: 1px; font-size: 11px; line-height: 12px; height: 12px; display: none;}
+section#goodsview2 .goods-contents-area .thumbnail-area .goods-speach-description.playing .speach-description-timer{display: block;}
+section#goodsview2 .goods-contents-area .thumbnail-area .zoom-area{z-index:99; position:relative; width:50px; height:50px; background:url('../common/img/goods/btn_goods_view.png') no-repeat; background-size: 100% 100%; float:right; margin-top:-50px;}
+section#goodsview2 .goods-contents-area .price-area {border:solid 1px #d9d9d9; border-top:none; height:46px;}
+section#goodsview2 .goods-contents-area .price-area .price-text{float:left; }
+section#goodsview2 .goods-contents-area .price-area .price-text .goods_price{ color:#f03c3c; font-size:16px; font-weight:bold; font-family:dotum; margin-left:15px; line-height:30px;}
+section#goodsview2 .goods-contents-area .price-area .price-text .goods_dc{ color:#56758F; font-size:12px; font-weight:bold; font-family:dotum; margin-left:15px; line-height:16px; }
+section#goodsview2 .goods-contents-area .price-area .goods_coupon{ background:url('../common/img/new/btn_coupon.png') no-repeat; background-size:51px 20px; width:51px; height:20px; color:#FFFFFF; font-size:12px; float:right; text-align:center; margin-top:4px; margin-right:15px;}
+
+section#goodsview2 .goods-contents-area .share-area {border:solid 1px #d9d9d9; height:43px; margin-top:8px; clear:both;}
+section#goodsview2 .goods-contents-area .share-area .share-title{height:43px; font-size:12px; color:#353535; margin-left:15px; line-height:43px; margin-right:18px; float:left;}
+section#goodsview2 .goods-contents-area .share-area .share-btn {float:left; width:218px;}
+section#goodsview2 .goods-contents-area .share-area .share-btn .sns01{background:transparent url("../common/img/detailp/icon_twitter_off.png") no-repeat;  width:29px; height:29px; float:left; margin-right:8px; margin-top:7px; background-size:29px 29px;}
+section#goodsview2 .goods-contents-area .share-area .share-btn .sns01:active{background:transparent url("../common/img/detailp/icon_twitter_on.png") no-repeat;}
+section#goodsview2 .goods-contents-area .share-area .share-btn .sns02{background:transparent url("../common/img/detailp/icon_facebook_off.png") no-repeat;  width:29px; height:29px; float:left; margin-right:8px; margin-top:7px; background-size:29px 29px;}
+section#goodsview2 .goods-contents-area .share-area .share-btn .sns02:active{background:transparent url("../common/img/detailp/icon_facebook_on.png") no-repeat;}
+section#goodsview2 .goods-contents-area .share-area .share-btn .sns03{background:transparent url("../common/img/detailp/icon_kakao_off.png") no-repeat;  width:29px; height:29px; float:left; margin-right:8px; margin-top:7px; background-size:29px 29px;}
+section#goodsview2 .goods-contents-area .share-area .share-btn .sns03:active{background:transparent url("../common/img/detailp/icon_kakao_on.png") no-repeat;}
+section#goodsview2 .goods-contents-area .share-area .share-btn .sns04{background:transparent url("../common/img/detailp/icon_me2day_off.png") no-repeat;  width:29px; height:29px; float:left; margin-right:8px; margin-top:7px; background-size:29px 29px;}
+section#goodsview2 .goods-contents-area .share-area .share-btn .sns04:active{background:transparent url("../common/img/detailp/icon_me2day_on.png") no-repeat;}
+section#goodsview2 .goods-contents-area .share-area .share-btn .sns05{background:transparent url("../common/img/detailp/icon_cyworld_off.png") no-repeat;  width:29px; height:29px; float:left; margin-top:7px; background-size:29px 29px;}
+section#goodsview2 .goods-contents-area .share-area .share-btn .sns05:active{background:transparent url("../common/img/detailp/icon_cyworld_on.png") no-repeat;}
+section#goodsview2 .goods-contents-area .share-area .share-btn .sns06{background:transparent url("../common/img/detailp/icon_kakaoStory_off.png") no-repeat;  width:29px; height:29px; float:left; margin-right:12px; margin-top:7px; display: block !important; background-size:29px 29px;}
+section#goodsview2 .goods-contents-area .share-area .share-btn .sns06:active{background:transparent url("../common/img/detailp/icon_kakaoStory_on.png") no-repeat; display: block !important;}
+section#goodsview2 .goods-contents-area .share-area .share-btn .sns07{background:transparent url("../common/img/detailp/icon_pinterest_off.png") no-repeat;  width:29px; height:29px; float:left; margin-right:8px; margin-top:7px; display: block !important; background-size:29px 29px;}
+section#goodsview2 .goods-contents-area .share-area .share-btn .sns07:active{background:transparent url("../common/img/detailp/icon_pinterest_on.png") no-repeat; display: block !important;}
+section#goodsview2 .goods-contents-area .share-area .share-btn .sns08{background:transparent url("../common/img/detailp/icon_url_off.png") no-repeat;  width:29px; height:29px; float:left;margin-top:7px; display: block !important; cursor:pointer; background-size:29px 29px;}
+section#goodsview2 .goods-contents-area .share-area .share-btn .sns08:active{background:transparent url("../common/img/detailp/icon_url_on.png") no-repeat; display: block !important;}
+
+section#goodsview2 .goods-contents-area .buy-info-area {margin-top:13px; margin-bottom:18px;clear: both;}
+section#goodsview2 .goods-contents-area .buy-info-item {height:26px; margin-bottom:4px; line-height:26px;}
+section#goodsview2 .goods-contents-area .buy-info-item .buy-info-title {float:left; max-width:40%; color:#353535;}
+section#goodsview2 .goods-contents-area .buy-info-item .buy-info-contents {float:right; max-width:60%;}
+section#goodsview2 .goods-contents-area .buy-info-item .buy-info-contents select{height:26px; width:174px; text-align:right;}
+section#goodsview2 .goods-contents-area .buy-info-item .buy-info-contents input{height:20px; text-align:right; float:right; width:50px;}
+section#goodsview2 .goods-contents-area .buy-info-item .buy-info-contents input.inputable-addoption{width:165px;}	/* select element's width -9px (padding + border) */
+section#goodsview2 .goods-contents-area .buy-info-item .buy-info-contents .cnt_plus{width:26px; height:26px; background:url("../common/img/new/btn_amount_plus.png") no-repeat; background-size:26px 26px;float:right; margin-left:5px; }
+section#goodsview2 .goods-contents-area .buy-info-item .buy-info-contents .cnt_minus{width:26px; height:26px; background:url("../common/img/new/btn_amount_.png") no-repeat; background-size:26px 26px; float:right; margin-left:5px;}
+section#goodsview2 .goods-contents-area .buy-info-item p {height:16px;line-height:16px; margin-bottom:8px;}
+
+#el-multi-option-display  table {border:0; border-collapse: separate; border-spacing: 3px;}
+#el-multi-option-display  table td {border:1px solid #ccc; }
+.goods-multi-option {display:none;}
+.order-contents-area  {margin-top:2px; margin-left:8px; margin-right:4px;}
+.order-contents-area  {height:20px; margin-bottom:2px; line-height:20px;}
+.goods-multi-option table {border:1px solid #D3D3D3;}
+.goods-multi-option table td {border-bottom:1px solid #D3D3D3;padding:10px;}
+.goods-multi-option .order-contents-area {margin-top:2px; margin-left:8px; margin-right:4px; height:20px; margin-bottom:2px; line-height:20px;}
+.goods-multi-option .order-contents-area  .buy-info-title {float:left; max-width:50%; color:#353535;}
+.goods-multi-option .order-contents-area  .buy-info-title .cnt_plus{width:26px; height:26px; background:url("../common/img/new/btn_amount_plus.png") no-repeat; background-size:26px 26px;float:right; margin-left:5px; }
+.goods-multi-option .order-contents-area  .buy-info-title .cnt_minus{width:26px; height:26px; background:url("../common/img/new/btn_amount_.png") no-repeat; background-size:26px 26px; float:right; margin-left:5px;}
+.goods-multi-option .order-contents-area  .buy-info-contents {float:right; max-width:50%;}
+.goods-multi-option .order-contents-area .buy-info-contents .del_multi_opt{width:11px; height:11px; background:url("../common/img/new/btn_multioption_del.gif") no-repeat; background-size:11px 11px; margin-left:5px; display:inline-block;}
+.order-contents-area  p {height:16px;line-height:16px; margin-bottom:8px;}
+
+.add-option-area {width:296px;margin:auto; margin-bottom:18px;}
+.add-option-area .btn-add-option {width:296px; height:38px; background:#FFFFFF; line-height:38px; text-align:center; font-size:14px; color:#808591; border-radius:4px; border:solid 1px #cecfcf; font-weight:bold;}
+
+section#goodsview2 .goods-contents-area .btn-area {width:296px; height:38px; margin:auto;  text-align:center; color:#ffffff; font-size:14px; line-height:38px; margin:0 auto;}
+section#goodsview2 .goods-contents-area .btn-area .btn-buy {width:94px; height:38px; background:#f35151; float:left; margin-right:6px; border-radius:4px; font-weight:Bold;}
+section#goodsview2 .goods-contents-area .btn-area .btn-cart {width:94px; height:38px; background:#808591; float:left; margin-right:6px;border-radius:4px; font-weight:Bold;}
+section#goodsview2 .goods-contents-area .btn-area .btn-wish {width:94px; height:38px; background:#808591; float:left; border-radius:4px; font-weight:Bold;}
+section#goodsview2 .goods-contents-area .btn-area .btn-soldout {width:296px; height:38px; background:#5AAEFF; float:left; margin-right:6px; border-radius:4px; font-weight:Bold;}
+
+section#goodsview2 .goods-contents-area .other-settle-area {margin:18px 0px;}
+
+section#goodsview2 .goods-contents-area .detail-view-area {width:296px;margin:auto; margin-bottom:18px;}
+section#goodsview2 .goods-contents-area .detail-view-area .btn-detail {width:296px; height:38px; background:#FFFFFF; line-height:38px; text-align:center; font-size:14px; color:#808591; border-radius:4px; border:solid 1px #cecfcf; font-weight:bold;}
+
+section#goodsview2 .goods-contents-area .goods-info-area {}
+section#goodsview2 .goods-contents-area .goods-info-area .tab-area{ height:33px; font-family:dotum; padding-left:10px; padding-right:10px;}
+section#goodsview2 .goods-contents-area .goods-info-area .tab-area .tab-basic{ float:left; background:#FFFFFF; repeat-x; width:33%; font-size:14px; color:#94959d; line-height:33px;text-align:center; font-weight:bold; border-bottom:solid 1px #dadada;}
+section#goodsview2 .goods-contents-area .goods-info-area .tab-area .tab-review{ float:left; background:#FFFFFF; width:33%; font-size:14px; color:#94959d; line-height:33px;text-align:center; font-weight:bold;border-bottom:solid 1px #dadada;}
+section#goodsview2 .goods-contents-area .goods-info-area .tab-area .tab-qna{ float:left; background:#FFFFFF; width:33%; font-size:14px; color:#94959d; line-height:33px;text-align:center; font-weight:bold;border-bottom:solid 1px #dadada;}
+section#goodsview2 .goods-contents-area .tab-relative{ background:#FFFFFF; font-size:14px; color:#353535; line-height:33px; font-weight:bold;border-bottom:solid 1px #dadada; border-top:solid 1px #dadada; margin:30px 10px 0; padding-left: 10px;}
+section#goodsview2 .goods-contents-area .goods-info-area .tab-area .bar-area{float:right; width:0px;height:33px;  no-repeat;}
+section#goodsview2 .goods-contents-area .goods-info-area .tab-area .active-bar{}
+section#goodsview2 .goods-contents-area .goods-info-area .tab-area .active-bar2{}
+section#goodsview2 .goods-contents-area .goods-info-area .tab-area .active-tab {background:#FFFFFF; line-height:32px; border:solid 1px #dadada; border-bottom:none; color:#353535;}
+section#goodsview2 .goods-contents-area .goods-info-area .content-area {padding:12px 12px 0px 15px;}
+section#goodsview2 .goods-contents-area .goods-info-area .content-area .content-basic .content-item {clear:both; height:24px;}
+section#goodsview2 .goods-contents-area .goods-info-area .content-area .content-basic .content-item .content-title{font-size:12px; color:#353535; float:left; width:102px; line-height:24px; height:24px;}
+section#goodsview2 .goods-contents-area .goods-info-area .content-area .content-basic .content-item .content-content{font-size:12px; color:#353535; float:left;line-height:24px; height:24px;}
+section#goodsview2 .goods-contents-area .goods-info-area .content-area .content-basic .content-item .red{color:#f03c3c;font-weight:bold;}
+section#goodsview2 .goods-contents-area .goods-info-area .content-area .content-basic .content-item .blue{color:#56758F;font-weight:bold;}
+
+section#goodsview2 .goods-contents-area .goods-info-area .content-area .content-review .review-title {font-size:14px; font-weight:bold; font-family:dotum; color:#353535; height:27px; line-height:27px;}
+section#goodsview2 .goods-contents-area .goods-info-area .content-area .content-review .review-title .title{float:left;}
+section#goodsview2 .goods-contents-area .goods-info-area .content-area .content-review .review-title .title .title_cnt{color:#466996}
+section#goodsview2 .goods-contents-area .goods-info-area .content-area .content-review .review-title .write-btn{float:right;width:80px; height:27px; line-height:27px; font-size:12px; color:#FFFFFF; font-weight:normal;text-align:center; background:#808591; font-family:dotum; border-radius:3px;}
+section#goodsview2 .goods-contents-area .goods-info-area .content-area .content-review .review-item { border:solid 1px #d9d9d9; border-bottom:none; margin-top:8px;}
+section#goodsview2 .goods-contents-area .goods-info-area .content-area .content-review .review-item .review-item-title { border-bottom:solid 1px #d9d9d9; padding:8px 14px 8px 14px;}
+section#goodsview2 .goods-contents-area .goods-info-area .content-area .content-review .review-item .review-item-title .review-item-subject {font-weight:bold; color:#353535; line-height:19px;}
+section#goodsview2 .goods-contents-area .goods-info-area .content-area .content-review .review-item .review-item-title .review-item-id {color:#353535; line-height:19px; }
+section#goodsview2 .goods-contents-area .goods-info-area .content-area .content-review .review-item .review-item-title .review-item-id .review-item-star {float:right; color:#d4d4d4; font-size:12px;}
+section#goodsview2 .goods-contents-area .goods-info-area .content-area .content-review .review-item .review-item-title .review-item-id .review-item-star .active{color:#FECE00;}
+section#goodsview2 .goods-contents-area .goods-info-area .content-area .content-review .review-item .review-item-content { background:#F5F5F5;display:none;}
+section#goodsview2 .goods-contents-area .goods-info-area .content-area .content-review .review-item .review-item-content .review-item-content-review{ border-bottom:solid 1px #d9d9d9; padding:8px 14px 8px 14px; }
+section#goodsview2 .goods-contents-area .goods-info-area .content-area .content-review .review-item .review-item-content .review-item-content-reply{ border-bottom:solid 1px #d9d9d9; padding:8px 14px 8px 14px; }
+section#goodsview2 .goods-contents-area .goods-info-area .content-area .content-review .review-item .review-item-content .review-item-content-reply .reply-icon {float:left; background:url("../common/img/new/btn_re.png") no-repeat; background-size:20px 14px; width:20px; height:14px; margin-right:5px; }
+section#goodsview2 .goods-contents-area .goods-info-area .content-area .content-review .review-more-btn {width:300px; margin:auto; text-align:center; height:35px; color:#ffffff; line-height:35px; font-size:15px; font-weight:bold; background:#808591; border-radius:3px; font-family:dotum; margin-top:15px;}
+
+section#goodsview2 .goods-contents-area .goods-info-area .content-area .content-qna .qna-title {font-size:14px; font-weight:bold; font-family:dotum; color:#353535;  height:27px;  line-height:27px;}
+section#goodsview2 .goods-contents-area .goods-info-area .content-area .content-qna .qna-title .title{float:left;}
+section#goodsview2 .goods-contents-area .goods-info-area .content-area .content-qna .qna-title .title .title_cnt{color:#466996}
+section#goodsview2 .goods-contents-area .goods-info-area .content-area .content-qna .qna-title .write-btn{float:right;width:80px; height:27px; line-height:27px; font-size:12px; color:#FFFFFF; font-weight:normal;text-align:center; background:#808591; font-family:dotum; border-radius:3px;}
+
+section#goodsview2 .goods-contents-area .goods-info-area .content-area .content-qna .qna-item { border:solid 1px #d9d9d9; border-bottom:none; margin-top:8px;}
+section#goodsview2 .goods-contents-area .goods-info-area .content-area .content-qna .qna-item .qna-item-title { border-bottom:solid 1px #d9d9d9; padding:8px 14px 8px 14px;}
+section#goodsview2 .goods-contents-area .goods-info-area .content-area .content-qna .qna-item .qna-item-title .qna-item-subject {font-weight:bold; color:#353535; line-height:19px;}
+section#goodsview2 .goods-contents-area .goods-info-area .content-area .content-qna .qna-item .qna-item-title .qna-item-id {color:#353535; line-height:19px; }
+section#goodsview2 .goods-contents-area .goods-info-area .content-area .content-qna .qna-item .qna-item-title .qna-item-id .answer-n {float:right; width:53px; height:17px; background:url("../common/img/new/btn_q_ready.png") no-repeat; background-size:53px 17px;}
+section#goodsview2 .goods-contents-area .goods-info-area .content-area .content-qna .qna-item .qna-item-title .qna-item-id .answer-y {float:right;  width:53px; height:17px; background:url("../common/img/new/btn_q_complete.png") no-repeat; background-size:53px 17px;}
+section#goodsview2 .goods-contents-area .goods-info-area .content-area .content-qna .qna-item .qna-item-content { background:#F5F5F5; display:none;}
+section#goodsview2 .goods-contents-area .goods-info-area .content-area .content-qna .qna-item .qna-item-content .qna-item-content-question{ border-bottom:solid 1px #d9d9d9; padding:8px 14px 8px 14px; }
+section#goodsview2 .goods-contents-area .goods-info-area .content-area .content-qna .qna-item .qna-item-content .qna-item-content-answer{ border-bottom:solid 1px #d9d9d9; padding:8px 14px 8px 14px; }
+section#goodsview2 .goods-contents-area .goods-info-area .content-area .content-qna .qna-item .qna-item-content .qna-item-content-answer .answer-icon {float:left; background:url("../common/img/new/btn_a.png") no-repeat; background-size:16px 14px; width:16px; height:14px; margin-right:5px;}
+section#goodsview2 .goods-contents-area .goods-info-area .content-area .content-qna .qna-item .qna-item-content .qna-item-content-question .question-icon {float:left; background:url("../common/img/new/btn_q.png") no-repeat; background-size:16px 14px; width:16px; height:14px; margin-right:5px;}
+section#goodsview2 .goods-contents-area .goods-info-area .content-area .content-qna .qna-more-btn {width:300px; margin:auto; text-align:center; height:35px; color:#ffffff; line-height:35px; font-size:15px; font-weight:bold; background:#808591; border-radius:3px; font-family:dotum; margin-top:15px;}
+
+
+section#goodsview2 .goods-contents-area .goods-info-area .content-area .content-basic .commoninfo-area { margin-top:16px;}
+section#goodsview2 .goods-contents-area .goods-info-area .content-area .content-basic .commoninfo-area .commoninfo-wrap {border:solid 1px #d9d9d9; border-bottom:none; }
+section#goodsview2 .goods-contents-area .goods-info-area .content-area .content-basic .commoninfo-area .commoninfo-wrap .commoninfo-title{border-bottom:solid 1px #d9d9d9; padding:0px 10px 0px 10px; height:33px; line-height:33px;}
+section#goodsview2 .goods-contents-area .goods-info-area .content-area .content-basic .commoninfo-area .commoninfo-wrap .commoninfo-title .down_arrow{background:url("../common/img/info/icon_arrow_down.png") no-repeat; width:15px; height:15px; margin-top:9px;float:right;}
+section#goodsview2 .goods-contents-area .goods-info-area .content-area .content-basic .commoninfo-area .commoninfo-wrap .commoninfo-title .up_arrow{background:url("../common/img/info/icon_arrow_up.png") no-repeat; width:15px; height:15px; margin-top:9px;float:right;}
+
+section#goodsview2 .goods-contents-area .goods-info-area .content-area .content-basic .commoninfo-area .commoninfo-wrap .active_title{color:#436593; font-weight:bold;}
+
+section#goodsview2 .goods-contents-area .goods-info-area .content-area .content-basic .commoninfo-area .commoninfo-wrap .commoninfo-content{border-bottom:solid 1px #d9d9d9; padding:12px 12px 12px 12px; background:#f5f5f5; display:none;}
+section#goodsview2 .goods-contents-area .del-btn {float:right; margin-bottom:8px; width:70px; height:27px; line-height:27px; font-size:12px; color:#FFFFFF; font-weight:normal; text-align:center; background:#808591; font-family:dotum; border-radius:3px;}
+
+section#goodsview2 .goods-contents-area .couponlist-area {bottom:0px; position:fixed; width:100%; background:#FFFFFF; z-index:99; display:none;}
+section#goodsview2 .goods-contents-area .couponlist-title {background:#313030; border-bottom:solid 1px #b2b2b2; height:48px;}
+section#goodsview2 .goods-contents-area .couponlist-title .title{height:48px; line-height:48px; margin-left:15px; font-size:16px; color:#FFFFFF; font-family:dotum;font-weight:bold;float:left;}
+section#goodsview2 .goods-contents-area .couponlist-title .title .title_cnt{font-size:14px;}
+section#goodsview2 .goods-contents-area .couponlist-title .close-btn{background:url("../common/img/new/btn_close.png") no-repeat; background-size:31px 31px; width:31px; height:31px; margin-top:8px;float:right;margin-right:10px;}
+section#goodsview2 .goods-contents-area .couponlist-item{height:43px; border-bottom:solid 1px #dbdbdb;}
+section#goodsview2 .goods-contents-area .couponlist-item .couponlist-item-name{height:43px; line-height:43px; font-size:12px; color:#353535; margin-left:15px;  float:left;}
+section#goodsview2 .goods-contents-area .couponlist-item .couponlist-item-name .mobile_coupon{color:#f03c3c;}
+section#goodsview2 .goods-contents-area .couponlist-item .download-btn{background:#f35151; border-radius:3px; width:80px; height:27px; margin-top:8px; line-height:27px; font-size:12px; color:#FFFFFF; float:right; margin-right:12px;text-align:center;}
+section#goodsview2 .goods-contents-area .couponlist-title .close-btn{background:url("../common/img/new/btn_close.png") no-repeat; background-size:31px 31px; width:31px; height:31px; margin-top:8px;float:right;margin-right:10px;}
+
+section#goodsview2 .goods-contents-area .couponlist-area .couponlist-item-area {position:relative; max-height:220px; width:100%; overflow:hidden;}
+
+.goods-qna-certification {background:url("../common/img/nlist/btn_delete02_off.png") no-repeat; background-size:40px 21px; width:40px; height:21px; border:none; font-size:10px; padding:none; text-align:center;}
+.goods-qna-certification:active {background:url("../common/img/nlist/btn_delete02_on.png") no-repeat;}
+
+#background {
+	position : fixed;
+	left : 0;
+	top : 0;
+	bottom:0px;
+	width : 100%;
+	height : 100%;
+	background : rgba(0, 0, 0, 0.2);
+	display:none;
+	z-index:98;
+}
+
+/* 모바일전용, 무통장전용 쿠폰*/
+section#goodsview2 .goods-contents-area .couponlist-item .couponlist-item-name .couponInfoOnlyBtn							{ height: 16px; width: 130px; }
+section#goodsview2 .goods-contents-area .couponlist-item .couponlist-item-name .couponInfoOnlyName							{ height: 26px; line-height: 26px; }
+section#goodsview2 .goods-contents-area .couponlist-item .couponlist-item-name .couponInfoOnlyBtn .onlyMobileCouponBtn		{ margin: 0px 3px 0px 0px; float: left; width: 60px; height: 15px; color: #ffffff; font-size: 10px; -webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px; background-color: #56ca81; font-weight: bold; text-align: center; line-height: 15px; }
+section#goodsview2 .goods-contents-area .couponlist-item .couponlist-item-name .couponInfoOnlyBtn .onlyBankBookCouponBtn	{ margin: 0px 3px 0px 0px; float: left; width: 60px; height: 15px; color: #ffffff; font-size: 10px; -webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px; background-color: #7b9ff0; font-weight: bold; text-align: center; line-height: 15px; }
+
+/* 관련상품 */
+#relativegoods {overflow:hidden;overflow-x:scroll;clear:both; margin:auto; min-width:296px; padding:12px;}
+#relativegoods .inner-wrapper{padding:1px;}
+#relativegoods .goods-item{width:30%; margin-bottom:18px; display:block; float:left; min-width:87px;}
+#relativegoods .goods-item .goods-img{position:relative; width:100%; text-align:center;}
+#relativegoods .goods-item .goods-img .goods-speach-description{display: block !important; background-image: url('../img/goods/btn_main_play.png'); background-size: 100% 100%; position: relative; height: 32px; color: #ffffff; width: 32px; text-align: center; margin-top: -36px; margin-left: 1px;}
+#relativegoods .goods-item .goods-price .red {color: #f03c3c;font-size: 12px;font-weight: bold;}
+#relativegoods .goods-item .goods-price {font-weight:bold;width:100%; height:18px; font-size:13px; color:#222222; line-height:18px; text-align:center;}
+#relativegoods .goods-item .goods-price a{font-weight:bold; font-size:13px; color:#222222;}
+#relativegoods .goods-item .goods-price .red{color:#f03c3c; font-size:12px; font-weight:bold; !important;}
+#relativegoods .goods-item .goods-discount {font-weight:bold; color:#fb0e0e; width:100%; height:18px; font-size:12px; line-height:18px; text-align:center; display: block !important;}
+#relativegoods .goods-item .goods-dc {width:100%; height:18px; font-size:12px; font-weight:bold; color:#436693; line-height:15px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+#relativegoods .goods-item .goods-dc a{font-size:12px; font-weight:bold; color:#436693;}
+#relativegoods .goods-item .goods-consumer {text-align:center; font-size:13px; color:#222222; padding-left:3px; padding-right:3px; overflow:hidden;white-space:nowrap; display:block !important;}
+#relativegoods .goods-item .goods-coupon-price {text-align:center; font-size:12px; color:#fb0e0e; padding-left:3px; padding-right:3px; overflow:hidden;white-space:nowrap; display:block !important;}
+#relativegoods .goods-item .goods-coupon-price .goods-coupon-icon { width:21px; height:12px; background:url('../img/good_icon_coupon.gif') no-repeat; display: inline-block !important;}
+
+/* 상품확대사진 스와이프 */
+.goods_banner {clear:both;padding:0px;margin-bottom:10px; position:static;}
+.goods_banner .swipe_detail {width:100%}
+.goods_banner .swipe_detail .list_content_border {border-bottom:solid 1px #cccccc; float:left; width:100%; margin-bottom:10px;}
+.goods_banner .swipe_detail .list_content {width:100%; padding-bottom:10px; float:left;}
+.goods_banner .swipe_detail .list_content .list_item { text-align:center;}
+.goods_banner .swipe_detail .list_content .list_item>img {height:auto;}
+.goods_banner .list_page {height:29px; text-align:center; padding-left:32%; padding-right:32%; margin-top:10px;}
+.goods_banner .list_page .list_page_wrap {text-align:center}
+.goods_banner .list_page .list_page_box {background:url('../common/img/new/b_off.png') center center no-repeat; height:10px; width:14px; background-size:10px 10px;  display:inline-block; margin-left:1%; margin-right:1%;}
+.goods_banner .list_page .now_page {background:url('../common/img/new/b_on.png') center center no-repeat; height:10px; width:14px; background-size:10px 10px;}
+.goods_banner .list_margin {height:10px;float:left; width:100%;}
+</style>
+
+
+<input type="hidden" name="list_category" value="{category}" />
+<input type="hidden" name="list_kw" value="{kw}" />
+<input type="hidden" name="view_area" value="{view_area}" />
+
+<section id="goodsview2" class="content">
+	<div class="top_title">
+		<div class="goods_nm">
+		<!--{? clevel == '0' || slevel >= clevel }-->
+		{goodsnm}
+		<!--{: slevel < clevel && auth_step[1] == 'Y' }-->
+		{goodsnm}
+		<!--{/}-->
+		</div>
+	</div>
+	<div class="top_btn">
+		<!--{ ? kw }-->
+		<div class="left_list_btn" onClick="javascript:document.location.href='/'+mobile_root+'/goods/list.php?kw={=kw}';">
+				&nbsp;&nbsp;&nbsp;
+		</div>
+		<!--{ : category }-->
+		<div class="left_list_btn" onClick="javascript:document.location.href='/'+mobile_root+'/goods/list.php?category={=category}';">
+				&nbsp;&nbsp;&nbsp;
+		</div>
+		<!--{ : referer }-->
+		<div class="left_list_btn" onClick="javascript:document.location.href='{referer}';">
+				&nbsp;&nbsp;&nbsp;
+		</div>
+		<!--{ / }-->
+		<!--{ ? category || kw }-->
+		<div class="right_other_btn" onClick="javascript:showOtherGodds();">
+			&nbsp;&nbsp;&nbsp;
+		</div>
+		<!--{ / }-->
+	</div>
+	<div class="goods-other-wrap">
+		<div class="goods-other-arrow">
+			<div class="goods-other-arrow-left"><div class="left-arrow" onClick="javascript:objSwipe.prev();"></div></div>
+			<div class="goods-other-arrow-right"><div class="right-arrow" onClick="javascript:objSwipe.next();"></div></div>
+		</div>
+		<div  id="swipe-other-goods" class="goods-other-area" >
+			<div>
+
+			</div>
+		</div>
+	</div>
+	<div class="goods-contents-area">
+		<div class="goods-contents-area-top">
+		<div class="thumbnail-area">
+			<div class="thumbnail-img">
+				<div class="goods_banner" id="banner-detail" style="margin-bottom:0;">
+					<div class="list_content_border"></div>
+					<div class="swipe_detail" id="swipe_detail">
+						<div>
+							<!--{ @ l_img }-->
+							<div class="list_content{?.index_ != 0} hidden{/}" id="banner-detail-{.index_+1}">
+								<div class="list_item">
+									{=goodsimgMobile(.value_, 500)}
+								</div>
+							</div>
+							<!--{ / }-->
+						</div>
+					</div>
+					<div class="list_content_border"></div>
+					<div class="list_page">
+						<div class="list_page_wrap">
+							<!--{ @ range(0, l_img.size_ - 1) }-->
+							<div class="list_page_box{?.index_ == 0} now_page{/}" id="banner-detail-page-box-{.index_+1}"></div>
+							<!--{ / }-->
+							<div class="list_page_num hidden"><span id="swipe_detail-page" class="n_page">1</span> / <span id="banner-detail-tpage">{l_img.size_}</span></div>
+						</div>
+					</div>
+					<div class="list_margin"></div>
+				</div>
+			</div>
+			<!--{ ? tts_url }-->
+			<div class="goods-speach-description">
+				<span class="speach-description-play" data-src="{tts_url}">재생</span>
+				<span class="speach-description-timer"></span>
+				<audio id="speach-description-player"></audio>
+			</div>
+			<!--{ / }-->
+			<div class="zoom-area"  onClick="javascript:document.location.href='/'+mobile_root+'/goods/view_bigimg.php?goodsno={=goodsno}';">
+				<div class="zoom-icon"></div>
+			</div>
+		</div>
+		<div class="price-area">
+			<div class="price-text">
+			<!--{? clevel == '0' || slevel >= clevel }-->
+			<!--{ ? runout && _cfg_soldout.price == 'image'}-->
+			<div class="goods_price"><img src="../data/goods/icon/custom/soldout_price"></div>
+			<!--{ : runout && _cfg_soldout.price == 'string'}-->
+			<div class="goods_price">{_cfg_soldout.price_string}</div>
+			<!--{ : }-->
+			<div class="goods_price"><!--{ ? !strprice }--> {=number_format(price)}원 <!--{ : }--> {strprice} <!--{ / }--></div>
+			<!--{ / }-->
+			<!--{ ? discount_mobile}-->
+			<div class="goods_dc">{=discount_mobile}</div>
+			<!--{ / }-->
+			<!--{: slevel < clevel && auth_step[2] == 'Y' }-->
+			<!--{ ? runout && _cfg_soldout.price == 'image'}-->
+			<div class="goods_price"><img src="../data/goods/icon/custom/soldout_price"></div>
+			<!--{ : runout && _cfg_soldout.price == 'string'}-->
+			<div class="goods_price">{_cfg_soldout.price_string}</div>
+			<!--{ : }-->
+			<div class="goods_price"><!--{ ? !strprice }--> {=number_format(price)}원 <!--{ : }--> {strprice} <!--{ / }--></div>
+			<!--{ / }-->
+			<!--{ ? discount_mobile}-->
+			<div class="goods_dc">{=discount_mobile}</div>
+			<!--{ / }-->
+			<!--{ / }-->
+			</div>
+			<!-- 할인쿠폰 다운받기 -->
+            <!--{ ? coupon || coupon_emoney }-->
+            <div class="goods_coupon" onClick="javascript:showCouponList();">
+            </div>
+            <!--{ / }-->
+		</div>
+		<!--{ ? sales_status == 'range'}-->
+		<div class="goods_sales_status">
+		남은시간 : <span id="el-countdown-1"></span>
+		</div>
+		<script type="text/javascript">
+		Countdown.init('{=date('Y-m-d H:i:s',sales_range_end)}', 'el-countdown-1');
+		</script>
+		<!--{ : sales_status == 'before'}-->
+		<div class="goods_sales_status">
+		{=date('Y-m-d H:i:s',sales_range_start)} 판매시작합니다.
+		</div>
+		<!--{ : sales_status == 'end'}-->
+		<div class="goods_sales_status">
+		판매가 종료되었습니다.
+		</div>
+		<!--{ / }-->
+
+		<!--{ ? snsBtn}-->
+		<div class="share-area">
+			<div class="share-title">
+				공유하기
+			</div>
+			<div class="share-btn">
+				{=snsBtn}
+			</div>
+		</div>
+		<!--{ / }-->
+		<form name="frmView" method="post" onsubmit="return false;">
+		<input type="hidden" name="mode" value="" />
+		<input type="hidden" name="goodsno" value="{goodsno}" />
+		<input type="hidden" name="goodsCoupon" value="{coupon}" />
+		<input type="hidden" name="min_ea" value="{min_ea}">
+		<input type="hidden" name="max_ea" value="{max_ea}">
+		<input type=hidden name=ea step="{? sales_unit}{sales_unit}{:}1{/}" min="{? min_ea}{min_ea}{:}1{/}" max="{? max_ea}{max_ea}{:}0{/}" value={? min_ea}{min_ea}{:}1{/}>
+
+		<!--{ ? ! strprice }-->
+			<div class="buy-info-area">
+				<!--{ ? _opt  && _typeOption=="single" }-->
+					<div class="buy-info-item">
+						<div class="buy-info-title">선택옵션</div>
+						<div class="buy-info-contents">
+							<select name="opt[]" onchange="chkOption(this);nsGodo_MultiOption.set();" required fld_esssential msgR="옵션을 선택해주세요">
+								<option value="">선택사항</option>
+								<!--{ @ _opt }--><!--{ @ .value_ }-->
+								<option value="{..opt1}{?..opt2}|{..opt2}{/}" {?usestock&&!..stock} disabled class=disabled{/}> {?usestock&&!..stock}[품절]{/} {..opt1}{?..opt2}/{..opt2}{/} {?..price!=price}({=number_format(..price)}원){/}</option>
+								<!--{ ? usestock && !..stock }--> [품절]<!--{ / }-->
+								<!--{ / }--><!--{ / }-->
+							</select>
+						</div>
+					</div>
+				<!--{ / }-->
+
+				<!--{ ? _opt && _typeOption=="double" }-->
+					<!--{ @ _optnm }-->
+					<div class="buy-info-item">
+						<div class="buy-info-title">{.value_}</div>
+						<!-- 옵션 선택 -->
+						<div class="buy-info-contents">
+						<!--{ ? !.index_ }-->
+							<select name="opt[]" onchange="subOption(this);" required fld_esssential msgR="{.value_} 선택을 해주세요">
+							<option value="">옵션선택</option>
+							<!--{ @ (_opt) }--><option value="{..key_}">{..key_}</option><!--{ / }--></select>
+						<!--{ : }-->
+							<select name="opt[]" onchange="chkOption(this);nsGodo_MultiOption.set();" required fld_esssential msgR="{.value_} 선택을 해주세요"><option value="">선택사항</option></select>
+						<!--{ / }-->
+						</div>
+
+						<input type="hidden" name="opt_txt[]" value="">
+
+					</div>
+
+
+					<!--{ / }-->
+				<script>subOption(document.getElementsByName('opt[]')[0])</script>
+				<!--{ / }-->
+
+				<!--{ ? ! _opt }--><!--{ ? ! _addopt }--><!--{ ? ! _addopt_inputable }-->
+				<!--{ ? runout < 1 || usestock && totstock > 0 }-->
+					<div class="buy-info-item" id="none_option">
+						<div class="buy-info-contents" style="float:left;">
+							<div class="cnt_plus" onClick="javascript:orderCntCalc(1);"></div>
+							<div class="cnt_minus" onClick="javascript:orderCntCalc(-1);"></div>
+							<input type="number" data-price="{price}" id="ea" name="ea" size="5" value="{? min_ea}{min_ea}{:}1{/}" step="{? sales_unit}{sales_unit}{:}1{/}" min="{? min_ea}{min_ea}{:}1{/}" max="{? max_ea}{max_ea}{:}0{/}" onchange="orderCntCalc(this, this.value, true);"/>
+						</div>
+						<div class="buy-info-contents">
+							원
+						</div>
+						<div class="buy-info-contents" name="order_price" id="order_price">
+							<script type="text/javascript">
+								var div = document.getElementById("order_price");
+								var min_price = show_price({price}, {min_ea});
+								var order_price = comma(min_price);
+								div.textContent = order_price;
+							</script>
+						</div>
+					</div>
+				<!--{ / }--><!--{ / }--><!--{ / }--><!--{ / }-->
+
+				<!-- 추가 옵션 -->
+				<!--{ ? _addopt }-->
+				<!--{ @ _addopt }-->
+				<div class="buy-info-item">
+					<div class="buy-info-title">{.key_}<!--{ ? _addoptreq[.index_]=='o' }-->(필수)<!--{ / }--></div>
+					<div class="buy-info-contents">
+						<!--{ ? _addoptreq[.index_] }-->
+							<select name="addopt[]" required fld_esssential label="{.key_}" onchange="nsGodo_MultiOption.set();">
+							<option value="">=={.key_} 선택==
+						<!--{ : }-->
+							<select name="addopt[]" label="{.key_}" onchange="nsGodo_MultiOption.set();">
+							<option value="">=={.key_} 선택==
+							<option value="-1">선택안함
+						<!--{ / }-->
+						<!--{ @ .value_ }-->
+						<option value="{..sno}^{.key_}^{..opt}^{..addprice}">{..opt}
+						<!--{ ? ..addprice }-->({=number_format(..addprice)}원 추가)<!--{ / }-->
+						<!--{ / }-->
+						</select>
+					</div>
+				</div>
+				<!--{ / }-->
+				<!--{ / }-->
+
+				<!-- 입력 옵션 -->
+				<!--{ ? _addopt_inputable }--><!--{ @ _addopt_inputable }-->
+					<div class="buy-info-item">
+						<div class="buy-info-title">{.key_}<!--{ ? _addopt_inputable_req[.index_]=='o' }-->(필수)<!--{ / }--></div>
+						<div class="buy-info-contents">
+							<input type="hidden" name="_addopt_inputable[]" value="">
+							<input type="text" name="addopt_inputable[]" label="{.key_}" option-value="{.sno}^{.key_}^{.opt}^{.addprice}" value="" { ? _addopt_inputable_req[.index_] }required fld_esssential{/} maxlength="{.opt}" class="inputable-addoption">
+						</div>
+					</div>
+				<!--{ / }--><!--{ / }-->
+
+				<!--{ ? min_ea || max_ea || sales_unit }-->
+					<div class="buy-info-item" style="height:auto; !important;">
+						<div style="clear:both;text-align:right;">
+							<!--{ ? min_ea > 1 }--><p>최소구매수량 : {min_ea}개</p><!--{ / }-->
+							<!--{ ? max_ea }--><p>최대구매수량 : {max_ea}개</p><!--{ / }-->
+							<!--{ ? sales_unit > 1}--><p>묶음주문단위 : {sales_unit}개</p><!--{ / }-->
+						</div>
+					</div>
+				<!--{ / }-->
+
+				<!-- 입력 옵션 -->
+				<!--{ ? _addopt_inputable }--><!--{ @ _addopt_inputable }-->
+					<div class="add-option-area">
+						<div class="btn-add-option" id="input_option_btn" onClick="nsGodo_MultiOption.set_input();">입력한 옵션으로 선택</div>
+					</div>
+				<!--{ / }--><!--{ / }-->
+
+			</div>
+		<!--{ / }-->
+
+		<div id="el-multi-option-display" class="goods-multi-option">
+			<table width="100%"border="0" cellpadding="0" cellspacing="0">
+			<col>
+			</table>
+
+			<div style="font-size:12px;text-align:right;padding:10px 20px 10px 0;border-bottom:1px solid #D3D3D3;margin-bottom:5px;">
+				총 금액 : <span style="color:#E70103;font-weight:bold;" id="el-multi-option-total-price"></span>
+			</div>
+		</div>
+		<!--{? clevel == '0' || slevel >= clevel }-->
+		<div class="btn-area">
+			<!--{ ? runout > 0 || usestock && totstock < 1 }-->
+				<div class="btn-soldout" onClick="javascript:;">SOLD OUT</div>
+			<!--{ : }-->
+				<!--{? goodsBuyable === true}-->
+					<div class="btn-buy" onClick="javascript:indbAction2('goodsorder-hide');">바로구매</div>
+					<div class="btn-cart" onClick="javascript:indbAction2('goodscart-hide');">장바구니</div>
+					<div class="btn-wish" onClick="javascript:indbAction2('goodswish-hide');">찜하기</div>
+				<!--{ : }-->
+					<div class="btn-buy" onClick="javascript:buyableMember('{goodsBuyable}');">바로구매</div>
+					<div class="btn-cart" onClick="javascript:buyableMember('{goodsBuyable}');">장바구니</div>
+					<div class="btn-wish" onClick="javascript:buyableMember('{goodsBuyable}');">찜하기</div>
+				<!--{ / }-->
+			<!--{ / }-->
+		</div>
+		<!--{ / }-->
+		</form>
+		<!-- 네이버 체크아웃, 옥션 아이페이 등 -->
+		<div class="other-settle-area">
+			{Payco}
+		</div>
+
+		<div class="other-settle-area">
+			{naverCheckout}
+		</div>
+
+		<div class="detail-view-area">
+			<div class="btn-detail" onClick="javascript:location.href='/'+mobile_root+'/goods/view_detail.php?goodsno={=goodsno}';">상세정보 보기</div>
+		</div>
+		</div>
+		<div class="goods-info-area">
+			<div class="tab-area">
+				<div class="tab-basic active-tab" onclick="javascript:changeTab('basic');">기본정보<div class="bar-area active-bar"></div></div>
+				<div class="tab-review" onclick="javascript:changeTab('review');">상품평 <!--{ ? review_cnt > 0 }-->({=review_cnt})<!--{ / }--><div class="bar-area"></div></div>
+				<div class="tab-qna" onclick="javascript:changeTab('qna');">상품문의 <!--{ ? qna_cnt > 0 }-->({=qna_cnt})<!--{ / }--></div>
+			</div>
+			<div class="content-area">
+				<!-- 상품 기본정보 시작 -->
+				<div class="content-basic">
+					<!--{? clevel == '0' || slevel >= clevel || (slevel < clevel && auth_step[2] == 'Y') }-->
+						<!--{ ? strprice }-->
+						<div class="content-item">
+							<div class="content-title">판매가격</div>
+							<div class="content-content red">{strprice}</div>
+						</div>
+						<!--{ : }-->
+							<div class="content-item">
+								<div class="content-title">판매가격</div>
+								<div class="content-content red">{=number_format(price)}원</div>
+							</div>
+							<!--{ ? consumer }-->
+							<div class="content-item">
+								<div class="content-title">소비자가격</div>
+								<div class="content-content red">{=number_format(consumer)}원</div>
+							</div>
+							<!--{ / }-->
+							<!--{ ? discount_mobile }-->
+							<div class="content-item">
+								<div class="content-title">모바일할인</div>
+								<div class="content-content blue">{=discount_mobile}</div>
+							</div>
+							<!--{ / }-->
+							<!--{ ? special_discount_amount }-->
+							<div class="content-item">
+								<div class="content-title">상품할인금액</div>
+								<div class="content-content blue">- {=number_format(special_discount_amount)}원</div>
+							</div>
+							<!--{ / }-->
+
+							<!--{ ? realprice }-->
+							<div class="content-item">
+								<div class="content-title">회원할인가격</div>
+								<div class="content-content blue">{=number_format(realprice)}원</div>
+							</div>
+							<!--{ / }-->
+							<!--{ ? reserve }-->
+							<div class="content-item">
+								<div class="content-title">적립금</div>
+								<div class="content-content blue">{=number_format(reserve)}원</div>
+							</div>
+							<!--{ / }-->
+							<!--{ ? naverNcash == 'Y' }-->
+							<div class="content-item">
+								<div class="content-title">네이버마일리지</div>
+								<div class="content-content blue">{ ? exception }{exception}{:}{ ? N_ba }<span id="naver-mileage-base-accum-rate" style="font-weight:bold;color:#1ec228;">{N_ba}%</span>{/}<span id="naver-mileage-add-accum-rate" style="font-weight:bold;color:#1ec228;"></span> 적립{/}&nbsp;<img src="../img/nmileage/n_mileage_info2.gif" onclick="javascript:mileage_info();" style="cursor: pointer; vertical-align: middle;"></div>
+							</div>
+							<!--{ / }-->
+							<!--{ ? coupon }-->
+							<div class="content-item">
+								<div class="content-title">쿠폰적용가격</div>
+								<div class="content-content red">{=number_format(couponprice)}원</div>
+							</div>
+							<!--{ / }-->
+							<!--{ ? coupon_emoney }-->
+							<div class="content-item">
+								<div class="content-title">쿠폰적립금</div>
+								<div class="content-content blue">{=number_format(coupon_emoney)}원</div>
+							</div>
+							<!--{ / }-->
+
+							<!--{ ? delivery_type == 1 }-->
+							<div class="content-item">
+								<div class="content-title">배송비</div>
+								<div class="content-content">무료배송</div>
+							</div>
+							<!--{ : delivery_type == 2 }-->
+							<div class="content-item">
+								<div class="content-title">개별배송비</div>
+								<div class="content-content">{=number_format(goods_delivery)}원</div>
+							</div>
+							<!--{ : delivery_type == 3 }-->
+							<div class="content-item">
+								<div class="content-title">착불배송비</div>
+								<div class="content-content">{=number_format(goods_delivery)}원</div>
+							</div>
+							<!--{ : delivery_type == 4 }-->
+							<div class="content-item">
+								<div class="content-title">고정배송비</div>
+								<div class="content-content">{=number_format(goods_delivery)}원</div>
+							</div>
+							<!--{ : delivery_type == 5 }-->
+							<div class="content-item">
+								<div class="content-title">수량별배송비</div>
+								<div class="content-content">{=number_format(goods_delivery)}원 (수량에따라 배송비 추가)</div>
+							</div>
+							<!--{ / }-->
+						<!--{ / }-->
+					<!--{ / }-->
+					<!--{ ? goodscd }-->
+					<div class="content-item">
+						<div class="content-title">제품코드</div>
+						<div class="content-content">{goodscd}</div>
+					</div>
+					<!--{ / }-->
+					<!--{ ? origin }-->
+					<div class="content-item">
+						<div class="content-title">원산지</div>
+						<div class="content-content">{origin}</div>
+					</div>
+					<!--{ / }-->
+					<!--{ ? maker }-->
+					<div class="content-item">
+						<div class="content-title">제조사</div>
+						<div class="content-content">{maker}</div>
+					</div>
+					<!--{ / }-->
+					<!--{ ? brand }-->
+					<div class="content-item">
+						<div class="content-title">브랜드</div>
+						<div class="content-content">{brand} <a href="../goods/brand.php?brand={brandno}">[브랜드바로가기]</a></div>
+					</div>
+					<!--{ / }-->
+					<!--{ ? launchdt }-->
+					<div class="content-item">
+						<div class="content-title">출시일</div>
+						<div class="content-content">{launchdt}</div>
+					</div>
+					<!--{ / }-->
+					<!--{ @ ex }-->
+					<div class="content-item">
+						<div class="content-title">{.key_}</div>
+						<div class="content-content">{.value_}</div>
+					</div>
+					<!--{ / }-->
+					<!--{ ?commoninfo() }-->
+					<div class="commoninfo-area">
+						<div class="commoninfo-wrap">
+							<!--{ @commoninfo() }-->
+							<div class="commoninfo-title" id="commoninfo-title-{=.idx}" onClick="javascript:showCommonInfo('{=.idx}');">
+								{=.title}<div class="down_arrow"></div>
+							</div>
+							<div class="commoninfo-content" id="commoninfo-content-{=.idx}">
+								{=.info}
+							</div>
+							<!--{ / }-->
+						</div>
+					</div>
+					<!--{ / }-->
+
+				</div>
+				<!-- 상품 기본정보 끝 -->
+				<!-- 상품 후기 시작 -->
+				<div class="content-review" style="display:none;">
+					<!--{ ? review_cnt }-->
+					<div class="review-title"><div class="title"><span class="title_cnt">총 {=review_cnt}개</span>의 상품평</div><a href="../myp/review_register.php?mode=add_review&goodsno={=goodsno}"><div class="write-btn">상품평쓰기</div></a></div>
+					<div class="review-list">
+						<div class="review-item">
+							<!--{ @review_loop }-->
+							<div class="review-item-title" onClick="javascript:showReviewContent('{=.sno}');">
+								<div class="review-item-subject">{=.subject}</div>
+								<div class="review-item-id">{=.review_name} | {=.regdt}<div class="review-item-star">{=.point_star}</div></div>
+							</div>
+							<div class="review-item-content" id="review-item-content-{=.sno}">
+								<div class="review-item-content-review">
+									<div class="review-item-content-review">
+										{=.contents}
+										<!--{ ? .image }-->
+										<div>
+										{=.image}
+										</div>
+										<!--{ / }-->
+										<!--{ ? .authdelete == 'Y' }-->
+										<a href="javascript:" onclick="delete_qnaReview( 'del_review', '{.m_no}', '{.sno}');"><div class="del-btn">삭 제</div></a>
+										<div style="clear:both;"></div>
+										<!--{ / }-->
+									</div>
+								</div>
+								<!--{ @ reply}-->
+								<div class="review-item-content-reply">
+									<div class="reply-icon"></div>{=reply.contents}
+									<!--{ ? reply.authdelete == 'Y' }-->
+									<a href="javascript:" onclick="delete_qnaReview( 'del_review', '{reply.m_no}', '{reply.sno}');"><div class="del-btn">삭 제</div></a>
+									<div style="clear:both;"></div>
+									<!--{ / }-->
+								</div>
+								<!--{ / }-->
+							</div>
+							<!--{ / }-->
+						</div>
+						<!--{ ? review_cnt > 10 }-->
+						<div class="review-more-btn" onClick="document.location.href='../myp/review.php?goodsno={=goodsno}';">더보기</div>
+						<!--{ / }-->
+
+					<!--{ : }-->
+					<div class="review-title"><div class="title">상품평이 없습니다</div><a href="../myp/review_register.php?mode=add_review&goodsno={=goodsno}"><div class="write-btn">상품평쓰기</div></a></div>
+					<div class="review-list">
+					<!--{ / }-->
+					</div>
+				</div>
+				<!-- 상품 후기 끝 -->
+				<!-- 상품 문의 시작 -->
+				<div class="content-qna" style="display:none;">
+					<!--{ ? qna_cnt }-->
+					<div class="qna-title"><div class="title"><span class="title_cnt">총 {=qna_cnt}개</span>의 상품문의</div><a href="../goods/goods_qna_register.php?mode=add_qna&goodsno={=goodsno}"><div class="write-btn">문의하기</div></a></div>
+					<div class="qna-list">
+						<div class="qna-item">
+							<!--{ @ qna_loop }-->
+							<div class="qna-item-title" onClick="javascript:showQnaContent('{=.sno}');">
+								<div class="qna-item-subject">{=.subject}</div>
+								<div class="qna-item-id">{=.qna_name} | {=.regdt}
+								<!--{ ? .reply_cnt > 0 }-->
+								<div class="answer-y"></div>
+								<!--{ : }-->
+								<div class="answer-n"></div>
+								<!--{ / }-->
+								</div>
+
+							</div>
+							<div class="qna-item-content"  id="qna-item-content-{=.sno}">
+
+							{?.accessable}
+								<div class="qna-item-content-question">
+									<div class="question-icon"></div>{=.contents}
+									<!--{ ? .authdelete == 'Y' }-->
+										<a href="javascript:;" onclick="delete_qnaReview( 'del_qna', '{.m_no}', '{.sno}');"><div class="del-btn">삭 제</div></a>
+										<div style="clear:both;"></div>
+									<!--{ / }-->
+								</div>
+								<!--{ @ reply}-->
+								<div class="qna-item-content-answer">
+									<div class="answer-icon"></div>{=reply.contents}
+									<!--{ ? reply.authdelete == 'Y' }-->
+										<a href="javascript:;" onclick="delete_qnaReview( 'del_qna', '{reply.m_no}', '{reply.sno}');"><div class="del-btn">삭 제</div></a>
+										<div style="clear:both;"></div>
+									<!--{ / }-->
+								</div>
+								<!--{ / }-->
+								{:}
+								<div class="qna-item-content-question">
+									{?.m_no > 0}
+									비밀글 입니다.
+									{:}
+									비밀번호 :
+									<input type="password" id="goods-qna-password-{.sno}" name="password" required="required"/>
+									<button type="button" data-sno="{.sno}"  class="goods-qna-certification">확인</button>
+									{/}
+								</div>
+								{/}
+
+
+							</div>
+							<!--{ / }-->
+						</div>
+						<!--{ ? qna_cnt > 10 }-->
+						<div class="qna-more-btn" onClick="document.location.href='../goods/goods_qna_list.php?goodsno={=goodsno}';">더보기</div>
+						<!--{ / }-->
+					</div>
+					<!--{ : }-->
+					<div class="qna-title"><div class="title">상품문의가 없습니다</div><a href="../goods/goods_qna_register.php?mode=add_qna&goodsno={=goodsno}"><div class="write-btn">문의하기</div></a></div>
+					<div class="qna-list">
+					<!--{ / }-->
+				</div>
+				<!-- 상품 문의 끝 -->
+			</div>
+		</div>
+
+		<!-- 관련상품 시작 -->
+		<div class="tab-relative">관련상품</div>
+		<div id="relativegoods">
+			<div class="inner-wrapper">
+				<!--{ @ dataGoodsRelation( goodsno, _cfg_related.max ) }-->
+				<div class="goods-item" style="margin-right:15px;">
+					<!--{ ? _cfg_related.dp_image }-->
+					<div class="goods-img">
+						<a href="view.php?goodsno={.goodsno}"{ ? _cfg_related.link_type == 'blank'} target="_blank"{/}>{=goodsimgMobile(.img_x,_cfg_related.size)}</a>
+						<!--{? .tts_url }-->
+						<div class="goods-speach-description" style="display:none;">
+							<span class="speach-description-play" data-src="{.tts_url}">재생</span>
+							<span class="speach-description-timer"></span>
+						</div>
+						<!--{ / }-->
+					</div>
+					<!--{ / }-->
+					<!--{ ? _cfg_related.dp_goodsnm }-->
+					<div class="goods-nm"><a href="view.php?goodsno={.goodsno}">{.goodsnm}</a></div>
+					<!--{ / }-->
+					<!--{ ? _cfg_related.dp_price }-->
+					<!--{ ? !.strprice }-->
+						<!--{ ? .consumer }-->
+					<div class="goods-consumer" style="display: none;"><strike>{=number_format(.consumer)}원</strike>↓</div>
+						<!--{ / }-->
+					<!--{ / }-->
+					<!--{ ? .strprice }-->
+					<div class="goods-price"><a href="{goods_src}&goodsno={.goodsno}">{=number_format(.strprice)}</a></div>
+					<!--{ : .price }-->
+					<div class="goods-price"><a href="{goods_src}&amp;goodsno={.goodsno}"><span class="red">{=number_format(.price)}원</span></a></div>
+					<!--{ / }-->
+					<!--{ ? .special_discount }-->
+					<div class="goods-discount" style="display: none;">({=number_format(.special_discount)}
+					<!--{ ? strstr('원',.special_discount) }-->원<!--{ / }-->
+					<!--{ ? strstr('%',.special_discount) }-->%<!--{ / }-->
+					 할인)</div>
+					<!--{ / }-->
+					<!--{ ? .coupon }-->
+					<div class="goods-coupon-price" style="display: none;">{=number_format(.coupon)}원 <div class="goods-coupon-icon"></div></div>
+					<!--{ / }-->
+					<!--{ / }-->
+					<!--{ ? _cfg_related.use_cart }-->
+					<!--{ / }-->
+					<!--{ ? .icon }--><!--{ / }-->
+				</div>
+				<!--{ / }-->
+			</div>
+		</div>
+		<!-- 관련상품 끝 -->
+
+		<!--{ ? coupon || coupon_emoney }-->
+		<div class="couponlist-area">
+			<div class="couponlist-title">
+				<div class="title">다운로드 쿠폰 List <!--{ ? coupon_cnt > 0 }--><span class="titl_cnt">({=coupon_cnt})<!--{/}--></span> </div>
+				<div class="close-btn" onClick="javascript:closeCouponList();"></div>
+			</div>
+			<div class="couponlist-item-area">
+				<div id="scroll-area">
+				<ul>
+				<!--{ @ a_coupon }-->
+				<li>
+				<div class="couponlist-item">
+					<div class="couponlist-item-name">
+						<div class="couponInfoOnlyBtn">
+							<!--{ ? .c_screen == 'm' }--><div class="onlyMobileCouponBtn">모바일전용</div><!--{ / }-->
+							<!--{ ? .payMethod == 1 }--><div class="onlyBankBookCouponBtn">무통장전용</div><!--{ / }-->
+						</div>
+						<div class="couponInfoOnlyName">{.coupon}</div>
+					</div>
+					<a href="{_cfg.rootDir}/proc/dn_coupon_goods.php?goodsno={goodsno}&couponcd={.couponcd}'" target="ifrmHidden"><div class="download-btn">쿠폰받기</div></a>
+				</div>
+				</li>
+				<!--{ / }-->
+				</ul>
+				</div>
+			</div>
+		</div>
+		<!--{ / }-->
+		<div id="background"></div>
+	</div>
+</section>
+
+
+{#footer}

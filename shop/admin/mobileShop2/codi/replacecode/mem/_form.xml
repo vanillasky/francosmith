@@ -1,0 +1,528 @@
+<?xml version="1.0" encoding="EUC-KR"?>
+<codes>
+<list>
+	<code power="">{_mode}</code>
+	<desc>모드 - joinMember:회원가입, modMember:회원정보수정</desc>
+	<exam>joinMember</exam>
+</list>
+<list>
+	<code>{_sess}</code>
+	<desc>회원</desc>
+	<exam></exam>
+</list>
+<list>
+	<code>{m_id}</code>
+	<desc>아이디</desc>
+	<exam>testid</exam>
+</list>
+<list>
+	<code>{name}</code>
+	<desc>이름</desc>
+	<exam>홍길동</exam>
+</list>
+<list>
+	<code>{_checked.sex.m}</code>
+	<desc>성별 - 남 checked 여부</desc>
+	<exam>checked 또는 공백</exam>
+</list>
+<list>
+	<code>{_checked.sex.w}</code>
+	<desc>성별 - 여 checked 여부</desc>
+	<exam>checked 또는 공백</exam>
+</list>
+<list>
+	<code>{birth_year}</code>
+	<desc>생년월일 - 년</desc>
+	<exam>2000</exam>
+</list>
+<list>
+	<code>{birth[0]}</code>
+	<desc>생년월일 - 월</desc>
+	<exam>01</exam>
+</list>
+<list>
+	<code>{birth[1]}</code>
+	<desc>생년월일 - 일</desc>
+	<exam>01</exam>
+</list>
+<list>
+	<code>{_checked.calendar.l}</code>
+	<desc>양/음력 - 음력 checked 여부</desc>
+	<exam>checked 또는 공백</exam>
+</list>
+<list>
+	<code>{_checked.marriyn.n}</code>
+	<desc>결혼여부 - 미혼 checked 여부</desc>
+	<exam>checked 또는 공백</exam>
+</list>
+<list>
+	<code>{_checked.marriyn.y}</code>
+	<desc>결혼여부 - 기혼 checked 여부</desc>
+	<exam>checked 또는 공백</exam>
+</list>
+<list>
+	<code>{marridate[0]}</code>
+	<desc>결혼기념일 - 년</desc>
+	<exam>2008</exam>
+</list>
+<list>
+	<code>{marridate[1]}</code>
+	<desc>결혼기념일 - 월</desc>
+	<exam>01</exam>
+</list>
+<list>
+	<code>{marridate[2]}</code>
+	<desc>결혼기념일 - 일</desc>
+	<exam>01</exam>
+</list>
+<list>
+	<code>{email}</code>
+	<desc>이메일</desc>
+	<exam>test@test.co.kr</exam>
+</list>
+<list>
+	<code>{_checked.mailling}</code>
+	<desc>메일링 checked 여부</desc>
+	<exam>checked 또는 공백</exam>
+</list>
+<list>
+	<code>{zipcode[0]}</code>
+	<desc>우편번호 - 앞자리</desc>
+	<exam>123</exam>
+</list>
+<list>
+	<code>{zipcode[1]}</code>
+	<desc>우편번호 - 뒷자리</desc>
+	<exam>456</exam>
+</list>
+<list>
+	<code>{address}</code>
+	<desc>주소</desc>
+	<exam>서울시 강남구 대치동</exam>
+</list>
+<list>
+	<code>{address_sub}</code>
+	<desc>세부주소</desc>
+	<exam>1234 번지</exam>
+</list>
+<list>
+	<code>{mobile[0]}</code>
+	<desc>핸드폰1</desc>
+	<exam>010</exam>
+</list>
+<list>
+	<code>{mobile[1]}</code>
+	<desc>핸드폰2</desc>
+	<exam>0000</exam>
+</list>
+<list>
+	<code>{mobile[2]}</code>
+	<desc>핸드폰3</desc>
+	<exam>0000</exam>
+</list>
+<list>
+	<code>{_checked.sms}</code>
+	<desc>SMS 수신 checked 여부</desc>
+	<exam>checked 또는 공백</exam>
+</list>
+<list>
+	<code>{phone[0]}</code>
+	<desc>전화번호1</desc>
+	<exam>02</exam>
+</list>
+<list>
+	<code>{phone[0]}</code>
+	<desc>전화번호2</desc>
+	<exam>0000</exam>
+</list>
+<list>
+	<code>{phone[0]}</code>
+	<desc>전화번호3</desc>
+	<exam>0000</exam>
+</list>
+<list>
+	<code>{fax[0]}</code>
+	<desc>팩스1</desc>
+	<exam>02</exam>
+</list>
+<list>
+	<code>{fax[1]}</code>
+	<desc>팩스2</desc>
+	<exam>0000</exam>
+</list>
+<list>
+	<code>{fax[2]}</code>
+	<desc>팩스3</desc>
+	<exam>0000</exam>
+</list>
+<list>
+	<code>{company}</code>
+	<desc>회사명</desc>
+	<exam></exam>
+</list>
+<list>
+	<code>{service}</code>
+	<desc>업태</desc>
+	<exam></exam>
+</list>
+<list>
+	<code>{item}</code>
+	<desc>종목</desc>
+	<exam></exam>
+</list>
+<list>
+	<code>{busino}</code>
+	<desc>사업자번호</desc>
+	<exam></exam>
+</list>
+<list>
+	<code>{ @ codeitem('job') }</code>
+	<desc>직업코드</desc>
+	<exam>array("01" => 학생, "02" => 컴퓨터전문직, ..., "14" => 기타)</exam>
+</list>
+<list>
+	<code>{_selected.job[.key_]}</code>
+	<desc>직업 selected 여부</desc>
+	<exam>selected 또는 공백</exam>
+</list>
+<list>
+	<code>{ @ codeitem('like') }</code>
+	<desc>관심분야항목</desc>
+	<exam>array("01" => 의류/패션잡화, "02" => 화장품/향수/미용품, ..., "09" => 꽃배달/케익서비스)</exam>
+</list>
+<list>
+	<code>{interest}</code>
+	<desc>관심분야</desc>
+	<exam></exam>
+</list>
+<list>
+	<code>{_joinset.ex1}</code>
+	<desc>추가1 타이틀</desc>
+	<exam></exam>
+</list>
+<list>
+	<code>{ex1}</code>
+	<desc>추가1 데이타</desc>
+	<exam></exam>
+</list>
+<list>
+	<code>{_joinset.ex2}</code>
+	<desc>추가2 타이틀</desc>
+	<exam></exam>
+</list>
+<list>
+	<code>{ex2}</code>
+	<desc>추가2 데이타</desc>
+	<exam></exam>
+</list>
+<list>
+	<code>{_joinset.ex3}</code>
+	<desc>추가3 타이틀</desc>
+	<exam></exam>
+</list>
+<list>
+	<code>{ex3}</code>
+	<desc>추가3 데이타</desc>
+	<exam></exam>
+</list>
+<list>
+	<code>{_joinset.ex4}</code>
+	<desc>추가4 타이틀</desc>
+	<exam></exam>
+</list>
+<list>
+	<code>{ex4}</code>
+	<desc>추가4 데이타</desc>
+	<exam></exam>
+</list>
+<list>
+	<code>{_joinset.ex5}</code>
+	<desc>추가5 타이틀</desc>
+	<exam></exam>
+</list>
+<list>
+	<code>{ex5}</code>
+	<desc>추가5 데이타</desc>
+	<exam></exam>
+</list>
+<list>
+	<code>{_joinset.ex6}</code>
+	<desc>추가6 타이틀</desc>
+	<exam></exam>
+</list>
+<list>
+	<code>{ex6}</code>
+	<desc>추가6 데이타</desc>
+	<exam></exam>
+</list>
+<list>
+	<code>{recommid}</code>
+	<desc>추천인</desc>
+	<exam></exam>
+</list>
+<list>
+	<code>{memo}</code>
+	<desc>남기는말씀</desc>
+	<exam></exam>
+</list>
+<list>
+	<code>{_checked.useField.sex}</code>
+	<desc>성별 사용여부</desc>
+	<exam>checked 또는 공백</exam>
+</list>
+<list>
+	<code>{_checked.useField.birth}</code>
+	<desc>생년월일 사용여부</desc>
+	<exam>checked 또는 공백</exam>
+</list>
+<list>
+	<code>{_checked.useField.calendar}</code>
+	<desc>양/음력 사용여부</desc>
+	<exam>checked 또는 공백</exam>
+</list>
+<list>
+	<code>{_checked.useField.marriyn}</code>
+	<desc>결혼여부 사용여부</desc>
+	<exam>checked 또는 공백</exam>
+</list>
+<list>
+	<code>{_checked.useField.marridate}</code>
+	<desc>결혼기념일 사용여부</desc>
+	<exam>checked 또는 공백</exam>
+</list>
+<list>
+	<code>{_checked.useField.email}</code>
+	<desc>이메일 사용여부</desc>
+	<exam>checked 또는 공백</exam>
+</list>
+<list>
+	<code>{_checked.useField.mailling}</code>
+	<desc>메일링 사용여부</desc>
+	<exam>checked 또는 공백</exam>
+</list>
+<list>
+	<code>{_checked.useField.address}</code>
+	<desc>주소 사용여부</desc>
+	<exam>checked 또는 공백</exam>
+</list>
+<list>
+	<code>{_checked.useField.mobile}</code>
+	<desc>핸드폰 사용여부</desc>
+	<exam>checked 또는 공백</exam>
+</list>
+<list>
+	<code>{_checked.useField.sms}</code>
+	<desc>SMS 수신 사용여부</desc>
+	<exam>checked 또는 공백</exam>
+</list>
+<list>
+	<code>{_checked.useField.phone}</code>
+	<desc>전화번호 사용여부</desc>
+	<exam>checked 또는 공백</exam>
+</list>
+<list>
+	<code>{_checked.useField.fax}</code>
+	<desc>팩스번호 사용여부</desc>
+	<exam>checked 또는 공백</exam>
+</list>
+<list>
+	<code>{_checked.useField.company}</code>
+	<desc>회사명 사용여부</desc>
+	<exam>checked 또는 공백</exam>
+</list>
+<list>
+	<code>{_checked.useField.service}</code>
+	<desc>업태 사용여부</desc>
+	<exam>checked 또는 공백</exam>
+</list>
+<list>
+	<code>{_checked.useField.item}</code>
+	<desc>종목 사용여부</desc>
+	<exam>checked 또는 공백</exam>
+</list>
+<list>
+	<code>{_checked.useField.busino}</code>
+	<desc>사업자번호 사용여부</desc>
+	<exam>checked 또는 공백</exam>
+</list>
+<list>
+	<code>{_checked.useField.job}</code>
+	<desc>직업 사용여부</desc>
+	<exam>checked 또는 공백</exam>
+</list>
+<list>
+	<code>{_checked.useField.interest}</code>
+	<desc>관심분야 사용여부</desc>
+	<exam>checked 또는 공백</exam>
+</list>
+<list>
+	<code>{_checked.useField.ex1}</code>
+	<desc>추가1 사용여부</desc>
+	<exam>checked 또는 공백</exam>
+</list>
+<list>
+	<code>{_checked.useField.ex2}</code>
+	<desc>추가2 사용여부</desc>
+	<exam>checked 또는 공백</exam>
+</list>
+<list>
+	<code>{_checked.useField.ex3}</code>
+	<desc>추가3 사용여부</desc>
+	<exam>checked 또는 공백</exam>
+</list>
+<list>
+	<code>{_checked.useField.ex4}</code>
+	<desc>추가4 사용여부</desc>
+	<exam>checked 또는 공백</exam>
+</list>
+<list>
+	<code>{_checked.useField.ex5}</code>
+	<desc>추가5 사용여부</desc>
+	<exam>checked 또는 공백</exam>
+</list>
+<list>
+	<code>{_checked.useField.ex6}</code>
+	<desc>추가6 사용여부</desc>
+	<exam>checked 또는 공백</exam>
+</list>
+<list>
+	<code>{_checked.useField.recommid}</code>
+	<desc>추천인 사용여부</desc>
+	<exam>checked 또는 공백</exam>
+</list>
+<list>
+	<code>{_checked.useField.memo}</code>
+	<desc>남기는말씀 사용여부</desc>
+	<exam>checked 또는 공백</exam>
+</list>
+<list>
+	<code>{_required.sex}</code>
+	<desc>성별 필수사항</desc>
+	<exam>required 또는 공백</exam>
+</list>
+<list>
+	<code>{_required.birth}</code>
+	<desc>생년월일 필수사항</desc>
+	<exam>required 또는 공백</exam>
+</list>
+<list>
+	<code>{_required.calendar}</code>
+	<desc>양/음력 필수사항</desc>
+	<exam>required 또는 공백</exam>
+</list>
+<list>
+	<code>{_required.marriyn}</code>
+	<desc>결혼여부 필수사항</desc>
+	<exam>required 또는 공백</exam>
+</list>
+<list>
+	<code>{_required.marridate}</code>
+	<desc>결혼기념일 필수사항</desc>
+	<exam>required 또는 공백</exam>
+</list>
+<list>
+	<code>{_required.email}</code>
+	<desc>이메일 필수사항</desc>
+	<exam>required 또는 공백</exam>
+</list>
+<list>
+	<code>{_required.mailling}</code>
+	<desc>메일링 필수사항</desc>
+	<exam>required 또는 공백</exam>
+</list>
+<list>
+	<code>{_required.address}</code>
+	<desc>주소 필수사항</desc>
+	<exam>required 또는 공백</exam>
+</list>
+<list>
+	<code>{_required.mobile}</code>
+	<desc>핸드폰 필수사항</desc>
+	<exam>required 또는 공백</exam>
+</list>
+<list>
+	<code>{_required.sms}</code>
+	<desc>SMS 수신 필수사항</desc>
+	<exam>required 또는 공백</exam>
+</list>
+<list>
+	<code>{_required.phone}</code>
+	<desc>전화번호 필수사항</desc>
+	<exam>required 또는 공백</exam>
+</list>
+<list>
+	<code>{_required.fax}</code>
+	<desc>팩스번호 필수사항</desc>
+	<exam>required 또는 공백</exam>
+</list>
+<list>
+	<code>{_required.company}</code>
+	<desc>회사명 필수사항</desc>
+	<exam>required 또는 공백</exam>
+</list>
+<list>
+	<code>{_required.service}</code>
+	<desc>업태 필수사항</desc>
+	<exam>required 또는 공백</exam>
+</list>
+<list>
+	<code>{_required.item}</code>
+	<desc>종목 필수사항</desc>
+	<exam>required 또는 공백</exam>
+</list>
+<list>
+	<code>{_required.busino}</code>
+	<desc>사업자번호 필수사항</desc>
+	<exam>required 또는 공백</exam>
+</list>
+<list>
+	<code>{_required.job}</code>
+	<desc>직업 필수사항</desc>
+	<exam>required 또는 공백</exam>
+</list>
+<list>
+	<code>{_required.interest}</code>
+	<desc>관심분야 필수사항</desc>
+	<exam>required 또는 공백</exam>
+</list>
+<list>
+	<code>{_required.ex1}</code>
+	<desc>추가1 필수사항</desc>
+	<exam>required 또는 공백</exam>
+</list>
+<list>
+	<code>{_required.ex2}</code>
+	<desc>추가2 필수사항</desc>
+	<exam>required 또는 공백</exam>
+</list>
+<list>
+	<code>{_required.ex3}</code>
+	<desc>추가3 필수사항</desc>
+	<exam>required 또는 공백</exam>
+</list>
+<list>
+	<code>{_required.ex4}</code>
+	<desc>추가4 필수사항</desc>
+	<exam>required 또는 공백</exam>
+</list>
+<list>
+	<code>{_required.ex5}</code>
+	<desc>추가5 필수사항</desc>
+	<exam>required 또는 공백</exam>
+</list>
+<list>
+	<code>{_required.ex6}</code>
+	<desc>추가6 필수사항</desc>
+	<exam>required 또는 공백</exam>
+</list>
+<list>
+	<code>{_required.recommid}</code>
+	<desc>추천인 필수사항</desc>
+	<exam>required 또는 공백</exam>
+</list>
+<list>
+	<code>{_required.memo}</code>
+	<desc>남기는말씀 필수사항</desc>
+	<exam>required 또는 공백</exam>
+</list>
+</codes>

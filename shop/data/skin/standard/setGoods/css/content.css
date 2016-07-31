@@ -1,0 +1,64 @@
+ /* UI Object */
+body{margin:0px;}
+
+img,input{border:none;vertical-align:middle}
+
+#wrap{width:100%}
+#header{width:100% ;height:105px}
+#container{*display:inline-block;_width /**/:100%; padding-top:13px;width:900px;margin:0 auto;}
+#footer{width:100%}
+#comment{width:100%;text-align:left;float:left;}
+.title{text-align:left;float:left;}
+.clear{clear:both;}
+.codi-left{float:left;position:relative;width:627px;margin-right:15px;border:1px solid #e6e6e6;border-bottom:2px solid #e6e6e6;margin-bottom:30px}
+.codi-bg{background-color:#f5f5f5;padding:28px;}
+.codi-area{text-align:center;margin:0 auto;max-width:438px;border:0px solid;}
+.codi-info{text-align:left;margin:41px 0;padding:0 28px;font-size:12px;font-family:gulim;color:#656565;word-break:break-all;}
+.codi-right{float:left;position:relative;width:228px;}
+/*.codi-right-top-bg{height:43px;background:url(../img/front/bg_list_title.gif);border-left:1px solid #e6e6e6;border-right:1px solid #e6e6e6}*/
+.codi-right-top-bg{min-height:43px;background-color:#9BCA3E;border-left:1px solid #e6e6e6;border-bottom:1px solid #e6e6e6;border-right:1px solid #e6e6e6}
+.setName{padding:15px 14px;font:14px dotum;color:#ffffff;font-weight:bold;text-align:left;word-wrap:break-word;}
+.setitemTotal{padding:0 5px 10px 0;font:10px tahoma;color:#5e7524;text-decoration:underline;text-align:right;}
+
+
+.codiSymbol{font:11px tahoma;color:#656565;font-weight:bold;margin:11px 0;padding-left:13px;height:30px;padding-bottom:18px;border-bottom:1px solid #e6e6e6}
+.codiSymbol .icon{margin-left:14px;font-size:11px;vertical-align:middle;}
+.codiSymbol .likeBtn{float:right;padding:5px 10px;}
+.relationCody{height:201px;border-bottom:1px solid #e6e6e6;}
+
+.relationCody-list{margin:20px 0px 26px 28px;list-style:none;padding-left:0px;height:100px;}
+.relationCody-list li{float:left;padding-right:14px;}
+.relationCody-list li img{border:1px solid #cec9c6;padding:1px;width:78px;}
+
+.codiComment{}
+.codiComment-input{border-top:1px solid #fdfdfd;padding-top:11px;border-bottom:1px solid #e6e6e6;padding-bottom:20px}
+.codiComment-title{margin-top:20px;padding-left:28px}
+.codiComment-box{position:relative;background-color:#f5f5f5;border-top:1px solid #fdfdfd;}
+
+.tbl-list{word-break:break-all}
+.tbl-list td{min-height:43px;border-bottom:1px solid #e6e6e6}
+.tbl-list .td1{padding-left:28px;padding-top:5px;width:60px}
+.tbl-list .td2{width:419px;padding-top:5px;}
+.tbl-list .td3{padding-right:28px}
+
+.commentModify{border-top:1px solid #fdfdfd}
+
+.inputForm{padding-left:28px;}
+.input{height:27px;border:1px solid #e6e6e6}
+
+.orderList{border-left:1px solid #e6e6e6;border-right:1px solid #e6e6e6}
+.orderList-item{height:120px;padding-bottom:8px;border-bottom:1px dashed #e6e6e6;}
+.orderList-menuBtn{text-align:center;padding:15px 0px 10px 0px}
+.orderList-totalCost{height:26px;text-align:right;margin:20px 15px 0 0;}
+.orderList-total{font:11px tahoma;color:#666666;font-weight:bold;margin-bottom:2px;}
+.orderList-cost{font:16px verdana;color:#f0564c;font-weight:bold;}
+.orderList-buyBtn{text-align:center;padding:10px 8px 12px 14px;}
+.orderList-item-name{text-align:left;width:80%;font:12px gulim;color:#656565;font-weight:bold;padding:0 0 5px 5px;margin:0 10px;word-break:break-all;}
+.orderList-item-price{width:85%;text-align:left;float:left;font:14px verdana;color:#303030;font-weight:bold;padding-left:15px}
+.orderList-item-txt{padding-top:20px;}
+
+.fieldFont{font:12px gulim;color:#595959;}
+.commentFont{font:12px gulim;color:#989898}
+
+.sns{text-align:left;}
+.sns img{padding-right:5px;}

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="EUC-KR"?>
+<codes>
+<list>
+	<code>{_sess.m_id}</code>
+	<desc>회원아이디</desc>
+	<exam>testid</exam>
+</list>
+<list>
+	<code>{=number_format(_sess.sum_sale)}</code>
+	<desc>로그인 회원의 총구매액</desc>
+	<exam>112,000</exam>
+</list>
+<list>
+	<code>{=number_format(_sess.cnt_sale)}</code>
+	<desc>로그인 회원의 총구매건수</desc>
+	<exam>5</exam>
+</list>
+<list>
+	<code>{=number_format(_sess.emoney)}</code>
+	<desc>로그인 회원의 적립금</desc>
+	<exam>10,000</exam>
+</list>
+<list>
+	<code>{=number_format(_sess.cnt_coupon)}</code>
+	<desc>로그인 회원의 할인쿠폰수</desc>
+	<exam>0</exam>
+</list>
+</codes>

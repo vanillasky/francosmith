@@ -1,0 +1,81 @@
+{*** 1:1문의 | shopTouch_myp/qna.php ***}
+{ # header }
+
+<?php {page_title} = "1:1문의";?>
+{#sub_header}
+
+<div class="indiv"><!-- Start indiv -->
+
+<section id="qnalist">
+	<table>
+	<tr>
+		<th>번호</th>
+		<th>질문유형</th>
+		<th>제목</th>
+		<th>작성자</th>
+		<th>작성일</th>
+	</tr>
+	<!--{ @ _loop }-->
+	<!--{ ? .sno == .parent // 질문 }-->
+	<tr onclick="view_content(this);">
+		<td class="ql_no">{.idx}</td>
+		<td class="ql_qna_type">{.itemcd}</td>
+		<td class="ql_qna_subject">{.subject}</td>
+		<td class="ql_qna_name">{.m_id}</td>
+		<td class="ql_qna_dt">{=substr(.regdt,0,10)}</td>
+	</tr>
+	<tr style="display:none;">
+		<td></td>
+		<td colspan="4"><!--{ ? .ordno != '0' }-->주문번호 {.ordno}<!--{ / }--><br />{.contents}</td>
+	</tr>
+	<!--{ : .sno != .parent // 답글 }-->
+	<tr class="reply" onclick="view_content(this);">
+		<td class="ql_no">{.idx}</td>
+		<td class="ql_qna_type"></td>
+		<td class="ql_qna_subject">Re:{.subject}</td>
+		<td class="ql_qna_name">{.m_id}</td>
+		<td class="ql_qna_dt">{=substr(.regdt,0,10)}</td>
+	</tr>
+	<tr style="display:none;" class="reply">
+		<td></td>
+		<td colspan="4"><!--{ ? .ordno != '0' }-->주문번호 {.ordno}<!--{ / }--><br />{.contents}</td>
+	</tr>
+	<!--{ / }-->
+	
+	<!--{ / }-->
+	</table>
+	
+	<div class="pagediv">{pg->page['navi']}</div>
+
+</section>
+
+
+<script language="javascript">
+
+function popup_register( mode, sno )
+{
+	if ( mode == 'del_qna' ) var win = window.open("../mypage/mypage_qna_del.php?mode=" + mode + "&sno=" + sno,"qna_register","width=400,height=200");
+	else var win = window.open("../mypage/mypage_qna_register.php?mode=" + mode + "&sno=" + sno,"qna_register","width=600,height=500");
+	win.focus();
+}
+
+var preContent;
+
+function view_content(obj) {
+	var row = obj;
+
+	var next = row.parentNode.rows[ row.rowIndex + 1];
+
+	if(next.style.display == "none") {
+		next.style.display="";
+	}
+	else {
+		next.style.display="none";
+	}
+}
+
+</script>
+
+</div><!-- End indiv -->
+
+{ # footer }

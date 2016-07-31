@@ -1,0 +1,30 @@
+
+img{border:none;vertical-align:middle}
+
+#wrap{width:100%}
+#header{width:100% ;height:105px}
+#container{*display:inline-block;_width /**/:100%; padding-top:13px;width:900px;margin:0 auto;}
+#footer{width:100%}
+
+.clear{clear:both;}
+.codiBox{width:278px;margin-right:15px;border:1px solid #e6e6e6;border-bottom:1px solid #e6e6e6;margin-top:15px}
+.codiBox-area{font:11px;margin:14px 0 14px 14px;border:0;width:250px}
+
+.codiLayout img{width:250px;padding:0px;;margin:0;}
+.codiInfo {text-align:left;font:12px dotum;font-weight:bold;color:#444343;margin:5px 0;word-break:break-all }
+.codiMemo {text-align:left;font:11px dotum;color:#9f9f9f;word-break:break-all }
+.codiLine {margin:10px 0;border:1px solid #e6e6e6}
+.codiSymbol {height:34px;font:11px tahoma;color:#656565;font-weight:bold;margin:11px 0;text-align:right;}
+.codiSymbol .icon{margin-left:14px;font-size:11px;vertical-align:text-bottom;}
+.codiComment {margin-top:-20px 0;border-top:1px solid #e6e6e6; background-color:#f5f5f5;}
+.tblComment {word-break:break-all}
+.tblComment td{border-bottom:1px solid #e6e6e6;font-size:11px;font-family:dotum;height:29px;padding-top:5px;}
+.tblComment .td1{padding-left:14px;padding-top:5px;width:56px;color:#303030;text-align:left;}
+.tblComment .td2{padding:5px 10px;color:#656565;text-align:left;}
+.title{margin-left:15px;float:left;}
+.orderBtn{margin-right:15px;float:right;text-align:right;}
+.orderBtn img{padding-left:10px;}
+.btnGotop{padding-top:25px;padding-right:30px;text-align:right;}
+
+#Wrapper{border: 0px solid #000000; position: relative; background:#ffffff;	margin:0 auto;}
+#Images{margin:0 15px;}

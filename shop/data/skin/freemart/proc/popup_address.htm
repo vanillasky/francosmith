@@ -1,0 +1,88 @@
+<html>
+<head>
+<link rel="styleSheet" href="../new_address_style.css">
+<script type="text/javascript" src="../new_address.js"></script>
+<script type="text/javascript">
+window.onload = function(){
+	var mode = '{_mode}';
+	searchType(mode);
+}
+</script>
+</head>
+<body>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr><td><img src="../img/common/title_address.gif" border=0></td><td align="right"><a href="javascript:this.close()" onfocus="blur()"><img src="../img/common/btn_close02.gif" border=0></a></td></tr>
+</table>
+<div class="new-address">
+	<form name="form1" method="get">
+	<input type="hidden" name="form" id="form" value="{_form}" />
+		<div class="address_sech_type">
+			<label><input type="radio" id="type_a" value="srchRoadName" name="mode" onclick="searchType(this.value);" {_checked.mode.srchRoadName}  />도로명+건물번호</label>
+			<label><input type="radio" id="type_b" value="srchGroundNo" name="mode" onclick="searchType(this.value);" {_checked.mode.srchGroundNo} />동(읍/면)+지번</label>
+			<label><input type="radio" id="type_c" value="srchBuildingName" name="mode" onclick="searchType(this.value);" {_checked.mode.srchBuildingName} />건물명(아파트명)</label>
+		</div>
+
+		<div class="search-area-box" >
+			<div class="select-area">
+				<div id="sido_list" style="float:left;">
+					<label><span style="margin-right:18px;">시도</span></label>
+					<select name="sido_code" id="sido_code" onchange="selectedSigunguList();" required label="시도">
+						<option value="0">선택해주세요</option>		
+						<!--{ @ sido_list_result }-->
+						<option value="{.sido_code}" {_selected[.sido_code]}>{.sido_name}</option>
+						<!--{ / }-->
+					</select>
+				</div>
+				<div id="sigungu_list">
+					<label><span style="padding-left:16px;margin-right:7px;">시군구</span></label>
+					<select name="sigungu_name" id="sigungu_name">
+						<option value="0">선택해주세요</option>
+					</select>
+				</div>
+			</div>
+
+			<div class="input-area" id="srchRoadName" style="display:;">
+				<label><span>검색어</span></label>
+				<input type="text" name="road_name" id="road_name" value="" onFocus="this.className='input_focus'" onBlur="if ( this.value == '' ) { this.className='input_road_name' }" class="input_road_name"/><span style="margin:0 23px;"> + </span><input type="text" name="building_no" id="building_no" value="" onFocus="this.className='input_focus'" onBlur="if ( this.value == '' ) { this.className='input_building_no' }" class="input_building_no" />
+				<a href="#" onclick="javascript:validateCheck();"><img src="../img/common/btn_search.gif"/></a>
+			</div>
+
+			<div class="input-area" id="srchGroundNo" style="display:none;">
+				<label><span>검색어</span></label>
+				<input type="text" name="eupmyeondong_name" id="eupmyeondong_name" value="" onFocus="this.className='input_focus'" onBlur="if ( this.value == '' ) { this.className='input_eupmyeondong_name' }" class="input_eupmyeondong_name" /><span style="margin:0 23px;"> + </span><input type="text" name="ground_no" id="ground_no" value="" onFocus="this.className='input_focus'" onBlur="if ( this.value == '' ) { this.className='input_ground_no' }" class="input_ground_no" />
+				<a href="#" onclick="javascript:validateCheck();"><img src="../img/common/btn_search.gif"/></a>
+			</div>
+
+			<div class="input-area" id="srchBuildingName" style="display:none;">
+				<label><span>검색어</span></label>
+				<input type="text" name="buliding_name" id="buliding_name" value="" onFocus="this.className='input_buliding_name_focus'" onBlur="if ( this.value == '' ) { this.className='input_buliding_name' }" class="input_buliding_name" />
+				<a href="#" onclick="javascript:validateCheck();"><img src="../img/common/btn_search.gif"/></a>
+			</div>
+		</div>
+	</form>
+
+	<div id="explain">
+			<div class="explain" id="explainRoadName" style="display:;">
+				검색방법 : 시도 및 시군구 선택 후 도로명과 건물번호를 입력하세요.<br>
+				예) 테헤란로77길(도로명) + 13(건물번호)
+			</div>
+
+			<div class="explain" id="explainGroundNo" style="display:none;">
+				검색방법 : 시도 및 시군구 선택 후 동(읍/면)명과 지번을 입력하세요.<br>
+				예) 삼성동(동명) + 143-9(지번)
+			</div>
+
+			<div class="explain" id="explainBuildingName" style="display:none;">
+				검색방법 : 시도 및 시군구 선택 후 건물명을 입력하세요.<br>
+				예) 창조빌딩(건물명)
+			</div>
+
+			<div class="all_explain">
+				* 도로명 새주소가 검색되지 않는 경우는 행정안전부 새주소안내시스템<br>
+				(<a href="http://www.juso.go.kr" target="_blank">http://www.juso.go.kr</a>)에서 확인하시기 바랍니다.
+			</div>
+	</div>
+	<div class="result_area" id="result_area"></div>
+</div>
+</body>
+</html>

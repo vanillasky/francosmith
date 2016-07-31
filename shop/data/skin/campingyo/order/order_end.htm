@@ -1,0 +1,201 @@
+{*** 주문완료 | order/order_end.php ***}
+{ # header }
+
+<!-- 상단이미지 || 현재위치 -->
+<table width=100% cellpadding=0 cellspacing=0 border=0>
+<tr>
+	<td><img src="../img/common/title_order_finish.gif" border=0></td>
+</tr>
+<tr>
+	<td class="path">home > <b>주문완료</b></td>
+</tr>
+<tr>
+	<td align=center style="padding:10 0 10 0"><img src="../img/common/order_complete.gif" border=0></td>
+</tr>
+</table><p>
+
+
+<div class="indiv"><!-- Start indiv -->
+
+<table width=100% style="border:1px solid #DEDEDE" cellpadding=0 cellspacing=0>
+<tr>
+	<td width=150 valign=top align=right bgcolor="#F3F3F3" style="padding-top:5px"><img src="../img/common/order_step_end.gif"></td>
+	<td style="border:5px solid #F3F3F3; padding:5px 10px;">
+
+	<table width=100% cellpadding=2>
+	<col width=100>
+	<!--{ ? settlekind=="a" }-->
+	<tr>
+		<td>입금은행</td>
+		<td>{bank}</td>
+	</tr>
+	<tr>
+		<td>입금계좌</td>
+		<td>{account}</td>
+	</tr>
+	<tr>
+		<td>예금주명</td>
+		<td>{name}</td>
+	</tr>
+	<tr>
+		<td>입금자명</td>
+		<td>{bankSender}</td>
+	</tr>
+	<tr>
+		<td>입금금액</td>
+		<td><b>{=number_format(settleprice)}원</b></td>
+	</tr>
+	<!--{ : settlekind=="c" }-->
+	<tr>
+		<td>결제카드</td>
+		<td>{_GET.card_nm}</td>
+	</tr>
+	<tr>
+		<td>결제금액</td>
+		<td><b>{=number_format(settleprice)}원</b></td>
+	</tr>
+	<!--{ : settlekind=="o" }-->
+	<tr>
+		<td>결제방법</td>
+		<td>계좌이체</td>
+	</tr>
+	<tr>
+		<td>결제금액</td>
+		<td><b>{=number_format(settleprice)}원</b></td>
+	</tr>
+	<!--{ : settlekind=="v" }-->
+	<tr>
+		<td>가상계좌</td>
+		<td>{vAccount}</td>
+	</tr>
+	<tr>
+		<td>결제금액</td>
+		<td><b>{=number_format(settleprice)}원</b></td>
+	</tr>
+	<!--{ : settlekind=="y" }-->
+	<tr>
+		<td>결제방법</td>
+		<td>옐로페이</td>
+	</tr>
+	<tr>
+		<td>결제금액</td>
+		<td><b>{=number_format(settleprice)}원</b></td>
+	</tr>
+	<!--{ : settlekind=="d" }-->
+	<tr>
+		<td>결제방법</td>
+		<td>전액할인 결제 (적립금 사용)</td>
+	</tr>
+	<!--{ : settlekind=="u" }-->
+	<tr>
+		<td>결제카드</td>
+		<td>{_GET.card_nm}</td>
+	</tr>
+	<tr>
+		<td>결제금액</td>
+		<td><b>{=number_format(settleprice)}원</b></td>
+	</tr>
+	<!--{ / }-->
+	<tr>
+		<td>상품가격</td>
+		<td>{=number_format(goodsprice)}원</td>
+	</tr>
+	<tr>
+		<td>배송비</td>
+		<td><!--{ ? deli_msg }-->{deli_msg}<!--{ : }-->{=number_format(delivery)}원<!--{ / }--></td>
+	</tr>
+	<!--{ ? o_special_discount_amount }-->
+	<tr>
+		<td>상품할인</td>
+		<td>{=number_format(o_special_discount_amount)}원</td>
+	</tr>
+	<!--{ / }-->
+	<!--{ ? memberdc }-->
+	<tr>
+		<td>회원할인</td>
+		<td>{=number_format(memberdc)}원</td>
+	</tr>
+	<!--{ / }-->
+	<!--{ ? _naver_mileage }-->
+	<tr>
+		<td>네이버마일리지</td>
+		<td>{=number_format(_naver_mileage)}원</td>
+	</tr>
+	<!--{ / }-->
+	<!--{ ? _naver_cash }-->
+	<tr>
+		<td>네이버캐쉬</td>
+		<td>{=number_format(_naver_cash)}원</td>
+	</tr>
+	<!--{ / }-->
+	<!--{ ? coupon }-->
+	<tr>
+		<td>쿠폰할인</td>
+		<td>{=number_format(coupon)}원{ ? about_coupon //어바웃쿠폰} (어바웃쿠폰 {=number_format(about_coupon)}원){ / }</td>
+	</tr>
+	<!--{ / }-->
+	<!--{ ? coupon_emoney }-->
+	<tr>
+		<td>쿠폰적립</td>
+		<td>{=number_format(coupon_emoney)}원</td>
+	</tr>
+	<!--{ / }-->
+	<tr>
+		<td>적립금결제</td>
+		<td><b>{=number_format(emoney)}원</b></td>
+	</tr>
+	<!--{ ? eggyn == 'y' }-->
+	<tr>
+		<td>전자보증보험</td>
+		<td><a href="javascript:popupEgg('{_egg.usafeid}', '{ordno}')"><font color=#0074BA><b><u>{eggno} <font class=small><b>[보증서출력]</b></font></u></b></font></a><div style="padding-top:5px"><font class=small color=444444>마이페이지의 <A HREF="../mypage/mypage_orderview.php?ordno={ordno}"><font class=small color=#0074BA><b><u>주문상세내역</u></b></font></A>에서도 언제든 출력이 가능합니다.</font></div></td>
+	</tr>
+	<!--{ : eggyn == 'f' }-->
+	<tr>
+		<td>전자보증보험</td>
+		<td>보증서 발급이 실패되었습니다. 마이페이지의 <A HREF="../mypage/mypage_orderview.php?ordno={ordno}"><font color=#0074BA><b><u>주문상세내역</u></b></font></A>에서 재발급이 가능합니다.</td>
+	</tr>
+	<!--{ / }-->
+	<tr><td height=3></td></tr>
+	<tr><td height=1 bgcolor=#efefef colspan=2 style="font-size:0px;"></td></tr>
+	<tr><td height=3></td></tr>
+	<tr>
+		<td>주문번호</td>
+		<td>{ordno}</td>
+	</tr>
+	<tr>
+		<td>주문자명</td>
+		<td>{nameOrder}</td>
+	</tr>
+	<tr>
+		<td>주문일자</td>
+		<td>{orddt}</td>
+	</tr>
+	<tr>
+		<td>주문금액</td>
+		<td>{=number_format(settleprice)}원</td>
+	</tr>
+	<!--{ ? cashreceipt_useopt == '0' || cashreceipt_useopt == '1' }-->
+	<tr>
+		<td>현금영수증</td>
+		<td>
+			<!--{ ? cashreceipt_useopt == '0' }-->
+			소득공제용
+			<!--{ : }-->
+			지출증빙용
+			<!--{ / }-->
+			현금영수증 신청
+		</td>
+	</tr>
+	<!--{ / }-->
+	</table>
+	</td>
+</tr>
+</table><p>
+
+<div style="width:100%; text-align:center; padding:10"><A HREF="../index.php"><img src="../img/common/btn_confirm.gif" border=0></A></div>
+
+</div><!-- End indiv -->
+
+{=naverCommonInflowScript->getOrderCompleteData(_GET.ordno)}
+
+{ # footer }

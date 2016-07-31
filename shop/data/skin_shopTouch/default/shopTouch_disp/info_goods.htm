@@ -1,0 +1,42 @@
+{*** 상품 이용안내 | shopTouch_disp/info_goods.php ***}
+{ # header }
+
+<?php {page_title} = "배송안내";?>
+{#sub_header}
+<style type="text/css">
+section#info_goods {padding:0px 0px 0px 0px;}
+section#info_goods table {width:100%; border-top:2px solid #434343; border-bottom:1px solid #ccc; margin-bottom:20px; }
+section#info_goods table th {padding:5px 10px 5px 10px; border-bottom:1px solid #bdbdbd; vertical-align:middle; background-color:#F4F4F4; text-align:left; width:20%; min-width:65px;}
+section#info_goods table td {padding:5px 10px 5px 10px; border-bottom:1px solid #bdbdbd; vertical-align:middle;}
+</style>
+<div class="indiv"><!-- Start indiv -->
+
+<section id="info_goods">
+	<table>
+	<tr>
+		<th>배송안내</th>
+	</tr>
+	<tr>
+		<td>
+		배송비 : 기본배송료는 {?_set.delivery.default}{=number_format(_set.delivery.default)}원{:}무료{/} 입니다. (도서,산간,오지 일부지역은 배송비가 추가될 수 있습니다) {?_set.delivery.free}&nbsp;{=number_format(_set.delivery.free)}원 이상 구매시 무료배송입니다.{/}<br />
+		{=delivery_info} 
+		</td>
+	</tr>
+	</table>
+
+	<table>
+	<tr>
+		<th>반품교환 안내</th>
+	</tr>
+	<tr>
+		<td>
+		{=return_info}
+		</td>
+	</tr>
+	</table>
+
+</section>
+</div><!-- End indiv -->
+
+{ # footer }
+

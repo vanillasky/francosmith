@@ -1,0 +1,121 @@
+{*** 카테고리메뉴 | proc/menuCategory.php ***}
+<div id="t_cate">
+	<!--{ ? _cfg.subCategory != 2 // 1단 또는 서브레이어 출력 유형 }-->
+	<div id="r_cate">
+		<table cellpadding=0 cellspacing=0 id=menuLayer align=center border="0" width="100%">
+			<tr class="catebar_tr" >
+			<!--{ @ dataCategory( _cfg.subCategory, 1 ) }-->
+				<td id='level1' class="catebar"  >
+					<a href="../goods/goods_list.php?category={.category}">{.catnm}</a>
+				<!--{ ? .sub }-->
+				<div id="subMenuWrapper">
+					<div class="subLayer">
+						<table width="100%" cellspacing=0 cellpadding="0" border="0" id="table_arrow" style="background-color:#376e88">
+						<tr>
+							<td><img src="/shop/data/images/web/icon/icon_arrow.gif"></td>
+						</tr>
+						</table>
+						<div id="subcategory">
+						<table width="100%" cellspacing=0 cellpadding="0" border="0" id="table_cate">
+							
+							<!--{ @ .sub }-->
+							<tr>
+								<td align="left" nowrap class="cate" onclick="javascript:location.href='../goods/goods_list.php?category={..category}'"><a href="../goods/goods_list.php?category={..category}">{..catnm}</a></td>
+							</tr>
+							<!--{ / }-->
+						</table>
+						</div>
+					</div>
+				</div>
+				<!--{ / }-->
+			</td>
+				<td style="text-align:center;color:#ccc;width:2px;">|</td>	
+			<!--{ / }-->
+			
+		</tr>
+		</table>
+		<!--{ ? _cfg.subCategory }-->
+		<script>_execSubLayerTop();</script>
+		<!--{ / }-->
+		
+	</div>
+	
+	<div id="sale_menu">
+		<div id="sale_icon"><img src="/shop/data/images/web/icon/1412717979_label_sale.png"></div>
+		
+	</div>
+	
+	<div id="brands" class="main_navi" style="display:none;">
+		<ul>
+			
+			<li><a href="/shop/goods/goods_brand.php?&brand=51"><img alt="APlus" src="http://francosmith.godohosting.com/brands/aplus.jpg"/></a></li>
+			<li><a href="/shop/goods/goods_brand.php?&brand=54"><img src="/shop/data/images/brands/bessey.png"></a></li>
+			<li><a href="/shop/goods/goods_brand.php?&brand=45"><img alt="본덱스-마감제" src="http://francosmith.godohosting.com/brands/bondex.jpg"/></a></li>
+			<li><a href="/shop/goods/goods_brand.php?&brand=9"><img alt="핸슨" src="/shop/data/images/brands/chhanson.png"></a></li>
+			<li><a href="/shop/goods/goods_brand.php?&brand=10"><img alt="CMT Orange Tools" src="/shop/data/images/brands/cmt.png"></a></li>
+			<li><a href="/shop/goods/goods_brand.php?&brand=48"><img alt="COLT Bits" src="http://francosmith.godohosting.com/brands/colt.jpg"></a></li>
+			<li><a href="/shop/goods/goods_brand.php?&brand=19"><img alt="디어포스 사포" src="http://francosmith.godohosting.com/brands/deerfos.jpg"></a></li>
+			
+			<li><a href="/shop/goods/goods_brand.php?&brand=3"><img alt="DMT 다이아몬드 숫돌" src="/shop/data/images/brands/dmt.png"></a></li>
+			<li><a href="/shop/goods/goods_brand.php?&brand=57"><img src="/shop/data/images/brands/festool.png"></a></li>
+			<li><a href="/shop/goods/goods_brand.php?&brand=39"><img src="/shop/data/images/brands/fiskars.png"></a></li>
+		    <li><a href="/shop/goods/goods_brand.php?&brand=1"><img src="/shop/data/images/brands/gorilla.png"></a></li>
+			<li><a href="/shop/goods/goods_brand.php?&brand=6"><img alt="옥조" src="/shop/data/images/brands/gyokucho.png"></a></li>
+			<li><a href="/shop/goods/goods_brand.php?&brand=5"><img src="/shop/data/images/brands/irwin.png"></a></li>
+			<!--<li><a href=""><img src="http://francosmith.godohosting.com/brands/jet.jpg"></a></li>-->
+			<li><a href="/shop/goods/goods_brand.php?&brand=24"><img src="http://francosmith.godohosting.com/brands/kakuri.jpg"></a></li>
+			<li><a href="/shop/goods/goods_brand.php?&brand=52"><img src="http://francosmith.godohosting.com/brands/kreg.jpg"></a></li>
+			<li><a href="/shop/goods/goods_brand.php?&brand=53"><img src="/shop/data/images/brands/leight.png"></a></li>
+			<li><a href="/shop/goods/goods_brand.php?&brand=18"><img src="/shop/data/images/brands/lie-nielsen.png"></a></li>
+			
+			<li><a href="/shop/goods/goods_brand.php?brand=2"><img src="/shop/data/images/brands/microjig.png"></a></li>
+			<li><a href="/shop/goods/goods_brand.php?&brand=8"><img src="/shop/data/images/brands/narex.png"></a></li>
+			<li><a href="/shop/goods/goods_brand.php?&brand=14"><img src="/shop/data/images/brands/pfeil.png"></a></li>
+			<!--<li><a href=""><img src="/shop/data/images/brands/rockwell.png"></a></li>-->
+			<!--<li><a href=""><img src="/shop/data/images/brands/two-cherries.png"></a></li>-->
+			<li><a href="/shop/goods/goods_brand.php?&brand=37"><img src="/shop/data/images/brands/stabila.png"></a></li>
+			<li><a href="/shop/goods/goods_brand.php?&brand=7"><img src="/shop/data/images/brands/starm.png"></a></li>
+			<li><a href="/shop/goods/goods_brand.php?&brand=32"><img src="/shop/data/images/brands/tormek.png"></a></li>
+			<li><!--<li><a href=""><img src="/shop/data/images/brands/sorby.png"></a>--></li>
+			<li><!--<li><a href=""><img src="/shop/data/images/brands/portercable.png"></a>--></li>
+			<li><!--<li><a href=""><img src="/shop/data/images/brands/powermatic.png"></a>--></li>
+			<!--<li><img src="/shop/data/images/brands/sawstop.png"></a></li>-->
+			<!--<li><a href=""><img src="/shop/data/images/brands/sthil.png"></a></li>-->
+			<!--<li><a href=""><img src="/shop/data/images/brands/zinsser.png"></a></li>-->
+			<li><a href="/shop/goods/goods_brand.php?&brand=20"><img src="/shop/data/images/brands/osmo.png"></a></li>
+		</ul>
+	</div>
+	
+	<div id="all_menu" class="main_navi" style="display:none;">
+		
+	</div>
+	
+	<!--{ : // 1,2단 동시 메뉴 출력 유형 }-->
+	<table cellpadding=0 cellspacing=0 border=0 class="cateUnfold" align=center>
+	<tr>
+		<!--{ @ dataCategory( _cfg.subCategory, 1 ) }-->
+		<td style="{?strpos(.catnm, 'img')===false}padding:5px 19px 0 19px{/}" class="catebar"><a href="../goods/goods_list.php?category={.category}">{.catnm}</a>
+			<!--{ ? .sub }-->
+			<div class="catesub">
+				<table>
+				<!--{ @ .sub }-->
+				<tr>
+					<td class="cate"><a href="../goods/goods_list.php?category={..category}">- {..catnm}</a></td>
+				</tr>
+				<!--{ / }-->
+				</table>
+			</div>
+			<!--{ / }-->
+		</td>
+		<!--{ / }-->
+	</tr>
+	</table>
+	<!--{ / }-->
+	
+	
+
+
+	
+</div>
+
+

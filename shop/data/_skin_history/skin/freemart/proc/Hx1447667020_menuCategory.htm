@@ -1,0 +1,266 @@
+{*** 카테고리메뉴 | proc/menuCategory.php ***}
+<div id="t_cate">
+	<!--{ ? _cfg.subCategory != 2 // 1단 또는 서브레이어 출력 유형 }-->
+	<div id="r_cate">
+		<table cellpadding=0 cellspacing=0 id=menuLayer align=center border="0" width="100%">
+			<tr class="catebar_tr" >
+			<!--{ @ dataCategory( _cfg.subCategory, 1 ) }-->
+				<td id='level1' class="catebar"  >
+					<a href="../goods/goods_list.php?category={.category}">{.catnm}</a>
+				<!--{ ? .sub }-->
+				<div id="subMenuWrapper">
+					<div class="subLayer">
+						<table width="100%" cellspacing=0 cellpadding="0" border="0" id="table_arrow" style="background-color:#376e88">
+						<tr>
+							<td><img src="/shop/data/images/web/icon/icon_arrow.gif"></td>
+						</tr>
+						</table>
+						<div id="subcategory">
+						<table width="100%" cellspacing=0 cellpadding="0" border="0" id="table_cate">
+							
+							<!--{ @ .sub }-->
+							<tr>
+								<td align="left" nowrap class="cate" onclick="javascript:location.href='../goods/goods_list.php?category={..category}'"><a href="../goods/goods_list.php?category={..category}">{..catnm}</a></td>
+							</tr>
+							<!--{ / }-->
+						</table>
+						</div>
+					</div>
+				</div>
+				<!--{ / }-->
+			</td>
+				<td style="text-align:center;color:#ccc;width:2px;">|</td>	
+			<!--{ / }-->
+			
+		</tr>
+		</table>
+		<!--{ ? _cfg.subCategory }-->
+		<script>_execSubLayerTop();</script>
+		<!--{ / }-->
+		
+	</div>
+	
+	<div id="sale_menu">
+		<div id="sale_icon"><img src="/shop/data/images/web/icon/1412717979_label_sale.png"></div>
+		
+	</div>
+	
+	<div id="brands" class="main_navi" style="display:none;">
+		<div id="DB_navi38_2">
+			<div id="DB_etc4">
+				<div id="DB_etc4_bar" style="width:95%;text-align:right; margin-right:10px;">
+					<img src="/shop/data/images/web/icon/Close_Box_Red.png">
+				</div>
+				<ul class="DB_btn">
+					<li class="DB_all"><a href="#DB" class="DB_select">all</a></li>
+					<li class="gap"></li>
+					<li class="DB_k1"><a href="#DB">ㄱ</a></li>
+					<li class="DB_k2"><a href="#DB">ㄴ</a></li>
+					<li class="DB_k3"><a href="#DB">ㄷ</a></li>
+					<li class="DB_k4"><a href="#DB">ㄹ</a></li>
+					<li class="DB_k5"><a href="#DB">ㅁ</a></li>
+					<li class="DB_k6"><a href="#DB">ㅂ</a></li>
+					<li class="DB_k7"><a href="#DB">ㅅ</a></li>
+					<li class="DB_k8"><a href="#DB">ㅇ</a></li>
+					<li class="DB_k9"><a href="#DB">ㅈ</a></li>
+					<li class="DB_k10"><a href="#DB">ㅊ</a></li>
+					<li class="DB_k11"><a href="#DB">ㅋ</a></li>
+					<li class="DB_k12"><a href="#DB">ㅌ</a></li>
+					<li class="DB_k13"><a href="#DB">ㅍ</a></li>
+					<li class="DB_k14"><a href="#DB">ㅎ</a></li>
+					<li class="gap"></li>
+					<li class="DB_k15"><a href="#DB">A</a></li>
+					<li class="DB_k16"><a href="#DB">B</a></li>
+					<li class="DB_k17"><a href="#DB">C</a></li>
+					<li class="DB_k18"><a href="#DB">D</a></li>
+					<li class="DB_k19"><a href="#DB">E</a></li>
+					<li class="DB_k20"><a href="#DB">F</a></li>
+					<li class="DB_k21"><a href="#DB">G</a></li>
+					<li class="DB_k22"><a href="#DB">H</a></li>
+					<li class="DB_k23"><a href="#DB">I</a></li>
+					<li class="DB_k24"><a href="#DB">J</a></li>
+					<li class="DB_k25"><a href="#DB">K</a></li>
+					<li class="DB_k26"><a href="#DB">L</a></li>
+					<li class="DB_k27"><a href="#DB">M</a></li>
+					<li class="DB_k28"><a href="#DB">N</a></li>
+					<li class="DB_k29"><a href="#DB">O</a></li>
+					<li class="DB_k30"><a href="#DB">P</a></li>
+					<li class="DB_k31"><a href="#DB">Q</a></li>
+					<li class="DB_k32"><a href="#DB">R</a></li>
+					<li class="DB_k33"><a href="#DB">S</a></li>
+					<li class="DB_k34"><a href="#DB">T</a></li>
+					<li class="DB_k35"><a href="#DB">U</a></li>
+					<li class="DB_k36"><a href="#DB">V</a></li>
+					<li class="DB_k37"><a href="#DB">W</a></li>
+					<li class="DB_k38"><a href="#DB">X</a></li>
+					<li class="DB_k39"><a href="#DB">Y</a></li>
+					<li class="DB_k40"><a href="#DB">Z</a></li>
+					<li class="gap"></li>
+					<li class="DB_eng"><a href="#DB">eng</a></li>
+					<li class="DB_etc"><a href="#DB">etc</a></li>
+				</ul>
+				<ul class="DB_list">
+					
+					<li><a href="/shop/goods/goods_brand.php?&brand=64" data-key="ㄱ">가야</a></li>
+					<li><a href="/shop/goods/goods_brand.php?&brand=" data-key="ㄱ">고릴라글루</a></li>
+					<li><a href="/shop/goods/goods_brand.php?&brand=" data-key="ㄱ">가또블랑코</a></li>
+					<li><a href="/shop/goods/goods_brand.php?&brand=" data-key="ㄴ">나렉스</a></li>
+					<li><a href="/shop/goods/goods_brand.php?&brand=" data-key="ㄷ">디어포스</a></li>
+					<li><a href="/shop/goods/goods_brand.php?&brand=" data-key="ㄹ">리넬슨</a></li>
+					
+                    <li><a href="/shop/goods/goods_brand.php?&brand=" data-key="ㄹ">로버트 솔비</a></li>
+                    <li><a href="/shop/goods/goods_brand.php?&brand=" data-key="ㄹ">루녹스</a></li>
+                    <li><a href="/shop/goods/goods_brand.php?&brand=" data-key="ㄹ">료비</a></li>
+                    <li><a href="/shop/goods/goods_brand.php?&brand=" data-key="ㅁ">마이크로지그</a></li>
+                    <li><a href="/shop/goods/goods_brand.php?&brand=" data-key="ㅁ">마코</a></li>
+                    <li><a href="/shop/goods/goods_brand.php?&brand=" data-key="ㅁ">매그스위치</a></li>
+                    <li><a href="/shop/goods/goods_brand.php?&brand=" data-key="ㅁ">명화금속</a></li>
+                    
+                    <li><a href="/shop/goods/goods_brand.php?&brand=" data-key="ㅂ">빅마크</a></li>
+					<li><a href="/shop/goods/goods_brand.php?&brand=" data-key="ㅂ">베세이</a></li>
+                    <li><a href="/shop/goods/goods_brand.php?&brand=" data-key="ㅂ">본덱스</a></li>
+					<li><a href="/shop/goods/goods_brand.php?&brand=" data-key="ㅅ">스마토</a></li>
+					<li><a href="/shop/goods/goods_brand.php?&brand=" data-key="ㅅ">스타엠</a></li>
+					<li><a href="/shop/goods/goods_brand.php?&brand=" data-key="ㅅ">스타빌라</a></li>
+                    <li><a href="/shop/goods/goods_brand.php?&brand=" data-key="ㅅ">샤프톤</a></li>
+					<li><a href="/shop/goods/goods_brand.php?&brand=" data-key="ㅇ">어윈</a></li>
+                    <li><a href="/shop/goods/goods_brand.php?&brand=" data-key="ㅇ">오성정밀화학</a></li>
+                    <li><a href="/shop/goods/goods_brand.php?&brand=" data-key="ㅇ">오스모</a></li>
+					<li><a href="/shop/goods/goods_brand.php?&brand=" data-key="ㅇ">용수</a></li>
+
+                    <li><a href="/shop/goods/goods_brand.php?&brand=" data-key="ㅈ">제타</a></li>	
+                    <li><a href="/shop/goods/goods_brand.php?&brand=" data-key="ㅊ">철마</a></li>
+                    <li><a href="/shop/goods/goods_brand.php?&brand=" data-key="ㅋ">카쿠리</a></li>
+                    <li><a href="/shop/goods/goods_brand.php?&brand=" data-key="ㅋ">크레그</a></li>
+                    <li><a href="/shop/goods/goods_brand.php?&brand=" data-key="ㅋ">클린-스트립</a></li>
+                    	
+					<li><a href="/shop/goods/goods_brand.php?&brand=" data-key="ㅌ">타이트본드</a></li>
+                    <li><a href="/shop/goods/goods_brand.php?&brand=" data-key="ㅌ">타지마</a></li>
+                    <li><a href="/shop/goods/goods_brand.php?&brand=" data-key="ㅌ">토맥</a></li>
+                    <li><a href="/shop/goods/goods_brand.php?&brand=" data-key="ㅍ">파텍스</a></li>
+                    <li><a href="/shop/goods/goods_brand.php?&brand=" data-key="ㅍ">피닉스라이트</a></li>
+                    <li><a href="/shop/goods/goods_brand.php?&brand=" data-key="ㅍ">피스카스</a></li>
+                    <li><a href="/shop/goods/goods_brand.php?&brand=" data-key="ㅍ">페일</a></li>
+					<li><a href="/shop/goods/goods_brand.php?&brand=" data-key="ㅎ">핸켈</a></li>
+					
+						
+                        
+                        
+                        <li><a href="/shop/goods/goods_brand.php?&brand=51" data-key="A">Aplus</a></li>
+                        <li><a href="/shop/goods/goods_brand.php?&brand=54" data-key="B">Bessey</a></li>
+                        <li><a href="/shop/goods/goods_brand.php?&brand=" data-key="B">BONDEX</a></li>
+                        <li><a href="/shop/goods/goods_brand.php?&brand=9" data-key="C">C.H. HANSON</a></li>
+                        <li><a href="/shop/goods/goods_brand.php?&brand=10" data-key="C">CMT</a></li>
+                        <li><a href="/shop/goods/goods_brand.php?&brand=48" data-key="C">COLT</a></li>
+                        <li><a href="/shop/goods/goods_brand.php?&brand=" data-key="D">DEERFOS</a></li>
+                        <li><a href="/shop/goods/goods_brand.php?&brand=" data-key="D">DKP</a></li>
+                        <li><a href="/shop/goods/goods_brand.php?&brand=" data-key="D">DMS</a></li>
+                        <li><a href="/shop/goods/goods_brand.php?&brand=" data-key="D">DMT</a></li>
+                        <li><a href="/shop/goods/goods_brand.php?&brand=" data-key="E">EIGHT</a></li>
+                        <li><a href="/shop/goods/goods_brand.php?&brand=" data-key="F">FESTOOL</a></li>
+                        <li><a href="/shop/goods/goods_brand.php?&brand=" data-key="F">Fiskars</a></li>
+                        <li><a href="/shop/goods/goods_brand.php?&brand=" data-key="F">Francosmith</a></li>
+                        <li><a href="/shop/goods/goods_brand.php?&brand=64" data-key="G">GAYA</a></li>
+                        <li><a href="/shop/goods/goods_brand.php?&brand=" data-key="G">Gorilla Glue</a></li>
+                        <li><a href="/shop/goods/goods_brand.php?&brand=" data-key="H">HANKEL</a></li>
+                        <li><a href="/shop/goods/goods_brand.php?&brand=" data-key="I">IRWIN</a></li>
+                        <li><a href="/shop/goods/goods_brand.php?&brand=" data-key="J">JET</a></li>
+                        <li><a href="/shop/goods/goods_brand.php?&brand=" data-key="J">Jorgensen</a></li>
+                        <li><a href="/shop/goods/goods_brand.php?&brand=" data-key="K">Kakuri</a></li>
+                        <li><a href="/shop/goods/goods_brand.php?&brand=" data-key="K">Klean-Strip</a></li>
+                        <li><a href="/shop/goods/goods_brand.php?&brand=" data-key="K">Kreg</a></li>
+                        <li><a href="/shop/goods/goods_brand.php?&brand=" data-key="L">Leigh</a></li>
+                        <li><a href="/shop/goods/goods_brand.php?&brand=" data-key="L">Lie-Nielsen</a></li>
+                        <li><a href="/shop/goods/goods_brand.php?&brand=" data-key="L">Lunox</a></li>
+                        <li><a href="/shop/goods/goods_brand.php?&brand=" data-key="M">MagSwitch</a></li>
+                        <li><a href="/shop/goods/goods_brand.php?&brand=" data-key="M">MAKO</a></li>
+                        <li><a href="/shop/goods/goods_brand.php?&brand=" data-key="M">MHG</a></li>
+                        <li><a href="/shop/goods/goods_brand.php?&brand=" data-key="M">Micro Jiig</a></li>
+                        <li><a href="/shop/goods/goods_brand.php?&brand=" data-key="N">Narex</a></li>
+                        <li><a href="/shop/goods/goods_brand.php?&brand=" data-key="O">OSMO</a></li>
+                        <li><a href="/shop/goods/goods_brand.php?&brand=" data-key="P">PFEIL</a></li>
+                        <li><a href="/shop/goods/goods_brand.php?&brand=" data-key="P">PHOENIX LIGHT</a></li>
+                        <li><a href="/shop/goods/goods_brand.php?&brand=" data-key="P">PowerMatic</a></li>
+                        <li><a href="/shop/goods/goods_brand.php?&brand=" data-key="R">Robert Sorby</a></li>
+                        <li><a href="/shop/goods/goods_brand.php?&brand=" data-key="R">RYOBI</a></li>
+                        <li><a href="/shop/goods/goods_brand.php?&brand=" data-key="S">SHAPTON</a></li>
+                        <li><a href="/shop/goods/goods_brand.php?&brand=" data-key="S">SHINWA</a></li>
+                        <li><a href="/shop/goods/goods_brand.php?&brand=" data-key="S">SMATO</a></li>
+                        <li><a href="/shop/goods/goods_brand.php?&brand=" data-key="S">STABILA</a></li>
+                        <li><a href="/shop/goods/goods_brand.php?&brand=" data-key="S">STAR-M</a></li>
+                        <li><a href="/shop/goods/goods_brand.php?&brand=" data-key="T">TAJIMA</a></li>
+                        <li><a href="/shop/goods/goods_brand.php?&brand=" data-key="T">Titebond</a></li>
+                        <li><a href="/shop/goods/goods_brand.php?&brand=" data-key="T">Tormek</a></li>
+                        <li><a href="/shop/goods/goods_brand.php?&brand=" data-key="U">UTOOLS</a></li>
+                        <li><a href="/shop/goods/goods_brand.php?&brand=" data-key="U">UVEX</a></li>
+                        <li><a href="/shop/goods/goods_brand.php?&brand=" data-key="V">VICMARC</a></li>
+                        <li><a href="/shop/goods/goods_brand.php?&brand=" data-key="W">WATCO</a></li>
+                        <li><a href="/shop/goods/goods_brand.php?&brand=" data-key="X">MENU10</a></li>
+                        <li><a href="/shop/goods/goods_brand.php?&brand=" data-key="Z">ZETA</a></li>
+                    
+                        <li><a href="#" data-key="eng">AKG</a></li>
+						<li><a href="#" data-key="eng">SPIGEN</a></li>
+						<li><a href="#" data-key="eng">SGPAKG</a></li>
+						<li><a href="#" data-key="eng">NIKE</a></li>
+						<li><a href="#" data-key="eng">SAMSUNG</a></li>
+						<li><a href="#" data-key="eng">APPLE</a></li>
+						<li><a href="#" data-key="eng">SOLNY</a></li>
+                    
+                        
+				</ul>
+			</div>
+			<div id="rc_brand" >
+				<ul>
+				<li><a href="/shop/goods/goods_brand.php?&brand=65"><img src="http://francosmith.godohosting.com/main/brand/vicmarc.jpg" border="0"></a></li>
+					<li><a href="/shop/goods/goods_brand.php?&brand=65"><img src="http://francosmith.godohosting.com/main/brand/vicmarc.jpg" border="0"></a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+		
+	
+	<div id="all_menu" class="main_navi" style="display:none;">
+		<div>
+		  <ul>
+		  	  <li class="l1">수공구</li>
+			  <li class="l2">끌(Chisel)</li>
+		  </ul>
+		</div>
+		<div>
+		  <ul>
+		  	  <li class="l1">수공구</li>
+			  <li class="l2">끌(Chisel)</li>
+		  </ul>
+		</div>
+	</div>
+	
+	
+	<!--{ : // 1,2단 동시 메뉴 출력 유형 }-->
+	<table cellpadding=0 cellspacing=0 border=0 class="cateUnfold" align=center>
+	<tr>
+		<!--{ @ dataCategory( _cfg.subCategory, 1 ) }-->
+		<td style="{?strpos(.catnm, 'img')===false}padding:5px 19px 0 19px{/}" class="catebar"><a href="../goods/goods_list.php?category={.category}">{.catnm}</a>
+			<!--{ ? .sub }-->
+			<div class="catesub">
+				<table>
+				<!--{ @ .sub }-->
+				<tr>
+					<td class="cate"><a href="../goods/goods_list.php?category={..category}">- {..catnm}</a></td>
+				</tr>
+				<!--{ / }-->
+				</table>
+			</div>
+			<!--{ / }-->
+		</td>
+		<!--{ / }-->
+	</tr>
+	</table>
+	<!--{ / }-->
+	
+	
+
+
+	
+</div>
+
+

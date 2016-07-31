@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="EUC-KR"?>
+<codes>
+<list>
+	<code>{_GET['sword']}</code>
+	<desc>검색어</desc>
+	<exam></exam>
+</list>
+<list>
+	<code>{ @ codeitem( 'cooperation' ) }</code>
+	<desc>질문유형</desc>
+	<exam>array("01" => 회원가입/정보, "02" => 상품구매/주문절차 및 취소, "03" => 결제/배송, "04" => 교환/반품/환불, "05" => 적립금 적립, "06" => 기타)</exam>
+</list>
+<list>
+	<code power="">{@ _loop}</code>
+	<desc>FAQ</desc>
+	<exam more="service/faq.loop.xml"></exam>
+</list>
+<list>
+	<code>{_GET['ssno']}</code>
+	<desc>초기출력(display) 코드번호</desc>
+	<exam></exam>
+</list>
+<list>
+	<code>{ # header }</code>
+	<desc>상단과 측면을 크게 감싸는 외곽파일 인클루드, 소스 맨위에 삽입</desc>
+	<exam></exam>
+</list>
+<list>
+	<code>{ # footer }</code>
+	<desc>하단을 크게 감싸는 외곽파일 인클루드, 소스 맨아래에 삽입</desc>
+	<exam></exam>
+</list>
+</codes>

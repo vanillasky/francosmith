@@ -1,0 +1,64 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+ <head>
+  <title> 미확인 입금자 리스트 </title>
+  <link rel="stylesheet" type="text/css" href="./style.css" />
+ </head>
+<body>
+<div class="title type1">
+<h2>미확인 입금자 리스트</h2>
+<p>
+입금자명/입금액이 정확하지 않은 입금자 리스트 입니다.<br/>
+아래의 리스트에 성함이 있는 고객님은 고객센터 또는 게시판으로 문의해 주시길 바랍니다.
+</p>
+</div>
+
+<div class="form">
+	<form name="frmSearch" method="get" action="">
+	<label>입금일자 <input type="text" name="date" value="{_GET['date']}"/></label>
+	<label>입금자 <input type="text" name="name" value="{_GET['name']}"/></label>
+	<input type="image" src="./img/btn.gif" class="submit"/>
+	</form>
+</div>
+
+<table class="list">
+<colgroup>
+<col width="80"/>
+<col width="80"/>
+<col width=""/>
+<col width="90"/>
+<col width="90"/>
+</colgroup>
+<thead>
+<tr>
+	<th>번호</th>
+	<th>입금일자</th>
+	<th>고객명</th>
+	<th>은행명</th>
+	<th>입금액</th>
+</tr>
+</thead>
+<tbody>
+<!--{ ? loop }-->
+	<!--{ @ loop }-->
+	<tr>
+		<td>{.no}</td>
+		<td>{.date}</td>
+		<td class="al">{.name}</td>
+		<td>{.bank}</td>
+		<td>{.money}원</td>
+	</tr>
+	<!--{ / }-->
+<!--{ : }-->
+	<tr>
+		<td colspan="5" class="nodata">조회된 미확인 입금자 데이터가 없습니다.</td>
+	</tr>
+<!--{ / }-->
+</tbody>
+</table>
+
+<div class="pagediv">
+	{paging}
+</div>
+</body>
+</html>

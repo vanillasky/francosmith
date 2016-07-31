@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="EUC-KR"?>
+<codes>
+<list>
+	<code>{..sno}</code>
+	<desc>코멘트 번호</desc>
+	<exam>5</exam>
+</list>
+<list>
+	<code>{..id}</code>
+	<desc>게시판 아이디</desc>
+	<exam>notice</exam>
+</list>
+<list>
+	<code>{..no}</code>
+	<desc>게시물 번호 (=부모글 번호)</desc>
+	<exam>1</exam>
+</list>
+<list>
+	<code>{..m_no}</code>
+	<desc>회원번호</desc>
+	<exam>1</exam>
+</list>
+<list>
+	<code>{..m_id}</code>
+	<desc>회원아이디 - admin.gif:관리자, 회원아이디:그외</desc>
+	<exam>testid</exam>
+</list>
+<list>
+	<code power="">{..name}</code>
+	<desc>글쓴이 - admin.gif:관리자, 글쓴이:그외</desc>
+	<exam>홍길동</exam>
+</list>
+<list>
+	<code power="">{..comment}</code>
+	<desc>코멘트</desc>
+	<exam>저도 함께해요</exam>
+</list>
+<list>
+	<code power="">{..regdt}</code>
+	<desc>작성일</desc>
+	<exam>2007-01-01 14:30:30</exam>
+</list>
+<list>
+	<code>{..link.delete}</code>
+	<desc>링크 A태그 > 삭제</desc>
+	<exam>&lt;a href='delete.php?id=notice&amp;page=1&amp;sno=5&amp;mode=comment'&gt;</exam>
+</list>
+</codes>

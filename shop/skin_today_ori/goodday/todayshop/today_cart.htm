@@ -1,0 +1,150 @@
+{*** 장바구니 | goods/goods_cart.php ***}
+<!--header start-->
+<!--삭제하지마세요.-->
+{ # header }
+<!--header end-->
+
+<!--일반몰과 병행 사용시 상단 카테고리를 출력하기 위함-->
+<!--{? todayshop_cfg['shopMode'] == 'regular'}-->
+{ # tsCategory }
+<!--{/}-->
+
+<!-- 44px --><div class="margin" style="height:44px;"></div>
+
+<div id="el-anchor-side-banner" style="position:relative;border:none;"></div>
+
+<script type="text/javascript">
+var nsGodo_CartAction = function() {
+
+	function popup(url,w_name, w_width,w_height) {
+		var x = (screen.availWidth - w_width) / 2;
+		var y = (screen.availHeight - w_height) / 2;
+		return window.open(url,w_name,"width="+w_width+",height="+w_height+",top="+y+",left="+x+",scrollbars=no");
+	}
+
+	return {
+		cart_type : '{? _GET.cart_type == 'todayshop'}todayshop{:}regular{/}',
+		data : [],
+		pushdata: function(obj) {
+			this.data.push(obj);
+		},
+		editOption : function(idx) {
+			popup('../goods/popup_goods_cart_edit.php?idx='+idx+'&cart_type='+ this.cart_type,'WIN_CARTOPTION',350,500);
+		},
+		wishList : function() {
+
+			if (this.cart_type == 'todayshop') {
+				alert('투데이샵 상품은 상품보관함에 담을 수 없습니다.');
+				return false;
+			}
+
+			if (!this.check()) {
+				alert('보관할 상품을 선택해 주세요.');
+				return false;
+			}
+
+			var f = document.frmCart;
+			f.action = '../mypage/mypage_wishlist.php';
+			f.mode.value = 'addItemFromCart';
+			f.submit();
+		},
+		order : function() {
+
+			if (!this.check()) {
+				alert('주문할 상품을 선택해 주세요.');
+				return false;
+			}
+
+			var f = document.frmCart;
+			f.action = (this.cart_type == 'regular') ? '../order/order.php' : '../todayshop/order.php' ;
+			f.mode.value = 'setOrder';
+			f.submit();
+		},
+		del : function() {
+
+			if (!this.check()) {
+				alert('삭제할 상품을 선택해 주세요.');
+				return false;
+			}
+
+			var f = document.frmCart;
+			f.action = (this.cart_type == 'regular') ? '../goods/goods_cart.php' : '../todayshop/today_cart.php' ;
+			f.mode.value = 'delItems';
+			f.submit();
+		},
+		check : function() {
+
+			var chks = document.getElementsByName('idxs[]');
+			var cnt = 0;
+
+			for (var i=0,m=chks.length;i<m ;i++) {
+				if (chks[i].checked == true) cnt++
+			}
+
+			return cnt > 0 ? true : false;
+
+		},
+		recalc : function() {
+
+			var chks = document.getElementsByName('idxs[]');
+
+			var total_reserve = 0;
+			var total_price = 0;
+
+			for (var i=0,m=chks.length;i<m ;i++) {
+				if (chks[i].checked == true) {
+					total_price += parseInt(this.data[i].price);
+					total_reserve += parseInt(this.data[i].reserve);
+				}
+			}
+
+			document.getElementById('el-orderitem-total-reserve').innerText = comma(total_reserve);
+			document.getElementById('el-orderitem-total-price').innerText = comma(total_price);
+		}
+	}
+}();
+</script>
+
+<!-- s:page title & date indicator -->
+<table width="{_cfg['shopSize']}" border="0" cellpadding="0" cellspacing="0">
+<tr>
+	<td align="left">
+		<img src="../img/tit_shopping.gif">
+		<!--{? opendt}-->
+		<img src='../img/d_year_{=opendt[0]}.gif' border="0"><img src='../img/d_year_{=opendt[1]}.gif' border="0"><img src='../img/d_year_{=opendt[2]}.gif' border="0"><img src='../img/d_year_{=opendt[3]}.gif' border="0"><img src='../img/d_year_dot.gif' border="0"><img src='../img/d_month_{=opendt[5]}.gif' border="0"><img src='../img/d_month_{=opendt[6]}.gif' border="0"><img src='../img/d_month_dot.gif' border="0"><img src='../img/d_month_{=opendt[8]}.gif' border="0"><img src='../img/d_month_{=opendt[9]}.gif' border="0">
+		<!--{/}-->
+		<!--{? closedt}-->
+		<img src="../img/d_hyphen.gif">
+		<img src='../img/d_year_{=closedt[0]}.gif' border="0"><img src='../img/d_year_{=closedt[1]}.gif' border="0"><img src='../img/d_year_{=closedt[2]}.gif' border="0"><img src='../img/d_year_{=closedt[3]}.gif' border="0"><img src='../img/d_year_dot.gif' border="0"><img src='../img/d_month_{=closedt[5]}.gif' border="0"><img src='../img/d_month_{=closedt[6]}.gif' border="0"><img src='../img/d_month_dot.gif' border="0"><img src='../img/d_month_{=closedt[8]}.gif' border="0"><img src='../img/d_month_{=closedt[9]}.gif' border="0">
+		<!--{/}-->
+
+	</td>
+
+</tr>
+</table>
+<!-- e:page title & date indicator -->
+
+
+<form name=frmCart method=post>
+<input type=hidden name=mode value=modItem>
+<br>
+{=include_file("proc/orderitem.htm")}
+</form>
+
+<br>
+<TABLE width=100% cellpadding=0 cellspacing=0 border=0>
+<tr>
+<td align=center>
+<!--{ ? count(cart->item) }-->
+	<a href="javascript:void(0);" onClick="nsGodo_CartAction.del()" onFocus="blur()"><img src="../img/common/btn_check_delete.gif" border=0></a>&nbsp;
+	<a href="javascript:void(0);" onClick="nsGodo_CartAction.order()" onFocus="blur()"><img src="../img/common/btn_check_order.gif" border=0></a>&nbsp;
+<!--{ / }-->
+<a href="javascript:history.back();"onFocus="blur()"><img src="../img/common/btn_back2.gif" border=0></a>&nbsp;
+<a href="today_cart.php?mode=empty" onFocus="blur()"><img src="../img/common/btn_empty2.gif" border=0></a>&nbsp;
+<a href="../index.php" onFocus="blur()"><img src="../img/common/btn_continue2.gif" border=0></a></td>
+</tr>
+</TABLE>
+<div align="center">{naverCheckout}</div>
+<div align="center">{auctionIpay}</div>
+
+{ # footer }

@@ -1,0 +1,32 @@
+{*** 상품후기 삭제 | goods/review_delete.php ***}
+{ # header }
+
+{#sub_header}
+
+<section id="content-wrap" class="content">
+	<section id="page_title">
+		<button class="btn_back" onclick="window.close();">뒤로</button>
+		<div class="top_title">상품후기</div>
+	</section>
+
+<section id="board-delete" >
+	<form name="frmDelete" method="post" action="indb.php">
+		<input type=hidden name="mode" value="{mode}">
+		<input type=hidden name="sno" value="{sno}">
+		<input type=hidden name="m_no" value="{m_no}">
+
+		<div class="content">
+			<br/>
+			정말로 삭제하시겠습니까? 데이터 삭제시 복구가 불가능 합니다. <br/>
+			비밀번호를 입력하여 주십시오.<br/><br/>
+			<input type=password name="password" placeholder="비밀번호">
+		</div>
+
+		<div class="btn_center">
+			<button type="submit" class="btn_confirm">확인</button>
+			<button type="button" class="btn_back" onclick="window.close();">취소</button>
+		</div>
+	</form>
+</section>
+
+{ # footer }

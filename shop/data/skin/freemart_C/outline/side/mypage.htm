@@ -1,0 +1,55 @@
+{*** 마이페이지_left | member/myinfo.php ***}
+<div id="left_mypage" style="width:{_cfg['shopSideSize']}px;">
+	<div class="title_mypage"><a href="../mypage/mypage.php">MY ACCOUNT</a></div>
+	<div class="line_cs"></div>
+	<div class="line_mypage"></div>
+	<!-- 쇼핑정보박스 : START -->
+	<div id="mem_box">
+		<span style="font-weight:bold; color:#343434; padding-left:3px;">{_member.name}</span> 님의 쇼핑정보
+		<div class="line_mypage2"></div>
+		<table cellpadding=0 cellspacing=0 border=0>
+		<tr><td align="left">{ # myBox }</td></tr>
+		</table>
+	</div>
+	<!-- 쇼핑정보박스 : END -->
+
+	<!-- 마이페이지 메뉴 시작 -->
+	<div class="mypage-separator"></div>
+	
+	<div id="mypage-menu">
+		<ul>
+			<li><a href="../member/myinfo.php">회원정보수정</a></li>
+			<li><a href="../member/hack.php">회원탈퇴</a></li>
+		</ul>
+	</div>
+	
+	<div class="mypage-separator"></div>
+	
+	<div id="mypage-menu">
+		<ul>
+			<li><a href="../mypage/mypage_orderlist.php" >주문내역/배송조회</a></li>
+			<li><a href="../mypage/mypage_emoney.php" >적립금내역</a></li>
+			<li><a href="../mypage/mypage_coupon.php" >할인쿠폰내역</a></li>
+			<li><a href="../mypage/mypage_wishlist.php" >상품보관함</a></li>
+		</ul>
+	</div>
+	
+	<div class="mypage-separator"></div>
+	
+	<div id="mypage-menu">
+		<ul>
+			<li><a href="../mypage/mypage_qna.php" style="color:#525252">1:1 문의게시판</a></li>
+			<li><a href="../mypage/mypage_review.php" style="color:#525252">나의 상품후기</a></li>
+			<li><a href="../mypage/mypage_qna_goods.php" style="color:#525252">나의 상품문의</a></li>
+			<li><a href="../mypage/mypage_today.php" style="color:#525252">최근 본 상품 목록</a></li>
+		</ul>
+	</div>
+	<!-- 마이페이지 메뉴 끝 -->
+</div>
+
+<!-- 메인왼쪽배너 : Start -->
+<table cellpadding="0" cellspacing="0" border="0"width=100%>
+<tr><td align="left"><!-- (배너관리에서 수정가능) --><!--{ @ dataBanner( 4 ) }-->{.tag}<!--{ / }--></td></tr>
+<tr><td align="left"><!-- (배너관리에서 수정가능) --><!--{ @ dataBanner( 5 ) }-->{.tag}<!--{ / }--></td></tr>
+</table>
+<!-- 메인왼쪽배너 : End -->

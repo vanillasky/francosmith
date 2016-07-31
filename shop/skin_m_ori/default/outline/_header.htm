@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<head>
+<meta name="description" content="{_meta_title}">
+<meta name="keywords" content="{_meta_keywords}">
+<meta http-equiv="Content-Type" content="text/html; charset=euc-kr" />
+<meta name="viewport" content="user-scalable=yes, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+<title>{_meta_title}</title>
+
+<script src="../common/js/common.js"></script>
+<script src="../common/js/goods_list_action.js"></script>
+<script src="../common/js/jquery-1.4.2.min.js"></script>
+<script src="../../../../lib/js/kakaoLink.js"></script>
+<link rel="styleSheet" href="../common/css/reset.css" />
+<link rel="stylesheet" href="../common/css/style.css" />
+<!--<link rel="stylesheet" href="../style_screen.css" type="text/css" media="screen and (min-width: 321px)"  />-->
+
+<!--{ ? _cfgMobileShop.mobileShopIcon }--><link rel="apple-touch-icon-precomposed" href="{_cfg.rootDir}/data/skin_mobile/{_cfgMobileShop.tplSkinMobile}/{_cfgMobileShop.mobileShopIcon}" /><!--{ / }-->
+
+{naverCommonInflowScript}
+</head>
+
+<body>
+
+<div id="dynamic"></div>
+
+<div id="wrap">
+
+<header>
+	<div id="logo">
+		<!--{ ? _cfgMobileShop.mobileShopLogo}-->
+		<a href="{_cfgMobileShop.mobileShopRootDir}"><img src="{_cfg.rootDir}/data/skin_mobile/{_cfgMobileShop.tplSkinMobile}/{_cfgMobileShop.mobileShopLogo}" alt="{_cfg.shopName}" title="{_cfg.shopName}" /></a>
+		<!--{ : }-->{@dataBanner(90)}{.tag}{/}<!--{ / }-->
+	</div>
+
+	<div id="mnb">
+		<ul>
+			<!--{ ? _sess }-->
+				<li><a href="{_cfg.rootDir}/member/logout.php" class="btn logout"><span>로그아웃</span></a></li>
+			<!--{ : }-->
+				<li><a href="{_cfgMobileShop.mobileShopRootDir}/mem/login.php" class="btn login"><span>로그인</span></a></li>
+			<!--{ / }-->
+			<li><a href="{_cfgMobileShop.mobileShopRootDir}/myp" class="btn mypage"><span>마이페이지</span></a></li>
+		</ul>
+	</div>
+
+	<div class="clearb"></div>
+	
+	<!--{ ? __view_search_form }-->
+	<hr class="hidden" />
+	<div id="search">
+		<form name="search_form" method="get" action="{_cfgMobileShop.mobileShopRootDir}/goods/list.php">
+			<fieldset>
+				<legend>상품검색</legend>
+				<div class="kw"><div class="kw_ico"><input type="text" id="kw" name="kw" value="" /></div></div>
+				<div class="btn"><button type="submit"><span>검색</span></button></div>
+			</fieldset>
+		</form>
+	</div>
+	<!--{ / }-->
+
+	<hr class="hidden" />
+	<div id="gnb">
+		<ul>
+			<li><a href="{_cfgMobileShop.mobileShopRootDir}/goods/category.php" class="category<!--{?_categorypage}-->_on<!--{/}-->"><span>카테고리</span></a>
+			<li class="lb"><a href="{_cfgMobileShop.mobileShopRootDir}/myp/wishlist.php" class="wishlist<!--{?_wishlistpage}-->_on<!--{/}-->"><span>찜리스트</span></a>
+			<li class="lb"><a href="{_cfgMobileShop.mobileShopRootDir}/goods/cart.php" class="cart<!--{?_cartpage}-->_on<!--{/}-->"><span>장바구니</span></a>
+		</ul>
+	</div>
+
+</header>
+
+<div class="clearb"></div>
+<hr class="hidden" />

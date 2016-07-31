@@ -1,0 +1,114 @@
+{*** 이용후기 작성 | goods/goods_review_register.php ***}
+<html>
+<head>
+<title>상품사용기작성</title>
+<meta http-equiv="Content-Type" content="text/html; charset=euc-kr">
+<script src="../common.js"></script>
+<link rel="styleSheet" href="../style.css">
+</head>
+<body>
+
+<form method=post action="indb.review.php" enctype="multipart/form-data" onSubmit="return chkForm(this)">
+<input type=hidden name=mode value="{_mode}">
+<input type=hidden name=sno value="{_sno}">
+
+<table width=100% cellpadding=0 cellspacing=0 border=0>
+<tr>
+	<td height=500 style="border-style:solid; border-width:10px; border-color:#000000" valign=top>
+
+	<div style="width:100%; background:#000000; border-bottom:2px solid #DDDDDD"><img src="../img/common/popup_title_review.gif"></div>
+
+	<div style="margin-left:20px; margin-right:20px;">
+
+
+	<div style="border-width:1px; border-style:solid; border-color:#DEDEDE; margin-top:5px;" class="hundred">
+	<table width=100% cellpadding=0 cellspacing=0 border=0>
+	<tr>
+		<td style="border-width:3px; border-style:solid; border-color:#F3F3F3; padding:5 5 5 5">
+
+		<table width=500 id=form cellpadding=5 cellspacing=0 border=0 align=center>
+		<col width=50>
+<!--{ ? _mode != 'reply_review' }-->
+		<tr>
+			<td class="input_txt" align=right>평가</td>
+			<td class="noline">
+			<input type=radio name=point value=5 class=noline {_data.point['5']}>★★★★★
+			<input type=radio name=point value=4 class=noline {_data.point['4']}>★★★★☆
+			<input type=radio name=point value=3 class=noline {_data.point['3']}>★★★☆☆
+			<input type=radio name=point value=2 class=noline {_data.point['2']}>★★☆☆☆
+			<input type=radio name=point value=1 class=noline {_data.point['1']}>★☆☆☆☆
+			</div>
+			</td>
+		</tr>
+<!--{ / }-->
+		<tr><td colspan=2 height=1 bgcolor="#DEDEDE" style="padding:0px;"></td></tr>
+		<tr>
+			<td class="input_txt" align=right>작성자</td>
+			<td>
+			<div style="float:left; width:50%;"><input type=text name=name style="width:100" required label="작성자" value="{_data.name}"></div>
+			<!--{ ? ! _sess && empty(_data['m_no']) // 작성자==회원 }-->
+			<div style="float:left; width:50%;"><span class="input_txt">비밀번호</span> <input type=password name=password style="width:100" required label="비밀번호"></div>
+			<!--{ / }-->
+			</td>
+		</tr>
+		<tr><td colspan=2 height=1 bgcolor="#DEDEDE" style="padding:0px;"></td></tr>
+		<tr>
+			<td class="input_txt" align=right>구매상품선택</td>
+			<td>
+				<select name="goodsno">
+				<!--{ @ _goodslist }-->
+				<option value="{.goodsno}" {? _data['goodsno'] == .goodsno}selected{/} >{.goodsnm}</option>
+				<!--{ / }-->
+				</select>
+			</td>
+		</tr>
+
+		<tr><td colspan=2 height=1 bgcolor="#DEDEDE" style="padding:0px;"></td></tr>
+		<tr>
+			<td class="input_txt" align=right>제목</td>
+			<td><input type=text name=subject style="width:95%" required label="제목" value="{_data.subject}"></td>
+		</tr>
+
+		<tr><td colspan=2 height=1 bgcolor="#DEDEDE" style="padding:0px;"></td></tr>
+		<tr>
+			<td class="input_txt" align=right>내용</td>
+			<td><textarea name=contents style="width:95%;height:170" required label="내용">{_data.contents}</textarea></td>
+		</tr>
+		<tr><td colspan=2 height=1 bgcolor="#DEDEDE" style="padding:0px;"></td></tr>
+		<tr>
+			<td class="input_txt" align=right>이미지</td>
+			<td>
+			<input type=file name=attach style="width:95%"  label="이미지" value="">
+			<!--{? _data.attach == 1}-->
+			<div style="padding-top:3px;">
+			<input type="checkbox" name="remove_attach" value="1" style="border:none;">첨부 파일 삭제
+			</div>
+			<!--{/}-->
+			</td>
+		</tr>
+		</table>
+
+		</td>
+	</tr>
+	</table>
+	</div>
+	</div>
+
+	<TABLE width=100%>
+	<tr>
+		<td align=center style="padding-top:5"><input type="image" src="../img/common/btn_upload.gif"></td>
+	</tr>
+	</TABLE>
+	<TABLE width=100% cellpadding=0 cellspacing=0 border=0>
+	<TR>
+		<TD align=right><A HREF="javascript:this.close()" onFocus="blur()"><img src="../img/common/popup_close.gif"></A></TD>
+	</TR>
+	</TABLE>
+	</td>
+</tr>
+</table>
+
+</form>
+
+</body>
+</html>

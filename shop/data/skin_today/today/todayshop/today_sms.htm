@@ -1,0 +1,90 @@
+{*** 친구에게 상품 알리기(문자서비스) | todayshop/sms.php ***}
+<html>
+<head>
+<style>
+a { cursor:pointer; }
+.box {background-image:url(../img/phone_bg.gif); width:465px;}
+.box .contents { padding-left:40px;}
+.box .title {font-size:14px; font-weight:bold; color:#000000; font-family:'돋움','굴림';}
+.box .subtitle {font-size:11px; color:#F15B00; font-family:'돋움','굴림'; margin:5px; letter-spacing:-1px;}
+.box .tb {width:380px; border-collapse:collapse; margin:10px 0px 10px 0px;}
+.box .tb th {border:solid 1px #E6E6E6; background-color:#F6F6F6; color:#000000; font-size:11px; font-weight:normal; font-family:'돋움','굴림'; letter-spacing:-1px; width:120px; text-align:left; padding-left:10px;}
+.box .tb td {border:solid 1px #E6E6E6; padding:10px;}
+.box .msg {word-break:break-all; word-wrap:break-word; font-family:'돋움','굴림'; font-size:11px;}
+.input {width:50px; font-family:verdana; font-size:11px; border:solid 1px #D6D6D6;}
+.select {font-family:verdana; font-size:11px; border:solid 1px #D6D6D6;}
+.btn {text-align:center;}
+</style>
+<script type="text/javascript" src="../common.js"></script>
+<script type="text/javascript">
+function chkForm(fobj) {
+	if (!fobj.rcvphone0.value) {
+		alert("받는 사람의 휴대폰 번호를 입력하세요.");
+		fobj.rcvphone0.focus();
+		return false;
+	}
+	if (!fobj.rcvphone1.value) {
+		alert("받는 사람의 휴대폰 번호를 입력하세요.");
+		fobj.rcvphone1.focus();
+		return false;
+	}
+	if (!fobj.rcvphone2.value) {
+		alert("받는 사람의 휴대폰 번호를 입력하세요.");
+		fobj.rcvphone2.focus();
+		return false;
+	}
+	if (!fobj.callback0.value) {
+		alert("보내는 사람의 휴대폰 번호를 입력하세요.");
+		fobj.callback0.focus();
+		return false;
+	}
+	if (!fobj.callback1.value) {
+		alert("보내는 사람의 휴대폰 번호를 입력하세요.");
+		fobj.callback1.focus();
+		return false;
+	}
+	if (!fobj.callback2.value) {
+		alert("보내는 사람의 휴대폰 번호를 입력하세요.");
+		fobj.callback2.focus();
+		return false;
+	}
+	return true;
+}
+</script>
+</head>
+<body>
+<form name="frm" action="../todayshop/indb.today_sms.php" method="post" onsubmit="return chkForm(this)" target="ifrmHidden">
+<input type="hidden" name="tgsno" value="{=tgsno}" />
+<div><img src="../img/phone_01.gif" /></div>
+<div class="box">
+	<div class="contents">
+		<div class="title"><img src="../img/phone_blt.gif" /> 친구에게 상품 알리기 (문자서비스)</div>
+		<div class="subtitle">친구에게 오늘의 상품 정보를 알려주세요~!</div>
+		<table class="tb" cellpadding="0" cellspacing="0" border="0">
+		<tr>
+			<th>받는사람 휴대폰</th>
+			<td>
+				<input type="text" name="rcvphone0" class="input" maxlength="3" onkeydown="onlynumber()" /> - <input type="text" name="rcvphone1" class="input" maxlength="4" onkeydown="onlynumber()" /> - <input type="text" name="rcvphone2" class="input" maxlength="4" onkeydown="onlynumber()" />
+			</td>
+		</tr>
+		<tr>
+			<th>보내는사람 휴대폰</th>
+			<td>
+				<input type="text" name="callback0" class="input" maxlength="3" onkeydown="onlynumber()" /> - <input type="text" name="callback1" class="input" maxlength="4" onkeydown="onlynumber()" /> - <input type="text" name="callback2" class="input" maxlength="4" onkeydown="onlynumber()" />
+			</td>
+		</tr>
+		<tr>
+			<th>내용</th>
+			<td class="msg">{=smsMsg}</td>
+		</tr>
+		</table>
+	</div>
+	<div class="btn">
+		<input type="image" src="../img/phone_send.gif" /> <a onclick="self.close()"><img src="../img/phone_end.gif" /></a>
+	</div>
+</div>
+<div><img src="../img/phone_foot.gif" /><a onclick="self.close();"><img src="../img/phone_close.gif" /></a></div>
+</form>
+<iframe name="ifrmHidden" style="display:none;"></iframe>
+</body>
+</html>

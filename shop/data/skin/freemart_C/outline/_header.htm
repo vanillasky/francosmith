@@ -1,0 +1,125 @@
+{*** 상단레이아웃 | main/index.php ***}
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+
+
+<html>
+<head>
+
+
+
+<!--[if lt IE 9]>
+	<script src="/shop/data/js/jquery-1.11.3.min.js"></script> 
+<![endif]-->
+
+<!--[if gte IE 9 ]><!-->
+   <script src="/shop/data/js/jquery-2.2.3.min.js" ></script> 
+<!-- [endif]-->
+	
+<!-- [if !IE]> <!-->
+	<script src="/shop/data/js/jquery-1.11.3.min.js"></script> 
+<!--  [endif]-->
+
+<script src="/shop/data/js/jquery-ui.js"></script>   
+	
+<meta http-equiv="Content-Type" content="text/html; charset=euc-kr">
+<meta name="description" content="{_meta_title}">
+<meta name="keywords" content="{_meta_keywords}">
+<meta property="og:type"          content="website" />
+<meta property="og:title"         content="Francosmith Tools & Woodworking" />	
+<meta name="google-site-verification" content="FZqtnU-EnzciANnzLJfBIztQ-yjjuntrMSXo_1ijE-E" />
+<title>{_meta_title}</title>
+
+<!--{ ? _POST }-->
+
+<script>
+	
+history.back = function() {
+
+    var step = (document.location.protocol == 'https:' ? 2 : 1) * -1;
+
+    history.go( step );
+
+}
+
+
+</script>
+
+<!--{ / }-->
+<!--{ ? connInterpark == 'ok' // 인터파크 헤더 호출 }-->
+
+
+<script type="text/javascript">var entr_nm = "<a href='/'>{_cfg.shopName}</a>"; // 상점명</script>
+<script type="text/javascript" src="http://www.interpark.com/gate/minm/topnav_shopplus_soho.js"></script>
+
+<!--{ / }-->
+<!--{ ? _COOKIE['cc_inflow'] == 'yahoo_fss' || _GET['ref'] == 'yahoo_fss' }-->
+<script language="javascript" src="http://kr.ysp.shopping.yahoo.com/ysp/ysp_fss.js"></script>
+<script> ykfss_bar();</script>
+<!--{ / }-->
+<script src="../common.js"></script>
+<script src="../cart_tab/godo.cart_tab.js"></script>
+<script src="/js/mall.js"></script>	
+
+
+<link rel="styleSheet" href="../cart_tab/style.css">
+<link rel="styleSheet" href="../style.css">
+
+<link rel="styleSheet" href="../shop_layout.css">
+<link rel="styleSheet" href="../prod.css">
+<link rel="styleSheet" href="../table.css">	
+<link rel="styleSheet" href="../main-navi.css">
+<link rel="styleSheet" href="../mypage.css" />	
+<link rel="styleSheet" href="../font.css" />	
+<link rel="styleSheet" href="../button.css" />	
+<link rel="styleSheet" href="../tab.css" />	
+<link rel="styleSheet" href="../smart_search.css" />
+	
+<style type="text/css">
+.outline_both {
+border-left-style:solid;
+border-right-style:solid;
+border-left-width:{_cfg['shopLineWidthL']}px;
+border-right-width:{_cfg['shopLineWidthR']}px;
+border-left-color:#{_cfg['shopLineColorL']};
+border-right-color:#{_cfg['shopLineColorR']};
+}
+
+</style>
+<!--{ ? _overture_cc }-->{ # overture_cc }<!--{ / }-->
+{=customHeader}
+</head>
+
+{=copyProtect()}
+<body bgcolor="{_cfg['outbg_color']}" background="{_cfg['outbg_img']}" {=copyProtect(true)}>
+	
+{ # myBoxLayer }
+<!--{? useMyLevelLayerBox == 'y'}-->
+{ # myLevelLayer }
+<!--{/}-->
+<!--{ ? alertCoupon == true}-->
+{ # myCouponLayer }
+<!--{ / }-->
+
+
+	
+<table width=100% height=100% cellpadding=0 cellspacing=0 border="0">
+<!--{ ? this->tpl_['header_inc'] }-->
+<tr>
+	<td>{ # header_inc // 상단디자인 }</td>
+</tr>
+<!--{ / }-->
+<tr>
+	<td height=100% align={_cfg['shopAlign']}>
+		<!--{ ? this->tpl_['side_inc'] && _cfg['outline_sidefloat'] == 'left' }-->
+		<table width="{_cfg['shopSize']}" height="100%" class="outline_both">
+		<!--{:}-->
+		<table width="99%" height=100% cellpadding=0 cellspacing=0 border=0>
+		<!--{/}-->
+		<tr>
+		<!--{ ? this->tpl_['side_inc'] && _cfg['outline_sidefloat'] == 'left' }-->
+			<td valign=top width="{_cfg['shopSideSize']}" nowrap>{ # side_inc // 측면디자인 }</td>
+		<!--{ / }-->
+			<td valign=top width="100%" height="100%" bgcolor="{_cfg['inbg_color']}" background="{_cfg['inbg_img']}" >
+			
+			
+			

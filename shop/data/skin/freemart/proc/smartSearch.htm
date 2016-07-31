@@ -1,0 +1,181 @@
+<!--{ ? ssState == 'y' }-->
+
+
+<script src="/shop/data/js/nouislider.js"></script>
+<script src="/shop/data/js/wNumb.js"></script>
+<link rel="stylesheet" href="/shop/data/js/nouislider.css">
+
+<script language="JavaScript">
+//addOnloadEvent(function(){ ssPrcSetting() });
+addOnloadEvent(function(){ color2Tag('selectedColor') });
+
+</script>
+
+<input type="hidden" name="searchID" id="searchID" />
+<input type="hidden" name="queryString" id="queryString" value="{__SERVER['QUERY_STRING']}" />
+<input type="hidden" name="tempOption" id="tempOption" />
+
+<div id="ssMoreSearchBox" class="ssMoreSearchBox" style="display:none;">
+	<div class="title top_red"><div id="ssMoreSearchName"></div></div>
+	<div style="padding:10px; background:#FFFFFF; text-align:left;">
+		<div id="ssMoreOption" class="ssMoreOption"></div>
+		<div style="clear:both;"></div>
+		<div class="ssMoreButton"><a href="javascript:;" onclick="ssSubmitMoreOption()" style="margin-right:4px;"><img src="../img/banner/btn_array_apply.gif"></a><a href="javascript:;" onclick="ssCloseMoreOption()"><img src="../img/banner/btn_array_cancel.gif"></a></div>
+	</div>
+</div>
+<!--{ @ colorList }-->
+{.value_}
+<!--{ / }-->
+<div class="smart-search-wrap">
+<form name="sSearch" id="sSearch" method="get" style="margin:0px;">
+	<input type="hidden" name="category" id="category" value="{__GET.category}" />
+	<input type="hidden" name="page" id="page" value="1" />
+	<input type="hidden" name="sort" id="sort" value="{__GET.sort}">
+	<input type="hidden" name="page_num" id="page_num" value="{__GET.page_num}">
+
+	<div class="title top_red">Filter</div>
+
+	<div class="form">
+		<!--{ @ searchList }-->
+		<div id="searchListTab{.index_}" class="searchListTab">
+			<div class="searchListTab_title">{.name}</div>
+			<!--{ ? count(.list) >= 10 }-->
+				<div class="searchListTab_more">
+					<img src="../img/banner/btn_b_skin_more.gif" onclick="ssShowMore('ssMoreSearchBox', '{.name}', '{.id}'); ssCheckedOption('{.id}');" title="{.name} 더보기" />
+				</div>
+				<div style="height:0px; clear:both; font-size:0px;"></div>
+			<!--{ : }-->
+				<div style="height:0px; clear:left; font-size:0px;"></div>
+			<!--{ / }-->
+		</div>
+		
+			<!--{ ? .max }-->
+			<div class="searchListBar">
+				<div class="barArea">
+					<!-- 
+					<img src="../img/banner/scroll_point.png" id="minArrow" class="ssPrcArrow" style="display:none;" onmousedown="ssStart_move(event,'minArrow');" onmouseup="Moveing_stop();sSearch.submit();" />
+					<img src="../img/banner/scroll_point.png" id="maxArrow" class="ssPrcArrow" style="display:none;" onmousedown="ssStart_move(event,'maxArrow');" onmouseup="Moveing_stop();sSearch.submit();" />
+					-->
+					
+					<div class="price-box" >
+						<div id="nonlinear"></div>
+					</div>
+				</div>
+				
+				<div class="inputArea">
+					<input type="hidden" name="ssOriMinPrc" id="ssOriMinPrc" value="{.min}" />
+					<input type="hidden" name="ssOriMaxPrc" id="ssOriMaxPrc" value="{.max}" />
+					<input type="hidden" name="ssMinPrice" id="ssMinPrice" value="<!--{ ? __GET.ssMinPrice || __GET.ssMinPrice == '0' }-->{__GET.ssMinPrice}<!--{ : }-->{.min}<!--{ / }-->" />
+					<input type="hidden" name="ssMaxPrice" id="ssMaxPrice" value="<!--{ ? __GET.ssMaxPrice || __GET.ssMaxPrice == '0' }-->{__GET.ssMaxPrice}<!--{ : }-->{.max}<!--{ / }-->" />
+					
+					<input type="text" name="rMinPrice" id="rMinPrice" value="<!--{ ? __GET.ssMinPrice || __GET.ssMinPrice == '0' }-->{__GET.ssMinPrice}<!--{ : }-->{.min}<!--{ / }-->" />원 ~
+					<input type="text" name="rMaxPrice" id="rMaxPrice" value="<!--{ ? __GET.ssMaxPrice || __GET.ssMaxPrice == '0' }-->{__GET.ssMaxPrice}<!--{ : }-->{.max}<!--{ / }-->" />원
+					
+					
+				</div>
+				
+				
+				<div class="find-button">
+					<div>
+						<button class="button-dark button-medium" onclick="submitSmartSearch(sSearch, false);">Find</button>
+					</div>
+				</div>
+					
+					
+				<script>
+					var nonLinearSlider = document.getElementById('nonlinear');
+					
+					noUiSlider.create(nonLinearSlider, {
+						connect: true,
+						behaviour: 'tap',
+						start: [ Math.floor10(<!--{ ? __GET.ssMinPrice || __GET.ssMinPrice == '0' }-->{__GET.ssMinPrice}<!--{ : }-->{.min}<!--{ / }-->), 
+						         Math.round10(<!--{ ? __GET.ssMaxPrice || __GET.ssMaxPrice == '0' }-->{__GET.ssMaxPrice}<!--{ : }-->{.max}<!--{ / }-->)],
+						range: {
+							// Starting at 500, step the value by 500,
+							// until 4000 is reached. From there, step by 1000.
+							'min': [ Math.floor10({.min}, 3) ],
+							'10%': [ {.min}, 1000 ],
+							'max': [ Math.round10({.max}, 3) ]
+						},
+						format: wNumb ({
+							decimals:0,
+							thousand:',',
+						})
+					});
+					
+				</script>
+				
+				<script>
+					// Write the CSS 'left' value to a span.
+					function leftValue ( handle ) {
+						return handle.parentElement.style.left;
+					}
+					
+					var lowerValue = document.getElementById('rMinPrice'),
+						//lowerOffset = document.getElementById('lower-offset'),
+						upperValue = document.getElementById('rMaxPrice'),
+						//upperOffset = document.getElementById('upper-offset'),
+						handles = nonLinearSlider.getElementsByClassName('noUi-handle');
+					
+					// Display the slider value and how far the handle moved
+					// from the left edge of the slider.
+					nonLinearSlider.noUiSlider.on('update', function ( values, handle ) {
+						if ( !handle ) {
+							lowerValue.value = values[handle];
+						} else {
+							upperValue.value = values[handle];
+						}
+						
+						
+					});
+				</script>
+
+			</div>
+			<!--{ : }-->
+				<!--{ ? .color_useyn }-->
+				<input type="hidden" name="ssColor" id="ssColor" value="<!--{=__GET.ssColor}-->" />
+				<div>
+					<table border="0" cellpadding="0" cellspacing="2" align="center">
+					<tr>
+						<td>
+							<table border="0" cellpadding="0" cellspacing="2" bgcolor="#E9E9E9" style="margin:1px;">
+								<tr>
+							<!--{ @ .colorList }-->
+								<!--{ ? ..size_ / 2 == ..index_ }-->
+								</tr>
+								<tr>
+								<!--{ / }-->
+									<td><div class="paletteColor" style="background-color:#{..value_};" onclick="ssSelectColor(this.style.backgroundColor)"></div></td>
+							<!--{ / }-->
+								</tr>
+							</table>
+						</td>
+					</tr>
+					<tr>
+						<td id="selectedColor" title="선택된 색은 더블클릭으로 삭제하실 수 있습니다."></td>
+					</tr>
+					</table>
+				</div>
+				<!--{ : }-->
+				<div class="searchListBox" <!--{ ? count(.list) >= 5 }--> style="height:110px; overflow-y:auto;"<!--{ / }-->>
+					<ul>
+					<!--{ @ .list }-->
+						<!--{ ? ..index_ < 10 }-->
+						<li><input type="checkbox" name="{.id}[]" id="{.id}_{..index_}" value="<!--{ ? .valList[..index_] }-->{.valList[..index_]}<!--{ : }-->{..value_}<!--{ / }-->" {.chked[..index_]} onclick="javascript:submitSmartSearch(this.form, true);" /> <label for="{.id}_{..index_}">{..value_}</label></li>
+						<!--{ : }-->
+						<li class="hidden"><input type="checkbox" name="{.id}[]" id="{.id}_{..index_}" value="<!--{ ? .valList[..index_] }-->{.valList[..index_]}<!--{ : }-->{..value_}<!--{ / }-->" {.chked[..index_]} onclick="javascript:submitSmartSearch(this.form, true);" /></li>
+						<!--{ / }-->
+					<!--{ / }-->
+					</ul>
+				</div>
+				<!--{ / }-->
+			<!--{ / }-->
+		<!--{ / }-->
+		<div class="ssBtnArea"><a href="{__SERVER['PHP_SELF']}?category={__GET['category']}"><img src="../img/banner/btn_b_skin_reset.gif" /></a></div>
+	</div>
+</form>
+</div>
+
+
+
+<!--{ / }-->

@@ -1,0 +1,169 @@
+<script language="javascript">
+// 영수증 선택에 따른 분류
+function RCP1(){	// 소득공제
+	//document.ini.useopt.value="0" // 소득공제용
+	_ID('cert_0').style.display = "block";
+	_ID('cert_1').style.display = "none";
+}
+function RCP2(){	// 지출증빙
+	//document.ini.useopt.value="1" // 지출증빙용
+	_ID('cert_0').style.display = "none";
+	_ID('cert_1').style.display = "block";
+}
+function f_submit() {
+	var frm_pay = document.frm_pay;
+	
+	var bRetVal = false;
+	
+	/*  주문번호 확인 */
+	if( !frm_pay.EP_order_no.value ) {
+		alert("가맹점주문번호를 입력하세요!!");
+		frm_pay.EP_order_no.focus();
+		return;
+	}
+	/*  금액 확인 */
+	if( !frm_pay.EP_tot_amt.value ) {
+		alert("총거래금액을 입력하세요!!");
+		frm_pay.EP_tot_amt.focus();
+		return;
+	}
+	if( !frm_pay.EP_service_amt.value ) {
+		alert("봉사료를 입력하세요!!");
+		frm_pay.EP_service_amt.focus();
+		return;
+	}
+	if( !frm_pay.EP_vat.value ) {
+		alert("부가세를 입력하세요!!");
+		frm_pay.EP_vat.focus();
+		return;
+	}        
+	
+	/* 현금영수증 발급 구분에 따라 처리 */            
+	/* 현금영수증 발행용도 */
+	if( frm_pay.EP_issue_type.value == "01" ) {
+		/* 개인 */
+		if( frm_pay.EP_auth_type.value == "02" ) {
+			
+			if( frm_pay.EP_auth_value.value.length != 13 ) {
+				alert("주민등록번호를 입력하세요!!");
+				frm_pay.EP_auth_value.focus();
+				return;
+			}
+		}
+		else if( frm_pay.EP_auth_type.value == "03" ) {
+			
+			if( frm_pay.EP_auth_value.value.length < 10 ) {
+				alert("휴대폰번호를 입력하세요!!");
+				frm_pay.EP_auth_value.focus();
+				return;
+			}
+		}
+		else {
+			alert("소득공제용은 인증구분을 주민등록번호, 휴대폰번호를 선택하세요.!!");
+			frm_pay.EP_cash_auth_type.focus();
+			return;
+		}
+	}
+	else {
+		/* 법인 */
+		if( frm_pay.EP_auth_value.value.length < 10 ) {
+			alert("사업자번호를 입력하세요!!");
+			frm_pay.EP_auth_value.focus();
+			return;
+		}
+	}
+	/* 하위 가맹점 사용 확인 */
+	if( frm_pay.EP_sub_mall_yn.value == "1" ) {
+		if( frm_pay.EP_sub_mall_buss.value.length != 10 ) {
+			alert("하위가맹점 사업자번호를 입력하세요!!");
+			frm_pay.EP_auth_value.focus();
+			return;
+		}
+	}
+	
+	bRetVal = true;
+	if ( bRetVal ) frm_pay.submit();
+}
+</script>
+
+<table width="100%" style="border:1px solid #DEDEDE" cellpadding="0" cellspacing="0">
+<tr>
+	<td width="150" valign="top" align="right" bgcolor="#F3F3F3"></td>
+	<td id="orderbox">
+
+	<table>
+	<col width="100">
+	<tr>
+		<td>현금영수증</td>
+		<td>
+		<!--{ ? cashreceipt }-->
+		<a href="javascript:receipt('{cashreceipt}', '현금영수증');">현금영수증출력</a>
+
+		<!--{ : cashreceipt == '' && step == 0 }-->
+		입금하셔야 현금영수증을 발급하실 수 있습니다.
+
+		<!--{ : cashreceipt == '' && step2 }-->
+		취소중이거나 취소된 주문은 현금영수증을 발급하실 수 없습니다.
+
+		<!--{ : cashreceipt == '' && step && !step2 && _set.receipt.period && orddt && (strtotime(orddt)+(86400*_set.receipt.period)) < time() }-->
+		주문일로부터 {_set.receipt.period}일이 경과하여 발행할 수 없습니다. ({=date('y-m-d H:i',(strtotime(orddt)+(86400*_set.receipt.period)))})
+
+		<!--{ : cashreceipt == '' && step && !step2 }-->
+	 <form name="frm_pay" method="post" action="../order/card/easypay/cash_receipt.php"  target="ifrmHidden"> 
+		<input type="hidden" name="EP_tr_cd" value="00201050"><!-- 거래구분(수정불가) -->
+		<input type="hidden" name="EP_pay_type" value="cash"><!-- 결제수단(수정불가) -->
+		<input type="hidden" name="EP_req_type" value="issue"><!-- 요청구분(수정불가) -->
+
+		<!-- *표시 필수 -->
+	
+		<input type="hidden" name="EP_tot_amt" value="{prn_settleprice}"><!-- *총거래금액 -->
+		<input type="hidden" name="EP_service_amt" value="0"><!-- *봉사료 -->
+		<input type="hidden" name="EP_vat" value="{_cashReceipt.vat}"><!-- *부가세 -->
+		<input type="hidden" name="EP_sub_mall_yn" value="0"><!-- *하위가맹점사용여부 -->
+		<input type="hidden" name="EP_sub_mall_buss" value=""><!-- 하위가맹점사업자번호 -->
+		<input type="hidden" name="EP_order_no" value="{ordno}"><!-- *주문번호 -->
+		<input type="hidden" name="EP_user_id" value="22"><!-- 고객ID -->
+		<input type="hidden" name="EP_user_nm" value="{nameOrder}"><!-- 고객명 -->
+
+		<!-- 삭제/수정 불가 -->
+		<input type="hidden" name="ordno"			value="{ordno}" />					<!-- 주문 번호 - PG 처리와는 전혀 상관이 없는 옵션임 -->
+		<input type="hidden" name="goodname"		value="{_item[0]['goodsnm']}" />	<!-- 상품명 -->
+		<input type="hidden" name="cr_price"		value="{prn_settleprice}" />			<!-- 결제금액 -->
+		<input type="hidden" name="sup_price"		value="{_cashReceipt.supply}" />	<!-- 공급가액 -->
+		<input type="hidden" name="tax"				value="{_cashReceipt.vat}" />		<!-- 부가세 -->
+		<input type="hidden" name="srvc_price"		value="0" />						<!-- 봉사료 -->
+		<input type="hidden" name="buyername"		value="{nameOrder}" />				<!-- 구매자명 -->
+		<input type="hidden" name="buyeremail"		value="{email}" />					<!-- 전자우편 -->
+		<input type="hidden" name="buyertel"		value="{mobileOrder}" />			<!-- 이동전화 -->
+		<input type="hidden" name="companynumber"	value="" />							<!-- 서브몰사업자번호 -->
+		<table>
+		<tr>
+			<td width="100">발행용도</td><!-- *발행용도 -->
+			<td>
+			<input type="radio" name="EP_issue_type" value="01" Onclick= "javascript:RCP1()" checked />소득공제용
+			<input type="radio" name="EP_issue_type" value="02" Onclick= "javascript:RCP2()" />지출증빙용
+			</td>
+		</tr>
+		<tr>
+			<td>
+			<select name="EP_auth_type" class="input_F">
+				<option value="" selected>선택</option>
+				<option value="03">휴대폰번호</option>
+				<option value="04">사업자번호</option>
+			</select>
+
+	
+			</td>
+			<td><input type="text" name="EP_auth_value" value="{=str_replace('-','',mobileOrder)}" class="line"> <span class="small">("-" 생략)</span></td><!-- *인증번호 -->
+		</tr>
+		</table>
+		</form>
+		<input type="button" value="현금영수증발급요청" name="app_btn" onClick="javascript:f_submit();">
+		<!--{ / }-->
+		</td>
+	</tr>
+	</table>
+
+	</td>
+</tr>
+</table>

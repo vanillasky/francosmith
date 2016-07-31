@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="EUC-KR"?>
+<codes>
+<list>
+	<code power="">{=include_file("proc/orderitem.htm")}</code>
+	<desc>장바구니 상품목록 출력파일 인클루드</desc>
+	<exam></exam>
+</list>
+<list>
+	<code power="">{ordno}</code>
+	<desc>주문번호</desc>
+	<exam>1187054690353</exam>
+</list>
+<list>
+	<code>{_sess}</code>
+	<desc>회원</desc>
+	<exam></exam>
+</list>
+<list>
+	<code>{_style_member}</code>
+	<desc>회원주문인 경우 이름란의 스타일</desc>
+	<exam>readonly style='border:0'</exam>
+</list>
+<list>
+	<code>{name}</code>
+	<desc>이름</desc>
+	<exam>홍길동</exam>
+</list>
+<list>
+	<code>{zipcode[0]}</code>
+	<desc>우편번호1</desc>
+	<exam>123</exam>
+</list>
+<list>
+	<code>{zipcode[1]}</code>
+	<desc>우편번호2</desc>
+	<exam>456</exam>
+</list>
+<list>
+	<code>{address}</code>
+	<desc>주소1</desc>
+	<exam>서울 강남구 대치동</exam>
+</list>
+<list>
+	<code>{address_sub}</code>
+	<desc>주소2</desc>
+	<exam>123번지</exam>
+</list>
+<list>
+	<code>{phone[0]}</code>
+	<desc>전화번호1</desc>
+	<exam>02</exam>
+</list>
+<list>
+	<code>{phone[1]}</code>
+	<desc>전화번호2</desc>
+	<exam>1234</exam>
+</list>
+<list>
+	<code>{phone[2]}</code>
+	<desc>전화번호3</desc>
+	<exam>5678</exam>
+</list>
+<list>
+	<code>{mobile[0]}</code>
+	<desc>핸드폰번호1</desc>
+	<exam>010</exam>
+</list>
+<list>
+	<code>{mobile[1]}</code>
+	<desc>핸드폰번호2</desc>
+	<exam>1234</exam>
+</list>
+<list>
+	<code>{mobile[2]}</code>
+	<desc>핸드폰번호3</desc>
+	<exam>5678</exam>
+</list>
+<list>
+	<code>{email}</code>
+	<desc>이메일</desc>
+	<exam>xxx@godo.co.kr</exam>
+</list>
+<list>
+	<code>{cart->goodsprice}</code>
+	<desc>상품합계금액</desc>
+	<exam>5800</exam>
+</list>
+<list>
+	<code>{cart->delivery}</code>
+	<desc>배송비</desc>
+	<exam>2500</exam>
+</list>
+<list>
+	<code>{cart->dc}</code>
+	<desc>회원할인율</desc>
+	<exam>15%</exam>
+</list>
+<list>
+	<code power="">{cart->dcprice}</code>
+	<desc>회원할인가</desc>
+	<exam>700</exam>
+</list>
+<list>
+	<code power="">{cart->totalprice}</code>
+	<desc>총주문금액 (=상품합계금액+배송비)</desc>
+	<exam>8300</exam>
+</list>
+<list>
+	<code>{cart->totalprice-cart->dcprice}</code>
+	<desc>총결제금액</desc>
+	<exam>7600</exam>
+</list>
+<list>
+	<code>{_member.emoney}</code>
+	<desc>보유적립금</desc>
+	<exam>10000</exam>
+</list>
+<list>
+	<code>{_set.emoney.min}</code>
+	<desc>최저 사용가능한 적립금액</desc>
+	<exam>1000</exam>
+</list>
+<list>
+	<code>{_set.emoney.max}</code>
+	<desc>최고 사용가능한 적립금한도 - number:금액, number+%:총 구매금액의 %</desc>
+	<exam>50%</exam>
+</list>
+<list>
+	<code>{_set.emoney.cut}</code>
+	<desc>금액절삭 자리수 - 1자리:10원단위, 2자리:100원단위, 3자리:1000원단위</desc>
+	<exam>3</exam>
+</list>
+<list>
+	<code>{_set.emoney.base}</code>
+	<desc>금액절삭 단위</desc>
+	<exam>1000</exam>
+</list>
+<list>
+	<code>{_emoney_max}</code>
+	<desc>구매시 적립금 사용 가능액수</desc>
+	<exam>2500</exam>
+</list>
+<list>
+	<code>{_set.use.a}</code>
+	<desc>무통장입금 사용여부 - on:사용, '':미사용</desc>
+	<exam>on</exam>
+</list>
+<list>
+	<code>{_set.use.c}</code>
+	<desc>신용카드 사용여부 - on:사용, '':미사용</desc>
+	<exam>on</exam>
+</list>
+<list>
+	<code>{_set.use.o}</code>
+	<desc>계좌이체 사용여부 - on:사용, '':미사용</desc>
+	<exam>on</exam>
+</list>
+<list>
+	<code>{_set.use.v}</code>
+	<desc>가상계좌 사용여부 - on:사용, '':미사용</desc>
+	<exam>on</exam>
+</list>
+<list>
+	<code>{_set.use.h}</code>
+	<desc>핸드폰 사용여부 - on:사용, '':미사용</desc>
+	<exam>on</exam>
+</list>
+<list>
+	<code>{_escrow.use}</code>
+	<desc>에스크로 사용여부 - Y:사용, N:미사용</desc>
+	<exam>Y</exam>
+</list>
+<list>
+	<code>{_escrow.c}</code>
+	<desc>에스크로 신용카드 사용여부 - on:사용, '':미사용</desc>
+	<exam>on</exam>
+</list>
+<list>
+	<code>{_escrow.o}</code>
+	<desc>에스크로 계좌이체 사용여부 - on:사용, '':미사용</desc>
+	<exam>on</exam>
+</list>
+<list>
+	<code>{_escrow.v}</code>
+	<desc>에스크로 가상계좌 사용여부 - on:사용, '':미사용</desc>
+	<exam>on</exam>
+</list>
+<list>
+	<code>{_escrow.min}</code>
+	<desc>에스크로 사용금액 (=비교대상:총결제금액)</desc>
+	<exam>100000</exam>
+</list>
+<list>
+	<code new="">{_egg.use}</code>
+	<desc>소비자피해보상보험(전자보증) 사용여부 - Y:사용, N:미사용</desc>
+	<exam>Y</exam>
+</list>
+<list>
+	<code new="">{_egg.min}</code>
+	<desc>소비자피해보상보험(전자보증) 사용금액 (=비교대상:총결제금액)</desc>
+	<exam>100000</exam>
+</list>
+<list>
+	<code new="">{_egg.scope}</code>
+	<desc>소비자피해보상보험(전자보증) 보증범위 - A:전체보증(무조건발급), P:부분보증</desc>
+	<exam>P</exam>
+</list>
+<list>
+	<code>{ # header }</code>
+	<desc>상단과 측면을 크게 감싸는 외곽파일 인클루드, 소스 맨위에 삽입</desc>
+	<exam></exam>
+</list>
+<list>
+	<code>{ # footer }</code>
+	<desc>하단을 크게 감싸는 외곽파일 인클루드, 소스 맨아래에 삽입</desc>
+	<exam></exam>
+</list>
+</codes>

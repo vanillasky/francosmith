@@ -1,0 +1,385 @@
+{*** 상품리스트 | todayshop/list.php ***}
+<!--header start-->
+<!--삭제하지마세요.-->
+{ # header }
+<!--header end-->
+
+
+<style>
+a { cursor:pointer; }
+.today_title { display:inline-block; width:100%; }
+.today_title div { float:left; }
+.today_title .space { width:20px; }
+.today_title .leftbtn { width:20px; text-align:right; padding-top:20px; }
+.today_title .date { width:110px; text-align:center; padding-top:20px; }
+.today_title .rightbtn { width:20px; text-align:left; padding-top:20px; }
+.today_title .todaybtn { float:right; padding-top:20px; }
+.today_title_underbar { margin-bottom:10px; }
+
+.today_search {background:#f5f5f5;border-top:2px solid #d5d5d5;border-bottom:2px solid #d5d5d5;padding:10px;}
+.today_search .sel {margin-right:20px;height:26px;_font-size:16px;border:1px solid #A9A9A9;}
+.today_search .input {border:none;background:url(../img/list_search_bg.gif) top left no-repeat;width:196px;height:26px;padding:7px 0 0 23px;}
+
+.item { width:100%;table-layout:fixed; }
+.item .image { width:165px; height:150px; overflow:hidden; margin:10px; border:solid 1px #363636; }
+.item .image img {height:150px;}
+.item .info1 { margin-top:15px; }
+.item .info1 .name { color:#db0511; font:bold 14px 'dotum','굴림'; margin-top:5px; }
+.item .info1 .date { color:#373737; font:12px 'dotum','굴림'; height:20px; margin-top:5px; }
+.item .info1 .label { color:#373737; font:12px 'dotum','굴림'; }
+.item .info1 .label .won { font-family: "돋움", "굴림"; font-size: 12px; color: #898989; }
+.item .info1 .label .consumer { font-family: "Arial", "굴림"; font-size: 16px; font-weight: bold; color: #a09f9f; text-decoration:line-through; }
+.item .info1 .label .price { font-family: "Arial", "Vernada"; font-size: 24px; font-weight: bold; color: #ee151d; }
+.item .info1 .timer { display:none; margin-top:5px; }
+.item .info1 .timer div { float:left; }
+.item .info1 .timer .contents { float:left; background:url(../img/t0day_list01_count01.gif); height:44px; padding-top:7px; }
+ item .info1 .timer .contents div {padding-right:7px;}
+.item .info2 { width:100%; border:solid 3px #E3E3E3; }
+.item .snsBox { margin:10px; }
+.item .statusBox { font:12px 'dotum','굴림'; }
+.item .statusBox .bar { float:left; }
+.item .statusBox span { font:bold 14px 'dotum','굴림'; color:#e00715; }
+.item .btnBox { padding:10px 0px; text-align:center; }
+.item_underbar { margin-top:10px; margin-bottom:10px; border-bottom:solid 1px #E3E3E3; width:100%; }
+</style>
+<script type="text/javascript" src="../../../lib/js/prototype.js"></script>
+<script type="text/javascript" src="../../../lib/js/todayshop.js"></script>
+<script type="text/javascript">
+var imgs = new Array();
+imgs[0] = "../img/today_count0.gif";
+imgs[1] = "../img/today_count1.gif";
+imgs[2] = "../img/today_count2.gif";
+imgs[3] = "../img/today_count3.gif";
+imgs[4] = "../img/today_count4.gif";
+imgs[5] = "../img/today_count5.gif";
+imgs[6] = "../img/today_count6.gif";
+imgs[7] = "../img/today_count7.gif";
+imgs[8] = "../img/today_count8.gif";
+imgs[9] = "../img/today_count9.gif";
+
+Timer.initImg(imgs);
+
+var member = null;
+var runout = new Array();
+var goodsStatus = new Array();
+
+function initList() {
+	TodayShop.getListData("{=_GET['category']}", "{=date.year}", "{=date.mon}", "{=date.mday}", setListData);
+}
+
+function initGoods(tgsno, startdt, enddt) {
+	var arrSdt = new Array();
+	if (startdt) arrSdt = startdt.split(" ");
+	var arrEdt = new Array();
+	if (enddt) arrEdt = enddt.split(" ");
+	if (arrSdt.length == 2 && arrSdt.length == 2) {
+		Timer.getTimer(tgsno, arrSdt[0], arrSdt[1], arrEdt[0], arrEdt[1], timerCallback);
+	}
+	else {
+		timerCallback(tgsno, 'noperiod');
+	}
+}
+
+function timerCallback(tgsno, status) {
+	goodsStatus[tgsno] = status;
+	setGoodsStatus(tgsno);
+}
+
+function setListData(res) {
+	try
+	{
+		if (res.member == "y") member=true;
+		else throw null;
+	}
+	catch (e) {
+		member=false;
+	}
+
+	try
+	{
+		if (res.data.length == 0) return;
+	}
+	catch (e) {
+		return;
+	}
+
+	// 현재 구매인원 표시(text)
+	for(var i = 0; i < res.data.length; i++) {
+		try
+		{
+			var buyerobj = document.getElementById("buyercnt"+res.data[i].tgsno);
+			if (buyerobj) buyerobj.innerHTML = parseInt(res.data[i].fakestock)+parseInt(res.data[i].buyercnt);
+
+			var smsobj = document.getElementById("smsBlock"+res.data[i].tgsno);
+			var smscntobj = document.getElementById("smsCnt"+res.data[i].tgsno);
+			if (smsobj && smscntobj && res.useSMS == "y" && smscntobj.value <= parseInt(res.smsCnt)) smsobj.style.display = "";
+
+			// 품절여부
+			try
+			{
+				runout[res.data[i].tgsno] = (res.data[i].runout == "1")? "y" : "n";
+			}
+			catch (e) {
+				runout[res.data[i].tgsno] = "n";
+			}
+
+			setGoodsStatus(res.data[i].tgsno);
+		}
+		catch (e)
+		{
+			if (smsobj) smsobj.style.display = "none";
+		}
+	}
+}
+
+function setGoodsStatus(tgsno) {
+	if (typeof(goodsStatus[tgsno]) == "undefined" || typeof(runout[tgsno]) == "undefined") return;
+
+	var tobj = document.getElementById("timerBlock"+tgsno);
+	var bobj = document.getElementById("btnBlock"+tgsno);
+	if (runout[tgsno] == "y") goodsStatus[tgsno] = "closed";
+	switch(goodsStatus[tgsno]) {
+		case 'ing' : {
+			var tbobj = document.getElementById("timerBox"+tgsno);
+			if (tbobj) tbobj.style.display = "inline-block";
+			if (tobj) tobj.innerHTML = "<div><span id='rTime_d"+tgsno+"'><img src='../img/today_count.gif' /></span><img src='../img/bn_day.gif' border='0'><span id='rTime_h"+tgsno+"'><img src='../img/today_count.gif' /><img src='../img/today_count.gif' /></span><img src='../img/bn_sp.gif' border='0'><span id='rTime_m"+tgsno+"'><img src='../img/today_count.gif' /><img src='../img/today_count.gif' /></span><img src='../img/bn_sp.gif' border='0'><span id='rTime_s"+tgsno+"'><img src='../img/today_count.gif' /><img src='../img/today_count.gif' /></span></div>";
+			if (bobj) bobj.innerHTML = "<a href=\"../todayshop/today_goods.php?tgsno="+tgsno+"&category={=ts_curcate.category}\"><img src='../img/t0day_list01_btndetail.gif' border='0'></a>";
+			break;
+		}
+		case 'closed': {
+			Timer.stopTimer(tgsno);
+			if (bobj) bobj.innerHTML = "<a href=\"../todayshop/today_goods.php?tgsno="+tgsno+"&category={=ts_curcate.category}\"><img src='../img/t0day_list01_btnend.gif' border='0'></a>";
+			break;
+		}
+		case 'noperiod': {
+			if (bobj) bobj.innerHTML = "<a href=\"../todayshop/today_goods.php?tgsno="+tgsno+"&category={=ts_curcate.category}\"><img src='../img/t0day_list01_btndetail.gif' border='0'></a>";
+		}
+		default :
+			if (bobj) bobj.innerHTML = "머지";
+
+
+
+	}
+
+}
+</script>
+<script type="text/javascript">
+function navi(year, month, day) {
+	location.href = "today_list.php?year="+year+"&month="+month+"&day="+day+"&category={=_GET['category']}";
+}
+
+function sendSms(tgsno) {
+	if (member === null) {
+		alert("잠시만 기다리세요.");
+		return;
+	}
+	if (member === true) window.open('../todayshop/today_sms.php?tgsno='+tgsno, 'todaysms', 'width=490, height=360');
+	else if(confirm("로그인후에 사용이 가능합니다. 로그인페이지로 이동하시겠습니까?")) location.href = "../member/login.php";
+}
+</script>
+
+<!-- 카테고리 노출 시작 (헤더에 카테고리가 노출되지 않을때에만 노출)-->
+<style>
+#page_cate { display:none; margin-bottom:20px; }
+#page_cate .topbg img { width:100%; height:13px; }
+
+#page_cate #ccg_closed #curCCateOuter { background-color:#49494A; }
+#page_cate #ccg_closed #curCCateOuter div { padding-left:23px; }
+#page_cate #ccg_closed #curCCateOuter div #curCCateBlock { color:#FFFFFF; }
+#page_cate #ccg_closed .togglebtn { background:url(../img/today_footbg.gif) top repeat-x; text-align:center; cursor:pointer; }
+
+#page_cate #ccg_opened .list { background-color:#49494A; }
+#page_cate #ccg_opened .catenm { width:195px; height:25px; }
+#page_cate #ccg_opened .catenm span { padding-left:30px; }
+#page_cate #ccg_opened .catenm span a { color:#FFFFFF; }
+#page_cate #ccg_opened .split { text-align:center; }
+#page_cate #ccg_opened .hei1 { height:1px; }
+#page_cate #ccg_opened .togglebtn { background:url(../img/today_footbg.gif) top repeat-x; text-align:center; padding-top:8px; cursor:pointer; }
+</style>
+<div id="page_cate">
+	<div class="topbg"><img src="../img/today_topbgsh.gif" /></div>
+	<div id="ccg_closed" style="display:none;">
+		<div id="curCCateOuter" style="<!--{? !ts_curcate}-->display:none;<!--{/}-->">
+			<div><img src="../img/bullet_category.gif" /> <span id="curCCateBlock"></span></div>
+		</div>
+		<div onclick="showCCate()">
+			<div class="togglebtn"><img src="../img/today_btnopen.gif" /></div>
+		</div>
+	</div>
+	<div id="ccg_opened">
+		<div class="list">
+			<table width="100%" cellpadding=0 cellspacing=0 border=0>
+			<tr><td class="catenm hei1"></td><td class="split hei1"></td><td class="catenm hei1"></td><td class="split hei1"></td><td class="catenm hei1"></td><td class="split hei1"></td><td class="catenm hei1"></td></tr>
+			<tr>
+			<!--{@ ts_category}-->
+				<td class="catenm" id="tsCCate{=.category}" <!--{? .category==ts_curcate['category']}-->style="background:url(../img/today_pointbox.gif) no-repeat"<!--{/}-->><span><a href="../todayshop/today_list.php?category={=.category}" onmouseover="this.style.color='#F9B000'" onmouseout="this.style.color='#FFFFFF'">{=.catnm}</a></span></td>
+				<!--{? .index_ != 0 && (.index_+1) % 4 == 0}--></tr><tr><!--{:}--><td class="split"><img src="../img/today_split.gif" /></td><!--{/}-->
+			<!--{/}-->
+			</tr>
+			</table>
+		</div>
+		<div onclick="showCCate()">
+			<div class="togglebtn"><img src="../img/today_btnclose.gif" /></div>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+function showCCate() {
+	var objc = document.getElementById("ccg_closed");
+	var objo = document.getElementById("ccg_opened");
+	if (objc.style.display == "none") {
+		objc.style.display = "block";
+		objo.style.display = "none";
+	}
+	else {
+		objc.style.display = "none";
+		objo.style.display = "block";
+	}
+}
+
+// 해당 상품의 카테고리 출력
+try
+{
+	if (!document.getElementById("header_cate")) {
+		document.getElementById("page_cate").style.display = "block";
+	}
+
+	if (typeof(setCategory) == "undefined") {
+		var regexp = /category=([0-9]*)/g;
+		var res = regexp.exec(location.href);
+
+		var cbobj = document.getElementById("curCCateBlock");
+
+		if (res.length > 1) {
+			var cateobj = document.getElementById("tsCCate" + res[1]);
+			if (cateobj) {
+				cateobj.style.background = "url(../img/today_pointbox.gif)";
+				var catenm = cateobj.getElementsByTagName("A")[0].innerHTML;
+				if (cbobj) cbobj.innerHTML = catenm;
+
+				var coobj = document.getElementById("curCCateOuter");
+				if (coobj) coobj.style.display = "block";
+			}
+		}
+		<!--{? category}-->
+		else {
+			if (cbobj.innerHTML == "") {
+				if (cbobj) cbobj.innerHTML = "{=category.catnm}";
+				var coobj = document.getElementById("curCCateOuter");
+				if (coobj) coobj.style.display = "block";
+
+				var cateobj = document.getElementById("tsCCate{=category.category}");
+				if (cateobj) cateobj.style.background = "url(../img/today_pointbox.gif)";
+			}
+		}
+		<!--{/}-->
+	}
+}
+catch (e)
+{
+	try
+	{
+		document.getElementById("page_cate").style.display = "block";
+	}
+	catch (e)
+	{
+	}
+}
+</script>
+<!-- 카테고리 노출 끝(헤더에 카테고리가 노출되지 않을때에만 노출)-->
+
+<!-- 오늘의 상품타이틀/날짜 시작--------------------------------->
+<div class="today_title">
+	<div class="title"><img src='../img/list_search_title01.gif' border="0"></div>
+	<div class="space"></div>
+	<div class="todaybtn">
+	<a href='../todayshop/today_goods.php'><img src='../img/calendar_btntoday.gif' border="0"></a>
+	<a href='../todayshop/calendar.php'><img src='../img/btn_calendar_01.gif' border="0"></a>
+	</div>
+</div>
+<div class="today_title_underbar"></div>
+<!-- 오늘의 상품타이틀/날짜  끝---------------------------------->
+
+
+<!-- 검색 폼 -->
+<div class="today_search">
+<form method="get">
+	<select name="category" class="sel">
+		<option value="">:::: 전체 ::::</option>
+		<!--{ @ category }-->
+		<option value="{.category}" {? _GET.category == .category}selected{/}>{.catnm}</option>
+		<!--{ / }-->
+	</select>
+
+	<img src="../img/list_search_bn01.gif" align="absmiddle">
+	<input type="text" name="keyword" value="{ _GET.keyword }" class="input" />
+	<input type="image" src="../img/list_search_btn01.gif" align="absmiddle" />
+	<a href="./list.php"><img src="../img/list_search_btn02.gif" align="absmiddle"></a>
+</form>
+</div>
+<!-- 검색 폼 끝 -->
+
+<!--{@ data}-->
+<div>
+	<table class="item">
+	<colgroup><col width="190" /><col /><col width="200" /></colgroup>
+	<tr>
+		<td>
+			<div class="image"><a href="../todayshop/today_goods.php?tgsno={=.tgsno}&category={=ts_curcate.category}" />{=goodsimgTS(.img_i)}</a></div>
+		</td>
+		<td valign="top">
+			<div class="info1">
+				<div class="name"><a href="../todayshop/today_goods.php?tgsno={=.tgsno}&category={=ts_curcate.category}" />{=.goodsnm}</a></div>
+				<!--{? .enddt}--><div class="date">판매기간 : {=.startdt} ~ {=.enddt}</div><!--{:}--><div class="date"></div><!--{/}-->
+				<div class="label">정상가격 : <span class="consumer">{=number_format(.consumer)}</span><span class="won">원</span></div>
+				<div class="label">할인가격 : <span class="price">{=number_format(.price)}</span><span class="won">원</span></div>
+				<!--{? .showtimer == 'y'}-->
+				<div class="timer" id="timerBox{=.tgsno}">
+					<div><img src="../img/t0day_list01_count.gif" /></div>
+					<div class="contents" id="timerBlock{=.tgsno}" /></div>
+					<div><img src="../img/t0day_list01_count02.gif" /></div>
+				</div>
+				<!--{/}-->
+			</div>
+		</td>
+		<td>
+			<div class="info2">
+				<div class="snsBox">
+					<img src='../img/bn_friend.gif' border="0">
+					<a href='{=.snspost.twitter}' target="_blank"><img src='../img/bn_t.gif' border="0"></a>
+					<a href='{=.snspost.facebook}' target="_blank"><img src='../img/bn_f.gif' border="0"></a>
+					<a href='{=.snspost.me2day}' target="_blank"><img src='../img/bn_t-26.gif' border="0"></a>
+					<span id="smsBlock{=.tgsno}" style="display:none"><a onclick="sendSms({=.tgsno})"><img src='../img/bn_sms.gif' border="0"></a></span>
+					<input type="hidden" id="smsCnt{=.tgsno}" value="{=.smsCnt}" />
+					<input type="hidden" id="totstock{=.tgsno}" value="{=.totstock}" />
+				</div>
+				<!--{? .limit_ea > 0}-->
+				<div class="statusBox">
+					<div class="bar"><img src="../img/t0day_list01_sp.gif" /></div>
+					<div>현재 <span id="">{.buyercnt}</span>명이</div>
+					<div>구매를 결정하셨습니다.</div>
+				</div>
+				<!--{/}-->
+				<div id="btnBlock{=.tgsno}" class="btnBox"></div>
+			</div>
+		</td>
+	</tr>
+	</table>
+</div>
+<div class="item_underbar"></div>
+<script type="text/javascript">initGoods({=.tgsno}, "{=.startdt}", "{=.enddt}");</script>
+<!--{/}-->
+<script type="text/javascript">//initList();</script>
+
+
+
+	<div class="paging">
+	{pg->page['navi']}
+	</div>
+
+
+
+<!--footer start-->
+<!--삭제하지마세요.-->
+{ # footer }
+<!--footer end-->

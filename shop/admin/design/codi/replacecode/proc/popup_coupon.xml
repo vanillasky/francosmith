@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="EUC-KR"?>
+<codes>
+<list>
+	<code power="">{@ cart->item}</code>
+	<desc>장바구니 상품목록</desc>
+	<exam more="proc/popup_coupon.cart-item.xml"></exam>
+</list>
+<list>
+	<code>{cart->dc}</code>
+	<desc>회원할인율</desc>
+	<exam>15%</exam>
+</list>
+</codes>

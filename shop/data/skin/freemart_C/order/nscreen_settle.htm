@@ -1,0 +1,459 @@
+{*** n스크린 결제하기(카드/무통장) | order/settle.php ***}
+{ # header }
+
+<style>
+#orderbox {border:5px solid #F3F3F3; padding:5px 10px;}
+#orderbox table th {width:100;}
+</style>
+
+<!-- 상단이미지 || 현재위치 -->
+<table width=100% cellpadding=0 cellspacing=0 border=0>
+<tr><td><img src="../img/common/title_payment.gif" border=0></td></tr>
+<tr><td class="path">home > <b>결제하기</b></td></tr>
+</table>
+
+
+<div class="indiv"><!-- Start indiv -->
+
+<!--{ = include_file( "proc/orderitem.htm" ) }-->
+
+<p>
+
+<form name=frmSettle method=post action="{orderActionUrl}" target=ifrmHidden>
+<!--{ @ _POST }-->
+<!--{ ? is_array(.value_) }-->
+	<!--{ @ .value_ }-->
+	<input type=hidden name="{.key_}[]" value="{..value_}">
+	<!--{ / }-->
+<!--{ : }-->
+	<input type=hidden name="{.key_}" value="{.value_}">
+<!--{ / }-->
+<!--{ / }-->
+
+<img src="../img/common/payment_txt_01.gif" border=0>
+<!-- 01 주문자정보 -->
+<table width=100% style="border:1px solid #DEDEDE" cellpadding=0 cellspacing=0>
+<tr>
+	<td width=150 valign=top align=right bgcolor="#F3F3F3"><img src="../img/common/order_step_01.gif"></td>
+	<td id="orderbox">
+
+	<table>
+	<col width=100>
+	<tr>
+		<td>주문자명</td>
+		<td>{nameOrder}</td>
+	</tr>
+	<tr>
+		<td>주문자 전화</td>
+		<td>{=implode("-",phoneOrder)}</td>
+	</tr>
+	<tr>
+		<td>주문자 핸드폰</td>
+		<td>{=implode("-",mobileOrder)}</td>
+	</tr>
+	<tr>
+		<td>이메일</td>
+		<td>{email}</td>
+	</tr>
+	</table>
+
+	</td>
+</tr>
+</table><div style="font-size:0;height:5px"></div>
+
+<!-- 02 배송정보 -->
+<table width=100% style="border:1px solid #DEDEDE" cellpadding=0 cellspacing=0>
+<tr>
+	<td width=150 valign=top align=right bgcolor="#F3F3F3"><img src="../img/common/order_step_02.gif"></td>
+	<td id="orderbox">
+
+	<table>
+	<col width=100>
+	<tr>
+		<td>받는자명</td>
+		<td>{nameReceiver}</td>
+	</tr>
+	<tr>
+		<td>받는자 전화</td>
+		<td>{=implode("-",phoneReceiver)}</td>
+	</tr>
+	<tr>
+		<td>받는자 핸드폰</td>
+		<td>{=implode("-",mobileReceiver)}</td>
+	</tr>
+	<tr>
+		<td>우편번호</td>
+		<td>{=implode("-",zipcode)}</td>
+	</tr>
+	<tr>
+		<td>주소</td>
+		<td>{address} {address_sub}</td>
+	</tr>
+	</table>
+
+	</td>
+</tr>
+</table><div style="font-size:0;height:5px"></div>
+
+<!-- 03 결제금액 -->
+<table width=100% style="border:1px solid #DEDEDE" cellpadding=0 cellspacing=0>
+<tr>
+	<td width=150 valign=top align=right bgcolor="#F3F3F3"><img src="../img/common/order_step_03.gif"></td>
+	<td id="orderbox">
+
+	<table>
+	<col width=100>
+	<tr>
+		<td>총주문금액</td>
+		<td>{=number_format(cart->goodsprice)}원</td>
+	</tr>
+	<tr>
+		<td>배송비</td>
+		<td>
+			{_msg_delivery}
+			<!--{ ? _delivery.extra_price > 0 }-->
+			<div class="small red">(지역별 배송비 {=number_format(_delivery.extra_price)} 원 포함)</div>
+			<!--{ / }-->
+		</td>
+	</tr>
+
+	<!--{ ? _addreserve }-->
+	<tr>
+		<td>추가적립금</td>
+		<td>{=number_format(_addreserve)}원</td>
+	</tr>
+	<!--{ / }-->
+	<tr>
+		<td>회원할인</td>
+		<td>- {=number_format(cart->dcprice)}원</td>
+	</tr>
+	<!--{ ? cart->special_discount_amount }-->
+	<tr>
+		<td>상품할인</td>
+		<td>- {=number_format(cart->special_discount_amount)}원</td>
+	</tr>
+	<!--{ / }-->
+	<!--{ ? coupon }-->
+	<tr>
+		<td>쿠폰할인</td>
+		<td>- {=number_format(coupon)}원{ ? view_aboutdc && about_coupon //어바웃쿠폰} (어바웃쿠폰 {=number_format(about_coupon)}원){ / }</td>
+	</tr>
+	<!--{ / }-->
+	<!--{ ? coupon_emoney }-->
+	<tr>
+		<td>쿠폰적립</td>
+		<td>{=number_format(coupon_emoney)}원</td>
+	</tr>
+	<!--{ / }-->
+	<tr>
+		<td>적립금 사용</td>
+		<td>- {=number_format(emoney)}원</td>
+	</tr>
+	<!--{ ? ncash.ncash_emoney //네이버마일리지계산}-->
+	<tr>
+		<td>네이버마일리지</td>
+		<td>- {=number_format(ncash.ncash_emoney)}원</td>
+	</tr>
+	<!--{ / }-->
+	<!--{ ? ncash.ncash_cash //네이버캐쉬계산}-->
+	<tr>
+		<td>네이버캐쉬</td>
+		<td>- {=number_format(ncash.ncash_cash)}원</td>
+	</tr>
+	<!--{ / }-->
+	<!--{ ? ncash.save_mode == 'ncash' || ncash.save_mode == 'both' //네이버마일리지 적립여부}-->
+	<tr>
+		<td>네이버마일리지<br/>적립</td>
+		<td>
+			&nbsp;&nbsp;{=ncash.totalAccumRate}%
+			<font class="small red">
+			<!--{ ? _POST.save_mode=='ncash' }-->
+			※ 적립금은 가맹점 대신 <b>네이버 마일리지</b>가 적립이 됩니다.
+			<!--{ / }-->
+			</font>
+		</td>
+	</tr>
+	<!--{ / }-->
+	<!--{ ? eggFee }-->
+	<tr>
+		<td>보증보험 수수료</td>
+		<td>{=number_format(eggFee)}원</td>
+	</tr>
+	<!--{ / }-->
+	<tr>
+		<td>결제금액</td>
+		<td><b>{=number_format(settleprice)}원</b></td>
+	</tr>
+	</table>
+	</td>
+</tr>
+</table><div style="font-size:0;height:5px"></div>
+
+<!-- 04-1 무통장입금 --><!--{ ? settlekind=="a" }-->
+<table width=100% style="border:1px solid #DEDEDE" cellpadding=0 cellspacing=0>
+<tr>
+	<td width=150 valign=top align=right bgcolor="#F3F3F3"><img src="../img/common/order_step_04.gif"></td>
+	<td id="orderbox">
+
+	<table>
+	<col width=100>
+	<tr>
+		<td>입금계좌선택</td>
+		<td>
+		<select name=bankAccount required label="입금계좌">
+		<option value="">== 입금계좌를 선택해주세요 ==
+		<!--{ @ _bank }-->
+		<option value="{.sno}">{.bank} {.account} {.name}
+		<!--{ / }-->
+		</select>
+		</td>
+	</tr>
+	<tr>
+		<td>입금자명</td>
+		<td>
+		<input type=text name=bankSender class=line value="{nameOrder}" required  label="입금자명">
+		</td>
+	</tr>
+	<tr>
+		<td>입금금액</td>
+		<td><b class=red>{=number_format(settleprice)}원</b></td>
+	</tr>
+	</table>
+
+	</td>
+</tr>
+</table><div style="font-size:0;height:5px"></div>
+<!--{ / }-->
+
+</form>
+
+<!-- 04-2 신용카드 --><!--{ ? settlekind=="c" }-->
+<table width=100% style="border:1px solid #DEDEDE" cellpadding=0 cellspacing=0>
+<tr>
+	<td width=150 valign=top align=right bgcolor="#F3F3F3"><img src="../img/common/order_step_04.gif"></td>
+	<td id="orderbox">
+
+	<table width=100%>
+	<col width=100>
+	<tr>
+		<td>카드결제</td>
+		<td>신용카드</td>
+	</tr>
+	<tr>
+		<td>결제금액</td>
+		<td><b class=red>{=number_format(settleprice)}원</b></td>
+	</tr>
+	</table>
+
+	{ card_gate }
+
+	</td>
+</tr>
+</table><div style="font-size:0;height:5px"></div>
+
+<!-- 04-3 계좌이체 --><!--{ : settlekind=="o" }-->
+<table width=100% style="border:1px solid #DEDEDE" cellpadding=0 cellspacing=0>
+<tr>
+	<td width=150 valign=top align=right bgcolor="#F3F3F3"><img src="../img/common/order_step_04.gif"></td>
+	<td id="orderbox">
+
+	<table width=100%>
+	<col width=100>
+	<tr>
+		<td>결제방법</td>
+		<td>계좌이체</td>
+	</tr>
+	<tr>
+		<td>결제금액</td>
+		<td><b class=red>{=number_format(settleprice)}원</b></td>
+	</tr>
+	</table>
+
+	{ card_gate }
+
+	</td>
+</tr>
+</table><div style="font-size:0;height:5px"></div>
+
+<!-- 04-4 가상계좌 --><!--{ : settlekind=="v" }-->
+<table width=100% style="border:1px solid #DEDEDE" cellpadding=0 cellspacing=0>
+<tr>
+	<td width=150 valign=top align=right bgcolor="#F3F3F3"><img src="../img/common/order_step_04.gif"></td>
+	<td id="orderbox">
+
+	<table width=100%>
+	<col width=100>
+	<tr>
+		<td>결제방법</td>
+		<td>가상계좌</td>
+	</tr>
+	<tr>
+		<td>결제금액</td>
+		<td><b class=red>{=number_format(settleprice)}원</b></td>
+	</tr>
+	</table>
+
+	{ card_gate }
+
+	</td>
+</tr>
+</table><div style="font-size:0;height:5px"></div>
+
+<!-- 04-5 핸드폰 --><!--{ : settlekind=="h" }-->
+<table width=100% style="border:1px solid #DEDEDE" cellpadding=0 cellspacing=0>
+<tr>
+	<td width=150 valign=top align=right bgcolor="#F3F3F3"><img src="../img/common/order_step_04.gif"></td>
+	<td id="orderbox">
+
+	<table width=100%>
+	<col width=100>
+	<tr>
+		<td>결제방법</td>
+		<td>핸드폰</td>
+	</tr>
+	<tr>
+		<td>결제금액</td>
+		<td><b class=red>{=number_format(settleprice)}원</b></td>
+	</tr>
+	</table>
+
+	<!--{ ? MobiliansEnabled != true }-->
+	{ card_gate }
+	<!--{ / }-->
+
+	</td>
+</tr>
+</table><div style="font-size:0;height:5px"></div>
+
+<!-- 04-6 포인트 --><!--{ : settlekind=="p" }-->
+<table width=100% style="border:1px solid #DEDEDE" cellpadding=0 cellspacing=0>
+<tr>
+	<td width=150 valign=top align=right bgcolor="#F3F3F3"><img src="../img/common/order_step_04.gif"></td>
+	<td id="orderbox">
+
+	<table width=100%>
+	<col width=100>
+	<tr>
+		<td>결제방법</td>
+		<td>포인트</td>
+	</tr>
+	<tr>
+		<td>결제금액</td>
+		<td><b class=red>{=number_format(settleprice)}원</b></td>
+	</tr>
+	</table>
+
+	{ card_gate }
+
+	</td>
+</tr>
+</table><div style="font-size:0;height:5px"></div>
+
+<!-- 04-7 CUP --><!--{ : settlekind=="u" }-->
+<table width=100% style="border:1px solid #DEDEDE" cellpadding=0 cellspacing=0>
+<tr>
+	<td width=150 valign=top align=right bgcolor="#F3F3F3"><img src="../img/common/order_step_04.gif"></td>
+	<td id="orderbox">
+
+	<table width=100%>
+	<col width=100>
+	<tr>
+		<td>결제방법</td>
+		<td>CUPS (중국카드는 할부 및 부분취소가 지원되지 않습니다.)</td>
+	</tr>
+	<tr>
+		<td>결제금액</td>
+		<td><b class=red>{=number_format(settleprice)}원</b></td>
+	</tr>
+	</table>
+
+	{ card_gate }
+
+	</td>
+</tr>
+</table><div style="font-size:0;height:5px"></div>
+
+<!-- 04-8 옐로페이 --><!--{ : settlekind=="y" }-->
+<table width=100% style="border:1px solid #DEDEDE" cellpadding=0 cellspacing=0>
+<tr>
+	<td width=150 valign=top align=right bgcolor="#F3F3F3"><img src="../img/common/order_step_04.gif"></td>
+	<td id="orderbox">
+
+	<table width=100%>
+	<col width=100>
+	<tr>
+		<td>결제방법</td>
+		<td>옐로페이</td>
+	</tr>
+	<tr>
+		<td>결제금액</td>
+		<td><b class=red>{=number_format(settleprice)}원</b></td>
+	</tr>
+	</table>
+
+	{ card_gate }
+
+	</td>
+</tr>
+</table><div style="font-size:0;height:5px"></div>
+<!--{ / }-->
+
+<div style="padding:20px" align=center id="avoidDblPay">
+<a href="javascript:submitSettleForm()"><img src="../img/common/btn_payment.gif"></a>
+<a href="order.php"><img src="../img/common/btn_back.gif"></a>
+</div>
+
+</div><!-- End indiv -->
+
+
+<script>
+function swapSettleButton(){
+	if (document.getElementById('avoidDblPay')) document.getElementById('avoidDblPay').innerHTML = "<a href='javascript:submitSettleForm()'><img src='../img/common/btn_payment.gif'></a><a href='order.php'><img src='../img/common/btn_back.gif'></a>";
+}
+function submitSettleForm()
+{
+	var fm = document.frmSettle;
+
+	if (!chkForm(fm)) return;
+
+	/*** 주문필수정보 체크 ***/
+	if (!fm.nameOrder.value) return;
+	if (!fm.ordno.value) return;
+
+	/**결제 모듈이 popup이 아닌경우에 플러그인을 체크합니다.**/
+	<!--{ ? _cfg.settlePgPopup == '' }-->
+		/*** PG 플러그인 설치여부 체크 ***/
+		<!--{ ? settlekind != "a" }--> //무통장
+		if (typeof(chkPgFlag) != 'undefined') {
+			if (chkPgFlag() == false) {
+				return;
+			}
+		}
+		<!--{ / }-->
+	<!--{ / }-->
+
+	if (document.getElementById('avoidDblPay')) document.getElementById('avoidDblPay').innerHTML = "--- 현재 결제처리중입니다. 잠시만 기다려주세요. ---<br><a href='javascript:swapSettleButton();'><img src='../img/common/btn_cancel.gif'></a>";
+
+	<!--{ ? _cfg.settlePg == 'dacom' && settlekind != "a" }-->
+	window.open("","Window","width=330, height=430, status=yes, scrollbars=no,resizable=yes, menubar=no");
+	<!--{ / }-->
+
+	<!--{ ? _cfg.settlePg == 'lgdacom' && settlekind == "u" }-->
+	window.open("","Window","width=390, height=430, status=yes, scrollbars=no,resizable=yes, menubar=no");
+	<!--{ / }-->
+
+
+	fm.submit();
+
+}
+
+//kcp 의 경우 결제 버튼이 kcp 페이지 자체에 있어, 이나무 settleform 을 미리 submit 시켜야 한다.
+<!--{ ? _cfg.settlePg == 'kcp' }-->
+window.onload = function(){
+	submitSettleForm();
+};
+<!--{ / }-->
+
+</script>
+
+{ # footer }

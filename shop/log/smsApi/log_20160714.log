@@ -1,0 +1,10 @@
+
+===== API LOG START =====
+[POSTDATA]
+a:3:{s:4:"mode";s:12:"smsAcceptApi";s:9:"sms_logNo";s:4:"1472";s:6:"sms_no";N;}
+[REQUEST]
+a:5:{s:12:"msgTranDTime";s:19:"2016-07-14 13:11:48";s:7:"msgKind";s:3:"sms";s:13:"msgSmsContent";s:83:"알루미늄 톱날 6인치x60날 29,700원. 우리 1005-602-458044 김성환. 대신화물,착불 발송.";s:13:"msgMmsSubject";N;s:13:"msgMmsContent";N;}
+[RESULT]
+d:0;
+
+===== API LOG END =====

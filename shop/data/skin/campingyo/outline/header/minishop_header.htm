@@ -1,0 +1,70 @@
+{*** 미니샵 상단파일 | main/index.php ***}
+
+<a name="top"></a>
+
+
+<table width=100% height=100% cellpadding=0 cellspacing=0 border=0>
+<tr>
+<td>
+
+<table width={_cfg['shopSize']} height=100% align={_cfg['shopAlign']} cellpadding=0 cellspacing=0 border=0>
+<tr>
+<td valign=bottom align="left">
+<!------------------ 미니샵 로고 시작 ------------------->
+<img src="../../img/main/m_logo_minishop.gif">
+<!------------------ 미니샵 로고 끝 ------------------->
+</td>
+
+<td align=right valign=bottom>
+<!------------------ 미니샵 전용 로고 시작 ------------------->
+<img src="../../img/main/m_logo_naver_checkout.gif">
+<!------------------ 미니샵 전용 로고 끝 ------------------->
+
+</td>
+</tr>
+</table>
+
+</td>
+</tr>
+
+<tr>
+<td>
+<table width="{_cfg['shopSize']}" align="{_cfg['shopAlign']}" cellpadding=0 cellspacing=0 background="../../img/main/m_bg_topmenu.gif">
+<tr>
+<td width="{_cfg['shopLineWidthL']}"></td>
+
+<!------------  상단메뉴 new arrival, discount goods, best goods, 검색창 시작 ----------->
+<td background="../../img/main/m_bg_topmenu.gif" >
+<form action="../goods/goods_search.php" onsubmit="return chkForm(this)">
+<input type=hidden name=searched value="Y">
+<input type=hidden name=log value="1">
+<input type=hidden name=skey value="all">
+<table cellpadding=0 cellspacing=0 border=0>
+<tr>
+<td><a href="../goods/goods_cart.php"><img src="../../img/main/m_top_menu01.gif"></a></td>
+<td><a href="http://nid.naver.com/nidlogin.login?mode=form&template=&url=http%3A%2F%2Fcheckout.naver.com%2Fcustomer%2ForderList.nhn%3F%26r%3D1" target="_blank"><img src="../../img/main/m_top_menu02.gif"></a></td>
+<td><a href="http://nid.naver.com/nidlogin.login?mode=form&template=&url=http%3A%2F%2Fcheckout.naver.com%2Fcustomer%2FinquiryList.nhn%3F%26r%3D1" target="_blank"><img src="../../img/main/m_top_menu03.gif"></a></td>
+<td><a href="http://checkout.naver.com/customer/about.nhn" target="_blank"><img src="../../img/main/m_top_menu04.gif"></a></td>
+<td align=right width=100% style="padding-right:10px">
+<!-- 검색창 -------->
+<table cellpadding=0 cellspacing=0 border=0>
+<tr>
+<td><input name=sword type=text class=line style="width:150;height:22;" value="{_GET['sword']}" required label="검색어"></td>
+<td width=3></td>
+<td><input type=image src="../../img/main/m_btn_search.gif"></td>
+</td></tr></table>
+<!-- 검색창 -------->
+</td>
+</tr>
+</table>
+</form>
+<!------------  상단메뉴 new arrival, discount goods, best goods, 검색창 끝 ----------->
+</td>
+<td width="{_cfg['shopLineWidthR']}"></td>
+</tr>
+<tr><td colspan=4 height=18 background="../../img/main/top_menu_bottom_back.gif"></td></tr>
+</table>
+
+</td>	
+</tr>
+</table>

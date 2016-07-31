@@ -1,0 +1,146 @@
+{*** 상품문의 작성 | goods/goods_qna_register.php ***}
+{ # header }
+<?php {page_title} = "상품문의";?>
+{#sub_header}
+
+<style type="text/css">
+section#nreviewregister {background:#FFFFFF; padding:12px;}
+section#nreviewregister table{border:none; border-top:solid 1px #dbdbdb;width:100%;}
+section#nreviewregister table td{padding:8px 0px 8px 10px; vertical-align:middle; border-bottom:solid 1px #dbdbdb;}
+section#nreviewregister table th{text-align:center; background:#f5f5f5; width:70px; vertical-align:middle; border-bottom:solid 1px #dbdbdb; color:#353535; font-size:12px;}
+section#nreviewregister table .img{padding:5px; width:60px;}
+section#nreviewregister table .img img{border:solid 1px #d9d9d9;}
+section#nreviewregister table td input[type=text], input[type=password], input[type=email], input[type=number], select{width:95%;height:21px;}
+section#nreviewregister table td textarea{width:95%;height:116px;}
+section#nreviewregister .btn_center {margin:auto; width:198px; height:34px; margin-top:20px; margin-bottom:20px;}
+section#nreviewregister .btn_center .btn_save{border:none; background:#f35151; border-radius:3px; color:#FFFFFF; font-size:13px; width:94px; height:34px; float:left; font-family:dotum; font-weight:bold;}
+section#nreviewregister .btn_center .btn_prev{border:none; background:#808591; border-radius:3px; color:#FFFFFF; font-size:13px; width:94px; height:34px; float:right; font-family:dotum; font-weight:bold;}
+section#nreviewregister .goods-nm{color:#353535; font-weight:bold; fonst-size:14px; margin-bottom:5px; overflow:hidden; word-break:break-all; }
+section#nreviewregister .goods-price{color:#f03c3c; font-size:12px;}
+
+section#nreviewregister .policyCollectionTable{border:none; border:solid 1px #dbdbdb; width:100%;}
+section#nreviewregister .policyCollectionTable .policyCollectionTitle{color: #0080FF; font-weight: bold; border-bottom: 0px;}
+section#nreviewregister .policyCollectionTable .policyCollectionContents{border-bottom: 0px;}
+section#nreviewregister .policyCollectionTable .policyCollectionRadio{text-align:center; }
+</style>
+
+<form method=post action="{goodsQNAActionUrl}" enctype="multipart/form-data" onSubmit="return chkForm2(this)">
+<input type=hidden name=mode value="{_mode}">
+<input type=hidden name=goodsno value="{_goodsno}">
+<input type=hidden name=sno value="{_sno}">
+<input type=hidden name=referer value="{_referer}">
+
+<section id="nreviewregister"  class="content">
+
+<table>
+	<tr>
+		<th class="img">{=goodsimgMobile(_goods.img_s,50)}</th>
+		<td>
+			<div class="goods-nm">
+				{_goods.goodsnm}
+			</div>
+			<div class="goods-price">
+				{=number_format(_goods.price)}원
+			</div>
+		</td>
+	</tr>
+	</table>
+	<div style="height:12px;"></div>
+	<table>
+	<tr>
+		<th>작성자</th>
+		<td>
+			<input type="text" name="name" required label="작성자" value="{_data.name}" />
+		</td>
+	</tr>
+	<!--{ ? ! _sess && empty(_data['m_no']) // 작성자==회원 }-->
+	<tr>
+		<th>비밀번호</th>
+		<td>
+			<input type=password name=password style="width:100" required label="비밀번호">
+		</td>
+	</tr>
+	<!--{ / }-->
+	<tr>
+		<th>이메일</th>
+		<td>
+			<input type="email" name="email"  label="이메일" value="{_data.email}" />
+		</td>
+	</tr>
+	<tr>
+		<th>휴대폰</th>
+		<td>
+			<input type="number" name="phone"  label="휴대폰번호" value="{_data.phone}" />
+		</td>
+	</tr>
+	<!--{ ? _cfg.qnaSecret == 'secret' // 비밀글 }-->
+	<tr>
+		<th>비밀글</th>
+		<td>
+			<label><input type="checkbox" name="secret" value="1" {_data.chksecret} /> 비밀글</label>
+		</td>
+	</tr>
+	<!--{ / }-->
+	<tr>
+		<th>제목</th>
+		<td>
+			<input type="text" name="subject" required label="제목" value="{_data.subject}" />
+		</td>
+	</tr>
+	<tr>
+		<th>내용</th>
+		<td>
+			<textarea name="contents" required label="내용"  >{_data.contents}</textarea>
+		</td>
+	</tr>
+	<!--{ ? _cfg.qnaSpamBoard&2 }-->
+	<tr>
+		<th>자동등록방지</th>
+		<td class=cell_L><!--{ = include_file( "proc/_captcha.htm" ) }--></td>
+	</tr>
+	<!--{ / }-->
+	</table>
+
+	<div style="height:12px;"></div>
+	<table cellpadding="0" cellspacing="0" class="policyCollectionTable">
+	<tr>
+		<td class="policyCollectionTitle">개인정보 수집 및 이용에 대한 안내</td>
+	</tr>
+	<tr>
+		<td class="policyCollectionContents">{termsPolicyCollection4}</td>
+	</tr>
+	<tr>
+		<td class="policyCollectionRadio">
+			<input type="radio" name="agree" value="y" /> 동의합니다 &nbsp;&nbsp;&nbsp;
+			<input type="radio" name="agree" value="n" /> 동의하지 않습니다
+		</td>
+	</tr>
+	</table>
+
+	<div class="m_review">
+		<div class="btn_center">
+			<button type="submit" id="save-btn" class="btn_save">확 인</button>
+			<button type="button" id="prev-btn" class="btn_prev"  onclick="history.back();">취 소</button>
+		</div>
+	</div>
+</section>
+</form>
+
+<script>
+function chkForm2(fm)
+{
+	if(checkAgreement(fm) != true) return false;
+
+	return chkForm(fm);
+}
+
+function checkAgreement(fm){
+	if(fm.agree[0].checked !== true){
+		alert('개인정보 수집 및 이용에 대한 안내에 동의 하셔야 작성이 가능합니다.');
+		return false;
+	}
+
+	return true;
+}
+</script>
+{ # footer }

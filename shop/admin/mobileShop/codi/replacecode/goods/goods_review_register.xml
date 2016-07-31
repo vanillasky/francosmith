@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="EUC-KR"?>
+<codes>
+<list>
+	<code power="">{_mode}</code>
+	<desc>모드 - add_review:작성, mod_review:수정, reply_review:답글</desc>
+	<exam>mod_review</exam>
+</list>
+<list>
+	<code power="">{_sno}</code>
+	<desc>게시물번호</desc>
+	<exam>2</exam>
+</list>
+<list>
+	<code power="">{_goodsno}</code>
+	<desc>상품번호</desc>
+	<exam>37</exam>
+</list>
+<list>
+	<code>{_goods.goodsnm}</code>
+	<desc>상품명</desc>
+	<exam>런닝 운동화</exam>
+</list>
+<list>
+	<code>{_goods.price}</code>
+	<desc>판매가</desc>
+	<exam>4800</exam>
+</list>
+<list>
+	<code>{_goods.img_s}</code>
+	<desc>리스트이미지</desc>
+	<exam>1164783000_s_0.jpg</exam>
+</list>
+<list>
+	<code>{_data['m_no']}</code>
+	<desc>회원번호</desc>
+	<exam>1</exam>
+</list>
+<list>
+	<code>{_data.m_id}</code>
+	<desc>회원아이디</desc>
+	<exam>testid</exam>
+</list>
+<list>
+	<code>{_data.name}</code>
+	<desc>비회원명</desc>
+	<exam>게스트</exam>
+</list>
+<list>
+	<code power="">{_data.subject}</code>
+	<desc>제목</desc>
+	<exam>아이디어 Gooood!</exam>
+</list>
+<list>
+	<code power="">{_data.contents}</code>
+	<desc>내용</desc>
+	<exam>아이디어 좋은 상품이네요.</exam>
+</list>
+<list>
+	<code>{_data.point['5']}</code>
+	<desc>평가 5점 checked 여부</desc>
+	<exam>checked</exam>
+</list>
+<list>
+	<code>{_data.point['4']}</code>
+	<desc>평가 4점 checked 여부</desc>
+	<exam>checked</exam>
+</list>
+<list>
+	<code>{_data.point['3']}</code>
+	<desc>평가 3점 checked 여부</desc>
+	<exam>checked</exam>
+</list>
+<list>
+	<code>{_data.point['2']}</code>
+	<desc>평가 2점 checked 여부</desc>
+	<exam>checked</exam>
+</list>
+<list>
+	<code>{_data.point['1']}</code>
+	<desc>평가 1점 checked 여부</desc>
+	<exam>checked</exam>
+</list>
+</codes>

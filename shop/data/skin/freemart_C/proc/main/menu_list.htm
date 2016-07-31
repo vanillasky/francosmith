@@ -1,0 +1,49 @@
+{*** 메뉴리스트 | main/html.php?htmid=proc/main/menu_list.htm ***}
+
+
+
+<!--{ @ dataCategory( _cfg.subCategory, 1 ) }-->
+<li class="menu-container">
+	<p class="lv1"><a href="../goods/goods_list.php?category={.category}">{.catnm}</a></p>
+	<div class="dropdown" style="width:{_cfg['shopSize']}px;">
+	<!--{ ? .sub }-->
+		<!--{ @ .sub }-->
+		<div class="menu_lv2">
+			<p><a href="../goods/goods_list.php?category={..category}"><span class="mlink boldf">{..catnm}</span></a>
+				<div class="menu_lv3">
+					<ul>
+				<!--{ @ dataSubCategory( ..category, true ) }-->
+						<li><a href="/shop/goods/goods_list.php?&category={...category}"><span class="mlink">{...catnm}</span></a></li>
+				<!--{ / }-->
+					</ul>
+				</div>
+			</p>
+		</div>	
+		<!--{ / }-->
+	<!--{ / }-->
+	</div>
+</li>	
+<!--{ / }-->
+
+
+
+	<table width=100% cellpadding=0 cellspacing=0 class="cateUnfold">
+	<!--{ @ dataCategory( _cfg.subCategory, 1 ) }-->
+	<tr>
+		<td class="catebar"><a href="../goods/goods_list.php?category={.category}">{.catnm}</a></td>
+	</tr>
+	<!--{ ? .sub }-->
+	<tr>
+		<td class="catesub">
+		<table>
+		<!--{ @ .sub }-->
+		<tr><td class="cate"><a href="../goods/goods_list.php?category={..category}">{..catnm}</a></td></tr>
+		<!--{ / }-->
+		</table>
+		</td>
+	</tr>
+	<!--{ / }-->
+	<!--{ / }-->
+	</table>
+
+

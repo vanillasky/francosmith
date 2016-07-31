@@ -1,0 +1,28 @@
+<? 
+$member_grp_ruleset = array( 
+'automaticFl' => 'y',
+'apprSystem' => 'figure',
+'apprPointTitle' => '등급기준',
+'apprPointLabel' => 'Point',
+'apprPointOrderPrice' => '1',
+'apprPointOrderPriceUnit' => '100000',
+'apprPointOrderPricePoint' => '5',
+'mobile_apprPointOrderPriceUnit' => '',
+'mobile_apprPointOrderPricePoint' => '',
+'apprPointOrderRepeatPoint' => '',
+'mobile_apprPointOrderRepeatPoint' => '',
+'apprPointReviewRepeat' => '1',
+'apprPointReviewRepeatPoint' => '5',
+'mobile_apprPointReviewRepeatPoint' => '',
+'apprPointLoginRepeat' => '1',
+'apprPointLoginRepeatPoint' => '5',
+'mobile_apprPointLoginRepeatPoint' => '',
+'calcPeriodFl' => 'n',
+'calcPeriodBegin' => '-1d',
+'calcPeriodMonth' => '1',
+'calcCycleMonth' => '6',
+'calcCycleDay' => '1',
+'calcKeep' => '6',
+'useMypageLayerBox' => 'y',
+); 
+?>

@@ -1,0 +1,70 @@
+{*** 메인용 상단파일 | main/index.php ***}
+<a name="top"></a>
+<div id="header_main">
+	<div id="top_1" style="width:{_cfg['shopSize']}px;">
+		<div id="top_logo"><!-- 배너관리에서 수정가능 --><!--{ @ dataBanner( 90 ) }-->{.tag}<!--{ / }--></div>
+		<div style="float:right; position:relative;">
+			<ul id="top_menu">
+				<!--{ ? !_sess }-->
+				<li><a href="../member/login.php" class="top_ul_font">로그인</a></li>
+				<li class="top_ul_line">|</li>
+				<li><a href="../member/join.php" class="top_ul_font">회원가입</a></li>
+				<li class="top_ul_line">|</li>
+				<!--{ : }-->
+				<li><a href="../member/logout.php" class="top_ul_font">로그아웃</a></li>
+				<li class="top_ul_line">|</li>
+				<!--{ / }-->
+				<li><a href="../member/myinfo.php?&" { ? useMypageLayerBox == 'y' }onClick="return fnMypageLayerBox({ ? _sess }true{ / });"{ / } class="top_ul_font">마이페이지</a></li>
+				<li class="top_ul_line">|</li>
+				<li><a href="../mypage/mypage_orderlist.php" class="top_ul_font">주문/배송</a></li>
+				<li class="top_ul_line">|</li>
+				<li><a href="../service/customer.php" class="top_ul_font">고객센터</a></li>
+				<li class="top_ul_line">|</li>
+				<li><img src="/shop/data/images/web/icon/shopping-cart-24.png" width="11" height="10"> <a href="../goods/goods_cart.php" class="top_ul_font">장바구니</a></li>
+			</ul>
+		</div>
+		<div id="top_back" style="float:left;  z-index:-1; text-align:center; border:1px solid; background-color:red; height:150px; width:{_cfg['shopSize']}px;">
+			<div id="top_search">
+				<!-- 검색 시작----------------------------------->
+				<form action="../goods/goods_search.php" onsubmit="return chkForm(this)">
+				<input type=hidden name=searched value="Y">
+				<input type=hidden name=log value="1">
+				<input type=hidden name=skey value="all">
+				<input type="hidden" name="hid_pr_text" value="{_s_type['pr_text']}" />
+				<input type="hidden" name="hid_link_url" value="{_s_type['link_url']}" />
+				<input type="hidden" id="edit" name="edit" value=""/>
+				<!--{? _s_type['keyword_chk'] == 'on' && _s_type['pr_text'] && !_GET['sword']}-->
+				<?php
+					{id} = "sword";
+					{onkeyup} = "document.getElementById('edit').value='Y'";
+					{onclick} = "document.getElementById('sword').value=''";
+					{value} = {_s_type['pr_text']};
+				?>
+				<!--{:}-->
+				<?php
+					{value} = {_GET['sword']};
+				?>
+				<!--{/}-->
+				<table cellpadding="0" cellspacing="0" border="0" class="search_table">
+				<tr>
+					<td class="search_td"><input name=sword type=text id="{id}" class="search_input" onkeyup="{onkeyup}" onclick="{onclick}" value="{value}" required label="검색어"></td>
+					<td class="search_btn_top"><input type=image src="../../img/main/icon_search.gif"></td>
+				</tr>
+				</table>
+				</form>
+				<!-- 검색 끝-------------------------------------->
+			</div>
+			sdfasfasdf
+		</div>
+	</div>
+	<div id="top_cate" style="width:{_cfg['shopSize']}px;">
+		<!-- 카테고리 메뉴 시작 -->
+		<!-- 관련 세부소스는 '기타/추가페이지(proc) > 카테고리메뉴- menuCategory.htm' 안에 있습니다 -->
+		{ # menuCategory }
+		<!-- 카테고리 메뉴 끝 -->
+		<div id="top_navi">
+			<p class="brand"><a href="#" class="catenavi">BRAND</a></p>
+			<p class="event"><a href="#" class="catenavi">EVENT</a></p>
+		</div>
+	</div>
+</div>

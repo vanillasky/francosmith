@@ -1,0 +1,102 @@
+<?php /* Template_ 2.2.7 2016/04/16 08:49:17 /www/francotr3287_godo_co_kr/shop/data/skin/freemart/proc/shopping_info.htm 000005929 */ ?>
+<table id="order-notice-table">
+	<tfoot>
+		<tr>
+			<td class="order-notice-foot-left"></td>
+			<td class="order-notice-foot-right"></td>
+		</tr>
+	</tfoot>
+	<tbody>
+		<tr>
+			<td class="order-notice-left">&nbsp;</td>
+			<td class="order-notice-right">&nbsp;</td>
+		</tr>
+		<tr>
+			<td class="delivery"><p>배송정보</p></td>
+			<td class="delivery-desc">
+				<p class="normal">배송기간은 결제 완료 후 <span class="stress">2~7일</span>정도 소요됩니다(주말,공휴일 제외).</p>
+				<p class="normal">단, 제작기간이 필요하거나 해외직수입 상품 등의 경우 배송기간이 더 소요될 수 있습니다.</p>
+				<p class="normal"><span class="stress">- 기본배송&nbsp;:&nbsp;</span>10만원 이상 구매시 무료배송, 10만원 미만 구매시 2,500원</p>
+				<p class="normal"><span class="stress">- 업체직배송&nbsp;:&nbsp;</span>동일업체 주문금액 합계가 일정 금액 미만이면 택배비가 부과됩니다.</p>
+				<p class="normal">&nbsp;</p>
+				<p class="normal"><span class="stress">부피가 크거나 무거운 제품, 묶음 배송이 불가능한 경우 별도의 배송비가 적용됩니다.</span>(상품 상세정보에 명시/사전연락 드립니다)</p>
+				<p class="normal"><span class="underline">일부 도서(島嶼)지역은 택배사운임정책에 따라 도선배송비가 추가</span>될수 있습니다.</p>
+				<p class="normal"><span class="stress">기계, 전동공구, 목재 등</span> 택배집하가 안되는 상품은 일정 및 배송비 협의 후 발송해드립니다.</p>
+				
+				<p class="normal">주문하신 날&nbsp;<span class="stress">당일에 발송</span>해도 <span class="stress">다음날 도착</span>을 보장할 수는 없습니다.</p>
+				<p class="normal">택배사의 물량/배송스케줄에 따라 도착 날짜는 유동적이므로 시간적인 여유를 가지고 주문해 주시기 바랍니다.</p>
+				<p class="normal">&nbsp;</p>
+				<p class="heading">주문내역/배송조회: <span class="normal">마이페이지에서 주문내역과 택배운송장번호로 추적조회 가능합니다.</span></p>
+				<p class="normal">(비회원의 경우 - 주문조회>주문번호를 이용하여 조회>택배운송장번호 확인)</p>
+				<p class="normal">&nbsp;</p>
+				<p class="heading">CJ대한통운 1588-2255, <a href="http://www.doortodoor.co.kr" target="_blank">www.doortodoor.co.kr</a></p>
+			</td>
+		</tr>
+	</tbody>
+</table>
+
+<table id="order-notice-table">
+	<tfoot>
+		<tr>
+			<td class="order-notice-foot-left">&nbsp;</td>
+			<td class="order-notice-foot-right">&nbsp;</td>
+		</tr>
+	</tfoot>
+	<tbody>
+		<tr>
+			<td class="order-notice-left">&nbsp;</td>
+			<td class="order-notice-right">&nbsp;</td>
+		</tr>
+		<tr>
+			<td class="return"><p>교환/반품/환불</p></td>
+			<td class="delivery-desc">
+				<p class="heading">기간: <span class="normal">상품 수령일로부터 </span><span class="stress">7일</span><span class="normal">이내 교환/반품/환불이 가능합니다.(업체직배송 상품의 경우 해당업체 기준에 따름)</span></p>
+				<p class="normal">&nbsp;</p>
+				<p class="heading">배송비: <span class="normal">상품하자, 오배송으로 인한 교환/반품 배송비는 업체가 부담합니다.</span></p>
+				<p class="normal">고객의 변심/주문실수으로 인한 상품 교환/반품시에는 <span class="underline">왕복배송비를 부담하셔야 합니다(착불로 받으신 경우는 편도 배송비)</span></p>
+				<p class="normal">반품 배송비는 택배접수시 책정된 배송비를 기준으로 합니다(상품의 부피/무게에 따라 집하시에 배송비가 추가될 수 있음을 양해하여 주시기 바랍니다).</p>
+				<p class="normal">&nbsp;</p>
+				<p class="heading">교환.반품,환불이 안되는 상품: <span class="normal">별도조색 페인트,주문제작상품, 포장/제품훼손 등으로 가치가 상실된 상품</span></p>
+				
+				<p class="normal">&nbsp;</p>
+				<p class="heading">교환 및 반송방법:</p>
+				<p class="normal indent1EM"><span class="normal">반드시 전화 또는 게시판을 이용하여 먼저 통보하여 주시기 바랍니다.</span></p>
+				<p class="normal indent1EM"><span class="normal">전화/게시판으로 접수하신 교환/반송건은 택배기사님이 방문/수령합니다.</span></p>
+				<p class="normal indent1EM"><span class="normal">개인적으로 착불로 보내실 때에는 반드시 대한통운택배(1588-1255)을 이용해 주셔야합니다.</span></p>
+				<p class="normal indent1EM"><span class="underline">반품시에는 물류센터</span>(경기 고양시 덕양구 지축동 CJ대한통운 천하대리점)로 보내주셔야 정상 처리됩니다.</p>
+				<p class="normal indent1EM"><span class="stress">겉포장 없이 본 상품박스에 택배 운송장을 붙여서</span> 반송하시면 반품이 불가합니다</p>
+				<p class="normal indent1EM"><span class="stress">배송박스 재사용이 불가할 때는 본상품이 파손되지 않게 다른 박스를 이용하여 포장해 주셔야합니다(반송중 파손제품 처리불가)</span></p>
+				<p class="normal indent1EM"><span class="normal">상품 확인을 위해 개봉을 하는 상품외에 개봉을 하지 않아도 확인할 수 있는 상품은 개봉흔적이 있으면 반품이 불가합니다.</span></p>
+			</td>
+		</tr>
+	</tbody>
+</table>
+
+
+<table id="order-notice-table">
+	<tfoot>
+		<tr>
+			<td class="order-notice-foot-left">&nbsp;</td>
+			<td class="order-notice-foot-right">&nbsp;</td>
+		</tr>
+	</tfoot>
+	<tbody>
+		<tr>
+			<td class="order-notice-left">&nbsp;</td>
+			<td class="order-notice-right">&nbsp;</td>
+		</tr>
+		<tr>
+			<td class="contact"><p>상담/영수증</p></td>
+			<td class="delivery-desc">
+				<p class="heading">상담전화: 1599-7835, e-mail:<a href="mailto:cs@francosmith.com">cs@francosmith.com</a></p>
+				<p class="heading">운영시간: <span class="normal">평일 09:30 ~ 18:00 (토/일/공휴일 휴무)</span></p>
+				<p class="normal">운영시간 이전/이후에는 이메일이나 사이트 게시판을 이용하여 주시기 바랍니다.</p>
+				<p class="normal">&nbsp;</p>
+				<p class="normal">세금계산서 및 현금영수증은 구매확정 후 <span class="stress">마이페이지 > 주문내역/배송조회</span> 화면에서 출력하실 수 있습니다.</p>
+				<p class="normal">신용카드로 결제하신 경우에는 별도로 세금계산서를 교부하지 않습니다.</p>                
+				<p class="normal">현금영수증/지출증빙은 둘 중 한가지만 발급 가능합니다.</p>                
+	
+			</td>
+		</tr>
+	</tbody>
+</table>

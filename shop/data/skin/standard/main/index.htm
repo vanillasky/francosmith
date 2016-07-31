@@ -1,0 +1,124 @@
+{*** 쇼핑몰 메인본문 | index.php ***}
+{ # header }
+
+<!-- 메인팝업창 -->
+<!--{ ? page_cache_enabled // MAIN_POPUP#PAGECACHE_PATCH_CHECKER : ☜ 삭제금지 }-->
+<div id="template-popup-layer" style="display: none; position: absolute; z-index: 200;"></div>
+<div id="template-popup-move-layer" style="display: none; position: absolute; z-index: 200; cursor: move;"></div>
+<!--{ : }-->
+<!--{ @ dataPopup() }-->
+
+<!--{ ? .type == 'layer' && isset(_COOKIE['blnCookie_' + .code]) === false }-->
+<div id="{'blnCookie_' + .code}" STYLE="position:absolute; width:{.width}px; height:{.height}px; left:{.left}px; top:{.top}px; z-index:200;">
+	<!--{ = eval("\$_GET[code]='blnCookie_" + .code + "';") }-->
+	<!--{ = include_file( .file ) }-->
+</div>
+<!--{ / }-->
+
+<!--{ ? .type == 'layerMove' && isset(_COOKIE['blnCookie_' + .code]) === false }-->
+<!-- 이동레이어 팝업창 시작 -->
+<div id="{'blnCookie_' + .code}" STYLE="position:absolute; width:{.width}px; height:{.height}px; left:{.left}px; top:{.top}px; z-index:200;">
+	<div onmousedown="Start_move(event,'{'blnCookie_' + .code}');" onmouseup="Moveing_stop();" style='cursor:move;'>
+		<table border="0" cellspacing="0" cellpadding="0">
+			<tr>
+				<td>
+					<!--{ = eval("\$_GET[code]='blnCookie_" + .code + "';") }-->
+					<!--{ = include_file( .file ) }-->
+				</td>
+			</tr>
+		</table>
+	</div>
+</div>
+<!-- 이동레이어 팝업창 끝 -->
+<!--{ / }-->
+
+<!--{ / }-->
+
+<script language="JavaScript"><!--
+<!--{ @ dataPopup() }-->
+<!--{ ? .type == '' }-->
+if ( !getCookie( "blnCookie_{.code}" ) ) { // {.name} 팝업호출
+var property = 'width={.width}, height={.height}, top={.top}, left={.left}, scrollbars=no, toolbar=no';
+var win=window.open( './html.php?htmid={.file}&code=blnCookie_{.code}', '{.code}', property );
+if(win) win.focus();
+}
+<!--{ / }-->
+<!--{ / }-->
+//--></script>
+<!--{ / }-->
+<div><!-- 메인 이미지 배너 (배너관리에서 수정가능) --><!--{ @ dataBanner( 1 ) }-->{.tag}<!--{ / }--></div>
+<div class="div_line" style="margin-bottom:30px;"><!-- --></div>
+
+
+<!-- 아래 상품리스트에 쓰이는 세부소스는 '디자인관리 > 상품(goods) > 상품목록 > 갤러리형,리스트형,리스트그룹형,상품이동형' 에 있습니다  -->
+
+<!-- 상품 리스트 #1 -->
+<!--{ ? _cfg_step[0].chk  }-->
+<div class="yuls_main_tit"><a href="../goods/goods_grp_01.php">{_cfg_step[0].title}</a></div>
+<!--{ = this->assign( 'loop', dataDisplayGoods( 0, _cfg_step[0].img, _cfg_step[0].page_num ) ) // 데이타 호출 }-->
+<!--{ = this->assign( 'cols', _cfg_step[0].cols ) // 행당 컬럼수 }-->
+<!--{ = this->assign( 'size', _cfg[_cfg_step[0].img] ) // 이미지 사이즈 }-->
+<!--{ = this->assign( 'id', "main_list_01" ) // 고유 ID }-->
+<!--{ = this->assign( 'dpCfg', _cfg_step[0] ) // 설정 }-->
+<!--{ = include_file( "goods/list/" + _cfg_step[0].tpl + ".htm" ) }-->
+<!--{ / }-->
+
+<div class="div_main_line"><!-- --></div>
+
+<!-- 상품 리스트 #2 -->
+<!--{ ? _cfg_step[1].chk  }-->
+<div class="yuls_main_tit"><a href="../goods/goods_grp_02.php">{_cfg_step[1].title}</a></div>
+<!--{ = this->assign( 'loop', dataDisplayGoods( 1, _cfg_step[1].img, _cfg_step[1].page_num ) ) // 데이타 호출 }-->
+<!--{ = this->assign( 'cols', _cfg_step[1].cols ) // 행당 컬럼수 }-->
+<!--{ = this->assign( 'size', _cfg[_cfg_step[1].img] ) // 이미지 사이즈 }-->
+<!--{ = this->assign( 'id', "main_list_02" ) // 고유 ID }-->
+<!--{ = this->assign( 'dpCfg', _cfg_step[1] ) // 설정 }-->
+<!--{ = include_file( "goods/list/" + _cfg_step[1].tpl + ".htm" ) }-->
+<!--{ / }-->
+
+<div class="div_main_line"><!-- --></div>
+
+<!-- 상품 리스트 #3 -->
+<!--{ ? _cfg_step[2].chk  }-->
+<div class="yuls_main_tit"><a href="../goods/goods_grp_03.php">{_cfg_step[2].title}</a></div>
+<!--{ = this->assign( 'loop', dataDisplayGoods( 2, _cfg_step[2].img, _cfg_step[2].page_num ) ) // 데이타 호출 }-->
+<!--{ = this->assign( 'cols', _cfg_step[2].cols ) // 행당 컬럼수 }-->
+<!--{ = this->assign( 'size', _cfg[_cfg_step[2].img] ) // 이미지 사이즈 }-->
+<!--{ = this->assign( 'id', "main_list_03" ) // 고유 ID }-->
+<!--{ = this->assign( 'dpCfg', _cfg_step[2] ) // 설정 }-->
+<!--{ = include_file( "goods/list/" + _cfg_step[2].tpl + ".htm" ) }-->
+<!--{ / }-->
+
+<div class="div_main_line"><!-- --></div>
+
+<!-- 상품 리스트 #4 -->
+<!--{ ? _cfg_step[3].chk  }-->
+<div class="yuls_main_tit"><a href="../goods/goods_grp_04.php">{_cfg_step[3].title}</a></div>
+<!--{ = this->assign( 'loop', dataDisplayGoods( 3, _cfg_step[3].img, _cfg_step[3].page_num ) ) // 데이타 호출 }-->
+<!--{ = this->assign( 'cols', _cfg_step[3].cols ) // 행당 컬럼수 }-->
+<!--{ = this->assign( 'size', _cfg[_cfg_step[3].img] ) // 이미지 사이즈 }-->
+<!--{ = this->assign( 'id', "main_list_04" ) // 고유 ID }-->
+<!--{ = this->assign( 'dpCfg', _cfg_step[3] ) // 설정 }-->
+<!--{ = include_file( "goods/list/" + _cfg_step[3].tpl + ".htm" ) }-->
+<!--{ / }-->
+
+<div class="div_main_line"><!-- --></div>
+
+<!-- 상품 리스트 #5 -->
+<!--{ ? _cfg_step[4].chk  }-->
+<div class="yuls_main_tit"><a href="../goods/goods_grp_05.php">{_cfg_step[4].title}</a></div>
+<!--{ = this->assign( 'loop', dataDisplayGoods( 4, _cfg_step[4].img, _cfg_step[4].page_num ) ) // 데이타 호출 }-->
+<!--{ = this->assign( 'cols', _cfg_step[4].cols ) // 행당 컬럼수 }-->
+<!--{ = this->assign( 'size', _cfg[_cfg_step[4].img] ) // 이미지 사이즈 }-->
+<!--{ = this->assign( 'id', "main_list_05" ) // 고유 ID }-->
+<!--{ = this->assign( 'dpCfg', _cfg_step[4] ) // 설정 }-->
+<!--{ = include_file( "goods/list/" + _cfg_step[4].tpl + ".htm" ) }-->
+<!--{ / }-->
+
+<div style="padding-top:15px"></div>
+
+<!-- 멀티 팝업 -->
+<script src="../proc/multi_popup.js"></script>
+<script>multiPopup('{_cfg.tplSkin}');</script>
+
+{ # footer }

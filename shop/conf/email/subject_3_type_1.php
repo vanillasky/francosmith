@@ -1,0 +1,1 @@
+<?$headers[Subject] = "배송중 메일";?>

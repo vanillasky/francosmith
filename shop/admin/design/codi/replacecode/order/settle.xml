@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="EUC-KR"?>
+<codes>
+<list>
+	<code power="">{=include_file("proc/orderitem.htm")}</code>
+	<desc>장바구니 상품목록 출력파일 인클루드</desc>
+	<exam></exam>
+</list>
+<list>
+	<code>{nameOrder}</code>
+	<desc>주문자명</desc>
+	<exam>홍길동</exam>
+</list>
+<list>
+	<code>{=implode("-",phoneOrder)}</code>
+	<desc>주문자 전화</desc>
+	<exam>02-1234-5678</exam>
+</list>
+<list>
+	<code>{=implode("-",mobileOrder)}</code>
+	<desc>주문자 핸드폰</desc>
+	<exam>010-1234-5678</exam>
+</list>
+<list>
+	<code>{email}</code>
+	<desc>이메일</desc>
+	<exam>xxx@godo.co.kr</exam>
+</list>
+<list>
+	<code>{nameReceiver}</code>
+	<desc>받는자명</desc>
+	<exam>홍길동</exam>
+</list>
+<list>
+	<code>{=implode("-",phoneReceiver)}</code>
+	<desc>받는자 전화</desc>
+	<exam>02-1234-5678</exam>
+</list>
+<list>
+	<code>{=implode("-",mobileReceiver)}</code>
+	<desc>받는자 핸드폰</desc>
+	<exam>010-1234-5678</exam>
+</list>
+<list>
+	<code>{=implode("-",zipcode)}</code>
+	<desc>우편번호</desc>
+	<exam>123-456</exam>
+</list>
+<list>
+	<code>{address}</code>
+	<desc>주소1</desc>
+	<exam>서울 강남구 대치동</exam>
+</list>
+<list>
+	<code>{address_sub}</code>
+	<desc>주소2</desc>
+	<exam>123번지</exam>
+</list>
+<list>
+	<code>{=number_format(cart->totalprice)}</code>
+	<desc>총주문금액 (=상품합계금액+배송비)</desc>
+	<exam>8,300</exam>
+</list>
+<list>
+	<code>{=number_format(coupon)}</code>
+	<desc>쿠폰할인</desc>
+	<exam>400</exam>
+</list>
+<list>
+	<code>{=number_format(emoney)}</code>
+	<desc>적립금 사용</desc>
+	<exam>2,000</exam>
+</list>
+<list>
+	<code>{=number_format(settleprice)}</code>
+	<desc>결제금액</desc>
+	<exam>5,200</exam>
+</list>
+<list>
+	<code power="">{settlekind}</code>
+	<desc>결제수단 - a:무통장입금, c:신용카드, o:계좌이체, v:가상계좌, h:핸드폰</desc>
+	<exam>a</exam>
+</list>
+<list>
+	<code power="">{@ _bank}</code>
+	<desc>입금계좌</desc>
+	<exam more="order/settle._bank.xml"></exam>
+</list>
+<list>
+	<code power="">{ # card_gate }</code>
+	<desc>PG 인클루드</desc>
+	<exam></exam>
+</list>
+</codes>

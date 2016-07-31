@@ -1,0 +1,90 @@
+{*** 쿠폰문자 전송 | todayshop/popup_sms_coupon.php ***}
+<html>
+<head>
+<style>
+a { cursor:pointer; }
+div, td, th, span { font-family:'돋움','굴림'; font-size:11px;color:#555555;}
+strong {font-size:12px;font-weight:bold;}
+
+.box {background-image:url(../img/phone_bg.gif); width:465px;}
+.box .contents { padding-left:40px;}
+.box .title {font-size:14px; font-weight:bold; color:#000000;}
+.box .subtitle {font-size:11px; color:#555555; margin:5px; letter-spacing:-1px;}
+.box .subtitle strong {color:#F15B00;}
+
+.box .tb {width:390px; border-collapse:collapse; margin:10px 0px 10px 0px;}
+.box .tb th {border:solid 1px #E6E6E6; background-color:#F6F6F6; color:#000000; font-weight:normal; font-family:'돋움','굴림'; letter-spacing:-1px; width:100px; text-align:left; padding-left:10px;}
+.box .tb td {border:solid 1px #E6E6E6; padding:10px;}
+
+
+.box .msg {word-break:break-all; word-wrap:break-word; }
+.box .msg textarea {width:100%;height:70px;border:none;display:none;}
+
+.input {width:50px; font-family:verdana; border:solid 1px #D6D6D6;}
+.select {font-family:verdana; border:solid 1px #D6D6D6;}
+.btn {text-align:center;}
+</style>
+<script type="text/javascript" src="../common.js"></script>
+<script type="text/javascript">
+function chkForm(fobj) {
+
+	if (!fobj.rcvphone0.value) {
+		alert("받는 사람의 휴대폰 번호를 입력하세요.");
+		fobj.rcvphone0.focus();
+		return false;
+	}
+	if (!fobj.rcvphone1.value) {
+		alert("받는 사람의 휴대폰 번호를 입력하세요.");
+		fobj.rcvphone1.focus();
+		return false;
+	}
+	if (!fobj.rcvphone2.value) {
+		alert("받는 사람의 휴대폰 번호를 입력하세요.");
+		fobj.rcvphone2.focus();
+		return false;
+	}
+
+	return true;
+}
+</script>
+</head>
+<body>
+<form name="frmSMS" method="post" action="./indb.popup_sms_coupon.php" onSubmit="return chkForm(this);">
+<input type="hidden" name="ordno" value="{=ordno}">
+<input type="hidden" name="action" value="do">
+<div><img src="../img/phone_01.gif" /></div>
+<div class="box">
+	<div class="contents">
+		<div class="title"><img src="../img/phone_blt.gif" /> 쿠폰전송</div>
+		<div class="subtitle"><strong>{=nameReceiver}님</strong>에게 <strong>SMS쿠폰</strong>을 전송합니다.</div>
+		<table class="tb" cellpadding="0" cellspacing="0" border="0">
+		<tr>
+			<th>휴대폰 번호</th>
+			<td>
+				<input type="text" name="rcvphone0" class="input" maxlength="3" onkeydown="onlynumber()" /> - <input type="text" name="rcvphone1" class="input" maxlength="4" onkeydown="onlynumber()" /> - <input type="text" name="rcvphone2" class="input" maxlength="4" onkeydown="onlynumber()" />
+			</td>
+		</tr>
+		<tr>
+			<th>전송 횟수</th>
+			<td>
+				<strong>{=cp_sms_cnt}회</strong> <span style="display:inline-block;color:#db0511;padding-left:10px;">*쿠폰 재전송은 <strong>최대3회</strong> 까지만 가능합니다.</span>
+
+			</td>
+		</tr>
+		<tr>
+			<th>내용</th>
+			<td class="msg">{=smsMsg}
+			<textarea name="message" readonly>{=smsMsg}</textarea>
+			</td>
+		</tr>
+		</table>
+	</div>
+	<div class="btn">
+		<input type="image" src="../img/phone_send.gif" /> <a onclick="self.close()"><img src="../img/phone_end.gif" /></a>
+	</div>
+</div>
+<div><img src="../img/phone_foot.gif" /><a onclick="self.close();"><img src="../img/phone_close.gif" /></a></div>
+</form>
+<iframe name="ifrmHidden" style="display:none;"></iframe>
+</body>
+</html>

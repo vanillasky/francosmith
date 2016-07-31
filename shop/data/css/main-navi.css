@@ -1,0 +1,170 @@
+
+/** Shop by Brand */
+
+/* .DB_etc4_bar { width:99%; text-align:right; height:25px; margin:10px 0 0 1px; }  */
+#DB_etc4, #DB_etc4 ul, #DB_etc4 li{margin:0;padding:0;list-style:none}
+#DB_etc4 a{text-decoration:none;font-size:11px;font-family:'malgun gothic';}
+#DB_etc4 a:hover{text-decoration:underline}
+
+#DB_etc4 {  display:inline-block; *display:inline; margin:5px 0 5px 5px;}
+#DB_etc4 .DB_btn{height:15px;margin-top:15px; margin-left:10px;}
+#DB_etc4 .DB_btn li{float:left;margin:0 1px 1px 0}
+#DB_etc4 .DB_btn li a{text-indent:-9999px;display:block;width:15px;height:15px;background:url('http://francosmith.godohosting.com/main/btn_bg.gif') no-repeat;}
+#DB_etc4 .DB_btn li.DB_all a{width:27px; background-position:-668px 0}
+#DB_etc4 .DB_btn li.DB_k1 a{background-position:0 0}
+#DB_etc4 .DB_btn li.DB_k2 a{background-position:-16px 0}
+#DB_etc4 .DB_btn li.DB_k3 a{background-position:-32px 0}
+#DB_etc4 .DB_btn li.DB_k4 a{background-position:-48px 0}
+#DB_etc4 .DB_btn li.DB_k5 a{background-position:-64px 0}
+#DB_etc4 .DB_btn li.DB_k6 a{background-position:-80px 0}
+#DB_etc4 .DB_btn li.DB_k7 a{background-position:-96px 0}
+#DB_etc4 .DB_btn li.DB_k8 a{background-position:-112px 0}
+#DB_etc4 .DB_btn li.DB_k9 a{background-position:-128px 0}
+#DB_etc4 .DB_btn li.DB_k10 a{background-position:-144px 0}
+#DB_etc4 .DB_btn li.DB_k11 a{background-position:-160px 0}
+#DB_etc4 .DB_btn li.DB_k12 a{background-position:-176px 0}
+#DB_etc4 .DB_btn li.DB_k13 a{background-position:-192px 0}
+#DB_etc4 .DB_btn li.DB_k14 a{background-position:-208px 0}
+#DB_etc4 .DB_btn li.DB_k15 a{background-position:-224px 0}
+#DB_etc4 .DB_btn li.DB_k16 a{background-position:-240px 0}
+#DB_etc4 .DB_btn li.DB_k17 a{background-position:-256px 0}
+#DB_etc4 .DB_btn li.DB_k18 a{background-position:-272px 0}
+#DB_etc4 .DB_btn li.DB_k19 a{background-position:-288px 0}
+#DB_etc4 .DB_btn li.DB_k20 a{background-position:-304px 0}
+#DB_etc4 .DB_btn li.DB_k21 a{background-position:-320px 0}
+#DB_etc4 .DB_btn li.DB_k22 a{background-position:-336px 0}
+#DB_etc4 .DB_btn li.DB_k23 a{background-position:-352px 0}
+#DB_etc4 .DB_btn li.DB_k24 a{background-position:-368px 0}
+#DB_etc4 .DB_btn li.DB_k25 a{background-position:-384px 0}
+#DB_etc4 .DB_btn li.DB_k26 a{background-position:-400px 0}
+#DB_etc4 .DB_btn li.DB_k27 a{background-position:-416px 0}
+#DB_etc4 .DB_btn li.DB_k28 a{background-position:-432px 0}
+#DB_etc4 .DB_btn li.DB_k29 a{background-position:-448px 0}
+#DB_etc4 .DB_btn li.DB_k30 a{background-position:-464px 0}
+#DB_etc4 .DB_btn li.DB_k31 a{background-position:-480px 0}
+#DB_etc4 .DB_btn li.DB_k32 a{background-position:-496px 0}
+#DB_etc4 .DB_btn li.DB_k33 a{background-position:-512px 0}
+#DB_etc4 .DB_btn li.DB_k34 a{background-position:-528px 0}
+#DB_etc4 .DB_btn li.DB_k35 a{background-position:-544px 0}
+#DB_etc4 .DB_btn li.DB_k36 a{background-position:-560px 0}
+#DB_etc4 .DB_btn li.DB_k37 a{background-position:-576px 0}
+#DB_etc4 .DB_btn li.DB_k38 a{background-position:-592px 0}
+#DB_etc4 .DB_btn li.DB_k39 a{background-position:-608px 0}
+#DB_etc4 .DB_btn li.DB_k40 a{background-position:-624px 0}
+#DB_etc4 .DB_btn li.DB_etc a{width:27px;background-position:-640px 0}
+#DB_etc4 .DB_btn li.DB_eng a{width:27px;background-position:-696px 0}
+
+#DB_etc4 .DB_btn li.DB_all a.DB_select{width:27px;background-position:-668px -16px}
+#DB_etc4 .DB_btn li.DB_k1 a.DB_select{background-position:0 -16px}
+#DB_etc4 .DB_btn li.DB_k2 a.DB_select{background-position:-16px -16px}
+#DB_etc4 .DB_btn li.DB_k3 a.DB_select{background-position:-32px -16px}
+#DB_etc4 .DB_btn li.DB_k4 a.DB_select{background-position:-48px -16px}
+#DB_etc4 .DB_btn li.DB_k5 a.DB_select{background-position:-64px -16px}
+#DB_etc4 .DB_btn li.DB_k6 a.DB_select{background-position:-80px -16px}
+#DB_etc4 .DB_btn li.DB_k7 a.DB_select{background-position:-96px -16px}
+#DB_etc4 .DB_btn li.DB_k8 a.DB_select{background-position:-112px -16px}
+#DB_etc4 .DB_btn li.DB_k9 a.DB_select{background-position:-128px -16px}
+#DB_etc4 .DB_btn li.DB_k10 a.DB_select{background-position:-144px -16px}
+#DB_etc4 .DB_btn li.DB_k11 a.DB_select{background-position:-160px -16px}
+#DB_etc4 .DB_btn li.DB_k12 a.DB_select{background-position:-176px -16px}
+#DB_etc4 .DB_btn li.DB_k13 a.DB_select{background-position:-192px -16px}
+#DB_etc4 .DB_btn li.DB_k14 a.DB_select{background-position:-208px -16px}
+#DB_etc4 .DB_btn li.DB_k15 a.DB_select{background-position:-224px -16px}
+#DB_etc4 .DB_btn li.DB_k16 a.DB_select{background-position:-240px -16px}
+#DB_etc4 .DB_btn li.DB_k17 a.DB_select{background-position:-256px -16px}
+#DB_etc4 .DB_btn li.DB_k18 a.DB_select{background-position:-272px -16px}
+#DB_etc4 .DB_btn li.DB_k19 a.DB_select{background-position:-288px -16px}
+#DB_etc4 .DB_btn li.DB_k20 a.DB_select{background-position:-304px -16px}
+#DB_etc4 .DB_btn li.DB_k21 a.DB_select{background-position:-320px -16px}
+#DB_etc4 .DB_btn li.DB_k22 a.DB_select{background-position:-336px -16px}
+#DB_etc4 .DB_btn li.DB_k23 a.DB_select{background-position:-352px -16px}
+#DB_etc4 .DB_btn li.DB_k24 a.DB_select{background-position:-368px -16px}
+#DB_etc4 .DB_btn li.DB_k25 a.DB_select{background-position:-384px -16px}
+#DB_etc4 .DB_btn li.DB_k26 a.DB_select{background-position:-400px -16px}
+#DB_etc4 .DB_btn li.DB_k27 a.DB_select{background-position:-416px -16px}
+#DB_etc4 .DB_btn li.DB_k28 a.DB_select{background-position:-432px -16px}
+#DB_etc4 .DB_btn li.DB_k29 a.DB_select{background-position:-448px -16px}
+#DB_etc4 .DB_btn li.DB_k30 a.DB_select{background-position:-464px -16px}
+#DB_etc4 .DB_btn li.DB_k31 a.DB_select{background-position:-480px -16px}
+#DB_etc4 .DB_btn li.DB_k32 a.DB_select{background-position:-496px -16px}
+#DB_etc4 .DB_btn li.DB_k33 a.DB_select{background-position:-512px -16px}
+#DB_etc4 .DB_btn li.DB_k34 a.DB_select{background-position:-528px -16px}
+#DB_etc4 .DB_btn li.DB_k35 a.DB_select{background-position:-544px -16px}
+#DB_etc4 .DB_btn li.DB_k36 a.DB_select{background-position:-560px -16px}
+#DB_etc4 .DB_btn li.DB_k37 a.DB_select{background-position:-576px -16px}
+#DB_etc4 .DB_btn li.DB_k38 a.DB_select{background-position:-592px -16px}
+#DB_etc4 .DB_btn li.DB_k39 a.DB_select{background-position:-608px -16px}
+#DB_etc4 .DB_btn li.DB_k40 a.DB_select{background-position:-624px -16px}
+#DB_etc4 .DB_btn li.DB_etc a.DB_select{width:27px;background-position:-640px -16px}
+#DB_etc4 .DB_btn li.DB_eng a.DB_select{width:27px;background-position:-696px -16px}
+
+#DB_etc4 .gap { width:10px; }
+
+
+#DB_etc4 .DB_list{
+	/*clear:both;*/
+	width: 720px;/** 936px;*/
+	height: 335px; /** 410px; */
+	overflow:auto;
+	border:1px solid #ffffff;
+	outline:1px solid #eee;
+	padding:10px;
+	background:#f4f4f4;
+	scrollbar-face-color:#cdcaca;
+	scrollbar-arrow-color:#000000;
+	scrollbar-track-color:#f8f8f8;
+	scrollbar-base-color:#cdcaca;
+	scrollbar-shadow-color:#cccccc;
+	scrollbar-darkshadow-color:#cdcaca;
+	margin-top:5px;
+	display:inline-block;
+	*display:inline;
+}
+#DB_etc4 .DB_list li{float:left;width:150px; height:20px;  margin:0; line-height:20px;}
+#DB_etc4 .DB_list li a { color:#666!important; font-weight:normal; }
+#DB_etc4 .DB_list li a:hover { color:#000!important; font-weight:bold; }
+
+
+#rc_brand { 
+	display:inline-block;
+	*display:inline; 
+	width:235px; 
+	margin-left:5px; 
+	height:335px;
+}
+
+#rc_brand, #rc_brand ul { 
+	margin:5 0 0 0 ; 
+	padding:0;
+	list-style:none
+}
+#rc_brand li { height:75px; list-style:none}
+
+#menu_section_group { 
+	display:block;
+	margin:0 0 0 5px; 
+	width:970px; 
+	height:540px;
+	overflow-y:auto;
+	overflow-x:hidden;
+	scrollbar-face-color:#f4f4f4;
+	scrollbar-arrow-color:#d2d2d2;
+	scrollbar-track-color:#f8f8f8;
+	scrollbar-base-color:#f4f4f4;
+	scrollbar-shadow-color:#cccccc;
+	scrollbar-darkshadow-color:#f4f4f4;
+}
+
+#menu_section_group .menu_section { display:block; float:left; width:180px; margin:5px 0  0 5px; padding:0; border:1px solid #eee; }
+#menu_section_group .menu_section h4 { background:#f4f4f4; border-bottom:1px solid #eee; font-size:1em; margin:0; padding:0;}
+#menu_section_group .menu_section h4 a { clear:both; color:#333; line-height:28px; text-align:center; }
+#menu_section_group .menu_section h4:hover { background:#ddd; }
+#menu_section_group .menu_section ul { padding:0; margin:0; width:180px;}
+#menu_section_group .menu_section li.outer { list-style-type:none; display:inline-block; list-style-position:inside; clear:both; font-size:11px; line-height:18px; color:#666; text-align:left; width:165px; padding:0 0 0 5px; margin:0;}
+#menu_section_group .menu_section li .level1 { float:left; width:140px;}
+#menu_section_group .menu_section li a { color:#666; }
+#menu_section_group .menu_section li a:hover { color:#000; text-decoration:none; font-weight:bold; }
+#menu_section_group .menu_section li ul { padding:3px 5px 3px 5px; margin-top:0 }
+#menu_section_group .menu_section li.inner {list-style-type:none; list-style-position:inside; clear:both; font-size:11px; line-height:15px; color:#666; text-align:left; width:120px;}
+
+#menu_section_group .menu_section .collapse_btn { float:right; right:5px; top:0px; width:18px; display:block; }

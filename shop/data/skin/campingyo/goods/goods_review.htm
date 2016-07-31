@@ -1,0 +1,171 @@
+{*** 이용후기 메인 | goods/goods_review.php ***}
+{ # header }
+
+<!-- 상단이미지 || 현재위치 -->
+<TABLE width=100% cellpadding=0 cellspacing=0 border=0>
+<tr>
+	<td><img src="../img/common/title_review.gif" border=0></td>
+</tr>
+<TR>
+	<td class="path">HOME > <B>이용후기</B></td>
+</TR>
+</TABLE>
+
+
+<div class="indiv"><!-- Start indiv -->
+
+<form name=frmList>
+<input type=hidden name=sort value="{_GET['sort']}">
+<input type=hidden name=page_num value="{_GET['page_num']}">
+
+<!-- 검색 : Start -->
+<div style="border:1px solid #DEDEDE;" class="hundred">
+<table width=100% cellpadding=10 cellspacing=0 border=0>
+<tr>
+	<td style="border:5px solid #F3F3F3;">
+	<table cellpadding="0" cellspacing="0" border="0">
+	<tr>
+		<td><img src="../img/common/search.gif" border=0></td>
+		<td style="padding-left:10">
+		<table cellpadding="2" cellspacing="0" border="0">
+		<tr>
+			<td class=input_txt>상품분류</td>
+			<td>
+			<div id=dynamic></div>
+			<script src="../../../../lib/js/categoryBox.js"></script>
+			<script>new categoryBox('cate[]',{=cateStep()},'{_category}','','frmList');</script>
+			</td>
+		</tr>
+		<tr>
+			<td class=input_txt>검색어</td>
+			<td><select name="skey" class=select>
+			<option value="all" {_selected.skey['all']}> 통합검색 </option>
+			<option value="subject" {_selected.skey['subject']}> 제목 </option>
+			<option value="contents" {_selected.skey['contents']}> 후기 </option>
+			<option value="m_id" {_selected.skey['m_id']}> 작성자 </option>
+			<option value="goodnm" {_selected.skey['goodnm']}> 상품명 </option>
+			</select><input type="text" NAME="sword" value="{_GET['sword']}" size=47 class="linebg"><input type="image" src="../img/common/btn_search.gif" align=absmiddle>
+			</td>
+		</tr>
+		</table>
+		</td>
+	</tr>
+	</table>
+	</td>
+</tr>
+</table>
+</div>
+<!-- 검색 : End -->
+
+<div style="float:right; padding-top:15">
+<select onchange="this.form.sort.value=this.value;this.form.submit()" style="font:8pt 돋움"><!--{ @ lstcfg.sort }--><option value="{.key_}" {_selected.sort[.key_]}>{.value_}<!--{ / }--></select>
+<select onchange="this.form.page_num.value=this.value;this.form.submit()" style="font:8pt 돋움"><!--{ @ lstcfg.page_num }--><option value="{.value_}" {_selected.page_num[.value_]}>{.value_}개씩 정렬<!--{ / }--></select>
+</div>
+
+<table width="100%" border="0" cellspacing="0" cellpadding="5" style="clear:both;margin-top:5px;border-top-style:solid;border-top-color:#303030;border-top-width:2;border-bottom-style:solid;border-bottom-color:#D6D6D6;border-bottom-width:1;">
+<tr height="23" bgcolor="#F0F0F0" class=input_txt>
+	<th width=50>번호</th>
+	<th width=60>이미지</th>
+	<th>상품명/후기</th>
+	<th width=80>작성자</th>
+	<th width=80>작성일</th>
+	<th width=80>평점</th>
+</tr>
+</table>
+
+<!--{ @ _loop }-->
+<div>
+<table width=100% cellpadding=3 cellspacing=0 style="border-bottom-style:solid;border-bottom-color:#E6E6E6;border-bottom-width:1;cursor:pointer;" onclick="view_content(this, event)">
+<tr height=25 onmouseover=this.style.background="#F7F7F7" onmouseout=this.style.background="">
+	<td width=50 align="center"><!--{? .notice==1 }-->공지<!--{:}-->{.idx}<!--{/}--></td>
+	<td width=60 align="center"><!--{? .notice==0 && .goodsno }--><a href="goods_view.php?goodsno={.goodsno}">{=goodsimg(.img_s,lstcfg.size)}</a><!--{/}--></td>
+	<td>
+		<TABLE cellpadding=0 cellspacing=0 border=0>
+			<TR>
+				<!--{ ? .type != 'Q' && .notice==0 }-->
+				<TD rowspan=2 width="27" valign="top" style="padding-top:3px;"><img src="../img/common/ico_a.gif"></TD>
+				<!--{ / }-->
+				<TD style="padding-top:5"><!--{? .notice==0 && .goodsno}--><span style="font-weight:bold;">{.goodsnm}</span> <a href="goods_view.php?goodsno={.goodsno}"><img src="../img/common/btn_goodview2.gif" align=absmiddle></a><!--{/}--></TD>
+			</TR>
+			<tr><td style="padding-top:5; padding-bottom:5; height:45px" class=stxt>{.subject}</td></tr>
+		</TABLE>
+	</td>
+	<td width=80 align="center">{ ? .name }{.name}{ : .m_name }{.m_name}{ : }{.m_id}{ / }</td>
+	<td width=80 align="center">{=substr(.regdt,0,10)}</td>
+	<td width=80>
+	<!--{ ? .point > 0 }-->
+	<!--{ @ array_fill(0,.point,'') }-->★<!--{ / }-->
+	<!--{ / }-->
+	</td>
+</tr>
+</table>
+<div style="display:none;padding:10;border-bottom-style:solid;border-bottom-color:#E6E6E6;border-bottom-width:1;">
+	<div width="100%" style="padding-left:55">{.contents}</div>
+	<div style="text-align:right;">
+	<!--{ ? .authreply == 'Y' }-->
+	<a href="javascript:;" onclick="popup_register( 'reply_review', '{.goodsno}', '{.sno}' );"><img src="../img/common/btn_reply.gif" border="0" align="absmiddle"></a>
+	<!--{ / }-->
+	<!--{ ? .authmodify == 'Y' }-->
+	<a href="javascript:;" onclick="popup_register( 'mod_review', '{.goodsno}', '{.sno}' );"><img src="../img/common/btn_modify2.gif" border="0" align="absmiddle"></a>
+	<!--{ / }-->
+	<!--{ ? .authdelete == 'Y' }-->
+	<a href="javascript:;" onclick="popup_register( 'del_review', '{.goodsno}', '{.sno}' );"><img src="../img/common/btn_delete.gif" border="0" align="absmiddle"></a>
+	<!--{ / }-->
+</div>
+</div>
+<!--{ / }-->
+
+<div class="pagediv">{pg->page['navi']}</div>
+
+</form>
+
+	<div style="text-align: right;">
+		<img src="../img/common/btn_review.gif" style="cursor: pointer" onclick="popup_register('add_review', null, null);"/>
+	</div>
+
+</div><!-- End indiv -->
+
+
+<script language="javascript">
+
+function popup_register( mode, goodsno, sno )
+{
+<!--{ ? empty(_cfg['reviewWriteAuth']) && !_sess // 회원전용 & 로그인전 }-->
+	alert( "회원전용입니다." );
+<!--{ : }-->
+	if ( mode == 'del_review' ) var win = window.open("goods_review_del.php?mode=" + mode + "&sno=" + sno,"qna_register","width=400,height=200");
+	else if (parseInt(goodsno) > 0) var win = window.open("goods_review_register.php?mode=" + mode + "&goodsno=" + goodsno + "&sno=" + sno,"qna_register","width=600,height=550");
+	else var win = window.open("goods_review_register.php?mode=" + mode + "&sno=" + sno,"qna_register","width=600,height=450");
+	win.focus();
+<!--{ / }-->
+}
+
+var preContent;
+
+function view_content(obj, e)
+{
+	if ( document.getElementById && ( e.srcElement.tagName == 'A' || e.srcElement.tagName == 'IMG' ) ) return;
+	else if ( !document.getElementById && ( e.target.tagName == 'A' || e.target.tagName == 'IMG' ) ) return;
+
+	var div = obj.parentNode;
+
+	for (var i=1, m=div.childNodes.length;i<m;i++) {
+		if (div.childNodes[i].nodeType != 1) continue;	// text node.
+		else if (obj == div.childNodes[ i ]) continue;
+
+		obj = div.childNodes[ i ];
+		break;
+	}
+
+	if (preContent && obj!=preContent){
+		obj.style.display = "block";
+		preContent.style.display = "none";
+	}
+	else if (preContent && obj==preContent) preContent.style.display = ( preContent.style.display == "none" ? "block" : "none" );
+	else if (preContent == null ) obj.style.display = "block";
+
+	preContent = obj;
+}
+</script>
+
+{ # footer }

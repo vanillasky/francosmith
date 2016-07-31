@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="EUC-KR"?>
+<codes>
+<list>
+	<code>{.goodsno}</code>
+	<desc>상품번호</desc>
+	<exam>37</exam>
+</list>
+<list>
+	<code power="">{.goodsnm}</code>
+	<desc>상품명</desc>
+	<exam>런닝 운동화</exam>
+</list>
+<list>
+	<code>{.goodscd}</code>
+	<desc>상품코드</desc>
+	<exam>PSH-0102</exam>
+</list>
+<list>
+	<code>{.origin}</code>
+	<desc>원산지</desc>
+	<exam>대한민국</exam>
+</list>
+<list>
+	<code>{.maker}</code>
+	<desc>제조사</desc>
+	<exam>나이키</exam>
+</list>
+<list>
+	<code>{.runout}</code>
+	<desc>품절상품 - 1:품절</desc>
+	<exam>1</exam>
+</list>
+<list>
+	<code>{.img_s}</code>
+	<desc>리스트이미지</desc>
+	<exam>1164783000_s_0.jpg</exam>
+</list>
+<list>
+	<code>{.coupon}</code>
+	<desc>쿠폰금액/할인율</desc>
+	<exam>10%</exam>
+</list>
+<list>
+	<code>{.coupon_ea}</code>
+	<desc>쿠폰수량</desc>
+	<exam>20</exam>
+</list>
+<list>
+	<code>{.coupon_usecnt}</code>
+	<desc>쿠폰수량제한 - '':없음, o:있음 </desc>
+	<exam>o</exam>
+</list>
+<list>
+	<code power="">{=toDate(.coupon_date,"-")}</code>
+	<desc>쿠폰종료일</desc>
+	<exam>2007-08-31</exam>
+</list>
+<list>
+	<code power="">{.str_coupon}</code>
+	<desc>쿠폰금액/할인율 텍스트</desc>
+	<exam>10%</exam>
+</list>
+</codes>

@@ -1,0 +1,20 @@
+<?php
+$animationBannerConfig = array();
+$animationBannerConfig['enable'] = 'true';
+$animationBannerConfig['type'] = 'slide';
+$animationBannerConfig['duration'] = 400;
+$animationBannerConfig['directionAnchorDisplay'] = 'true';
+$animationBannerConfig['shiftType'] = 'auto';
+$animationBannerConfig['interval'] = '1000';
+$animationBannerConfig['width'] = 694;
+$animationBannerConfig['height'] = 445;
+$animationBannerConfig['image'][0] = 'banner_01';
+$animationBannerConfig['image'][1] = 'banner_02';
+$animationBannerConfig['image'][2] = 'banner_03';
+$animationBannerConfig['link'][0] = '';
+$animationBannerConfig['link'][1] = '';
+$animationBannerConfig['link'][2] = '';
+$animationBannerConfig['target'][0] = '_self';
+$animationBannerConfig['target'][1] = '_self';
+$animationBannerConfig['target'][2] = '_self';
+$animationBannerConfig['anchorDisplay'] = 'circle';

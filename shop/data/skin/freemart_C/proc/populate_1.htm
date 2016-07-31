@@ -1,0 +1,20 @@
+{*** 인기상품 순위 펼침형 ***}
+<table border="0" cellspacing="0" cellpadding="0" width="190">
+<tr>
+	<td><img src="../img/common/hotitem_box_top.gif"></td>
+</tr>
+<tr>
+	<td style="background:url(../img/common/hotitem_box_body.gif) repeat-y top left;">
+	<table width="100%">
+	<!--{ @ populate_list }-->
+	<tr>
+		<td style="padding-left:14px;height:18px"><img src="../img/common/list_num{=sprintf('%02d',.index_ + 1)}.gif" align="absmiddle"> <a href="../goods/goods_view.php?goodsno={.goodsno}">{=strcut(.goodsnm,18)}</a></td>
+	</tr>
+	<!--{ / }-->
+	</table>
+	</td>
+</tr>
+<tr>
+	<td><img src="../img/common/hotitem_box_bottom.gif"></td>
+</tr>
+</table>

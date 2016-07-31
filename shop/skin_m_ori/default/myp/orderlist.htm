@@ -1,0 +1,35 @@
+{#header}
+
+<?php {page_title} = "주문내역";?>
+{#sub_header}
+
+<section id="orderlist">
+
+	<!--{ @ loop }-->
+	<table>
+	<tr>
+		<th>주문일시</th><td>{.orddt}</td>
+	</tr>
+	<tr>
+		<th>주문번호</th><td><a href="orderview.php?ordno={.ordno}">{.ordno}</a></td>
+	</tr>
+	<tr>
+		<th>결제방법</th><td>{.str_settlekind}</td>
+	</tr>
+	<tr>
+		<th>주문금액</th><td>{=number_format(.settleprice)}</td>
+	</tr>
+	<tr>
+		<th>주문상태</th><td class="step">{.str_step}</td>
+	</tr>
+	<tr>
+		<th>상세보기</th><td><a href="orderview.php?ordno={.ordno}" class="btn_orverview"><span class="hidden">상세내역보기</span></a></td>
+	</tr>
+	</table>
+	<!--{ / }-->
+
+	<div class="pagediv">{pg->page['navi']}</div>
+
+</section>
+
+{#footer}

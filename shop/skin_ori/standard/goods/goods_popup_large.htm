@@ -1,0 +1,95 @@
+{*** 상품확대보기 | goods/goods_popup_large.php ***}
+<script>
+function fitwin()
+{
+	window.resizeTo(150,150);
+	
+	var borderX = 150 - document.body.clientWidth;
+	var borderY = 150 - document.body.clientHeight;
+
+	if(document.body.clientWidth > 150)borderX = 50;
+	if(document.body.clientHeight > 150)borderY = 50;
+	
+	width	= document.body.scrollWidth + borderX;
+	height	= document.body.scrollHeight + borderY;
+	windowX = (window.screen.width-width)/2;
+	windowY = (window.screen.height-height)/2;
+
+	if(width>screen.width){
+		width = screen.width;
+		windowX = 0;
+	}
+	if(height>screen.height-50){
+		height = screen.height-50;
+		windowY = 0;
+	}
+
+	window.moveTo(windowX,windowY);
+	window.resizeTo(width,height);
+}
+</script>
+
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=euc-kr">
+<meta name="description" content="{_meta_title}">
+<meta name="keywords" content="{_meta_keywords}">
+<title>{_meta_title}</title>
+<link rel="styleSheet" href="../style.css">
+<script src="../common.js"></script>
+<script>
+function chgImg(obj)
+{
+	var objImg = document.getElementById('objImg');
+	objImg.src = obj.src.replace("/t/","/");
+}
+</script>
+
+{=copyProtect()}
+<body style="margin:0" onLoad="fitwin()" {=copyProtect(true)}>
+
+<table width=100% height=100% cellpadding=0 cellspacing=0 border=0>
+<tr>
+	<td height=100% style="border-width:10px; border-style:solid; border-color:#000000;padding:10px" valign=top>
+	<table width=100% height=100% cellpadding=0 cellspacing=0 border=0>
+	<tr>
+		<td align=center>
+		<table width=100% cellpadding=0 cellspacing=0 border=0>
+		<tr>
+			<td width={_cfg.img_l+0}>{=goodsimg(r_img[0],_cfg.img_l+0,'id=objImg')}</td>
+			<td width=250 nowrap height=100% valign=top align=right style="padding-left:10px">
+
+			<table width=100% height=100% cellpadding=5 cellspacing=0 border=0>
+			<tr><td colspan=2 height=2 bgcolor="#000000" style="padding:0px"></td></tr>
+			<tr><td colspan=2 height=2 style="padding:0px"></td></tr>
+			<tr><td colspan=2 height=1 bgcolor="#B4B4B4" style="padding:0px"></td></tr>
+			<tr><td colspan=2 bgcolor="#F6F6F6"><B>{goodsnm}</B></td></tr>
+			<tr><td colspan=2 height=1 bgcolor="#C5C5C5" style="padding:0px"></td></tr>
+			<!-- <tr><td nowrap width=40>설명</td><td>{shortdesc}</td></tr> -->
+			<tr><td width=40 class=stxt><B>가격</B></td><td><FONT COLOR="#007FC8">{=number_format(price)}</FONT></td></tr>
+			<tr><td colspan=2 height=1 bgcolor="#DDDDDD" style="padding:0px"></td></tr>
+			<tr><td class=stxt><B>적립금</B></td><td>{=number_format(reserve)}</td></tr>
+			<tr><td colspan=2 height=1 bgcolor="#DDDDDD" style="padding:0px"></td></tr>
+			<tr><td colspan=2 height=2 style="padding:0px"></td></tr>
+			<tr><td colspan=2 height=2 bgcolor="#000000" style="padding:0px"></td></tr>
+			<tr>
+				<td height=100% colspan=2 valign=bottom align=right>
+				<!--{ @ t_img }-->
+				{=goodsimg(.value_,45,"onclick='chgImg(this)' class=hand style='border-width:1; border-style:solid; border-color:#cccccc'")}
+				<!--{ / }-->
+				</td>
+			</tr>
+			</table>
+			</td>
+		</tr>
+		</table>
+		</td>
+	</tr>
+	<tr><td align=right><A HREF="javascript:this.close()" onFocus="blur()"><img src="../img/common/popup_close.gif"></A></td></tr>
+	</table>
+	</td>
+</tr>
+</table>
+
+</body>
+</html>

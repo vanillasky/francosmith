@@ -1,0 +1,184 @@
+{*** 게시판 글쓰기 | board/write.php ***}
+{ # header }
+{#sub_header}
+
+<style type="text/css">
+.policyCollectionTable								{ border:solid 0px #dbdbdb; width:100%; }
+.policyCollectionTable .policyCollectionTitle		{ color: #0080FF; font-weight: bold; border-bottom: 0px; }
+.policyCollectionTable .policyCollectionContents	{ border-bottom: 0px; }
+.policyCollectionTable .policyCollectionRadio		{ text-align:center; }
+.policyCollectionTable .policyCollectionTextarea	{ width: 100%; height: 200px; border:0px solid #dbdbdb; padding: 0; font-family:dotum, 돋움, verdana, gulim, 굴림9; font-size: 12px;}
+</style>
+
+<script type="text/javascript">
+var mode = '{_mode}';
+var rootDir = '{_cfg.rootDir}';
+var mobileSkin = '{_cfgMobileShop.tplSkinMobile}';
+var prvFilePath = new Array();
+var prvFileName = new Array();
+<!--{ @ prvFilePath}-->
+prvFilePath.push("{prvFilePath.value_}");
+<!--{/}-->
+<!--{ @ prvFileName}-->
+prvFileName.push("{prvFileName.value_}");
+<!--{/}-->
+
+var bdSecretChk = '{_bdSecretChk}';
+var bdUseFile = '{_bdUseFile}';
+var maxFileNumber = '{_maxFileNumber}';
+</script>
+
+<script type="text/javascript">
+jQuery(document).ready(function(){
+	if (bdUseFile == 'on')
+	{
+		initFileUpload();
+	}
+
+	jQuery('.secret_button').click(function(){
+		if(bdSecretChk == 0 || bdSecretChk == 1){
+			if ($(this).hasClass('on')) {
+				$(this).removeClass('on').addClass('off');
+			}
+			else if ($(this).hasClass('off')) {
+				$(this).removeClass('off').addClass('on');
+			}
+			else {
+				$(this).addClass('on');
+			}
+		}
+		else if(bdSecretChk == 3 ){
+			alert('해당 게시판은 비밀글로만 작성이 가능합니다.');
+		}
+	});
+
+	if(jQuery('.notice_button').length>0){
+		jQuery('.notice_button').click(function(){
+			if ($(this).hasClass('on')) {
+				$(this).removeClass('on').addClass('off');
+			}
+			else if ($(this).hasClass('off')) {
+				$(this).removeClass('off').addClass('on');
+			}
+			else {
+				$(this).addClass('on');
+			}
+		});
+	}
+});
+
+function chkForm3(form)
+{
+	<!--{? _termsPolicyCollectionYn == 'Y' }-->
+	if(checkAgreement(form) != true) return false;
+	<!--{ / }-->
+
+	return chkForm2(form);
+}
+
+function checkAgreement(form){
+	if(form.agree[0].checked !== true){
+		alert('개인정보 수집 및 이용에 대한 안내에 동의 하셔야 작성이 가능합니다.');
+		return false;
+	}
+
+	return true;
+}
+</script>
+
+<script src="/m2/lib/js/board.js"></script>
+
+<section id="page_title">
+	<button class="btn_back" onclick="history.back();">뒤로</button>
+	<div class="top_title">{=_bdName}</div>
+</section>
+
+<section id="boardregister" class="content">
+	<form method="post" action="{boardwriteActionUrl}" enctype="multipart/form-data" onsubmit="return chkForm3(this)">
+	<input type='hidden' name='tmp' />
+	<input type='hidden' name="id" value="{id}" />
+	<input type='hidden' name='category_pre' value="{category}" />
+	<input type='hidden' name='no' value="{no}" />
+	<input type='hidden' name='mode' value="{mode}" />
+	<input type='hidden' name='page' value="{page}" />
+	<input type='hidden' name='encode' value="" />
+	<input type='hidden' name='chkSpamKey' />
+	<table>
+	<!--{ ? _bdUseSubSpeech }-->
+	 <tr>
+		<td>
+			{subSpeech}
+		</td>
+	</tr>	
+	<!--{ / }-->
+	<tr>
+		<td>
+			<input type="text" name="subject" required fld_esssential msgR="제목을 입력해주세요" placeholder="제목을 입력하세요" value="{_data.subject}"  />
+				<!--{ ? _chk.notice }-->{_chk.notice}<!--{ / }-->
+				{_chk.secret}
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<textarea name="contents" id="contents" style="width:100%;height:200px" placeholder="내용을 입력하세요" >{=htmlspecialchars(_data.contents)}</textarea>
+			<!--<script type="text/javascript">mobileEditor('contents')</script>-->
+		</td>
+	</tr>
+	<!--{ ? _bdUseFile }-->
+	{prvFile}
+	<tr>
+		<td>
+			<ul id="board-attach">
+				<li class="item template">
+					<button class="file-face" type="button">파일첨부</button>
+					<input class="file-hidden" type="file" name="file[]" accept="*"/>
+				</li>
+			</ul>
+			<div style="font-size:10px;">
+				* 파일은 최대 <!--{ _maxFileNumber }-->개까지 업로드가 지원됩니다.<br/>
+				<!--{ ? _bdMaxSize }-->* 파일 업로드 최대 사이즈는 {=byte2str(_bdMaxSize)}입니다<br/><!--{ / }-->
+			</div>
+		</td>
+	</tr>
+	<!--{ / }-->
+	<!--{ ? !_sess && empty(_data['m_no'])  }-->
+	<tr>
+		<td align="center">
+			<input type="text" name="name" placeholder="이름" value="" required fld_esssential msgR="이름을 입력해주세요"/>&nbsp;&nbsp;
+			<input type="password" name="password" placeholder="비밀번호" required fld_esssential msgR="비밀번호를 입력해주세요"/>
+		</td>
+	</tr>
+	<!--{ / }-->
+	<!--{ ? _bdSpamBoard&2 }-->
+	<tr>
+		<td class="cell_L"><!--{ = include_file( "proc/_captcha.htm" ) }--></td>
+	</tr>
+	<!--{ / }-->
+	</table>
+
+	<!--{? _termsPolicyCollectionYn == 'Y' }-->
+	<div style="height:12px;"></div>
+	<table cellpadding="0" cellspacing="0" class="policyCollectionTable">
+	<tr>
+		<td class="policyCollectionTitle">개인정보 수집 및 이용에 대한 안내</td>
+	</tr>
+	<tr>
+		<td class="policyCollectionContents"><textarea class="policyCollectionTextarea">{termsPolicyCollection3}</textarea></td>
+	</tr>
+	<tr>
+		<td class="policyCollectionRadio">
+			<input type="radio" name="agree" value="y" /> 동의합니다 &nbsp;&nbsp;&nbsp;
+			<input type="radio" name="agree" value="n" /> 동의하지 않습니다
+		</td>
+	</tr>
+	</table>
+	<!--{ / }-->
+
+	<div class="btn_center">
+		<button type="submit" class="btn_save">확 인</button>
+		<button type="button" class="btn_prev"  onclick="history.back();">취 소</button>
+	</div>
+</section>
+</form>
+
+{ # footer }

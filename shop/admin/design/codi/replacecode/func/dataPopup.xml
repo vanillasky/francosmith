@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="EUC-KR"?>
+<codes>
+<list>
+	<code power="">{.file}</code>
+	<desc>팝업파일주소</desc>
+	<exam>popup/standard.htm</exam>
+</list>
+<list>
+	<code power="">{.code}</code>
+	<desc>팝업코드</desc>
+	<exam>standard</exam>
+</list>
+<list>
+	<code>{.name}</code>
+	<desc>팝업설명 (=파일설명)</desc>
+	<exam>기본팝업</exam>
+</list>
+<list>
+	<code>{.width}</code>
+	<desc>크기 - 창너비 (pixel)</desc>
+	<exam>300</exam>
+</list>
+<list>
+	<code>{.height}</code>
+	<desc>크기 - 창높이 (pixel)</desc>
+	<exam>400</exam>
+</list>
+<list>
+	<code>{.top}</code>
+	<desc>위치 - X좌표위치 (pixel)</desc>
+	<exam>100</exam>
+</list>
+<list>
+	<code>{.left}</code>
+	<desc>위치 - Y좌표위치 (pixel)</desc>
+	<exam>250</exam>
+</list>
+<list>
+	<code new="">{.type}</code>
+	<desc>타입 - 공백:윈도우, layer:레이어</desc>
+	<exam>layer</exam>
+</list>
+</codes>

@@ -1,0 +1,107 @@
+{ # header }
+<script type="text/javascript">
+function chkSubmit(){
+	if (document.frmComment.comment.value) {
+		return true;
+	}
+	else {
+		alert('내용을 입력하세요');
+		return false;
+	}
+	
+}
+</script>
+
+
+{? design_head_type=='html'}
+	{design_head_html}
+{: design_head_type=='image'}
+	<img src="{design_head_image}">
+{: design_head_type=='upload'}
+	{design_head_upload}
+{/}
+<br>
+
+<img src="../img/attendance/sub_title.gif"><br>
+
+<div style="color:#999999;padding:5px 0px 15px 10px">
+{? condition_type=='straight'}
+	<b><span style="color:#333333">{_member.name}</span></b>회원님께서는 
+	<b><span style="color:#333333">총 <span style="color:#ff6801">{check_period}</span>회</span></b> 매일 출석하셨습니다.
+{:}
+	<b><span style="color:#333333">{_member.name}</span></b>회원님께서는 
+	<b><span style="color:#333333">총 <span style="color:#ff6801">{check_period}</span>회</span></b> 출석하셨습니다.
+{/}
+</div>
+
+
+<div style="">
+	<table width="100%" cellspacing="0" cellpadding="6" style="border-top:2px solid #555555;border-bottom:1px solid #bbbbbb">
+	<tr>
+		<td width="80" nowrap align="center" style="background-color:#eeeeee;font-weight:bold;color:#555555;border-bottom:1px solid #bbbbbb">번호</td>
+		<td width="100" nowrap align="center" style="background-color:#eeeeee;font-weight:bold;color:#555555;border-bottom:1px solid #bbbbbb">참여하신 분</td>
+		<td align="center" style="background-color:#eeeeee;font-weight:bold;color:#555555;border-bottom:1px solid #bbbbbb">댓글</td>
+		<td width="120" nowrap align="center" style="background-color:#eeeeee;font-weight:bold;color:#555555;border-bottom:1px solid #bbbbbb">등록일</td>
+	</tr>
+	{@ comment_list.record}
+	<tr>
+	<td width="80" nowrap align="center" height="25">{._no}</td>
+	<td width="100" nowrap align="center">{.name}</td>
+	<td>{=nl2br(htmlspecialchars(.comment))}</td>
+	<td width="120" nowrap align="center">{=date('Y-m-d',.reg_date)}</td>
+	</tr>
+	{/}	
+	<tr>
+		<td colspan="4" style="background-color:#eeeeee;color:#555555;border-bottom:1px solid #bbbbbb;border-top:1px solid #bbbbbb">
+			<form name="frmComment" action="indb.attendance.php" method="post" target="ifrmHidden" onsubmit="return chkSubmit();">
+			<input type="hidden" name="mode" value="comment_add">
+			<input type="hidden" name="attendance_no" value="{attendance_no}">
+			<table width="100%" cellpadding="2">
+			<tr>
+			<td style="padding:5px 0px 0px 5px;color:#333333;font-size:8pt">댓글을 올려 출석을 체크해주세요</td>
+			<td></td>
+			</tr>
+			<tr>
+			<td style="padding:0px 0px 5px 5px">
+			<textarea name="comment" style="width:100%;height:60px"></textarea>
+			</td>
+			<td width="60" nowrap style="padding:0px 5px 5px 0px"><input type="image" src="../img/attendance/btn.gif"></td>
+			</table>
+		
+		</td>
+		
+	</tr>
+	</table>
+
+
+
+
+
+	
+	
+</div>
+
+
+<div style='text-align:center;padding:15px 5px 5px 5px'>
+	{? comment_list.page.prev} 
+		<a href="?{=getvalue_chg('page',comment_list.page.prev)}">이전</a>
+	{/}
+	
+	{@ comment_list.page.page}
+		{? comment_list.nowpage == .value_}
+			<a href="?{=getvalue_chg('page',.value_)}">{.value_}</a>
+		{:}
+			<a href="?{=getvalue_chg('page',.value_)}">[{.value_}]</a>
+		{/}
+	{/}
+	
+	{? comment_list.page.next} 
+		<a href="?{=getvalue_chg('page',comment_list.page.next)}">다음</a>
+	{/}
+
+
+</div>
+
+
+
+{ # footer }

@@ -1,0 +1,259 @@
+{#header}
+<?php {page_title} = "회원가입 (추가정보)";?>
+{#sub_header}
+
+<section class="content" id="memberjoin">
+<form id=form name=frmAgree method=post action="indb.php" target="ifrmHidden">
+	<input type="hidden" name="mode" value="member_addinfo" />
+	<input type="hidden" name="type" />
+	<div class="join_step">
+		<div class="join_step1">약관동의</div>
+		<div class="join_arrow"></div>
+		<div class="join_step2">계정생성</div>
+		<div class="join_arrow"></div>
+		<div class="join_step3 now_step">추가정보</div>
+		<div class="join_arrow"></div>
+		<div class="join_step4">가입완료</div>
+	</div>
+	<div class="content_border"></div>
+	<div class="account">
+		<div class="account_title"><div class="bullet"></div><div class="title">추가정보 입력하기</div></div>
+		<div class="content_border"></div>
+		<div class="account_content">
+			<div class="input_title">이름</div>
+			<div class="input_bar"></div>
+			<div class="input_content">
+				<input type="text" name="name" size="13" maxlength="10" style="ime-mode:active" />
+			</div>
+			<div class="content_border"></div>
+			<!--{ ? _checked.useField.nickname }-->
+			<div class="input_title">닉네임</div>
+			<div class="input_bar"></div>
+			<div class="input_content">
+				<input type="text" name="nickname" size="13" maxlength="12" style="ime-mode:active" />
+			</div>
+			<div class="content_border"></div>
+			<!--{ / }-->
+			<!--{ ? _checked.useField.sex }-->
+			<div class="input_title">성별</div>
+			<div class="input_bar"></div>
+			<div class="input_content">
+				<label><input type="radio" name="sex" label="성별" value="m" /> 남자</label>
+				<label><input type="radio" name="sex" label="성별" value="w" /> 여자</label>
+			</div>
+			<div class="content_border"></div>
+			<!--{ / }-->
+			<!--{ ? _checked.useField.birth }-->
+			<div class="input_title">생년월일</div>
+			<div class="input_bar"></div>
+			<div class="input_content">
+				<input type="number" name="birth_year" size="4" maxlength="4" onKeyPress="javascript:onlyNum(this, event);" style="ime-mode:disabled" /> 년 
+				<input type="number" name="birth[]" size="2" maxlength="2" onKeyPress="javascript:onlyNum(this, event);" style="ime-mode:disabled"/> 월 
+				<input type="number" name="birth[]" size="2" maxlength="2" onKeyPress="javascript:onlyNum(this, event);" style="ime-mode:disabled"/> 일
+			</div>
+			<div class="content_border"></div>
+			<!--{ / }-->
+			<!--{ ? _checked.useField.marriyn }-->
+			<div class="input_title">이메일</div>
+			<div class="input_bar"></div>
+			<div class="input_content">
+				<label><input type="radio" name="marriyn" label="결혼여부" value="n" /> 미혼</label>
+				<label><input type="radio" name="marriyn" label="결혼여부" value="y" /> 기혼</label>
+			</div>
+			<div class="content_border"></div>
+			<!--{ / }-->
+			<!--{ ? _checked.useField.marridate }-->
+			<div class="input_title">결혼기념일</div>
+			<div class="input_bar"></div>
+			<div class="input_content">
+				<input type="number" name="marridate[]" size="4" maxlength="4" onKeyPress="javascript:onlyNum(this, event);" style="ime-mode:disabled" /> 년 
+				<input type="number" name="marridate[]" size="2" maxlength="2" onKeyPress="javascript:onlyNum(this, event);" style="ime-mode:disabled"/> 월 
+				<input type="number" name="marridate[]" size="2" maxlength="2" onKeyPress="javascript:onlyNum(this, event);" style="ime-mode:disabled"/> 일
+			</div>
+			<div class="content_border"></div>
+			<!--{ / }-->
+			<!--{ ? _checked.useField.address }-->
+			<div class="input_title">주소</div>
+			<div class="input_bar"></div>
+			<div class="input_content">
+				<input type="text" name="dong" size="9" style="ime-mode:active;"/>
+				<span class="btn_zip"><button id="zipcode-btn" class="btn_zipcode" type="button" onClick="search_zipcode2();">우편번호검색</button></span>
+				<div class="clearb"></div>
+				<div id="zipcode_list"></div>
+			</div>
+			<div class="none_content_border"></div>
+			<div class="input_title"></div>
+			<div class="input_bar"></div>
+			<div class="input_content">
+				<input type="number" name="zipcode[]" size="3" maxlength="4" onKeyPress="javascript:onlyNum(this, event);" style="ime-mode:disabled" readonly/> -
+				<input type="number" name="zipcode[]" size="3" maxlength="4" onKeyPress="javascript:onlyNum(this, event);" style="ime-mode:disabled" readonly/>
+			</div>
+			<div class="none_content_border"></div>
+			<div class="input_title"></div>
+			<div class="input_bar"></div>
+			<div class="input_content">
+				<input type="text" name="address" size="20" style="ime-mode:active" /> 
+			</div>
+			<div class="none_content_border"></div>
+			<div class="input_title"></div>
+			<div class="input_bar"></div>
+			<div class="input_content">
+				<input type="text" name="address_sub" size="20" style="ime-mode:active" /> 
+			</div>
+			<div class="content_border"></div>
+			<!--{ / }-->
+			<!--{ ? _checked.useField.phone }-->
+			<div class="input_title">휴대폰</div>
+			<div class="input_bar"></div>
+			<div class="input_content">
+				<input type="tel" name="phone[]" size="3" maxlength="3" onKeyPress="javascript:onlyNum(this, event);" style="ime-mode:disabled" /> - 
+				<input type="tel" name="phone[]" size="4" maxlength="4" onKeyPress="javascript:onlyNum(this, event);" style="ime-mode:disabled"/> - 
+				<input type="tel" name="phone[]" size="4" maxlength="4" onKeyPress="javascript:onlyNum(this, event);" style="ime-mode:disabled"/>
+			</div>
+			<div class="content_border"></div>
+			<!--{ / }-->
+			<!--{ ? _checked.useField.fax }-->
+			<div class="input_title">휴대폰</div>
+			<div class="input_bar"></div>
+			<div class="input_content">
+				<input type="tel" name="fax[]" size="3" maxlength="3" onKeyPress="javascript:onlyNum(this, event);" style="ime-mode:disabled" /> - 
+				<input type="tel" name="fax[]" size="4" maxlength="4" onKeyPress="javascript:onlyNum(this, event);" style="ime-mode:disabled"/> - 
+				<input type="tel" name="fax[]" size="4" maxlength="4" onKeyPress="javascript:onlyNum(this, event);" style="ime-mode:disabled"/>
+			</div>
+			<div class="content_border"></div>
+			<!--{ / }-->
+			<!--{ ? _checked.useField.company }-->
+			<div class="input_title">회사</div>
+			<div class="input_bar"></div>
+			<div class="input_content">
+				<input type="text" name="company" size="17" maxlength="10" style="ime-mode:active" />
+			</div>
+			<div class="content_border"></div>
+			<!--{ / }-->
+			<!--{ ? _checked.useField.service }-->
+			<div class="input_title">업태</div>
+			<div class="input_bar"></div>
+			<div class="input_content">
+				<input type="text" name="service" size="17" maxlength="20" style="ime-mode:active" />
+			</div>
+			<div class="content_border"></div>
+			<!--{ / }-->
+			<!--{ ? _checked.useField.item }-->
+			<div class="input_title">종목</div>
+			<div class="input_bar"></div>
+			<div class="input_content">
+				<input type="text" name="item" size="17" maxlength="20" style="ime-mode:active" />
+			</div>
+			<div class="content_border"></div>
+			<!--{ / }-->
+			<!--{ ? _checked.useField.busino }-->
+			<div class="input_title">종목</div>
+			<div class="input_bar"></div>
+			<div class="input_content">
+				<input type="number" name="busino" size="13" maxlength="11" style="ime-mode:active" />
+			</div>
+			<div class="content_border"></div>
+			<!--{ / }-->
+			<!--{ ? _checked.useField.job }-->
+			<div class="input_title">직업</div>
+			<div class="input_bar"></div>
+			<div class="input_content">
+				<select name="job">
+					<!--{ @ codeitem('job') }-->
+					<option value="{.key_}" {_selected.job[.key_]}>{.value_}
+					<!--{ / }-->
+				</select>
+			</div>
+			<div class="content_border"></div>
+			<!--{ / }-->
+			<!--{ ? _checked.useField.interest }-->
+			<div class="input_title">관심분야</div>
+			<div class="input_bar"></div>
+			<div class="input_content">
+				<!--{ @ codeitem('like') }-->
+				<input type="checkbox" name="interest[]" value="{=pow(2,.key_+0)}" />{.value_}<br />
+				<!--{ / }-->
+			</div>
+			<div class="content_border"></div>
+			<!--{ / }-->
+			<!--{ ? _checked.useField.ex1 }-->
+			<div class="input_title">{_joinset.ex1}</div>
+			<div class="input_bar"></div>
+			<div class="input_content">
+				<input type="text" name="ex1" size="17" maxlength="20" style="ime-mode:active" />
+			</div>
+			<div class="content_border"></div>
+			<!--{ / }-->
+			<!--{ ? _checked.useField.ex2 }-->
+			<div class="input_title">{_joinset.ex2}</div>
+			<div class="input_bar"></div>
+			<div class="input_content">
+				<input type="text" name="ex2" size="17" maxlength="20" style="ime-mode:active" />
+			</div>
+			<div class="content_border"></div>
+			<!--{ / }-->
+			<!--{ ? _checked.useField.ex3 }-->
+			<div class="input_title">{_joinset.ex3}</div>
+			<div class="input_bar"></div>
+			<div class="input_content">
+				<input type="text" name="ex3" size="17" maxlength="20" style="ime-mode:active" />
+			</div>
+			<div class="content_border"></div>
+			<!--{ / }-->
+			<!--{ ? _checked.useField.ex4 }-->
+			<div class="input_title">{_joinset.ex4}</div>
+			<div class="input_bar"></div>
+			<div class="input_content">
+				<input type="text" name="ex4" size="17" maxlength="20" style="ime-mode:active" />
+			</div>
+			<div class="content_border"></div>
+			<!--{ / }-->
+			<!--{ ? _checked.useField.ex5 }-->
+			<div class="input_title">{_joinset.ex5}</div>
+			<div class="input_bar"></div>
+			<div class="input_content">
+				<input type="text" name="ex5" size="17" maxlength="20" style="ime-mode:active" />
+			</div>
+			<div class="content_border"></div>
+			<!--{ / }-->
+			<!--{ ? _checked.useField.ex6 }-->
+			<div class="input_title">{_joinset.ex6}</div>
+			<div class="input_bar"></div>
+			<div class="input_content">
+				<input type="text" name="ex6" size="17" maxlength="20" style="ime-mode:active" />
+			</div>
+			<div class="content_border"></div>
+			<!--{ / }-->
+			<!--{ ? _checked.useField.interest }-->
+			<div class="input_title">관심분류</div>
+			<div class="input_bar"></div>
+			<div class="input_content">
+				<select name="interest_category">
+					<!--{ @ ts_category_all }-->
+					<option value="{.category}" {_selected.job[.key_]}>{.catnm}
+					<!--{ / }-->
+				</select>
+			</div>
+			<div class="content_border"></div>
+			<!--{ / }-->
+			<!--{ ? _checked.useField.memo }-->
+			<div class="input_title">남기는 말씀</div>
+			<div class="input_bar"></div>
+			<div class="input_content">
+				<input type="text" name="memo" size="17" style="ime-mode:active" />
+			</div>
+			<div class="content_border"></div>
+			<!--{ / }-->
+
+		</div>
+		<div class="content_border"></div>
+	</div>
+	<div class="step_btn">
+		<div class="next_btn"><button id="next-btn" tabindex="5" onclick="javascript:nextStep();return false;">정보입력</button></div>
+		<div class="cancel_btn"><button id="cancel-btn" tabindex="5" onclick="javascript:location.href='/'+mobile_root+'/index.php';return false;">홈으로</button></div>
+	</div>
+	<div class="none_content_border2"></div>
+</form>
+</section>
+
+{#footer}

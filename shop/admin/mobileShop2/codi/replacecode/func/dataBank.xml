@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="EUC-KR"?>
+<codes>
+<list>
+	<code>{.bank}</code>
+	<desc>은행명</desc>
+	<exam>한국은행</exam>
+</list>
+<list>
+	<code>{.account}</code>
+	<desc>계좌번호</desc>
+	<exam>123-45-67890</exam>
+</list>
+<list>
+	<code>{.name}</code>
+	<desc>예금주</desc>
+	<exam>길동이</exam>
+</list>
+</codes>

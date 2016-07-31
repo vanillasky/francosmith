@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="EUC-KR"?>
+<codes>
+<list>
+	<code>{pg->idx-.index_}</code>
+	<desc>일련번호 계산하는 연산식</desc>
+	<exam>1</exam>
+</list>
+<list>
+	<code power="">{.ordno}</code>
+	<desc>주문번호</desc>
+	<exam>1187054690353</exam>
+</list>
+<list>
+	<code>{.orddt}</code>
+	<desc>주문일자</desc>
+	<exam>2007-01-01 12:30:30</exam>
+</list>
+<list>
+	<code>{.str_settlekind}</code>
+	<desc>결제방법</desc>
+	<exam>무통장</exam>
+</list>
+<list>
+	<code>{=number_format(.settleprice)}</code>
+	<desc>주문금액</desc>
+	<exam>5,200</exam>
+</list>
+<list>
+	<code>{.str_step}</code>
+	<desc>주문상태</desc>
+	<exam>주문접수</exam>
+</list>
+<list>
+	<code>{ ? .step==3 &amp;&amp; !.step2 }</code>
+	<desc>수령확인 유도하는 연산식 (=주문상태가 배송중인 경우)</desc>
+	<exam></exam>
+</list>
+<list>
+	<code>{.escrowconfirm}</code>
+	<desc>에스크로 배송확인상태 - 0:배송확인요청전, 1:배송요청중, 2:배송완료</desc>
+	<exam>0</exam>
+</list>
+<list>
+	<code>{.index_}</code>
+	<desc>반복 인덱스 (0부터 시작, 반복할 때 1씩 증가)</desc>
+	<exam>0</exam>
+</list>
+</codes>

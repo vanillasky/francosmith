@@ -1,0 +1,214 @@
+{*** 상품문의 작성2 | goods/goods_qna_register.php ***}
+{ # header }
+
+{#sub_header}
+<style type="text/css">
+section#nqnaregister {background:#FFFFFF;}
+section#nqnaregister table{border:none; width:100%;}
+section#nqnaregister table td{padding:8px 8px 8px 8px; vertical-align:middle; border-bottom:solid 1px #dbdbdb;}
+section#nqnaregister table th{text-align:center; background:#f5f5f5; width:70px; vertical-align:middle; border-bottom:solid 1px #dbdbdb; color:#353535; font-size:12px;}
+section#nqnaregister table .img{padding:5px; width:60px;}
+section#nqnaregister table .img img{border:solid 1px #d9d9d9;}
+section#nqnaregister table td input[type=text], input[type=password], select{width:95%;height:21px;}
+section#nqnaregister table td input[name=subject]{width:80%;height:21px;margin-top:15px;float:left}
+section#nqnaregister table td textarea{width:95%;height:116px;}
+section#nqnaregister .btn_center {margin:auto; width:198px; height:34px; margin-top:20px; margin-bottom:20px;}
+section#nqnaregister .btn_center .btn_save{border:none; background:#f35151; border-radius:3px; color:#FFFFFF; font-size:13px; width:94px; height:34px; float:left; font-family:dotum; font-weight:bold;}
+section#nqnaregister .btn_center .btn_prev{border:none; background:#808591; border-radius:3px; color:#FFFFFF; font-size:13px; width:94px; height:34px; float:right; font-family:dotum; font-weight:bold;}
+section#nqnaregister .goods-nm{color:#353535; font-weight:bold; fonst-size:14px; margin-bottom:5px; overflow:hidden; word-break:break-all;}
+section#nqnaregister .goods-price{color:#f03c3c; font-size:12px;}
+section#nqnaregister .attach{float:left;}
+section#nqnaregister .camera_btn{width:80px; height:27px; line-height:27px; font-size:12px; color:#FFFFFF; font-weight:normal;text-align:center; background:#808591; border-radius:3px;}
+section#nqnaregister .camera_btn :active{background:#808591; border-radius:3px; float:left;}
+
+#page_title{position:relative;}
+#page_title .btn_back {position:absolute; top:5px; left:10px; border:none; font-size:0; width:38px; height:27px; background-image:url("../common/img/new/btn_back.png"); background-size:100% 100%;}
+
+#star-point{text-align:center; position:relative; overflow:hidden;}
+#star-point .star-point-select{overflow:hidden; position:absolute; left:50%; top:0; width:230px; margin-left:-115px;}
+#star-point .star-point-select span.star{display:block; width:26px; height:26px; float:left; margin:0 10px; font-size:0; background-image:url("../common/img/new/btn_star_off.png"); background-size:100% 100%;}
+#star-point .star-point-select span.selected{font-weight:bold; background-image:url("../common/img/new/btn_star_on.png");}
+#star-point div.description{margin-top: 40px;}
+
+#qna-attach{list-style:none; overflow:hidden; position:relative; margin-bottom:5px;}
+#qna-attach li.item{float:left; width:50px; height:50px; overflow:hidden; margin-right:7px; margin-bottom: 7px;}
+#qna-attach li.item button.file-face{width:100%; height:100%; border:none; background-image:url("../common/img/new/btn_file_plus.png"); background-size:100% 100%; font-size:0;}
+#qna-attach li.item button.file-face.pqna{background-size:100% auto; border:none;}
+#qna-attach li.item input.file-hidden{opacity:0; margin-bottom:-20px;}
+
+#guest-info input[type=password]{border:solid 1px #cfcfcf; border-radius:1px;}
+.secret_button{width:48px;height:42px;float:left;}
+.secret_button.on{background-image: url("../common/img/new/btn_secret_on.png");}
+.secret_button.off{background-image: url("../common/img/new/btn_secret_off.png");}
+
+section#nqnaregister .policyCollectionTable								{ border:solid 1px #dbdbdb; border-top: 0px; width:100%; }
+section#nqnaregister .policyCollectionTable .policyCollectionTitle		{ color: #0080FF; font-weight: bold; border-bottom: 0px; }
+section#nqnaregister .policyCollectionTable .policyCollectionContents	{ border-bottom: 0px; }
+section#nqnaregister .policyCollectionTable .policyCollectionRadio		{ text-align:center; }
+</style>
+
+<script type="text/javascript">
+jQuery(document).ready(function(){
+	jQuery('.secret_button').click(function(){
+
+		if ($(this).hasClass('on')) {
+			$(this).removeClass('on').addClass('off');
+		}
+		else if ($(this).hasClass('off')) {
+			$(this).removeClass('off').addClass('on');
+		}
+		else {
+			$(this).addClass('on');
+		}
+	});
+});
+var submitted = false;
+var chkForm2 = function(form)
+{
+	if (submitted === false) {
+
+		if(checkAgreement(form) != true) return false;
+
+		if(jQuery('.secret_button').hasClass('on')){
+			form.secret.value='1';
+		}
+		else{
+			form.secret.value='';
+		}
+		if (form.subject.value.trim().length < 1) {
+			alert("제목을 입력해주세요");
+			form.subject.focus();
+			return false;
+		}
+		else if (form.contents.value.trim().length < 1) {
+			alert("내용을 입력해주세요");
+			form.contents.focus();
+			return false;
+		}
+		else if (form.name && form.name.value.trim().length < 1) {
+			alert("이름을 입력해주세요");
+			form.name.focus();
+			return false;
+		}
+		else if (form.password && form.password.value.trim().length < 1) {
+			alert("비밀번호를 입력해주세요");
+			form.password.focus();
+			return false;
+		}
+		else if (chkForm(form) === false) {
+			return false;
+		}
+		else {
+			submitted = true;
+			return true;
+		}
+	}
+	else {
+		return false;
+	}
+};
+
+function checkAgreement(form){
+	if(form.agree[0].checked !== true){
+		alert('개인정보 수집 및 이용에 대한 안내에 동의 하셔야 작성이 가능합니다.');
+		return false;
+	}
+
+	return true;
+}
+</script>
+
+<section id="nqnaregister" class="content">
+	<section id="page_title">
+		<button class="btn_back" onclick="history.back();">뒤로</button>
+		<div class="top_title">상품문의</div>
+	</section>
+
+	<form method="post" action="{goodsQNAActionUrl}" enctype="multipart/form-data" onsubmit="return chkForm2(this);">
+	<input type="hidden" name="mode" value="{_mode}">
+	<input type="hidden" name="goodsno" value="{_goodsno}">
+	<input type="hidden" name="isAll" value="{_GET.isAll}">
+	<input type="hidden" name="sno" value="{_sno}">
+	<input type="hidden" name="referer" value="{_referer}">
+	<!--{ ? _sess || !empty(_data['m_no']) // 작성자==회원 }-->
+	<input type="hidden" name="name" value="{_data.name}"/>
+	<!--{ / }-->
+
+	<!--{ ? _goods }-->
+	<table>
+	<tr>
+		<th class="img">{=goodsimgMobile(_goods.img_s,50)}</th>
+		<td>
+			<div class="goods-nm">
+				{_goods.goodsnm}
+			</div>
+			<div class="goods-price">
+				{=number_format(_goods.price)}원
+			</div>
+		</td>
+	</tr>
+	</table>
+	<!--{ / }-->
+	<table>
+	<tr>
+		<td>
+			<input type="text" name="subject" placeholder="제목을 입력하세요" value="{_data.subject}"/>
+			<!--{ ? _cfg.qnaSecret == 'secret' // 비밀글 }-->
+			<div class='secret_button off'></div>
+			<input type="hidden" name="secret" value="" />
+			<!--{/}-->
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<textarea name="contents" placeholder="내용을 입력하세요">{_data.contents}</textarea>
+		</td>
+	</tr>
+	<!--{ ? !_sess && empty(_data['m_no']) // 작성자==회원 }-->
+	<tr>
+		<td style="padding:0; border:none;">
+			<table id="guest-info" style="border-top:none;">
+				<td>
+					<input type="text" name="name" placeholder="이름" value="{_data.name}"/>
+				</td>
+				<td>
+					<input type="password" name="password" placeholder="비밀번호"/>
+				</td>
+			</table>
+		</td>
+	</tr>
+	<!--{ / }-->
+	<!--{ ? _cfg.qnaSpamBoard&2 }-->
+	<tr>
+		<td class="cell_L"><!--{ = include_file( "proc/_captcha.htm" ) }--></td>
+	</tr>
+	<!--{ / }-->
+	</table>
+
+	<div style="height:12px;"></div>
+	<table cellpadding="0" cellspacing="0" class="policyCollectionTable" width="100%">
+	<tr>
+		<td class="policyCollectionTitle">개인정보 수집 및 이용에 대한 안내</td>
+	</tr>
+	<tr>
+		<td class="policyCollectionContents">{termsPolicyCollection4}</td>
+	</tr>
+	<tr>
+		<td class="policyCollectionRadio">
+			<input type="radio" name="agree" value="y" /> 동의합니다 &nbsp;&nbsp;&nbsp;
+			<input type="radio" name="agree" value="n" /> 동의하지 않습니다
+		</td>
+	</tr>
+	</table>
+
+	<div class="m_qna">
+		<div class="btn_center">
+			<button type="submit" id="save-btn" class="btn_save">확 인</button>
+			<button type="button" id="prev-btn" class="btn_prev"  onclick="history.back();">취 소</button>
+		</div>
+	</div>
+
+</section>
+</form>
+
+{ # footer }

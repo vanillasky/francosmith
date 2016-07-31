@@ -1,0 +1,115 @@
+{*** 고객센터 | service/customer.php ***}
+{ # header }
+
+<!-- 상단이미지 || 현재위치 -->
+<TABLE width=100% cellpadding=0 cellspacing=0 border=0>
+<tr>
+	<td><img src="../img/common/title_cs.gif" border=0></td>
+</tr>
+<TR>
+	<td class="path">HOME > <B>고객센터</B></td>
+</TR>
+</TABLE>
+
+
+<div class="indiv"><!-- Start indiv -->
+
+<TABLE width=665 cellpadding=0 cellspacing=0 border=0>
+<TR>
+	<TD width=349><img src="../img/common/cs_img_01.gif"></TD>
+	<td background="../img/common/cs_img_02.gif" align=center style="padding-top:27">
+	<TABLE width=300 cellpadding=0 cellspacing=0 border=0>
+	<TR>
+		<TD width=60% style="border-right:1px solid #BDBDBD; padding-right:5">
+		<TABLE cellpadding=0 cellspacing=0 border=0>
+		<TR>
+			<TD width=50 align=right style="font:8pt tahoma;line-height:24px">TEL :<br>FAX :<br>E-MAIL :</TD>
+			<td style="font:8pt tahoma;font-weight:bold;line-height:24px; padding-left:5;word-break:break-all;">{_cfg.customerPhone}<br>{_cfg.customerFax}<br>{_cfg.customerEmail}</td>
+		</TR>
+		</TABLE>
+		</TD>
+		<td style="font:8pt 돋움;line-height:20px; padding-left:10; word-break:break-all;">{_cfg['customerHour']}</td>
+	</TR>
+	</TABLE>
+	</td>
+</TR>
+</TABLE>
+
+
+
+<br>
+<TABLE width=665 cellpadding=0 cellspacing=0 border=0>
+<TR>
+	<col valign=top>
+	<col valign=top align=center>
+	<col valign=top align=right>
+	<td>
+	<TABLE cellpadding=0 cellspacing=0 border=0>
+	<!-- 입금계좌 -->
+
+	<TR>
+		<TD><img src="../img/common/cs_top_01.gif"></TD>
+	</TR>
+	<tr>
+		<td height=99 valign=top style="border-left:1px solid #E6E6E6; border-right:1px solid #E6E6E6; padding-left:7; font:8pt 돋움; color:#4C4C4C; line-height:20px"><!--{ @ dataBank() }-->
+		{.bank}({.name}) {.account}<br>
+		<!--{ / }--></td>
+	</tr>
+	<TR>
+		<TD><img src="../img/common/cs_bottom_01.gif"></TD>
+	</TR>
+	</TABLE>
+	</td>
+	<td>
+	<!-- 마이쇼핑 -->
+	<TABLE cellpadding=0 cellspacing=0 border=0>
+	<TR>
+		<TD><img src="../img/common/cs_top_02.gif"></TD>
+	</TR>
+	<TR>
+		<TD height=99 class=stxt style="padding-left:15; border-left:1px solid #E6E6E6; border-right:1px solid #E6E6E6">
+		- <A HREF="../mypage/mypage_orderlist.php">주문내역/배송조회</A><br>
+		- <A HREF="../mypage/mypage_emoney.php">적립금내역</A><br>
+		- <A HREF="../mypage/mypage_coupon.php">할인쿠폰내역</A><br>
+		- <A HREF="../mypage/mypage_wishlist.php">상품보관함</A><br>
+		- <A HREF="../mypage/mypage_qna.php">1:1문의게시판</A><br>
+		- <A HREF="../mypage/mypage_review.php">나의 상품후기</A></TD>
+	</TR>
+	<TR>
+		<TD><img src="../img/common/cs_bottom_01.gif"></TD>
+	</TR>
+	</TABLE>
+	</td>
+	<td>
+	<!-- 자주하는 질문 -->
+	<TABLE cellpadding=0 cellspacing=0 border=0>
+	<TR>
+		<TD><a href="../service/faq.php"><img src="../img/common/cs_top_03.gif"></a></TD>
+	</TR>
+	<TR>
+		<TD class=stxt style="padding-left:15; border-left:1px solid #E6E6E6; border-right:1px solid #E6E6E6" valign=top>
+<!--{ @ dataFaqBest( 5, 35 ) }-->
+		<div style="margin:4 4 6 0;"><a href="../service/faq.php?ssno={.sno}" class=stxt style="line-height:normal;"><img src="../img/common/cs_num_0{.index_ + 1}.gif" align=absmiddle>{.question}</a></div>
+<!--{ / }-->
+		</TD>
+	</TR>
+	<TR>
+		<TD><img src="../img/common/cs_bottom_01.gif"></TD>
+	</TR>
+	</TABLE>
+	</td>
+</TR>
+</TABLE>
+<br>
+
+
+<TABLE width=665 cellpadding=0 cellspacing=0 border=0>
+<TR>
+	<TD><A HREF="../mypage/mypage_qna.php"><img src="../img/common/cs_img_03.gif"></A></TD>
+	<TD><a href="../service/guide.php"><img src="../img/common/cs_img_04.gif"></a></TD>
+</TR>
+</TABLE>
+
+</div><!-- End indiv -->
+
+{ # footer }

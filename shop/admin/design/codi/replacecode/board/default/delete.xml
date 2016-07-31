@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="EUC-KR"?>
+<codes>
+<list>
+	<code power="">{_GET.id}</code>
+	<desc>게시판 아이디</desc>
+	<exam>notice</exam>
+</list>
+<list>
+	<code power="">{_no}</code>
+	<desc>게시물 번호</desc>
+	<exam>1</exam>
+</list>
+<list>
+	<code power="">{_mode}</code>
+	<desc>모드 - delete:삭제, comment:코멘트(댓글)삭제</desc>
+	<exam>delete</exam>
+</list>
+<list>
+	<code>{_returnUrl}</code>
+	<desc>삭제 처리후 이동할 경로</desc>
+	<exam></exam>
+</list>
+<list>
+	<code>{_m_no}</code>
+	<desc>게시물 작성한 회원번호</desc>
+	<exam>1</exam>
+</list>
+<list>
+	<code>{_sess.m_no}</code>
+	<desc>로그인한 회원번호</desc>
+	<exam>1</exam>
+</list>
+<list>
+	<code>{_ici_admin}</code>
+	<desc>관리자여부 - true, false</desc>
+	<exam>true</exam>
+</list>
+<list>
+	<code>{_bdHeader}</code>
+	<desc>상단디자인 (Header)</desc>
+	<exam></exam>
+</list>
+<list>
+	<code>{_bdFooter}</code>
+	<desc>하단디자인 (Footer)</desc>
+	<exam></exam>
+</list>
+<list>
+	<code>{_bdWidth}</code>
+	<desc>게시판 넓이</desc>
+	<exam>95%</exam>
+</list>
+<list>
+	<code>{_bdAlign}</code>
+	<desc>게시판 위치</desc>
+	<exam>center</exam>
+</list>
+<list>
+	<code>{ # header }</code>
+	<desc>상단과 측면을 크게 감싸는 외곽파일 인클루드, 소스 맨위에 삽입</desc>
+	<exam></exam>
+</list>
+<list>
+	<code>{ # footer }</code>
+	<desc>하단을 크게 감싸는 외곽파일 인클루드, 소스 맨아래에 삽입</desc>
+	<exam></exam>
+</list>
+</codes>

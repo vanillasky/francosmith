@@ -1,0 +1,53 @@
+{*** 상품후기 삭제 | goods/review_delete.php ***}
+<!DOCTYPE html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=euc-kr" />
+<meta name="viewport" content="user-scalable=yes, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width, height=device-height" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+<title>상품후기 삭제</title>
+
+<script src="{_cfg.rootDir}/data/skin_mobileV2/{_cfgMobileShop.tplSkinMobile}/common/js/common.js?v=201507"></script>
+<script src="../common/js/jquery-1.4.2.min.js"></script>
+<script src="../common/js/jquery.mobile-1.1.1.js"></script>
+<script src="../common/js/jquery.cookie.js"></script>
+
+<link rel="stylesheet" type="text/css" href="../common/css/reset.css" />
+<link rel="stylesheet" type="text/css" href="{_cfg.rootDir}/data/skin_mobileV2/{_cfgMobileShop.tplSkinMobile}/common/css/style.css?v=201507" />
+</head>
+
+<body>
+
+<div id="dynamic"></div>
+
+<div id="wrap">
+
+<section id="content-wrap" class="content">
+
+<section id="board-delete" >
+	<form name="frmDelete" method="post" action="indb.php">
+		<input type=hidden name="mode" value="{mode}">
+		<input type=hidden name="sno" value="{sno}">
+		<input type=hidden name="m_no" value="{m_no}">
+
+		<div class="content">
+			<br/>
+			정말로 삭제하시겠습니까? 데이터 삭제시 복구가 불가능 합니다. <br/>
+			비밀번호를 입력하여 주십시오.<br/><br/>
+			<input type=password name="password" placeholder="비밀번호">
+		</div>
+
+		<div class="btn_center">
+			<button type="submit" class="btn_confirm">확인</button>
+			<button type="button" class="btn_back" onclick="parent.frmMaskRemove('delete_qna')">취소</button>
+		</div>
+	</form>
+</section>
+
+</section>
+
+</div>
+<iframe class="" id="ifrmHidden" name="ifrmHidden" src='{_cfg.rootDir}/blank.txt'></iframe>
+</body>
+</html>

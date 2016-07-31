@@ -1,0 +1,61 @@
+{*** 말풍선 | goods/goods_list.php ***}
+<!--{ ? !id }--><? {id} = "es_".md5(crypt('')); ?><!--{ / }-->
+
+<style>
+.godo-tooltip-1 {background:#000000;color:#ffffff;}
+.godo-tooltip-2 {background:#ffffff;color:#000000;border:1px solid #DFDFDF}
+</style>
+
+<div id="el-godo-tooltip-{id}" style="z-index:1000;display:none;position:absolute;top:0;left:0;width:{=size}px;padding:10px; -moz-opacity:.{dpCfg['alphaRate']}; filter:alpha(opacity={dpCfg['alphaRate']}); opacity:.{dpCfg['alphaRate']};line-height:140%;" class="godo-tooltip-{=dpCfg.dOpt10}">
+</div>
+
+
+<script>
+function fnGodoTooltipShow_{id}(obj) {
+	var pos_x =0;
+	var pos_y =0;
+	var tooltip = document.getElementById('el-godo-tooltip-{id}');
+	tooltip.innerText = obj.getAttribute('tooltip');
+	
+	if (document.documentElement.scrollTop > 0) {
+		pos_x = event.clientX + document.documentElement.scrollLeft;
+		pos_y = event.clientY + document.documentElement.scrollTop;
+	} else {
+		pos_x = event.clientX + document.body.scrollLeft;
+		pos_y = event.clientY + document.body.scrollTop;
+	}
+
+	tooltip.style.top = (pos_y + 10) + 'px';
+	tooltip.style.left = (pos_x + 10) + 'px';
+	tooltip.style.display = 'block';
+}
+
+function fnGodoTooltipHide_{id}(obj) {
+	var tooltip = document.getElementById('el-godo-tooltip-{id}');
+	tooltip.innerText = '';
+	tooltip.style.display = 'none';
+}
+</script>
+
+<!-- 상품 리스트 -->
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+<tr>
+	<!--{ @ loop }-->
+	<!--{ ? .index_ && .index_%cols==0 }--></tr><tr><td height="10"></td></tr><tr><td height="10"></td></tr><tr><!--{ / }-->
+	<td align="center" valign="top" width="{100/cols}%">
+	<div><a href="{.goods_view_url}" onmouseover="fnGodoTooltipShow_{id}(this)" onmousemove="fnGodoTooltipShow_{id}(this)" onmouseout="fnGodoTooltipHide_{id}(this)" tooltip="{.shortdesc}">{=goodsimg(.img_s,size,'class="'+ .css_selector +'"')}</a></div>
+	<!--{ ? .soldout_icon }--><div style="padding:3px">{? .soldout_icon == 'custom'}<img src="../data/goods/icon/custom/soldout_icon">{:}<img src="../../img/icon/good_icon_soldout.gif">{/}</div><!--{ / }-->
+	<!--{ ? .icon }--><div>{.icon}</div><!--{ / }-->
+	<!--{ ? .coupon }--><div class="eng"><b style="color:red">{.coupon}<font class="small">원</font></b> <img src="../../img/icon/good_icon_coupon.gif" align="absmiddle"></div><!--{ / }-->
+	</td>
+	<!--{ / }-->
+</tr>
+<tr><td height="10"></td></tr>
+</table>
+
+
+<!-- 품절상품 마스크 -->
+<div id="el-goods-soldout-image-mask" style="display:none;position:absolute;top:0;left:0;background:url({ ? _cfg_soldout.display_overlay == 'custom'}../data/goods/icon/custom/soldout_overlay{:}../data/goods/icon/icon_soldout{_cfg_soldout.display_overlay}{/}) no-repeat center center;"></div>
+<script>
+addOnloadEvent(function(){ setGoodsImageSoldoutMask() });
+</script>

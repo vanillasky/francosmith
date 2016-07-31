@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="EUC-KR"?>
+<codes>
+<list>
+	<code>{.id}</code>
+	<desc>아이디</desc>
+	<exam>notice</exam>
+</list>
+<list>
+	<code>{.name}</code>
+	<desc>게시판이름</desc>
+	<exam>공지사항</exam>
+</list>
+</codes>

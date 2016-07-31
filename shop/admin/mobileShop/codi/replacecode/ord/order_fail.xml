@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="EUC-KR"?>
+<codes>
+<list>
+	<code>{_GET.ordno}</code>
+	<desc>주문번호</desc>
+	<exam>1187054690353</exam>
+</list>
+<list>
+	<code>{nameOrder}</code>
+	<desc>주문자명</desc>
+	<exam>홍길동</exam>
+</list>
+<list>
+	<code>{orddt}</code>
+	<desc>주문일자</desc>
+	<exam>2007-01-01 12:30:30</exam>
+</list>
+<list>
+	<code>{settleprice}</code>
+	<desc>주문금액</desc>
+	<exam>5200</exam>
+</list>
+<list>
+	<code>{settlekind}</code>
+	<desc>결제수단 - a:무통장입금, c:신용카드, o:계좌이체, v:가상계좌, h:핸드폰</desc>
+	<exam>a</exam>
+</list>
+<list>
+	<code new="">{eggyn}</code>
+	<desc>소비자피해보상보험(전자보증) - y:성공, f:실패</desc>
+	<exam></exam>
+</list>
+<list>
+	<code>{ # header }</code>
+	<desc>상단과 측면을 크게 감싸는 외곽파일 인클루드, 소스 맨위에 삽입</desc>
+	<exam></exam>
+</list>
+<list>
+	<code>{ # footer }</code>
+	<desc>하단을 크게 감싸는 외곽파일 인클루드, 소스 맨아래에 삽입</desc>
+	<exam></exam>
+</list>
+<list>
+	<code>{ # sub_header }</code>
+	<desc>페이지 안의 작은 상단(구분) 라인</desc>
+	<exam></exam>
+</list>
+</codes>

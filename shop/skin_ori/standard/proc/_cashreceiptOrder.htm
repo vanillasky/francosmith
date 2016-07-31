@@ -1,0 +1,99 @@
+{*** 주문하기_현금영수증발급 | proc/_cashreceiptOrder.php ***}
+<table id="cash" style="display:none; margin-top:10px;">
+<col width="100">
+<tr>
+	<td valign=top style="padding-top:4px">현금영수증</td>
+	<td>
+
+	<div class="noline">
+	<input type="radio" name="cashreceipt" value="Y" onClick="cash_required()">신청
+	<input type="radio" name="cashreceipt" value="N" onClick="cash_required()" checked>신청안함
+	</div>
+
+	<table>
+	<tr>
+		<td width="100">발행용도</td>
+		<td class="noline">
+		<input type="radio" name="cashuseopt" value="0" onClick="setUseopt()" checked>소득공제용
+		<input type="radio" name="cashuseopt" value="1" onClick="setUseopt()">지출증빙용
+		</td>
+	</tr>
+	<tr>
+		<td>
+		<span id="cert_0" style="display:block;">휴대폰번호</span>
+		<span id="cert_1" style="display:none;">사업자번호</span>
+		</td>
+		<td><input type="text" name="cashcertno" value="" option="regNum" class="line"> <span class="small">("-" 생략)</span></td>
+	</tr>
+	</table>
+	</td>
+</tr>
+</table>
+
+
+<script language="javascript">
+function cash_required()
+{
+	var display = 'block';
+	if (_ID('cash') == null) return;
+
+	var obj = document.getElementsByName('settlekind');
+	for (var i = 0; i < obj.length; i++){
+		if (obj[i].checked != true) continue;
+		var settlekind = obj[i];
+		break;
+	}
+	if (settlekind == null) display = 'none';
+	else if (settlekind.value != 'a') display = 'none';
+
+	if (_ID('cash').style.display == display && display =='none') return;
+	_ID('cash').style.display = display;
+
+	items = new Array();
+	items.push( {name : "cashreceipt", label : "현금영수증 신청여부", msgR : ""} );
+	items.push( {name : "cashuseopt", label : "현금영수증 발행용도", msgR : "현금영수증 발행용도를 선택해야 합니다."} );
+	items.push( {name : "cashcertno", label : "휴대폰번호", msgR : ""} );
+
+	for (var i = 0; i < items.length; i++){
+		var obj = document.getElementsByName(items[i].name);
+		if (display == 'block' && items[i].name != 'cashreceipt' && typeof(document.getElementsByName('cashreceipt')[0]) != "undefined")
+			state = (document.getElementsByName('cashreceipt')[0].checked ? 'block' : 'none');
+		else state = display;
+		for (var j = 0; j < obj.length; j++){
+			if (state == 'block'){
+				obj[j].setAttribute('required', '');
+				obj[j].setAttribute('label', items[i].label);
+				obj[j].setAttribute('msgR', items[i].msgR);
+				obj[j].disabled = false;
+
+				if (items[i].name == 'cashcertno') setUseopt();
+			}
+			else {
+				obj[j].removeAttribute('required');
+				obj[j].removeAttribute('label');
+				obj[j].removeAttribute('msgR');
+				obj[j].disabled = true;
+			}
+		}
+	}
+}
+
+function setUseopt()
+{
+	var useopt = document.getElementsByName('cashuseopt');
+	if (useopt[0].checked)
+	{
+		_ID('cert_0').style.display = "block";
+		_ID('cert_1').style.display = "none";
+		useopt[0].form.cashcertno.setAttribute('label', '휴대폰번호');
+		useopt[0].form.cashcertno.setAttribute('msgR', '휴대폰번호를 정확히 입력하세요.');
+	}
+	else if (useopt[1].checked)
+	{
+		_ID('cert_0').style.display = "none";
+		_ID('cert_1').style.display = "block";
+		useopt[1].form.cashcertno.setAttribute('label', '사업자번호');
+		useopt[1].form.cashcertno.setAttribute('msgR', '사업자번호를 정확히 입력하세요.');
+	}
+}
+</script>

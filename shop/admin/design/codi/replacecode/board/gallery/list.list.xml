@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="EUC-KR"?>
+<codes>
+<list>
+	<code>{.num}</code>
+	<desc>일련번호</desc>
+	<exam>1</exam>
+</list>
+<list>
+	<code>{.no}</code>
+	<desc>게시물 번호</desc>
+	<exam>1</exam>
+</list>
+<list>
+	<code>{.m_no}</code>
+	<desc>회원번호</desc>
+	<exam>1</exam>
+</list>
+<list>
+	<code>{.m_id}</code>
+	<desc>회원아이디 - admin.gif:관리자, 회원아이디:그외</desc>
+	<exam>testid</exam>
+</list>
+<list>
+	<code>{.name}</code>
+	<desc>글쓴이 - admin.gif:관리자, 글쓴이:그외</desc>
+	<exam>홍길동</exam>
+</list>
+<list>
+	<code power="">{.subject}</code>
+	<desc>제목</desc>
+	<exam>하루의 시작을 이나무와 함께</exam>
+</list>
+<list>
+	<code power="">{.imgnm}</code>
+	<desc>이미지파일명 (=첨부파일중 첫번째 파일명)</desc>
+	<exam></exam>
+</list>
+<list>
+	<code power="">{.notice}</code>
+	<desc>NOTICE 여부 - o:공지글, '':일반글</desc>
+	<exam>o</exam>
+</list>
+<list>
+	<code>{.secret}</code>
+	<desc>비밀글 여부 - o:비밀글, '':일반글</desc>
+	<exam>o</exam>
+</list>
+<list>
+	<code>{.hit}</code>
+	<desc>조회수</desc>
+	<exam>13</exam>
+</list>
+<list>
+	<code>{.comment}</code>
+	<desc>코멘트(댓글) 갯수</desc>
+	<exam>2</exam>
+</list>
+<list>
+	<code>{.regdt}</code>
+	<desc>작성일</desc>
+	<exam>2007-01-01 12:30:30</exam>
+</list>
+<list>
+	<code>{.new}</code>
+	<desc>NEW아이콘 - true, false</desc>
+	<exam>true</exam>
+</list>
+<list>
+	<code>{.hot}</code>
+	<desc>HOT아이콘 - true, false</desc>
+	<exam>true</exam>
+</list>
+<list>
+	<code power="">{.link.view}</code>
+	<desc>링크 A태그 > 상세보기</desc>
+	<exam>&lt;a href='view.php?id=notice&amp;no=1'&gt;</exam>
+</list>
+<list>
+	<code>&lt;? {cnt_notice}++; ?&gt;</code>
+	<desc>공지사항 라인 출력할 때 1씩 증가</desc>
+	<exam>1</exam>
+</list>
+<list>
+	<code>{ ? (.index_+1-cnt_notice)%5==0 }</code>
+	<desc>라인당 게시물 5개씩 출력하도록 제어하는 연산식</desc>
+	<exam></exam>
+</list>
+</codes>

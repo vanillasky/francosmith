@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="EUC-KR"?>
+<codes>
+<list>
+	<code>{ @ dataBanner( 1, 1, 'Y' ) }</code>
+	<desc>배너코드1 위치의 배너를 1개만 랜덤으로 호출 (※ 위치는 1 ~ 60 제공)</desc>
+	<exam more="func/dataBanner.xml"></exam>
+</list>
+<list>
+	<code>{ @ dataBanner( 22 ) }</code>
+	<desc>배너코드22 위치의 배너를 호출</desc>
+	<exam more="func/dataBanner.xml"></exam>
+</list>
+</codes>

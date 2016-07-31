@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="EUC-KR"?>
+<codes>
+<list>
+	<code>{.img}</code>
+	<desc>이미지주소</desc>
+	<exam>/shop/data/skin/스킨명/img/banner/main_img.gif</exam>
+</list>
+<list>
+	<code>{.linkaddr}</code>
+	<desc>연결주소 - nolink:링크 안하는 경우, 그외:링크</desc>
+	<exam>nolink</exam>
+</list>
+<list>
+	<code>{.target}</code>
+	<desc>링크타겟</desc>
+	<exam>_self</exam>
+</list>
+<list>
+	<code power="">{.tag}</code>
+	<desc>태그</desc>
+	<exam>&lt;img src="/shop/data/skin/스킨명/img/banner/main_img.gif" align="absmiddle"&gt;</exam>
+</list>
+</codes>

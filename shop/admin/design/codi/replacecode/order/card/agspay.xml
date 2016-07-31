@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="EUC-KR"?>
+<codes>
+<list>
+	<code power="">{pg.id}</code>
+	<desc>상점아이디</desc>
+	<exam></exam>
+</list>
+<list>
+	<code power="">{pg.zerofee}</code>
+	<desc>무이자여부 - 9000400001:일반결제, 9000400002:무이자결제</desc>
+	<exam>9000400002</exam>
+</list>
+<list>
+	<code power="">{pg.quota}</code>
+	<desc>일반할부기간</desc>
+	<exam>0:2:3:4:5:6:7:8:9:10:11:12</exam>
+</list>
+<list>
+	<code power="">{pg.zerofee_period}</code>
+	<desc>무이자 기간</desc>
+	<exam>100-2:3:6,200-2:3:6</exam>
+</list>
+<list>
+	<code power="">{settlekind}</code>
+	<desc>결제수단 - c:신용카드, o:계좌이체, v:가상계좌, h:핸드폰</desc>
+	<exam>c</exam>
+</list>
+<list>
+	<code>{_POST.escrow}</code>
+	<desc>에스크로 여부 - Y:적용, N:미적용</desc>
+	<exam>N</exam>
+</list>
+<list>
+	<code power="">{ordno}</code>
+	<desc>주문번호</desc>
+	<exam>1187054690353</exam>
+</list>
+<list>
+	<code power="">{settleprice}</code>
+	<desc>결제금액</desc>
+	<exam>5200</exam>
+</list>
+<list>
+	<code>{_cfg['compName']}</code>
+	<desc>상점명</desc>
+	<exam></exam>
+</list>
+<list>
+	<code>{=strcut(cart->item[0]['goodsnm'],250)}</code>
+	<desc>상품명</desc>
+	<exam></exam>
+</list>
+<list>
+	<code>{_cfg['shopUrl']}</code>
+	<desc>상점URL</desc>
+	<exam></exam>
+</list>
+<list>
+	<code>{_sess.m_id}</code>
+	<desc>회원아이디</desc>
+	<exam></exam>
+</list>
+<list>
+	<code>{email}</code>
+	<desc>이메일</desc>
+	<exam>xxx@godo.co.kr</exam>
+</list>
+<list>
+	<code>{nameOrder}</code>
+	<desc>주문자명</desc>
+	<exam>홍길동</exam>
+</list>
+<list>
+	<code>{=implode('-',mobileOrder)}</code>
+	<desc>주문자연락처</desc>
+	<exam>010-1234-5678</exam>
+</list>
+<list>
+	<code>{nameReceiver}</code>
+	<desc>수신자명</desc>
+	<exam>홍길동</exam>
+</list>
+<list>
+	<code>{=implode('-',mobileReceiver)}</code>
+	<desc>수신자연락처</desc>
+	<exam>010-1234-5678</exam>
+</list>
+<list>
+	<code>{address}</code>
+	<desc>배송지주소1</desc>
+	<exam>서울 강남구 대치동</exam>
+</list>
+<list>
+	<code>{address_sub}</code>
+	<desc>배송지주소2</desc>
+	<exam>123번지</exam>
+</list>
+<list>
+	<code>{memo}</code>
+	<desc>기타요구사항</desc>
+	<exam></exam>
+</list>
+</codes>

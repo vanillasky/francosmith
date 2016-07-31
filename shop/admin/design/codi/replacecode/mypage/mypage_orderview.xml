@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="EUC-KR"?>
+<codes>
+<list>
+	<code>{ordno}</code>
+	<desc>주문번호</desc>
+	<exam>1187054690353</exam>
+</list>
+<list>
+	<code power="">{ @ item}</code>
+	<desc>주문상품</desc>
+	<exam more="mypage/mypage_orderview.item.xml"></exam>
+</list>
+<list>
+	<code>{nameOrder}</code>
+	<desc>주문자명</desc>
+	<exam>홍길동</exam>
+</list>
+<list>
+	<code>{phoneOrder}</code>
+	<desc>주문자 전화</desc>
+	<exam>02-1234-5678</exam>
+</list>
+<list>
+	<code>{mobileOrder}</code>
+	<desc>주문자 핸드폰</desc>
+	<exam>010-1234-5678</exam>
+</list>
+<list>
+	<code>{email}</code>
+	<desc>이메일</desc>
+	<exam>xxx@godo.co.kr</exam>
+</list>
+<list>
+	<code>{nameReceiver}</code>
+	<desc>받는자명</desc>
+	<exam>홍길동</exam>
+</list>
+<list>
+	<code>{phoneReceiver}</code>
+	<desc>받는자 전화</desc>
+	<exam>02-1234-5678</exam>
+</list>
+<list>
+	<code>{mobileReceiver}</code>
+	<desc>받는자 핸드폰</desc>
+	<exam>010-1234-5678</exam>
+</list>
+<list>
+	<code>{zipcode}</code>
+	<desc>우편번호</desc>
+	<exam>123-456</exam>
+</list>
+<list>
+	<code>{address}</code>
+	<desc>주소1</desc>
+	<exam>서울 강남구 대치동</exam>
+</list>
+<list>
+	<code>{address_sub}</code>
+	<desc>주소2</desc>
+	<exam>123번지</exam>
+</list>
+<list>
+	<code>{memo}</code>
+	<desc>배송메세지</desc>
+	<exam></exam>
+</list>
+<list>
+	<code>{deliverycomp}</code>
+	<desc>택배사명</desc>
+	<exam>훼미리택배</exam>
+</list>
+<list>
+	<code>{deliverycode}</code>
+	<desc>송장번호</desc>
+	<exam>1234567890</exam>
+</list>
+<list>
+	<code>{=number_format(goodsprice)}</code>
+	<desc>총주문금액</desc>
+	<exam>5,800</exam>
+</list>
+<list>
+	<code>{=number_format(delivery)}원</code>
+	<desc>배송비</desc>
+	<exam>2,500</exam>
+</list>
+<list>
+	<code>{=number_format(memberdc)}</code>
+	<desc>회원할인</desc>
+	<exam>700</exam>
+</list>
+<list>
+	<code>{=number_format(coupon)}</code>
+	<desc>쿠폰할인</desc>
+	<exam>400</exam>
+</list>
+<list>
+	<code>{=number_format(_data.emoney)}</code>
+	<desc>적립금 사용</desc>
+	<exam>2,000</exam>
+</list>
+<list>
+	<code>{=number_format(settleprice)}</code>
+	<desc>결제금액</desc>
+	<exam>5,200</exam>
+</list>
+<list>
+	<code power="">{settlekind}</code>
+	<desc>결제수단 - a:무통장입금, c:신용카드, o:계좌이체, v:가상계좌, h:핸드폰</desc>
+	<exam>a</exam>
+</list>
+<list>
+	<code>{bank}</code>
+	<desc>입금은행</desc>
+	<exam></exam>
+</list>
+<list>
+	<code>{account}</code>
+	<desc>입금계좌</desc>
+	<exam></exam>
+</list>
+<list>
+	<code>{name}</code>
+	<desc>예금주명</desc>
+	<exam></exam>
+</list>
+<list>
+	<code>{bankSender}</code>
+	<desc>입금자명</desc>
+	<exam></exam>
+</list>
+<list>
+	<code>{vAccount}</code>
+	<desc>가상계좌</desc>
+	<exam></exam>
+</list>
+<list>
+	<code new="">{eggyn}</code>
+	<desc>소비자피해보상보험(전자보증) - y:성공, f:실패</desc>
+	<exam></exam>
+</list>
+<list>
+	<code new="">{_egg.use}</code>
+	<desc>소비자피해보상보험(전자보증) 사용여부 - Y:사용, N:미사용</desc>
+	<exam></exam>
+</list>
+<list>
+	<code new="">{_egg.usafeid}</code>
+	<desc>소비자피해보상보험(전자보증) 아이디</desc>
+	<exam></exam>
+</list>
+<list>
+	<code new="">{eggno}</code>
+	<desc>소비자피해보상보험(전자보증) 증권번호</desc>
+	<exam></exam>
+</list>
+<list>
+	<code>{taxmode}</code>
+	<desc>세금계산서 모드 - taxapp:발행신청폼출력, taxview:발행정보출력</desc>
+	<exam>taxview</exam>
+</list>
+<list>
+	<code>{taxapp}</code>
+	<desc>세금계산서 발행신청가능여부 - Y, N</desc>
+	<exam>Y</exam>
+</list>
+<list>
+	<code>{taxed['step']}</code>
+	<desc>세금계산서 발행상태 - 0:발행신청, 1:발행승인, 2:발행완료, 3:전자발행</desc>
+	<exam>3</exam>
+</list>
+<list>
+	<code>{taxed['regdt']}</code>
+	<desc>세금계산서 신청일</desc>
+	<exam>2007-01-02 12:30:30</exam>
+</list>
+<list>
+	<code>{taxed['agreedt']}</code>
+	<desc>세금계산서 승인/요청일</desc>
+	<exam>2007-01-02 14:30:30</exam>
+</list>
+<list>
+	<code>{taxed['printdt']}</code>
+	<desc>세금계산서 완료일</desc>
+	<exam></exam>
+</list>
+<list>
+	<code>{=number_format(taxed['price'])}</code>
+	<desc>세금계산서 발행액</desc>
+	<exam>2700</exam>
+</list>
+<list>
+	<code>{taxed['busino']}</code>
+	<desc>사업장정보 - 사업자번호</desc>
+	<exam></exam>
+</list>
+<list>
+	<code>{taxed['company']}</code>
+	<desc>사업장정보 - 회사명</desc>
+	<exam></exam>
+</list>
+<list>
+	<code>{taxed['name']}</code>
+	<desc>사업장정보 - 대표자명</desc>
+	<exam></exam>
+</list>
+<list>
+	<code>{taxed['service']}</code>
+	<desc>사업장정보 - 업태</desc>
+	<exam></exam>
+</list>
+<list>
+	<code>{taxed['item']}</code>
+	<desc>사업장정보 - 종목</desc>
+	<exam></exam>
+</list>
+<list>
+	<code>{taxed['address']}</code>
+	<desc>사업장정보 - 사업장주소</desc>
+	<exam></exam>
+</list>
+<list>
+	<code new="">{taxed['doc_number']}</code>
+	<desc>전자발행 문서번호</desc>
+	<exam>ORD1187054690353_12</exam>
+</list>
+<list>
+	<code>{_pg.receipt}</code>
+	<desc>현금영수증 사용여부 - Y:사용, N:미사용</desc>
+	<exam>Y</exam>
+</list>
+<list>
+	<code>{ # cash_receipt }</code>
+	<desc>현금영수증 발급파일 인클루드</desc>
+	<exam></exam>
+</list>
+<list>
+	<code>{ # header }</code>
+	<desc>상단과 측면을 크게 감싸는 외곽파일 인클루드, 소스 맨위에 삽입</desc>
+	<exam></exam>
+</list>
+<list>
+	<code>{ # footer }</code>
+	<desc>하단을 크게 감싸는 외곽파일 인클루드, 소스 맨아래에 삽입</desc>
+	<exam></exam>
+</list>
+</codes>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="EUC-KR"?>
+<codes>
+<list>
+	<code>{.key_}</code>
+	<desc>반복 키</desc>
+	<exam>0</exam>
+</list>
+<list>
+	<code power="">{.value_}</code>
+	<desc>필수선택 여부 - '':선택사항, o:필수선택 (=반복 값)</desc>
+	<exam>o</exam>
+</list>
+</codes>

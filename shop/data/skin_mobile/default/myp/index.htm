@@ -1,0 +1,39 @@
+{#header}
+
+<?php {page_title} = "마이페이지";?>
+{#sub_header}
+
+<section id="mypage">
+	<ul>
+		<li>
+			<a href="./orderlist.php">
+			<dl>
+				<dt><span>주문내역</span></dt>			<dd><span>{_cnt_order} 건</span></dd>
+			</dl>
+			</a>
+		</li>
+		<li>
+			<a href="./wishlist.php">
+			<dl>
+				<dt><span>찜리스트</span></dt>			<dd><span>{_cnt_wishlist} 건</span></dd>
+			</dl>
+			</a>
+		</li>
+		<li>
+			<a href="./emoneylist.php">
+			<dl>
+				<dt><span>적립금내역</span></dt>		<dd><span>{=number_format(_emoney)} 포인트</span></dd>
+			</dl>
+			</a>
+		</li>
+		<li>
+			<a href="./couponlist.php">
+			<dl>
+				<dt><span>쿠폰내역</span></dt>		<dd><span>{_cnt_coupon} 건</span></dd>
+			</dl>
+			</a>
+		</li>
+	</ul>
+	<div class="clearb"></div>
+</section>
+{#footer}

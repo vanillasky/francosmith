@@ -1,0 +1,119 @@
+{*** 나의 상품문의 | mypage/mypage_qna_goods.php ***}
+{ # header }
+
+<!-- 상단이미지 || 현재위치 -->
+
+<div class="page_title_div">
+	<div class="page_title">Questions &amp; Anserws</div>
+	<div class="page_path"><a href="/shop/">HOME</a> &gt; <a href="/shop/mypage/mypage.php">마이페이지</a> &gt; <span class='bold'>나의상품문의</span></div>
+</div>
+<div class="page_title_line"></div>
+
+<div style="width:100%; padding-top:20px;"></div>
+
+
+<div class="indiv"><!-- Start indiv -->
+
+	<table class="mypage-board-table">
+	<tr class="mypage-board-title">
+		<th width=50>번호</th>
+		<th width=60>이미지</th>
+		<th>상품명/제목</th>
+		<th width=80>작성자</th>
+		<th width=80>작성일</th>
+	</tr>
+	</table>
+
+	<!--{ @ _loop }-->
+	<div>
+		<!--{ ? .sno == .parent // 질문 }-->
+		<table class="mypage-board-content" onclick="view_content(this, event)">
+		<tr height=25 onmouseover=this.style.background="#F7F7F7" onmouseout=this.style.background="">
+			<td width=50 align="center">{.idx}</td>
+			<td width=60 align="center"><a href="../goods/goods_view.php?goodsno={.goodsno}">{=goodsimg(.img_s,50)}</a></td>
+			<td>
+				<table cellpadding=0 cellspacing=0 border=0>
+				<tr>
+					<td style="padding-top:5"><span style="font-weight:bold;">{.goodsnm}</span> <a href="../goods/goods_view.php?goodsno={.goodsno}"><img src="../img/common/btn_goodview2.gif" align=absmiddle></a></td>
+				</tr>
+				<tr>
+					<td style="padding-top:5; padding-bottom:5" class=stxt>{.subject} <span style="color:#007FC8;">[{.replecnt}]</span></td>
+				</tr>
+				</table>
+			</td>
+			<td width=80 align="center">{.m_id}</td>
+			<td width=80 align="center">{=substr(.regdt,0,10)}</td>
+		</tr>
+		</table>
+		<!--{ : .sno != .parent // 답글 }-->
+		<table class="mypage-board-content" onclick="view_content(this, event)">
+		<tr height=25 onmouseover=this.style.background="#F7F7F7" onmouseout=this.style.background="">
+			<td width=50 align="center">{.idx}</td>
+			<td width=60 align="center">&nbsp;</td>
+			<td><span class="ans"><img src="../img/icon/board-re.png">&nbsp;{.subject}</span></td>
+			<td width=80 align="center">{.m_id}</td>
+			<td width=80 align="center">{=substr(.regdt,0,10)}</td>
+		</tr>
+		</table>
+	<!--{ / }-->
+		
+		<div class="mypage-txt-wrapper">
+			<div class="mypage-txt">
+				<div class="description">{=html_entity_decode(str_replace('<br />','',.contents))}</div>
+				
+				<div style="text-align:right;padding-bottom:5px;">
+					<!--{ ? .authreply == 'Y' }-->
+					<button class="button-small button-dark" onclick="popup_register( 'reply_qna', '{.goodsno}', '{.sno}' );">답변</button>
+				    <!--{ / }-->
+					<!--{ ? .authmodify == 'Y' }-->
+					<button class="button-small button-dark" onclick="popup_register( 'mod_qna', '{.goodsno}', '{.sno}' );">수정</button>
+				    <!--{ / }-->
+					<!--{ ? .authdelete == 'Y' }-->
+				    <button class="button-small button-dark" onclick="popup_register( 'del_qna', '{.goodsno}', '{.sno}' );">삭제</button>
+				    <!--{ / }-->
+			    </div>
+			</div>
+		</div>
+	</div>
+<!--{ / }-->
+
+<div class="pagediv">{pg->page['navi']}</div>
+
+
+<script language="javascript">
+
+function popup_register( mode, goodsno, sno )
+{
+	if ( mode == 'del_qna' ) var win = window.open("../goods/goods_qna_del.php?mode=" + mode + "&sno=" + sno,"qna_register","width=400,height=200");
+	else var win = window.open("../goods/goods_qna_register.php?mode=" + mode + "&goodsno=" + goodsno + "&sno=" + sno,"qna_register","width=600,height=500");
+	win.focus();
+}
+
+var preContent;
+
+function view_content(obj)
+{
+	var div = obj.parentNode;
+
+	for (var i=1, m=div.childNodes.length;i<m;i++) {
+		if (div.childNodes[i].nodeType != 1) continue;	// text node.
+		else if (obj == div.childNodes[ i ]) continue;
+
+		obj = div.childNodes[ i ];
+		break;
+	}
+
+	if (preContent && obj!=preContent){
+		obj.style.display = "block";
+		preContent.style.display = "none";
+	}
+	else if (preContent && obj==preContent) preContent.style.display = ( preContent.style.display == "none" ? "block" : "none" );
+	else if (preContent == null ) obj.style.display = "block";
+
+	preContent = obj;
+}
+</script>
+
+</div><!-- End indiv -->
+
+{ # footer }

@@ -1,0 +1,24 @@
+{*** 개인정보취급방침 | service/private.php ***}
+{ # header }
+
+<script type="text/javascript">
+$(document).ready(function(){
+	$("#private > article").html($("#private > article").html().replace(/\n/gi, "<br/>"));
+});
+</script>
+<style type="text/css">
+#private{
+	padding: 15px;
+}
+#private h2{
+	margin-bottom: 15px;
+	font-size: 15px;
+}
+</style>
+
+<section id="private">
+	<h2>개인정보취급방침</h2>
+	<article>{=include_file("service/_private1.txt")}</article>
+</section>
+
+{ # footer }

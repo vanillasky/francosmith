@@ -1,0 +1,49 @@
+#el-category-multi-selector {height:150px;overflow:auto;border:1px solid #cccccc;margin-top:5px;}
+#el-category-multi-selector ul {list-style-type:none;margin:0;padding:10px;}
+#el-category-multi-selector ul li {padding:2px 0;}
+
+#el-vat-indicator-price,
+#el-vat-indicator-vat {display:inline-block;width:80px;border-bottom:1px solid #cccccc;text-align:right;}
+
+.paletteColor { width:15px; height:15px; cursor:pointer; border:1px #DDDDDD solid; }
+.paletteColor_selected { float:left; width:15px; height:15px; margin:1px; cursor:pointer; border:1px #DDDDDD solid; }
+.selColorText { margin-top:8px; font-size:11px; font-family:dotum; color:#0070C0; float:left; cursor:pointer; }
+
+#selectedColor { float:left; }
+#colorList td { padding:5px 0px; border-bottom:1px #DCD8D6 solid; }
+
+div.goods_stat {}
+div.goods_stat input {border:none;}
+div.goods_stat span {display:block;width:30px;margin:0 auto;height:12px;}
+div.goods_stat span.show {background:url('../../img/icn_1.gif') no-repeat 50% 50%;}
+div.goods_stat span.hide {background:url('../../img/icn_0.gif') no-repeat 50% 50%;}
+
+tr.goods-option-highlight th,
+tr.goods-option-highlight td {background-color:#a7f5a1 !important;}
+
+div.admin-goods-list-category-wrap {float:left;}
+div.admin-goods-list-category-wrap ul {list-style:none;margin:0;padding:0px 10px;}
+div.admin-goods-list-category-wrap ul li {margin:0;padding:0;}
+div.admin-goods-list-category-wrap ul li img {vertical-align:middle;}
+
+div.admin-goods-list-sales-range-wrap {float:right;width:150px;}
+div.admin-goods-list-sales-range-wrap dl {margin:0;padding:0;}
+div.admin-goods-list-sales-range-wrap dl dt,
+div.admin-goods-list-sales-range-wrap dl dd {font:11px dotum;color:#627dce;margin:0;padding:0;line-height:1.5em;}
+div.admin-goods-list-sales-range-wrap dl dt {font-weight:bold;width:60px;position:absolute;margin-left:-60px;}
+
+div.admin-goods-list-function-wrap {float:right;width:145px;}
+
+div.admin-goods-list-extra-info-wrap {}
+div.admin-goods-list-extra-info-wrap table {color:#303030;border:0;margin:0;}
+div.admin-goods-list-extra-info-wrap table th,
+div.admin-goods-list-extra-info-wrap table td {font:11px Dotum;border:0;padding:0 2px;text-align:left;}
+div.admin-goods-list-extra-info-wrap table th {font-weight:bold;text-align:right;width:60px;}
+
+
+div.boxed-help {width:660px;border:solid 1px #ccc; margin:5px 0 5px 0;}
+div.boxed-help p {font:11px dotum;margin:1px;letter-spacing:-1px; background-color:#f8f8f8;color:#444; padding:7px 10px; line-height:15px;}
+
+div.title span {font-size:11px;}
+.small1 {font-size:11px;}
+

@@ -1,0 +1,99 @@
+{*** 하단기본타입 | main/index.php ***}
+<table cellpadding='0' cellspacing='0' border='0' width='100%' height="172" style="border-top:solid 1px #353535; border-bottom:solid 1px #d5d5d5">
+	<tr>
+		<td valign="top" height="36" style="padding-top:3px; background-color:#f7f7f7; border-bottom:solid 1px #d5d5d5;">
+			<table border='0' cellpadding='0' width="{_cfg['shopSize']}" align="{_cfg['shopAlign']}" cellspacing='0' style="font-size:12px;" >
+				<tr>
+					<td height="36">
+						<div style="line-height:17px;"> <a href="../service/company.php" style="color:#333;">회사소개 </a> <font color="#333"> | </font> <a href="../service/agreement.php" style="color:#333;">이용약관</a> <font color="#333"> | </font> <a href="../service/private.php" style="color:#333;"><strong>개인정보취급방침</strong></a> <font color="#333"> | </font> <a href="../service/guide.php" style="color:#333;">이용안내</a> <font color="#333"> | </font> <a href="../service/cooperation.php" style="color:#333;">제휴안내</a> <font color="#333"> | </font> <a href="../service/sitemap.php" style="color:#333;">사이트맵</a> </div>
+					</td>
+					<td align="right"><a href="#top"><img src="../../img/main/btn_top.gif"></a></td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+	<tr>
+		<td valign="top">
+			<table border='0' cellpadding='0' width="{_cfg['shopSize']}" align="{_cfg['shopAlign']}" cellspacing='0' style="font-size:12px;" >
+				<tr>
+					<td style="padding-top:10px;"> 
+						<!------------ 하단 카피라이트  시작 --------------->
+						<table width='100%' border='0'>
+							<tr>
+								<td style="font-size:12px; color:#666;">
+									<div style="line-height:17px;">
+									<font color='#33a5c0'>회사</font> {_cfg['compName']} 
+									<font color="#e0e0e0"> | </font> 
+									<font color='#33a5c0'>주소</font> {_cfg['address']} 
+									</div>
+									<div style="line-height:17px;"> 
+									<font color='#33a5c0'>대표</font> {_cfg['ceoName']} 
+									<font color="#e0e0e0"> | </font> 
+									<font color='#33a5c0'>사업자등록번호</font> {_cfg['compSerial']} <a href="http://www.ftc.go.kr/info/bizinfo/communicationList.jsp" target="_blank"><img src="../../img/common/btn_business.gif" style="vertical-align:top;"></a>
+									<font color="#e0e0e0"> | </font> 
+									<font color='#33a5c0'>통신판매업신고번호</font> {_cfg['orderSerial']} 
+									<!--<font color="#e0e0e0"> | </font> -->
+									</div>
+									
+									<div style="line-height:17px;"> 
+									<font color='#33a5c0'>전화번호</font> {_cfg['compPhone']} 
+									<font color="#e0e0e0"> | </font> 
+									<font color='#33a5c0'>팩스번호</font> {_cfg['compFax']} 
+									<!--<font color="#e0e0e0"> | </font> -->
+									
+									</div>
+									<div style="line-height:17px;">
+										<font color='#33a5c0'>개인정보관리자</font> {_cfg['adminName']}
+										<font color='#33a5c0'>메일</font> <a href="javascript:popup('../proc/popup_email.php?to={_cfg['adminEmail']}&hidden=1',650,600)">{_cfg['adminEmail']}</a> 
+									</div>
+									<!--
+									<div style="line-height:17px;"> 
+									<font color='#33a5c0'>호스팅제공</font> (주)고도소프트 
+									<img src="../../img/common/footer_godomall.png" style="vertical-align:middle;">
+									</div>
+									<div style="line-height:20px;"> Copyright ⓒ <b>{_cfg['shopUrl']}</b> All right reserved </div>
+									-->
+								</td>
+								<td><!-- KB에스크로 이체 인증마크 적용 시작 -->
+									<script>
+									function onPopKBAuthMark()
+									{
+									window.open('','KB_AUTHMARK','height=604, width=648, status=yes, toolbar=no, menubar=no,location=no');
+									document.KB_AUTHMARK_FORM.action='http://escrow1.kbstar.com/quics';
+									document.KB_AUTHMARK_FORM.target='KB_AUTHMARK';
+									document.KB_AUTHMARK_FORM.submit();
+									}
+									</script>
+									<form name="KB_AUTHMARK_FORM" method="get">
+									<input type="hidden" name="page" value="B009111"/>
+									<input type="hidden" name="cc" value="b010807:b008491"/>
+									<input type="hidden" name="mHValue" value='6dd1f98de45d450a592f0aa96b9c7784201403211310930'/>
+									</form>
+									<a href="#" onclick="javascript:onPopKBAuthMark();return false;">
+									<img src="http://img1.kbstar.com/img/escrow/escrowcmark.gif" border="0"/>
+									</a>
+									<!-- KB에스크로이체 인증마크 적용 종료 -->
+								</td>
+								<!------------------ 상단로고 시작 ------------------->
+								<td align="right"><!-- 배너관리에서 수정가능 --><!--{ @ dataBanner( 91 ) }-->{.tag}<!--{ / }--></td>
+								<!------------------ 상단로고 끝 -------------------> 
+							</tr>
+						</table>
+						<!------------ 하단 카피라이트  끝 ---------------> 
+					</td>
+					<!------------------ SSL seal 시작 -------------------> 
+					{=displaySSLSeal()} 
+					<!------------------ SSL seal 끝 -------------------> 
+					<!------------------ 구매안전서비스 표시 시작 -------------------> 
+					{=displayEggBanner()} 
+					
+
+					<!------------------ 구매안전서비스 표시 끝 -------------------> 
+					<!------------------ 옥션 iPay Logo 표시 시작 -------------------> 
+					{=auctionIpayLogo()} 
+					<!------------------ 옥션 iPay Logo 표시 끝 -------------------> 
+				</tr>
+			</table>
+		</td>
+	</tr>
+</table>

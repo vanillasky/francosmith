@@ -1,0 +1,56 @@
+{*** 메인용 하단파일 | main/index.php ***}
+<div id="footer_top" align="{_cfg['shopAlign']}">
+<table width="{_cfg['shopSize']}px" id="cs_contents" border="0" cellpadding="0" cellspacing="0">
+	<tr>
+		<td valign="top" width="210" style="padding:10px 0 0 50px;"> 
+		<!-- 고객센터 01 : Start -->
+		<div id="cscenter">
+			
+			<div class="cstel"><span class="fotter_info_tel">Tel:</span> {_cfg['compPhone']}</div>
+			<div class="cstel"><span class="fotter_info">Fax:</span> {_cfg['compFax']}</div>
+			<dl>
+				<dd>MON - FRI <span class="txt">am 10:00 - pm 17:00</span> </dd>
+			</dl>
+		</div>
+		<!-- 고객센터 01 : End --> 
+		</td>
+		<td valign="top" width="189" style="padding:10px 0 0 0;" >
+			<!-- 메인 무통장입금 : Start -->
+			<table id="bankinfo" border="0" cellpadding="0" cellspacing="0">
+				<tr>
+					<td><span class="footer_h2">Bank Info</span></td>
+				</tr>
+				<!--{ @ dataBank() }-->
+				<tr>
+					<td style="padding-top:5px;"><span class="footer_h3">{.bank}</span></td>
+				</tr>
+				<tr>
+					<td style="padding-top:5px;"><span class="footer_h4">{.account}</span><span class="footer_h3"> {.name}</span></td>
+				</tr>
+				
+				<!--{ / }--> 
+			</table>
+			<!-- 메인 무통장입금 : End --> 
+		</td>
+		<td valign="top" style="padding:5px 0 0 0;">
+			<table id="about" width="100%" border="1" cellpadding="0" cellspacing="0">
+				<tr>
+					<td class="bold" align="right">
+						<a href="../service/private.php">개인정보처리방침</a>&nbsp;<span style="color:#e0e0e0;">|</span>&nbsp; 
+						<a href="../service/guide.php">이용안내</a> &nbsp;<span style="color:#e0e0e0;">|</span>&nbsp; 
+						<a href="../service/cooperation.php">제휴안내</a>&nbsp;<span style="color:#e0e0e0;">|</span>&nbsp; 
+						<a href="../service/sitemap.php">SITE MAP</a>
+					</td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+	<tr><td height="10px;"></td></tr>
+		
+</table>
+<table>
+<tr>
+	<td><div id="footer_bottom" ></div></td>
+</tr>	
+</table>
+</div>

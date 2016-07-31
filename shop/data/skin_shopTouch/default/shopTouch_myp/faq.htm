@@ -1,0 +1,81 @@
+{*** FAQ | shopTouch_myp/faq.php ***}
+{ # header }
+
+<?php {page_title} = "FAQ";?>
+{#sub_header}
+
+<div class="indiv"><!-- Start indiv -->
+
+<section id="faqlist">
+	<!-- 검색 : Start -->
+	<form name=frmList id="form">
+	<table width=100% cellpadding=0 cellspacing=0 border=0 style="border:none;">
+	<tr>
+		<td style="border:2px solid #DDDDDD; height:60px; background-color:#F3F3F3; color:#333333; font-weight:bold;text-align:center;">
+			FAQ : <input type="text" NAME="sword" value="{_GET['sword']}" size=32>
+			<span class="button-black-left"><span class="button-black-right"><button type="button" id="search_btn" onClick="javascript:searchList(0);">검색</button></span></span>
+		</td>
+	</tr>
+	<tr>
+		<td style="height:10px;border:none;">
+		</td>
+	</tr>
+	<tr>
+		<td bgcolor="#F3F3F3" class=input_txt height=40 style="padding-top:10; padding-left:10;border:none;">
+			<!--{ @ codeitem('faq') }-->
+			<a href="?sitemcd={.key_}"><font style="color:#333333;font-size:12px;font-weight:bold;">{.value_}</font></a>
+			<!--{ ? .index_!=.size_-1 }--> <font color=#cccccc> | </font> <!--{ / }-->
+			<!--{ / }-->
+		</td>
+	</tr>
+	</table>
+	</form>
+	<!-- 검색 : End -->
+	<table>
+	<tr>
+		<th>번호</th>
+		<th>제목</th>
+	</tr>
+	<!--{ @ _loop }-->
+	
+	<tr onclick="view_content(this);">
+		<td class="fl_no">{.idx}</td>
+		<td class="gl_subject"><font color="#007FC8">[{.itemcd}]</font> {.question}</td>
+	</tr>
+	<tr class="reply" style="display:none;">
+		<td></td>
+		<td>
+		<div style="width:100%;"><font color="#007FC8">Q : {.descant}</font></div>
+		<div style="width:100%;">A : {.answer}</div>
+		</td>
+	</tr>
+	
+	
+	<!--{ / }-->
+	</table>
+	
+	<div class="pagediv">{pg->page['navi']}</div>
+
+</section>
+
+
+<script language="javascript">
+function view_content(obj) {
+	var row = obj;
+
+	var next = row.parentNode.rows[ row.rowIndex + 1];
+
+	if(next.style.display == "none") {
+		next.style.display="";
+	}
+	else {
+		next.style.display="none";
+	}
+}
+
+</script>
+
+</div><!-- End indiv -->
+
+{ # footer }
+

@@ -1,0 +1,128 @@
+{*** 회원인증 인트로 | intro_member.php ***}
+<!DOCTYPE html><head>
+<meta name="description" content="{_meta_title}" />
+<meta name="keywords" content="{_meta_keywords}" />
+<meta http-equiv="Content-Type" content="text/html; charset=euc-kr" />
+<meta name="viewport" content="user-scalable=yes, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width, height=device-height" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+<title>{_meta_title}</title>
+
+<script src="../common/js/common.js"></script>
+<script src="../common/js/goods_list_action.js"></script>
+<script src="../common/js/jquery-1.4.2.min.js"></script>
+<script src="../common/js/jquery.mobile-1.1.1.js"></script>
+<script src="../common/js/jquery.cookie.js"></script>
+
+<!--{ @ mobile_script }-->
+<script src="{.script_file}"></script>
+<!--{ / }-->
+<link rel="stylesheet" type="text/css" href="../common/css/reset.css" />
+<link rel="stylesheet" type="text/css" href="../common/css/style.css" />
+<style type="text/css">
+/* 로그인 */
+section#memauth {background-color:#FFFFFF;min-height:100%;position:relative; font-family:dotum;}
+section#memauth>form {}
+section#memauth>form .login_center {}
+section#memauth>form .login_center .login_t {display:block; position:absolute; top:0; left:50%; margin-top:0px; margin-left:-146px; width:293px; height:300px; background-color:#FFF;}
+section#memauth>form .login_center .login_t .login_img {display:block; position:absolute; top:0; left:50%; background:url('../common/img/login/mem_img02.png') center no-repeat; background-size:144px; 144px; margin-top:10px; margin-left:-146px; width:293px; height:170px; padding-left:5px; text-align:center;}
+section#memauth>form .login_center .login_t .login_txt {display:block; position:absolute; top:0; left:50%; margin-top:190px; margin-left:-146px; width:280px; padding:5px; color:#4d4d4d; text-align:center;}
+section#memauth>form .login_center .login_t .login_txt h2{height:25px; font-size:14px; }
+section#memauth>form .login_center .login_t .login_txt p{line-height:20px; font-size:13px; }
+
+section#memauth>form .login_center .login_b {height:440px;}
+section#memauth>form .login_center .login_b .login_title {display:block; position:absolute; top:0; left:50%; margin-top:270px; margin-left:-146px; width:293px; padding-left:5px; font-size:20px; font-weight:bold; color:#61656d;}
+section#memauth>form .login_center .login_b .input_id {display:block; position:absolute; top:0; left:50%; margin-top:305px; margin-left:-146px; width:293px; }
+section#memauth>form .login_center .login_b .input_pw {display:block; position:absolute; top:0; left:50%; margin-top:340px; margin-left:-146px; width:293px; }
+section#memauth>form .login_center .login_b .save_login_status {display:block; position:absolute; top:0; left:50%; margin-top:380px; margin-left:-146px; font-size:15px; }
+section#memauth>form .login_center .login_b .save_id {display:block; position:absolute; top:0; left:50%; margin-top:380px; margin-left:0; font-size:15px; }
+
+section#memauth>form .login_center .login_b .input_id input{ border:solid 1px #CCCCCC; border-radius: 0.5em;  position:absolute; height:25px; left:0px; right:0px; -webkit-appearance:none; -moz-box-shadow: inset 1px 1px 1px #bbb; -webkit-box-shadow: inset 1px 1px 1px #bbb; box-shadow: inset 1px 1px 1px #bbb; }
+section#memauth>form .login_center .login_b .input_pw input{ border:solid 1px #CCCCCC; border-radius: 0.5em;  position:absolute; height:25px; left:0px; right:0px; -webkit-appearance:none; -moz-box-shadow: inset 1px 1px 1px #bbb; -webkit-box-shadow: inset 1px 1px 1px #bbb; box-shadow: inset 1px 1px 1px #bbb; }
+section#memauth>form .login_center .login_b .login_btn {position:absolute; left:50%; top:0; margin-top:410px; margin-left:-144px;}
+section#memauth>form .login_center .login_b .login_btn #login-btn { width:293px; margin:auto; text-align:center; height:35px; color:#ffffff; line-height:35px; font-size:15px; font-weight:bold; background:#808591; border-radius:3px; font-family:dotum; border:none;}
+
+div.sns-account {
+	position:absolute; 
+	top:0; 
+	left:50%; 
+	margin-top:440px; 
+	margin-left:-146px;
+	width:293px;
+	clear:both;
+	padding:15px 0 75px;
+}
+div.sns-account div.login-title {
+	padding:20px 0 0 2px;
+	font-size:14px;
+	background:url('../img/new/bg_sns_line.gif') repeat-x left top;
+	background-size:5px;
+}
+div.sns-account button {
+	width:100%;
+	height:30px;
+	margin:6px 0 0;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+	color:#FFF;
+	font-weight:bold;
+	text-align:center;
+}
+div.sns-account button.login-facebook {
+	background:#4e6dbd url('../img/new/btn_login_facebook.png') no-repeat left top;
+	border:1px solid #2a468e;
+	border-radius: 3px;
+}
+</style>
+<!--{ customHeader }-->
+
+<section class="content" id="memauth">
+	<form name="login_form" action="{loginActionUrl}" method="post" onSubmit="chk_save(this);return chkForm(this);">
+	<input type=hidden name=returnUrl value="{_returnUrl}">
+	<input type=hidden name=close value="{_close}">
+		<fieldset>
+			<legend class="hidden">회원 인증 폼</legend>
+			<div class="login_center">
+			<div class="login_t">
+				<div class="login_img"></div>
+				<div class="login_txt">
+				<h2>회원 전용으로 운영되는 쇼핑몰 입니다.</h2>
+				<p>로그인 / 회원가입 후 이용이 가능합니다.</p>
+				</div>
+			</div>
+			<div class="login_b">
+				<div class="login_title">회원로그인</div>
+				<label class="input_id">
+					<span class="hidden">아이디</span>
+					<input type="text" name="m_id" value="" maxlength="12" title="아이디" required msgR="아이디를 입력하세요." onfocus="if(this.value=='회원아이디'){this.value='';}" placeholder="아이디" tabindex="1" />
+				</label>
+				<label class="input_pw">
+					<span class="hidden">비밀번호</span>
+					<input type="password" name="password" maxlength="34" title="비밀번호" required msgR="비밀번호를 입력하세요." placeholder="비밀번호" tabindex="2" />
+				</label>
+				<label class="save_login_status"><input type="checkbox" name="save_login_status" value="y" tabindex="3" /> 자동로그인</label>
+				<label class="save_id"><input type="checkbox" name="save_id" value="y" onclick="chk_save_id(this.checked);" tabindex="4" /> 아이디 저장</label>
+				<div class="login_btn"><button id="login-btn" type="submit" tabindex="5" >로그인</button></div>
+			</div>
+
+			<!--{ ? SocialMemberEnabled }-->
+			<div class="sns-account">
+				<div class="login-title">SNS 계정 로그인</div>
+				<!--{ ? FacebookLoginURL }-->
+				<button type="button" class="login-facebook" onclick="javascript:location.replace('{FacebookLoginURL}');return false;">페이스북</button>
+				<!--{ / }-->
+			</div>
+			<!--{ / }-->
+			</div>
+		</fieldset>
+	</form>
+</section>
+
+<script language="javascript">var shop_key = "<?php echo $_SERVER['HTTP_HOST'];?>";</script>
+<script src="../common/js/base64.js"></script>
+<script src="../common/js/login.js"></script>
+<iframe class="" id="ifrmHidden" name="ifrmHidden" src='{_cfg.rootDir}/blank.txt'></iframe>
+</body>
+</html>

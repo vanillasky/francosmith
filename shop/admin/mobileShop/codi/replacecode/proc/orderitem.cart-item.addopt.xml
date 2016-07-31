@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="EUC-KR"?>
+<codes>
+<list>
+	<code>{..sno}</code>
+	<desc>번호</desc>
+	<exam>4</exam>
+</list>
+<list>
+	<code>{..optnm}</code>
+	<desc>제목</desc>
+	<exam>악세사리</exam>
+</list>
+<list>
+	<code>{..opt}</code>
+	<desc>상품명</desc>
+	<exam>열쇠고리</exam>
+</list>
+<list>
+	<code>{..price}</code>
+	<desc>가격</desc>
+	<exam>1000</exam>
+</list>
+</codes>

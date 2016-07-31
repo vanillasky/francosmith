@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="EUC-KR"?>
+<codes>
+<list>
+	<code power="">{.no}</code>
+	<desc>게시물 번호</desc>
+	<exam>1</exam>
+</list>
+<list>
+	<code>{.sub}</code>
+	<desc>답글여부 - 기호:답글, '':원글</desc>
+	<exam></exam>
+</list>
+<list>
+	<code>{.m_no}</code>
+	<desc>회원번호</desc>
+	<exam>1</exam>
+</list>
+<list>
+	<code>{.m_id}</code>
+	<desc>회원아이디 - admin.gif:관리자, 회원아이디:그외</desc>
+	<exam>testid</exam>
+</list>
+<list>
+	<code>{.name}</code>
+	<desc>글쓴이 - admin.gif:관리자, 글쓴이:그외</desc>
+	<exam>홍길동</exam>
+</list>
+<list>
+	<code>{.email}</code>
+	<desc>이메일</desc>
+	<exam>test@test.co.kr</exam>
+</list>
+<list>
+	<code>{.homepage}</code>
+	<desc>홈페이지</desc>
+	<exam></exam>
+</list>
+<list>
+	<code power="">{.subject}</code>
+	<desc>제목</desc>
+	<exam>하루의 시작을 이나무와 함께</exam>
+</list>
+<list>
+	<code power="">{=htmlspecialchars(.contents)}</code>
+	<desc>내용</desc>
+	<exam>Have a nice day ... !</exam>
+</list>
+<list>
+	<code>{.urlLink}</code>
+	<desc>링크</desc>
+	<exam>http://www.test.co.kr/test.html</exam>
+</list>
+<list>
+	<code>{.uploadedFile}</code>
+	<desc>첨부파일</desc>
+	<exam>&lt;a href='다운경로'&gt;월간.doc&lt;/a&gt; (&lt;b&gt;40&lt;/b&gt;KB) &lt;font color=cccccc&gt;|&lt;/font&gt; &lt;a href='다운경로'&gt;출력.txt&lt;/a&gt; (&lt;b&gt;60&lt;/b&gt;Bytes)</exam>
+</list>
+<list>
+	<code>{.ip}</code>
+	<desc>아이피</desc>
+	<exam>123.45.678.901</exam>
+</list>
+<list>
+	<code>{.notice}</code>
+	<desc>NOTICE 여부 - o:공지글, '':일반글</desc>
+	<exam>o</exam>
+</list>
+<list>
+	<code>{.secret}</code>
+	<desc>비밀글 여부 - o:비밀글, '':일반글</desc>
+	<exam>o</exam>
+</list>
+<list>
+	<code>{.hit}</code>
+	<desc>조회수</desc>
+	<exam>13</exam>
+</list>
+<list>
+	<code>{.comment}</code>
+	<desc>코멘트(댓글) 갯수</desc>
+	<exam>2</exam>
+</list>
+<list>
+	<code>{.regdt}</code>
+	<desc>작성일</desc>
+	<exam>2007-01-01 12:30:30</exam>
+</list>
+<list>
+	<code>{.link.reply}</code>
+	<desc>링크 A태그 > 답글</desc>
+	<exam>&lt;a href='write.php?id=notice&amp;page=1&amp;no=1&amp;mode=reply'&gt;</exam>
+</list>
+<list>
+	<code>{.link.modify}</code>
+	<desc>링크 A태그 > 수정</desc>
+	<exam>&lt;a href='write.php?id=notice&amp;page=1&amp;no=1&amp;mode=modify'&gt;</exam>
+</list>
+<list>
+	<code>{.link.delete}</code>
+	<desc>링크 A태그 > 삭제</desc>
+	<exam>&lt;a href='delete.php?id=notice&amp;page=1&amp;no=1'&gt;</exam>
+</list>
+<list>
+	<code>{@ .loopComment}</code>
+	<desc>코멘트(댓글)</desc>
+	<exam more="board/default/view.loop.loopComment.xml"></exam>
+</list>
+<list>
+	<code>{.relation.next.link.view}</code>
+	<desc>관련글 > 다음글 > 링크 A태그</desc>
+	<exam>&lt;a href='view.php?id=notice&amp;no=2'&gt;</exam>
+</list>
+<list>
+	<code>{.relation.next.subject}</code>
+	<desc>관련글 > 다음글 > 제목</desc>
+	<exam>도움이 되는 쇼핑몰</exam>
+</list>
+<list>
+	<code>{.relation.next.regdt}</code>
+	<desc>관련글 > 다음글 > 작성일</desc>
+	<exam>2007-01-02 12:30:30</exam>
+</list>
+<list>
+	<code>{.relation.next.name}</code>
+	<desc>관련글 > 다음글 > 글쓴이</desc>
+	<exam>홍길동</exam>
+</list>
+<list>
+	<code>{.relation.prev.link.view}</code>
+	<desc>관련글 > 이전글 > 링크 A태그</desc>
+	<exam></exam>
+</list>
+<list>
+	<code>{.relation.prev.subject}</code>
+	<desc>관련글 > 이전글 > 제목</desc>
+	<exam></exam>
+</list>
+<list>
+	<code>{.relation.prev.regdt}</code>
+	<desc>관련글 > 이전글 > 작성일</desc>
+	<exam></exam>
+</list>
+<list>
+	<code>{.relation.prev.name}</code>
+	<desc>관련글 > 이전글 > 글쓴이</desc>
+	<exam></exam>
+</list>
+<list>
+	<code>{@ .relation.reply}</code>
+	<desc>관련글 > 답글</desc>
+	<exam more="board/default/view.loop.relation.reply.xml"></exam>
+</list>
+</codes>

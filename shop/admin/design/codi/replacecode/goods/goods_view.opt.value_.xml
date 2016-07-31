@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="EUC-KR"?>
+<codes>
+<list>
+	<code power="">{..opt1}</code>
+	<desc>옵션1 속성명</desc>
+	<exam>화이트</exam>
+</list>
+<list>
+	<code power="">{..opt2}</code>
+	<desc>옵션2 속성명</desc>
+	<exam>M</exam>
+</list>
+<list>
+	<code power="">{..price}</code>
+	<desc>판매가</desc>
+	<exam>4800</exam>
+</list>
+<list>
+	<code>{..consumer}</code>
+	<desc>정가</desc>
+	<exam>5000</exam>
+</list>
+<list>
+	<code>{..supply}</code>
+	<desc>매입가</desc>
+	<exam>4000</exam>
+</list>
+<list>
+	<code>{..reserve}</code>
+	<desc>적립금</desc>
+	<exam>450</exam>
+</list>
+<list>
+	<code power="">{..stock}</code>
+	<desc>재고량</desc>
+	<exam>100</exam>
+</list>
+<list>
+	<code>{..selected}</code>
+	<desc>옵션 selected 여부 (옵션출력방식이 일체형 경우만)</desc>
+	<exam>selected</exam>
+</list>
+<list>
+	<code>{..index_}</code>
+	<desc>반복 인덱스 (0부터 시작, 반복할 때 1씩 증가)</desc>
+	<exam>0</exam>
+</list>
+<list>
+	<code>{..size_}</code>
+	<desc>반복 전체회수</desc>
+	<exam>20</exam>
+</list>
+</codes>

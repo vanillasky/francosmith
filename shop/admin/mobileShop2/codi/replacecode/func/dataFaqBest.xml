@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="EUC-KR"?>
+<codes>
+<list>
+	<code power="">{.sno}</code>
+	<desc>코드번호</desc>
+	<exam>1</exam>
+</list>
+<list>
+	<code>{.question}</code>
+	<desc>제목</desc>
+	<exam>회원가입은 어떻게 하나요?</exam>
+</list>
+<list>
+	<code>{.index_}</code>
+	<desc>반복 인덱스 (0부터 시작, 반복할 때 1씩 증가)</desc>
+	<exam>0</exam>
+</list>
+</codes>

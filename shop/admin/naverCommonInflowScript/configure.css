@@ -1,0 +1,53 @@
+form#common-inflow-script-configure-form{
+	width: 800px;
+	display: block;
+}
+form#naver-service-configure{
+	display: block;
+}
+form#common-inflow-script-configure-form table.tb input{
+	margin: 0;
+	padding: 0;
+	vertical-align: middle;
+	height: 22px;
+}
+form#common-inflow-script-configure-form div.confirmed-account-id{
+	font-weight: bold;
+	color: #339900;
+	width: 150px;
+	border: solid #a1b398 1px;
+	background: #edf5e9;
+	padding: 5px;
+	margin-top: 5px;
+}
+div.notice{
+	background: #f0f0f0;
+	padding: 3px;
+}
+div.common-inflow-script-description{
+	border: solid #dce1e1 4px;
+	padding: 5px;
+	margin-bottom: 10px;
+}
+div.common-inflow-script-description p{
+	margin: 3px 0;
+	color: #666666;
+}
+div.common-inflow-script-description p.notice{
+	margin-bottom: 15px;
+}
+div.common-inflow-script-description strong, div.common-inflow-script-description u, div.common-inflow-script-description i{
+	color: #bf0000;
+}
+div#white-list-container{
+	margin-bottom: 10px;
+}
+span#account-id{
+	margin-right: 5px;
+	font-weight: bold;
+	color: #339900;
+}
+button#account-id-check{
+	vertical-align: middle;
+	font-size: 11px;
+}

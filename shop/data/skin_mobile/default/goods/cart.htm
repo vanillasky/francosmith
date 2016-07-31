@@ -1,0 +1,34 @@
+{#header}
+
+<?php {page_title} = "장바구니";?>
+{#sub_header}
+
+<script>
+function act(mode)
+{
+	var fm = document.frmCart;
+	if (isChked('idx[]')){
+		fm.mode.value = mode;
+		fm.submit();
+	}
+}
+</script>
+
+<section id="cart">
+	<form name="frmCart" method="post">
+	<input type="hidden" name="mode" value="modItem" />
+	{=include_file("proc/orderitem.htm")}
+
+	<!--{ ? count(cart->item) }-->
+	<div class="button clearb center">
+		<a href="../ord/order.php" class="allorder"><span class="hidden">주문하기</span></a>
+	</div>
+	<!--{ / }-->
+
+	</form>
+
+	{naverCheckout}
+
+</section>
+
+{#footer}

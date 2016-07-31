@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="EUC-KR"?>
+<codes>
+<list>
+	<code power="">{ _cfgCoupon.double }</code>
+	<desc>쿠폰 사용제한</desc>
+	<exam>0:한 주문에 여러 쿠폰 사용가능   1:한 주문에 한개 쿠폰만 사용</exam>
+</list>
+<list>
+	<code power="">{.sno}</code>
+	<desc>코드번호</desc>
+	<exam>1</exam>
+</list>
+<list>
+	<code>{.couponcd}</code>
+	<desc>쿠폰코드번호</desc>
+	<exam>37</exam>
+</list>
+<list>
+	<code>{.apr}</code>
+	<desc>할인금액</desc>
+	<exam>2000</exam>
+</list>
+<list>
+	<code power="">{.priodtype}</code>
+	<desc>쿠폰 기간 종류</desc>
+	<exam> 0 : 기간으로 설정 , 1 : 일 수로 설정</exam>
+</list>
+<list>
+	<code power="">{.sdate}</code>
+	<desc>쿠폰 적용 일수</desc>
+	<exam>90</exam>
+</list>
+<list>
+	<code power="">{.sdate}</code>
+	<desc>쿠폰 적용 시작일</desc>
+	<exam>0000-00-00 00:00:00</exam>
+</list>
+<list>
+	<code power="">{.edate}</code>
+	<desc>쿠폰 적용 종료일</desc>
+	<exam>0000-00-00 00:00:00</exam>
+</list>
+<list>
+	<code>{.goodsnm}</code>
+	<desc>상품명</desc>
+	<exam>런닝 운동화</exam>
+</list>
+<list>
+	<code power="">{.price}</code>
+	<desc>판매가</desc>
+	<exam>4800</exam>
+</list>
+</codes>

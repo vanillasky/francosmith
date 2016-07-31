@@ -1,0 +1,71 @@
+{*** 나의 상품후기 | shopTouch_myp/review.php ***}
+{ # header }
+
+<?php {page_title} = "상품후기";?>
+{#sub_header}
+
+<? if($_GET['goodsno']){ ?>
+<style type="text/css">
+section#reviewlist {padding:0px 0px 0px 0px;}
+</style>
+<? } ?>
+
+<div class="indiv"><!-- Start indiv -->
+
+<section id="reviewlist">
+	<table>
+	<tr>
+		<th>번호</th>
+		<th>이미지</th>
+		<th>상품명</th>
+		<th>제목</th>
+		<th>작성일</th>
+		<th>평점</th>
+	</tr>
+	<!--{ @ _loop }-->
+	
+	<tr onclick="view_content(this);">
+		<td class="rl_no">{.idx}</td>
+		<td class="rl_goods_img">{=goodsimg(.img_s,50)}</td>
+		<td class="rl_goods">{.goodsnm}</td>
+		<td class="rl_subject">{.subject}</td>
+		<td class="rl_dt">{=substr(.regdt,0,10)}</td>
+		<td class="rl_point">
+		<!--{ ? .point > 0 }-->
+		<!--{ @ array_fill(0,.point,'') }-->★<!--{ / }-->
+		<!--{ / }-->
+		</td>
+	</tr>
+	<tr class="reply" style="display:none;">
+		<td align="center"></td>
+		<td colspan="5">{.contents}</td>
+	</tr>
+	
+	
+	<!--{ / }-->
+	</table>
+	
+	<div class="pagediv">{pg->page['navi']}</div>
+
+</section>
+
+
+<script language="javascript">
+function view_content(obj) {
+	var row = obj;
+
+	var next = row.parentNode.rows[ row.rowIndex + 1];
+
+	if(next.style.display == "none") {
+		next.style.display="";
+	}
+	else {
+		next.style.display="none";
+	}
+}
+
+</script>
+
+</div><!-- End indiv -->
+
+{ # footer }

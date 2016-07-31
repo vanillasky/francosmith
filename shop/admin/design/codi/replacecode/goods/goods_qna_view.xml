@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="EUC-KR"?>
+<codes>
+<list>
+	<code>{_cfg['qnaWriteAuth']}</code>
+	<desc>상품문의 글쓰기 권한 - '':회원만 가능, free:비회원도 가능</desc>
+	<exam>free</exam>
+</list>
+<list>
+	<code power="">{_data.sno}</code>
+	<desc>게시물번호</desc>
+	<exam>2</exam>
+</list>
+<list>
+	<code power="">{_data.goodsno}</code>
+	<desc>상품번호</desc>
+	<exam>37</exam>
+</list>
+<list>
+	<code>{_data.goodsnm}</code>
+	<desc>상품명</desc>
+	<exam>런닝 운동화</exam>
+</list>
+<list>
+	<code>{_data.price}</code>
+	<desc>판매가</desc>
+	<exam>4800</exam>
+</list>
+<list>
+	<code>{_data.img_s}</code>
+	<desc>리스트이미지</desc>
+	<exam>1164783000_s_0.jpg</exam>
+</list>
+<list>
+	<code>{_data.m_no}</code>
+	<desc>회원번호</desc>
+	<exam>1</exam>
+</list>
+<list>
+	<code>{_data.m_id}</code>
+	<desc>회원아이디 - admin.gif:관리자, 회원아이디:회원, 비회원명:비회원</desc>
+	<exam>testid</exam>
+</list>
+<list>
+	<code>{_data.m_name}</code>
+	<desc>회원이름</desc>
+	<exam>홍길동</exam>
+</list>
+<list>
+	<code>{_data.name}</code>
+	<desc>비회원명 - admin.gif:관리자, '':회원, 비회원명:비회원</desc>
+	<exam>게스트</exam>
+</list>
+<list>
+	<code power="">{_data.subject}</code>
+	<desc>제목</desc>
+	<exam>언제쯤 배송이 될까요?</exam>
+</list>
+<list>
+	<code power="">{_data.contents}</code>
+	<desc>내용</desc>
+	<exam>3일전에 구매했는데 ... 언제쯤?</exam>
+</list>
+<list>
+	<code>{_data.regdt}</code>
+	<desc>작성일</desc>
+	<exam>2007-01-01 12:30:30</exam>
+</list>
+<list>
+	<code>{_data.authreply}</code>
+	<desc>답글여부 - Y, N</desc>
+	<exam>Y</exam>
+</list>
+<list>
+	<code>{_data.authdelete}</code>
+	<desc>삭제여부 - Y, N</desc>
+	<exam>Y</exam>
+</list>
+<list>
+	<code>{_data.authmodify}</code>
+	<desc>수정여부 - Y, N</desc>
+	<exam>Y</exam>
+</list>
+<list>
+	<code power="">{@ _loop}</code>
+	<desc>상품문의</desc>
+	<exam more="goods/goods_qna_view._loop.xml"></exam>
+</list>
+<list>
+	<code>{ # header }</code>
+	<desc>상단과 측면을 크게 감싸는 외곽파일 인클루드, 소스 맨위에 삽입</desc>
+	<exam></exam>
+</list>
+<list>
+	<code>{ # footer }</code>
+	<desc>하단을 크게 감싸는 외곽파일 인클루드, 소스 맨아래에 삽입</desc>
+	<exam></exam>
+</list>
+</codes>

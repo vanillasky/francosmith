@@ -1,0 +1,1 @@
+<?php include "../goods/_goodslist.php";?>

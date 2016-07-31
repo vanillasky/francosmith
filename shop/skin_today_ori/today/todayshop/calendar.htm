@@ -1,0 +1,284 @@
+{*** 달력형 상품리스트 | todayshop/calendar.php ***}
+<!--header start-->
+<!--삭제하지마세요.-->
+{ # header }
+<!--header end-->
+
+<style>
+.today_title { display:inline-block; width:100%; }
+.today_title div { float:left; }
+.today_title .space { width:20px; }
+.today_title .leftbtn { width:20px; text-align:right; padding-top:20px; }
+.today_title .date { width:110px; text-align:center; padding-top:20px; }
+.today_title .rightbtn { width:20px; text-align:left; padding-top:20px; }
+.today_title .todaybtn { float:right; padding-top:20px; }
+.today_title_underbar { margin-bottom:10px; }
+
+.calendar { border:solid 2px #7C7C7C; border-collapse:collapse; background-color:#ffffff; margin-bottom:40px; width:100%;}
+.calendar a { cursor:pointer; }
+.calendar .contents { height:340px;}
+.calendar .contents .box { overflow:hidden; height:320px; }
+.calendar .cal_title td { background-color:#E4E4E4; height:25px; font-weight:bold; text-align:center; width:127px;}
+.calendar .cal_title .sun {color:#FF0000; background-color:#E4E4E4;}
+.calendar .cal_title .sat {color:#047FC5; background-color:#E4E4E4;}
+.calendar .day_num { color:#1A1A1A; font-family:verdana; font-size:14px; font-weight:bold; padding:0px 10px 0px 10px;}
+.calendar .hday_num { color:#FF0000; font-family:verdana; font-size:14px; font-weight:bold; padding:0px 10px 0px 10px;}
+.calendar .itembox {display:inline-block; width:100%; height:50px; margin:0px !important; padding:0px 10px !important;}
+.calendar .itembox .imgbox {position:relative; float:left; overflow:hidden; width:48px; height:48px; border:solid 1px #D5D5D5;}
+.calendar .itembox .closed {position:absolute; top:33px; left:0px; z-index:10;}
+.calendar .itembox .namebox {float:left; overflow:hidden; text-align:left; width:48px; height:28px; word-break:break-all; word-wrap:break-word; margin-top:2px; margin-left:6px; line-height:14px;}
+.calendar .itembox .statusbox {float:left; text-align:left; width:48px; height:14px; word-break:break-all; word-wrap:break-word; margin-top:2px; margin-left:6px;}
+.calendar .space { height:10px; margin:0px !important; padding:0px !important;}
+</style>
+<script type="text/javascript" src="../../../lib/js/prototype.js"></script>
+<script type="text/javascript" src="../../../lib/js/todayshop.js"></script>
+<script type="text/javascript">
+var member = null;
+var useEncor = null;
+
+function setListData(res) {
+	try
+	{
+		if (res.member == "y") member=true;
+		else throw null;
+	}
+	catch (e) {
+		member=false;
+	}
+
+	// 앵콜 사용여부
+	try
+	{
+		useEncor = res.useEncor;
+	}
+	catch (e) {
+	}
+}
+
+TodayShop.getCalData(setListData);
+</script>
+<script type="text/javascript">
+function encor(tgsno) {
+	if (member === null) {
+		alert("잠시만 기다리세요.");
+		return;
+	}
+	if (member !== true) {
+		if(confirm("앵콜추천 참여는 회원만이 참여할 수 있습니다. 로그인하시겠습니까?")) {
+			location.href="../member/login.php";
+		}
+	}
+	else {
+		if(confirm("선택하신 상품을 앵콜 추천하시겠습니까?")) {
+			var fobj = document.frmEncor;
+			fobj.tgsno.value = tgsno;
+			fobj.submit();
+		}
+	}
+}
+
+var calendar_btn = {
+	more : new Image(),
+	close : new Image()
+};
+calendar_btn['more'] = '../img/calendar_btn_more.gif';
+calendar_btn['close'] = '../img/calendar_btn_close.gif';
+
+function more(day) {
+	var curstatus = document.getElementById("box"+day).style.overflow;
+	if (curstatus != "visible") {
+		document.getElementById("more"+day).src = calendar_btn['close'];
+		document.getElementById("box"+day).style.overflow = "visible";
+		document.getElementById("td"+day).style.height = "auto";
+		document.getElementById("box"+day).style.height = "95%";
+	}
+	else {
+		document.getElementById("more"+day).src = calendar_btn['more'];
+		document.getElementById("box"+day).style.overflow = "hidden";
+		document.getElementById("box"+day).style.height = "320px";
+		document.getElementById("td"+day).style.height = "340px";
+	}
+}
+
+function navi(year, month) {
+	location.href = "calendar.php?year="+year+"&month="+month;
+}
+
+window.onload = function() {
+	if (useEncor == "y") {
+		var spans = document.getElementsByTagName("SPAN");
+		for(var i = 0; i < spans.length; i++) {
+			if (spans[i].id.match(/^encorBlock[0-9]*_[0-9]*$/g)) spans[i].style.display="";
+		}
+	}
+}
+</script>
+
+<!-- 카테고리 노출 시작 (헤더에 카테고리가 노출되지 않을때에만 노출)-->
+<style>
+#page_cate { display:none; margin-bottom:20px; }
+#page_cate .topbg img { width:100%; height:13px; }
+
+#page_cate #ccg_closed #curCCateOuter { background-color:#49494A; }
+#page_cate #ccg_closed #curCCateOuter div { padding-left:23px; }
+#page_cate #ccg_closed #curCCateOuter div #curCCateBlock { color:#FFFFFF; }
+#page_cate #ccg_closed .togglebtn { background:url(../img/today_footbg.gif) top repeat-x; text-align:center; cursor:pointer; }
+
+#page_cate #ccg_opened .list { background-color:#49494A; }
+#page_cate #ccg_opened .catenm { width:195px; height:25px; }
+#page_cate #ccg_opened .catenm span { padding-left:30px; }
+#page_cate #ccg_opened .catenm span a { color:#FFFFFF; }
+#page_cate #ccg_opened .split { text-align:center; }
+#page_cate #ccg_opened .hei1 { height:1px; }
+#page_cate #ccg_opened .togglebtn { background:url(../img/today_footbg.gif) top repeat-x; text-align:center; padding-top:8px; cursor:pointer; }
+</style>
+<div id="page_cate">
+	<div class="topbg"><img src="../img/today_topbgsh.gif" /></div>
+	<div id="ccg_closed" style="display:none;">
+		<div id="curCCateOuter" style="<!--{? !ts_curcate}-->display:none;<!--{/}-->">
+			<div><img src="../img/bullet_category.gif" /> <span id="curCCateBlock"></span></div>
+		</div>
+		<div onclick="showCCate()">
+			<div class="togglebtn"><img src="../img/today_btnopen.gif" /></div>
+		</div>
+	</div>
+	<div id="ccg_opened">
+		<div class="list">
+			<table width="100%" cellpadding=0 cellspacing=0 border=0>
+			<tr><td class="catenm hei1"></td><td class="split hei1"></td><td class="catenm hei1"></td><td class="split hei1"></td><td class="catenm hei1"></td><td class="split hei1"></td><td class="catenm hei1"></td></tr>
+			<tr>
+			<!--{@ ts_category}-->
+				<td class="catenm" id="tsCCate{=.category}" <!--{? .category==ts_curcate['category']}-->style="background:url(../img/today_pointbox.gif) no-repeat"<!--{/}-->><span><a href="../todayshop/today_list.php?category={=.category}" onmouseover="this.style.color='#F9B000'" onmouseout="this.style.color='#FFFFFF'">{=.catnm}</a></span></td>
+				<!--{? .index_ != 0 && (.index_+1) % 4 == 0}--></tr><tr><!--{:}--><td class="split"><img src="../img/today_split.gif" /></td><!--{/}-->
+			<!--{/}-->
+			</tr>
+			</table>
+		</div>
+		<div onclick="showCCate()">
+			<div class="togglebtn"><img src="../img/today_btnclose.gif" /></div>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+function showCCate() {
+	var objc = document.getElementById("ccg_closed");
+	var objo = document.getElementById("ccg_opened");
+	if (objc.style.display == "none") {
+		objc.style.display = "block";
+		objo.style.display = "none";
+	}
+	else {
+		objc.style.display = "none";
+		objo.style.display = "block";
+	}
+}
+
+// 해당 상품의 카테고리 출력
+try
+{
+	if (!document.getElementById("header_cate")) {
+		document.getElementById("page_cate").style.display = "block";
+	}
+
+	if (typeof(setCategory) == "undefined") {
+		var regexp = /category=([0-9]*)/g;
+		var res = regexp.exec(location.href);
+
+		var cbobj = document.getElementById("curCCateBlock");
+
+		if (res.length > 1) {
+			var cateobj = document.getElementById("tsCCate" + res[1]);
+			if (cateobj) {
+				cateobj.style.background = "url(../img/today_pointbox.gif)";
+				var catenm = cateobj.getElementsByTagName("A")[0].innerHTML;
+				if (cbobj) cbobj.innerHTML = catenm;
+
+				var coobj = document.getElementById("curCCateOuter");
+				if (coobj) coobj.style.display = "block";
+			}
+		}
+		<!--{? category}-->
+		else {
+			if (cbobj.innerHTML == "") {
+				if (cbobj) cbobj.innerHTML = "{=category.catnm}";
+				var coobj = document.getElementById("curCCateOuter");
+				if (coobj) coobj.style.display = "block";
+			
+				var cateobj = document.getElementById("tsCCate{=category.category}");
+				if (cateobj) cateobj.style.background = "url(../img/today_pointbox.gif)";
+			}
+		}
+		<!--{/}-->
+	}	
+}
+catch (e)
+{
+	try
+	{
+		document.getElementById("page_cate").style.display = "block";
+	}
+	catch (e)
+	{
+	}	
+}
+</script>
+<!-- 카테고리 노출 끝(헤더에 카테고리가 노출되지 않을때에만 노출)-->
+
+<!-- 오늘의 상품타이틀/날짜 시작--------------------------------->
+<div class="today_title">
+	<div class="title"><img src='../img/calendar_title.gif' border="0"></div>
+	<div class="space"></div>
+	<div class="leftbtn"><a onclick="navi('{=monthnavi.beforeyear}','{=monthnavi.beforemonth}')"><img src='../img/calendar_btnleft.gif' border="0"></a></div>
+	<div class="date"><img src='../img/count_g{=monthnavi.year[0]}.gif' border="0"><img src='../img/count_g{=monthnavi.year[1]}.gif' border="0"><img src='../img/count_g{=monthnavi.year[2]}.gif' border="0"><img src='../img/count_g{=monthnavi.year[3]}.gif' border="0"><img src='../img/count_gsp.gif' border="0"><img src='../img/count_r{=monthnavi.month[0]}.gif' border="0"><img src='../img/count_r{=monthnavi.month[1]}.gif' border="0"></div>
+	<div class="rightbtn"><a onclick="navi('{=monthnavi.nextyear}','{=monthnavi.nextmonth}')"><img src='../img/calendar_btnright.gif' border="0"></a></div>
+	<div class="todaybtn">
+	<a href='../todayshop/today_goods.php'><img src='../img/calendar_btntoday.gif' border="0"></a>
+	<a href='../todayshop/today_goods.php'><img src='../img/btn_list_01.gif' border="0"></a>
+	</div>
+</div>
+<div class="today_title_underbar"></div>
+<!-- 오늘의 상품타이틀/날짜  끝---------------------------------->
+
+<form name="frmEncor" action="../todayshop/indb.calendar.php" method="post" target="ifrmHidden">
+<input type="hidden" name="tgsno" />
+</form>
+<table class="calendar" border="1" bordercolor="#D5D5D5" cellpadding="0" cellspacing="0">
+<tr class="cal_title">
+	<td class="sun">일</td><td>월</td><td>화</td><td>수</td><td>목</td><td>금</td><td class="sat">토</td>
+</tr>
+<!--{@ calendar}--><!--{? .index_%7==0}--><tr><!--{/}-->
+	<td valign="top" id="td{=.day}" class="contents" <!--{? .index_%7==0 || .index_%7==6}-->style="background-color:#F4F4F4;"<!--{/}-->>
+	<div class="box" id="box{=.day}">
+	<!--{? .date}-->
+		<!--{? .wday==0}--><div class="hday_num">{=.day}</div><!--{:}--><div class="day_num">{=.day}</div><!--{/}-->
+		<!--{@ dateData[.date]}-->
+			<div class="itembox">
+				<div class="imgbox">
+					<a href="../todayshop/today_goods.php?tgsno={=..tgsno}">{=goodsimgTS(..img_s,48)}</a>
+					<!--{? ..closed=='y'}--><div class="closed"><img src="../img/icon_closed.gif" /></div><!--{/}-->
+					<!--{? ..scheduled=='y'}--><div class="closed"><img src="../img/icon_scheduled.gif" /></div><!--{/}-->
+				</div>
+				<div class="namebox">
+					<a href="../todayshop/today_goods.php?tgsno={=..tgsno}">{=..goodsnm}</a>
+				</div>
+				<div class="statusbox">
+					<!--{? ..closed=='y'}--><span id="encorBlock{=..index_}_{=.index_}" style="display:none"><a onclick="encor({=..tgsno})"><img src="../img/btn_s_encor.gif" /></a></span>
+					<!--{/}-->
+				</div>
+			</div>
+			<div class="space"></div>
+		<!--{/}-->
+	</div>
+	<!--{? count(dateData[.date]) > 5}--><div style="text-align:right"><a onclick="more({=.day})"><img id="more{=.day}" src="../img/calendar_btn_more.gif" /></a></div><!--{/}-->
+	</td>
+	<!--{:}-->
+	</td>
+	<!--{/}-->
+	<!--{? (.index_+1)%7==0}--></tr><!--{/}-->
+<!--{/}-->
+</table>
+
+<!--footer start-->
+<!--삭제하지마세요.-->
+{ # footer }
+<!--footer end-->

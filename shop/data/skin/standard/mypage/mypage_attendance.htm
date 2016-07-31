@@ -1,0 +1,73 @@
+{*** 출석체크 | mypage/mypage_attendance.php ***}
+{ # header }
+
+<!-- 상단이미지 || 현재위치 -->
+<TABLE width=100% cellpadding=0 cellspacing=0 border=0>
+<tr>
+	<td><img src="../img/common/title_mamberon.gif" border=0></td>
+</tr>
+<TR>
+	<td class="path">HOME > 마이페이지 > <B>출석체크</B></td>
+</TR>
+</TABLE>
+
+
+<div class="indiv"><!-- Start indiv -->
+
+
+<table width="100%" cellpadding="0" cellspacing="0" border="0">
+<tr><td height="2" bgcolor="#303030" colspan="10"></td></tr>
+<tr bgcolor="#F0F0F0" height="23" class="input_txt">
+	<th>번호</th>
+	<th>출석체크명</th>
+	<th>출석체크 혜택기준</th>
+	<th>출석횟수</th>
+	<th>혜택 대상</th>
+	<th>진행 상태</th>
+</tr>
+<tr><td height="1" bgcolor="#D6D6D6" colspan="10"></td></tr>
+<col width="40" align="center"><col align="center">
+<col align="center" width="200"><col align="center" width="70"><col align="center" width="70"><col align="center" width="70">
+<!--{ @ loop }-->
+
+<tr>
+	<td height="40">{._no}</td>
+	<td>{.name}</td>
+	<td>
+		{? .condition_type=='straight'}
+			{. start_date}~{. end_date} 동안<br> 매일 {.condition_period}일 출석
+		{:}
+			{. start_date}~{. end_date} 동안<br> 총 {.condition_period}일 출석
+		{/}
+	</td>
+	<td>{.check_period}</td>
+	<td>{?.case}예{:}아니요{/}</td>
+	<td>
+		{? .status=='stop'}
+			강제종료
+		{: .status=='progress'}
+			진행중
+		{: .status=='ready'}
+			진행전
+		{: .status=='done'}
+			진행완료
+		{/}
+	</td>
+</tr>
+<tr><td colspan=10 height=1 bgcolor=#DEDEDE></td></tr>
+<!--{ / }-->
+</table>
+
+
+
+
+
+</div>
+
+<div class="pagediv">
+	
+	
+</div>
+
+
+{ # footer }

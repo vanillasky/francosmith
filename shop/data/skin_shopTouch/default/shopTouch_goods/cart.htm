@@ -1,0 +1,29 @@
+{#header}
+
+<?php {page_title} = "장바구니";?>
+{#sub_header}
+
+<script>
+function act(mode)
+{
+	var fm = document.frmCart;
+	if (isChked('idx[]')){
+		fm.mode.value = mode;
+		fm.submit();
+	}
+}
+</script>
+
+<section id="cart">
+	<form name="frmCart" method="post">
+	<input type="hidden" name="mode" value="modItem" />
+	{=include_file("shopTouch_proc/orderitem.htm")}
+	<!--{ ? count(cart->item) }-->
+	<div class="button clearb center" style="margin-top:15px;padding-bottom:20px;">
+		<a href="../shopTouch_ord/order.php" class="allorder"><span class="button-red-left"><span class="button-red-right"><button type="button">주문하기</button></span></span></a>
+	</div>
+	<!--{ / }-->
+	</form>
+</section>
+
+{#footer}

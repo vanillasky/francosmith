@@ -1,0 +1,65 @@
+{#header}
+
+<!--{ ? page_title }-->
+{#sub_header}
+<!--{ / }-->
+
+<script>
+function sort(sort)
+{
+	document.location.href="?category={_category}&sort="+encodeURI(sort);
+}
+</script>
+
+<section id="goods">
+	<div class="list_header">
+		<!--{ ? _cntSubCategory }-->
+		<ul class="sub_category">
+			<!--{ @ dataSubCategory( _category, true ) }-->
+			<li <!--{ ? .index_!=.size_-1 }-->class="bar"<!--{ / }-->><a href="?category={.category}">{.catnm} ({.gcnt+0})</a>
+			<!--{ / }-->
+		</ul>
+		<!--{ / }-->
+
+		<div class="list_sort">
+			<select name="sort" onchange="sort(this.options[this.selectedIndex].value)">
+				<option value="b.regdt desc" <!--{ ? _sort== "b.regdt desc" }-->selected="selected"<!--{ / }-->>최근등록순</option>
+				<option value="c.price" <!--{ ? _sort== "c.price" }-->selected="selected"<!--{ / }-->>낮은가격순</option>
+				<option value="c.price desc" <!--{ ? _sort== "c.price desc" }-->selected="selected"<!--{ / }-->>높은가격순</option>
+				<option value="c.reserve desc" <!--{ ? _sort== "c.reserve desc" }-->selected="selected"<!--{ / }-->>적립금순</option>
+				<option value="b.goodsnm" <!--{ ? _sort== "b.goodsnm" }-->selected="selected"<!--{ / }-->>상품명순</option>
+				<option value="b.maker" <!--{ ? _sort== "b.maker" }-->selected="selected"<!--{ / }-->>제조사순</option>
+			</select>
+		</div>
+	</div>
+
+	<div class="list">
+		<h4 class="hidden">상품 리스트</h4>
+		<!--{ = this->assign( 'loop', loopM ) // 데이타 호출 }-->
+		<!--{ = this->assign( 'cols', lstcfg.cols ) // 행당 컬럼수 }-->
+		<!--{ = this->assign( 'size', lstcfg.size ) // 이미지 크기 }-->
+		<!--{ = this->assign( 'id', "goods_list" ) // 고유 ID }-->
+		<!--{ = include_file( "goods/list/tpl_02.htm" ) }-->
+	</div>
+</section>
+
+<div class="indicator"></div>
+
+<script>
+var listingCnt = {=count(loopM)};
+var listingEnd = false;
+var listPage = 1;
+var listLoading = false;
+var listID = '{id}'
+var listCategory = '{_GET.category}';
+var listSort = '{_GET.sort}';
+var listKW = '{_GET.kw}';
+
+if(window.addEventListener) window.addEventListener("pageshow", goodsListPageShown, false);
+else if(window.attachEvent) window.attachEvent("pageshow", goodsListPageShown, false);
+
+</script>
+
+<div onclick="javascript:goodsListScrollEvent();" style="border:solid 1px #9b9b9b;padding:5px 5px 5px 5px;width:97%;background-color:#ededed;color:#003c87;font:bold 12pt Dotum;text-align:center;margin:0 auto;cursor:pointer;">더보기</div>
+
+{#footer}

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="EUC-KR"?>
+<codes>
+<list>
+	<code>{_sess}</code>
+	<desc>회원</desc>
+	<exam></exam>
+</list>
+<list>
+	<code new="">{ # ccsms }</code>
+	<desc>관리자에게 SMS상담문의하기 파일 인클루드</desc>
+	<exam></exam>
+</list>
+</codes>

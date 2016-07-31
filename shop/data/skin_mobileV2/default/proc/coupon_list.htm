@@ -1,0 +1,65 @@
+{*** 할인쿠폰적용하기 | proc/coupon_list.php ***}
+<script language=javascript>
+<!--
+function calcuCoupon(obj)
+{
+	var chk = document.getElementsByName(obj.name);
+	var apply_coupon = document.getElementById('apply_coupon');
+
+	var coupon_price = 0; var coupon_emoney = 0; var sno='';
+	var dc = 0; var abi = 0;
+	apply_coupon.innerHTML = '';
+	for(i=0;i<chk.length;i++){
+		if(chk[i].checked){
+			dc = chk[i].getAttribute('dc');
+			abi = chk[i].getAttribute('abi');
+
+			sno = chk[i].getAttribute('sno');
+			if(abi == 0)coupon_price += parseInt(dc);
+			else coupon_emoney += parseInt(dc);
+
+			apply_coupon.innerHTML += "<input type='hidden' name='apply_coupon[]' value='"+ sno +"'>";
+		}
+	}
+
+	document.getElementById('coupon_prop_price').innerHTML = comma(coupon_price);
+	document.getElementById('coupon_prop_emoney').innerHTML = comma(coupon_emoney);
+
+	if((coupon_price || coupon_emoney) && '2' == '{ _cfgCoupon.range }')document.getElementById('memberdc').innerHTML = 0;
+
+	document.frmOrder.coupon.value = comma(coupon_price);
+	document.frmOrder.coupon_emoney.value = comma(coupon_emoney);
+	chk_emoney(document.frmOrder.emoney);
+	getDelivery();
+	calcu_settle();
+
+}
+-->
+</script>
+
+<div>
+	<div class="summary">쿠폰 할인액 : <span id="coupon_prop_price">0</span>원<br />쿠폰 적립액 : <span id="coupon_prop_emoney" name="coupon_emoney">0</span>원</div>
+
+	<table>
+	<tr>
+		<th>선택</th>
+		<th>쿠폰/적용기간</th>
+<!--	<th>적용상품</th>-->
+		<th>할인/적립</th>
+	</tr>
+	<!--{ @ (_loop) }-->
+	<tr>
+		<td><input type={ ? _cfgCoupon.double }checkbox{ : }radio{ / } name='coupon_[]' onclick="calcuCoupon(this)" value='{.couponcd}' dc="{.apr}" sno='{.sno}' abi='{.ability}'></td>
+		<td>
+			<div>{.coupon}</div>
+			<div>/{? .priodtype == 1 } 발급 후 { .sdate }{ : }{=substr(.sdate,0,10)}~{=substr(.edate,0,10)} { / }</div>
+		</td>
+<!--		<td>{ ? .goodsnm }{ .goodsnm }{ : } - { / }</div>	</td>-->
+		<td>{=number_format(.price)}{ ? substr(.price,-1)!='%' }원{:}% ({=number_format(.apr)}원){/} {_r_couponAbility[.ability]}</td>
+	</tr>
+	<!--{ / }-->
+	</table>
+
+	<div class="btn_close"><a href="javascript:;" onclick="$('#coupon_list').hide();"><span class="hidden">[닫기]</span></a></div>
+
+</div>

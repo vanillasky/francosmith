@@ -1,0 +1,28 @@
+{*** 상품분류-좌측 | main/html.php?htmid=outline/side/category_side.htm ***}
+
+
+<div id="left_cs" style="width:{_cfg['shopSideSize']}px;">
+
+	<div class="smart-search-wrap">
+		<div class="title top_red">Category</div>
+		
+		<div class="category-left">
+			<ul>
+				<!--{ @ dataSubCategory( _category, true ) }-->
+				<li>
+				<!--{ ? _category == .category }--><b><!--{ / }-->
+				<a href="?category={.category}">{.catnm}<font color=#777777>({.gcnt+0})</font></a>
+				<!--{ ? _category == .category }--></b><!--{ / }-->
+				</li>
+				<!--{ / }-->	
+			
+			</ul>
+		</div>
+	</div>
+
+<!-- SMART SEARCH -->	
+<!--{ ? smartSearch_useyn == 'y' }-->
+{#smartSearch}
+<!--{ / }-->
+
+</div>

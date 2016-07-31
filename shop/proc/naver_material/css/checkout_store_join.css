@@ -1,0 +1,43 @@
+/*@charset "utf-8";*/
+/* NTS UI development 2 Team 110419 LYM  */
+/* Common */
+.chk_malljoin p,.chk_malljoin h1,.chk_malljoin h2,.chk_malljoin h3,.chk_malljoin h4,.chk_malljoin h5,.chk_malljoin h6,.chk_malljoin ul,.chk_malljoin ol,.chk_malljoin li,.chk_malljoin dl,.chk_malljoin dt,.chk_malljoin dd,.chk_malljoin table,.chk_malljoin th,.chk_malljoin td,.chk_malljoin form,.chk_malljoin fieldset,.chk_malljoin legend,.chk_malljoin input,.chk_malljoin textarea,.chk_malljoin button,.chk_malljoin select{margin:0;padding:0}
+.chk_malljoin input,.chk_malljoin textarea,.chk_malljoin select,.chk_malljoin button,.chk_malljoin table{font-family:'µ¸¿ò',dotum,applegothic,sans-serif;font-size:12px}
+.chk_malljoin img,.chk_malljoin fieldset{border:0}
+.chk_malljoin legend{display:none}
+.chk_malljoin ul,.chk_malljoin ol{list-style:none}
+.chk_malljoin em,.chk_malljoin address{font-style:normal}
+.chk_malljoin a{text-decoration:none}
+.chk_malljoin a:hover,.chk_malljoin a:active,.chk_malljoin a:focus{text-decoration:underline}
+.chk_malljoin .blind{overflow:hidden;position:absolute;width:0;height:0;opacity:0;filter:alpha(opacity=0)}
+
+.chk_malljoin {margin:0 auto; width:;}
+.chk_malljoin .line {background-color:#43ba0b; border:1px solid #3ba60e; height:4px; width:100%; font-size:0; line-height:0;}
+.chk_malljoin .malltitle_section {overflow:hidden;zoom:1;}
+.chk_malljoin .malltitle_section .mall_sub {float:left;background:url(../img/store/bg_malltitle.gif) no-repeat; height:161px; width:308px; position:relative; margin-left:20px;}
+.chk_malljoin .malltitle_section .mall_sub .logo {position:absolute; left:0; top:12px;}
+.chk_malljoin .malltitle_section .mall_sub .logo .l_naver {width:43px; height:15px; display:inline-block; margin-right:3px;}
+.chk_malljoin .malltitle_section .mall_sub .logo .l_checkout {width:73px; height:15px; display:inline-block;}
+.chk_malljoin .malltitle_section .img_cart {float:right; margin-right:53px;}
+.chk_malljoin .join_list {overflow:hidden; background:url(../img/store/bg_joinlist.gif) repeat-x; height:49px; border-left:1px solid #dcdcdc; border-right:1px solid #dcdcdc;}
+.chk_malljoin .join_list.rank2 {background-position:0 0;}
+.chk_malljoin .join_list.rank3 {background-position:0 -49px;}
+.chk_malljoin .join_list li {float:left;width:33%; padding:17px 0 17px; position:relative;}
+.chk_malljoin .join_list li img {margin-left:40px; vertical-align:top}
+.chk_malljoin .join_list li .bg_left {background:url(../img/store/bg_joinlist_leftoff.gif) no-repeat; width:27px; height:49px; position:absolute; left:-27px; top:0;}
+.chk_malljoin .join_list li.on {background:url(../img/store/bg_joinlist2.gif) repeat-x; height:49px; width:34%}
+.chk_malljoin .join_list li.on .bg_left {background:url(../img/store/bg_joinlist_left.gif) no-repeat; width:27px; height:49px; position:absolute; left:-27px; top:0;}
+.chk_malljoin .join_list li.on .bg_right {background:url(../img/store/bg_joinlist_right.gif) no-repeat; width:26px; height:49px; position:absolute; right:0; top:0;}
+.chk_malljoin .clause_section {margin-top:27px;}
+.chk_malljoin .clause_section .agree_text {padding:10px 0; border-bottom:1px solid #dcdcdc; margin-bottom:40px;}
+.chk_malljoin .clause_section h2 {margin:30px 0 10px;}
+.chk_malljoin .clause_section .clause_area {border:1px solid #a5acb2; height:224px; overflow:scroll; overflow-x:hidden; _height /**/:254px; padding:15px; color:#666; line-height:18px;}
+.chk_malljoin .clause_section .agree_list {overflow:hidden; margin-top:16px;}
+.chk_malljoin .clause_section .agree_list li {float:left; padding-top:3px; color:#666; margin-right:15px;}
+.chk_malljoin .clause_section .agree_list li input {width:13px; height:13px; margin:-1px 5px 1px 0; vertical-align:middle;}
+.chk_malljoin .clause_section .join_end {background:url(../img/store/text_join3.gif) no-repeat; height:57px; text-align:center; position:relative; margin:0 0 0 100px; width:466px; margin-top:47px;}
+.chk_malljoin .clause_section .join_end a {width:119px; height:12px; position:absolute; left:193px; top:26px; display:block; z-index:10}
+.chk_malljoin .btn_section {text-align:center; margin:30px 0;}
+.chk_malljoin .btn_section a {margin-right:6px;}
+.chk_malljoin .btn_section a img {vertical-align:top;}
+.chk_malljoin .btn_right {text-align:right; margin:12px 71px 0 0;}

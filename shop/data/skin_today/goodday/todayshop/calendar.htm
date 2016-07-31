@@ -1,0 +1,210 @@
+{*** 달력형 상품리스트 | todayshop/calendar.php ***}
+<!--header start-->
+<!--삭제하지마세요.-->
+{ # header }
+<!--header end-->
+
+<!--일반몰과 병행 사용시 상단 카테고리를 출력하기 위함-->
+<!--{? todayshop_cfg['shopMode'] == 'regular'}-->
+{ # tsCategory }
+<!--{/}-->
+
+<script type="text/javascript" src="../../../lib/js/prototype.js"></script>
+<script type="text/javascript" src="../../../lib/js/todayshop.js"></script>
+<script type="text/javascript">
+var member = null;
+var useEncor = null;
+
+function setListData(res) {
+	try
+	{
+		if (res.member == "y") member=true;
+		else throw null;
+	}
+	catch (e) {
+		member=false;
+	}
+
+	// 앵콜 사용여부
+	try
+	{
+		useEncor = res.useEncor;
+	}
+	catch (e) {
+	}
+}
+
+TodayShop.getCalData(setListData);
+</script>
+<script type="text/javascript">
+function encor(tgsno) {
+	if (member === null) {
+		alert("잠시만 기다리세요.");
+		return;
+	}
+	if (member !== true) {
+		if(confirm("앵콜추천 참여는 회원만이 참여할 수 있습니다. 로그인하시겠습니까?")) {
+			location.href="../member/login.php";
+		}
+	}
+	else {
+		if(confirm("선택하신 상품을 앵콜 추천하시겠습니까?")) {
+			var fobj = document.frmEncor;
+			fobj.tgsno.value = tgsno;
+			fobj.submit();
+		}
+	}
+}
+
+var calendar_btn = {
+	more : new Image(),
+	close : new Image()
+};
+calendar_btn['more'] = '../img/btn_list_more.gif';
+calendar_btn['close'] = '../img/btn_list_close.gif';
+
+function more(day) {
+	var curstatus = document.getElementById("box"+day).style.overflow;
+	if (curstatus != "visible") {
+		document.getElementById("more"+day).src = calendar_btn['close'];
+		document.getElementById("box"+day).style.overflow = "visible";
+		document.getElementById("td"+day).style.height = "auto";
+		document.getElementById("box"+day).style.height = "95%";
+	}
+	else {
+		document.getElementById("more"+day).src = calendar_btn['more'];
+		document.getElementById("box"+day).style.overflow = "hidden";
+		document.getElementById("box"+day).style.height = "235px";
+		document.getElementById("td"+day).style.height = "245px";
+	}
+}
+
+function navi(year, month) {
+	location.href = "calendar.php?year="+year+"&month="+month;
+}
+
+window.onload = function() {
+	if (useEncor == "y") {
+		var spans = document.getElementsByTagName("SPAN");
+		for(var i = 0; i < spans.length; i++) {
+			if (spans[i].id.match(/^encorBlock[0-9]*_[0-9]*$/g)) spans[i].style.display="";
+		}
+	}
+}
+</script>
+
+<div id="el-anchor-side-banner" style="position:relative;border:none;"></div>
+
+<!-- s:tab-->
+<table width="{_cfg['shopSize']}" border="0" cellpadding="0" cellspacing="0">
+<tr>
+	<td><a href="./today_goods.php"><img src="../img/tab_m1.gif"></a></td>
+	<td><a href="./list.php"><img src="../img/tab_m2.gif"></a></td>
+	<td><a href="./calendar.php"><img src="../img/tab_m3_on.gif"></a></td>
+	<td><a href="./goods_review.php"><img src="../img/tab_m4.gif"></a></td>
+</tr>
+</table>
+<!-- e:tab-->
+
+<!-- 44px --><div class="margin" style="height:44px;"></div>
+
+
+<!-- s:page title & date indicator -->
+<table width="{_cfg['shopSize']}" border="0" cellpadding="0" cellspacing="0">
+<tr>
+	<td align="left">
+		<img src="../img/tit_calendar.gif">
+
+		<a href="javascript:void(0);" onclick="navi('{=monthnavi.beforeyear}','{=monthnavi.beforemonth}')"><img src='../img/date_prev.gif' border="0"></a>
+		<img src='../img/d_year_{=monthnavi.year[0]}.gif' border="0"><img src='../img/d_year_{=monthnavi.year[1]}.gif' border="0"><img src='../img/d_year_{=monthnavi.year[2]}.gif' border="0"><img src='../img/d_year_{=monthnavi.year[3]}.gif' border="0"><img src='../img/d_year_dot.gif' border="0"><img src='../img/d_month_{=monthnavi.month[0]}.gif' border="0"><img src='../img/d_month_{=monthnavi.month[1]}.gif' border="0">
+		<a href="javascript:void(0);" onclick="navi('{=monthnavi.nextyear}','{=monthnavi.nextmonth}')"><img src='../img/date_next.gif' border="0"></a>
+	</td>
+
+</tr>
+</table>
+<!-- e:page title & date indicator -->
+
+
+
+
+
+<form name="frmEncor" action="../todayshop/indb.calendar.php" method="post" target="ifrmHidden">
+<input type="hidden" name="tgsno" />
+</form>
+
+
+<style>
+.calendar {background:#DBDBDB;}
+.calendar td.head {border-bottom:1px solid $aaaaaa;text-align:center;background:url(../img/week_bg.gif) top left repeat-x;}
+.calendar .contents {height:245px;background:#ffffff;padding:3px;}
+.calendar .contents .box { overflow:hidden; height:235px;_width:99%;}
+.calendar .contents .box span.day {display:block;margin:0 0 5px 0;font-family:Arial;font-size:18px;font-weight:bold;border:1px solid #999999;width:30px;height:30px;text-align:center;color:#333333;}
+.calendar .contents .box span.sunday {color:#e60000;}
+.calendar .contents .box span.saturday {color:#0042ff;}
+.calendar .contents .box .itembox {display:block; width:100%; margin:0 0 5px 0;padding:0;}
+.calendar .contents .box .itembox .imgbox {position:relative; float:left; overflow:hidden; width:42px; height:42px; border:solid 1px #D5D5D5;padding:0;margin:0;}
+.calendar .contents .box .itembox .closed {position:absolute; top:28px; left:0px; z-index:10;}
+.calendar .contents .box .itembox .namebox {float:left; overflow:hidden; text-align:left;height:28px; word-break:break-all; word-wrap:break-word; margin-top:2px; margin-left:5px; line-height:14px;}
+.calendar .contents .box .itembox .statusbox {float:right; text-align:left; width:48px; height:14px; word-break:break-all; word-wrap:break-word; margin-top:2px; margin-left:6px;}
+</style>
+
+<table border="0" cellpadding="0" cellspacing="1" width="100%" class="calendar">
+<col width="15%"><col width="14%"><col width="14%"><col width="14%"><col width="14%"><col width="14%"><col width="15%">
+<tr align="center">
+	<td class="head"><img src="../img/week_1.gif"></td>
+	<td class="head"><img src="../img/week_2.gif"></td>
+	<td class="head"><img src="../img/week_3.gif"></td>
+	<td class="head"><img src="../img/week_4.gif"></td>
+	<td class="head"><img src="../img/week_5.gif"></td>
+	<td class="head"><img src="../img/week_6.gif"></td>
+	<td class="head"><img src="../img/week_7.gif"></td>
+</tr>
+
+<!--{@ calendar}-->
+
+<!--{? .index_%7==0}-->
+<tr>
+<!--{/}-->
+
+	<td valign="top" id="td{=.day}" class="contents">
+	<div class="box" id="box{=.day}">
+	<!--{? .date}-->
+
+		<span class="day {? .wday==0}sunday{: .wday==6}saturday{/}">{=.day}</span>
+
+		<!--{@ dateData[.date]}-->
+		<div class="itembox">
+			<div class="imgbox">
+				<a href="../todayshop/today_goods.php?tgsno={=..tgsno}">{=goodsimgTS(..img_s,42)}</a>
+				<!--{? ..closed=='y'}--><div class="closed"><img src="../img/shop_end.jpg" /></div><!--{/}-->
+				<!--{? ..scheduled=='y'}--><div class="closed"><img src="../img/shop_coming.jpg" /></div><!--{/}-->
+			</div>
+
+			<div class="namebox">
+				<a href="../todayshop/today_goods.php?tgsno={=..tgsno}">{=..goodsnm}</a>
+			</div>
+			<div class="statusbox">
+				<!--{? ..closed=='y'}--><span id="encorBlock{=..index_}_{=.index_}" style="display:none"><a onclick="encor({=..tgsno})"><img src="../img/btn_s_encor.gif" /></a></span>
+				<!--{/}-->
+			</div>
+		</div>
+		<!--{/}-->
+	</div>
+	<!--{? count(dateData[.date]) > 4}--><div style="text-align:right"><a onclick="more({=.day})"><img id="more{=.day}" src="../img/btn_list_more.gif" /></a></div><!--{/}-->
+	</td>
+	<!--{:}-->
+	</td>
+	<!--{/}-->
+
+<!--{? (.index_+1)%7==0}-->
+</tr>
+<!--{/}-->
+
+<!--{/}-->
+</table>
+
+
+<!--footer start-->
+<!--삭제하지마세요.-->
+{ # footer }
+<!--footer end-->

@@ -1,0 +1,245 @@
+{*** 상세검색화면 | goods/goods_search.php ***}
+{ # header }
+<!-- 상단이미지 || 현재위치 -->
+
+<!--{? _GET['disp_type'] == 'gallery'}-->
+<? {lstcfg.tpl} = "tpl_01"; ?>
+<!--{: _GET['disp_type'] == 'list'}-->
+<? {lstcfg.tpl} = "tpl_02"; ?>
+<!--{/}-->
+
+<style>
+.paletteColor { width:16px; height:16px; cursor:pointer; float:left; margin:2px; border:1px solid #dfdfdf;}
+.paletteColor_selected { width:16px; height:16px; cursor:pointer; float:left; margin:2px; border:1px solid #dfdfdf; }
+</style>
+<TABLE width=100% cellpadding=0 cellspacing=0 border=0>
+<tr>
+<td><img src="../img/common/title_search.gif" border=0></td>
+</tr>
+<TR>
+<td class="path">HOME > <B>상품검색</B></td>
+</TR>
+</TABLE>
+
+
+<div class="indiv"><!-- Start indiv -->
+
+<form name=frmList id=form>
+<input type="hidden" name="disp_type" value="{_GET['disp_type']}" />
+<input type="hidden" name="hid_sword" value="{_GET['hid_sword']}" />
+<input type=hidden name=searched value="Y">
+<input type=hidden name=log value="1">
+<input type=hidden name=sort value="{_GET['sort']}">
+<input type=hidden name=page_num value="{_GET['page_num']}">
+
+<div style="border:1px solid #DEDEDE; background-color:#F5F5F5;">
+<table width=100% cellspacing=0 border=0>
+<tr>
+<td style="text-align:center;padding-top:20px;">
+	<select name="skey">
+	<option value="all" {_selected.skey['all']}> 통합검색 </option>
+	<option value="goodsnm" {_selected.skey['goodsnm']}> 상품명 </option>
+	<option value="goodscd" {_selected.skey['goodscd']}> 상품코드 </option>
+	<option value="maker" {_selected.skey['maker']}> 제조사 </option>
+	<option value="brand" {_selected.skey['brand']}> 브랜드 </option>
+	</select>
+	<input type="text" NAME="sword" value="{_GET['sword']}" size="32" style="background-color:#FFFFFF; font-color:#555555;font-face:dotum">
+	<span class=noline><input type="image" src="../img/common/btn_search.gif" align=absmiddle></span>
+	<label><input type="checkbox" name="refind" style="border:0" onclick="search_refind(this)" {_hid_checked}/>결과 내 재검색</label>
+</td>
+</tr>
+<tr>
+
+	<td style="text-align:left;padding:5px, 200px, 20x, 0;"><!--{? _s_type['keyword'] }-->인기검색어 : {_s_type['keyword']}<!--{/}--></td>
+</tr>
+</table>
+</div>
+<div style="padding:2px"></div>
+<!--{? _s_type['detail_type']}-->
+<div style="border:1px solid #DEDEDE;">
+<table width=100% cellpadding=10 cellspacing=0 border=0>
+<tr>
+<td style="text-align:center;">
+	<table cellpadding="0" cellspacing="0" border="0" >
+	<col /><col width="100px">
+	<tr>
+	<td style="text-align:center;">
+	<!-- 검색 : Start -->
+		<table cellpadding="2" cellspacing="0" border="0" style="text-align:center">
+		<!--{@ _s_type['detail_type']}-->
+		<tr>
+			<!--{? .value_ : 'category'}-->
+				<td style="text-align:right;">상품분류 : </td>
+				<td style="text-align:left;">
+				<div id=dynamic></div>
+				<script src="../../../../lib/js/categoryBox.js"></script>
+				<script>new categoryBox('cate[]',4,'{_category}','','frmList');</script>
+				</td>
+			<!--{: 'price'}-->
+				<td style="text-align:right;">가격 : </td>
+				<td style="text-align:left;">
+				<input type=text name=price[] style="width:100px;background-color:#FFFFFF;" value="{_GET['price'][0]}">원 ~
+				<input type=text name=price[] style="width:100px;background-color:#FFFFFF;" value="{_GET['price'][1]}">원
+				</td>
+			<!--{: 'add'}-->
+				<td style="text-align:right;">조건선택 : </td>
+				<td style="text-align:left;">
+				<!--{@ _s_type['detail_add_type']}-->
+				<label><input type="checkbox" name="detail_add_type[]" value="{..value_}" style="border:0" {_add_checked[..value_]}/>
+				<!--{? ..value_ : 'free_deliveryfee'}-->무료배송<!--{: 'dc'}-->할인쿠폰<!--{: 'save'}-->적립쿠폰<!--{: 'new'}-->신상품<!--{: 'event'}-->이벤트상품<!--{/}-->
+				</label>
+				<!--{/}-->
+				</td>
+			<!--{: 'color'}-->
+				<td style="text-align:right;">색상 : </td>
+				<td style="text-align:left;">
+				<input type="hidden" name="ssColor" id="ssColor" value="<!--{=__GET.ssColor}-->" />
+				<table border="0" cellpadding="0" cellspacing="2">
+				<tr>
+					<td>
+					<!--{@ (_colorList) }-->
+					<div class="paletteColor" style="background-color:#{..value_};" onclick="ssSelectColor(this.style.backgroundColor)"></div>
+					<!--{/}-->
+					</td>
+				</tr>
+				<tr>
+					<td id="selectedColor" title="선택된 색은 더블클릭으로 삭제하실 수 있습니다."></td>
+				</tr>
+				</table>
+				</td>
+			<!--{: }-->
+			<!--{/}-->
+		</tr>
+		<!--{/}-->
+		</table>
+	<!-- 검색 : End -->
+	</td>
+	<td style="text-align:right">
+		<span class=noline><input type="image" src="../img/common/btn_search_b.gif" align=absmiddle></span>
+	</td>
+	</tr>
+	</table>
+</td>
+</tr>
+</table>
+</div>
+<!--{/}-->
+
+<table width=100% border=0 cellpadding=0 cellspacing=0>
+<tr><td height=18></td></tr>
+<tr>
+<td class=small height=27 style="padding:0 0 0 5">
+<table width=100% border=0 cellpadding=0 cellspacing=0>
+<tr>
+<td style="text-align:left;">
+<FONT COLOR="#555555">
+<!--{? _GET['hid_sword'] && _GET['sword']}-->
+<font style="font-weight:bold; font-size:11px;">{_GET['hid_sword']}</font> 검색 결과 내,<font style="font-weight:bold; font-size:11px">{_GET['sword']}</font>를 포함한 검색결과
+<!--{: !_GET['hid_sword'] && _GET['sword']}-->
+<font style="font-weight:bold; font-size:11px;">{_GET['sword']}</font> 로 검색한 결과
+<!--{/}-->
+총 <font style="font-weight:bold; font-size:11px">{pg->recode['total']}</font>개의 상품이 있습니다.</FONT>
+</td>
+<td style="text-align:right;">
+<!--{? _s_type['disp_type'] == 'Y'}-->
+<a href="javascript: add_param_submit('disp_type','list')">
+	<!--{? _GET['disp_type'] == 'list'}-->
+	<img name="disp_list" src="../img/common/btn_list_on.gif">
+	<!--{:}-->
+	<img name="disp_list" src="../img/common/btn_list_off.gif">
+	<!--{/}-->
+</a>
+<a href="javascript: add_param_submit('disp_type', 'gallery')">
+	<!--{? _GET['disp_type'] == 'gallery'}-->
+	<img name="disp_gallery" src="../img/common/btn_gallery_on.gif">
+	<!--{:}-->
+	<img name="disp_gallery" src="../img/common/btn_gallery_off.gif">
+	<!--{/}-->
+</a>
+<!--{/}-->
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td>
+<!-- capture_start("list_top") -->
+<table width=100% cellpadding=0 cellspacing=0>
+<tr>
+<td><img src="../img/common/goodlist_txt_01.gif"><a href="javascript:sort('maker desc')"><img name=sort_maker_desc src="../img/common/list_up_off.gif"></a><a href="javascript:sort('maker')"><img name=sort_maker src="../img/common/list_down_off.gif"></a><img src="../img/common/goodlist_txt_03.gif"><a href="javascript:sort('goodsnm desc')"><img name=sort_goodsnm_desc src="../img/common/list_up_off.gif"></a><a href="javascript:sort('goodsnm')"><img name=sort_goodsnm src="../img/common/list_down_off.gif"></a><img src="../img/common/goodlist_txt_04.gif"><a href="javascript:sort('price desc')"><img name=sort_price_desc src="../img/common/list_up_off.gif"></a><a href="javascript:sort('price')"><img name=sort_price src="../img/common/list_down_off.gif"></a><img src="../img/common/goodlist_txt_05.gif"><a href="javascript:sort('reserve desc')"><img name=sort_reserve_desc src="../img/common/list_up_off.gif"></a><a href="javascript:sort('reserve')"><img name=sort_reserve src="../img/common/list_down_off.gif"></a></td>
+<td align=right><img src="../img/common/goodlist_txt_06.gif" align=absmiddle><select onchange="this.form.page_num.value=this.value;this.form.submit()" style="font:8pt 돋움"><!--{ @ lstcfg.page_num }--><option value="{.value_}" {_selected.page_num[.value_]}>{.value_}개씩 정렬<!--{ / }--></select></td>
+</tr>
+</table>
+
+<script>
+color2Tag('selectedColor');
+
+function remove_txt(obj){
+	obj.style.cssText = "text-align:left;";
+	obj.value="";
+}
+function search_refind(obj){
+	var frm = document.frmList;
+	if(obj.checked) tmp = frm.sword.value;
+	else tmp = '';
+	frm.sword.value = '';
+	frm.hid_sword.value = tmp;
+}
+function add_param_submit (param_nm, param_val){
+	var frm = document.frmList;
+	if( param_nm == 'sword') frm.sword.value = param_val;
+	else frm.disp_type.value = param_val;
+	frm.submit();
+}
+function sort(sort)
+{
+var fm = document.frmList;
+fm.sort.value = sort;
+fm.submit();
+}
+function sort_chk(sort)
+{
+if (!sort) return;
+sort = sort.replace(" ","_");
+var obj = document.getElementsByName('sort_'+sort);
+if (obj.length){
+div = obj[0].src.split('list_');
+for (i=0;i<obj.length;i++){
+chg = (div[1]=="\up_off.gif") ? "\up_on.gif" : "\down_on.gif";
+obj[i].src = div[0] + "list_" + chg;
+}
+}
+}
+<!--{ ? _GET['sort'] }-->
+if (is_sort) sort_chk('{_GET['sort']}');
+<!--{ / }-->
+var is_sort = 1;
+</script>
+<!-- capture_end ("list_top") -->
+</td>
+</tr>
+<tr><td height=1 bgcolor=#DDDDDD style="padding:0px"></td></tr>
+<tr>
+<td style="padding:15 0">
+<!--{ = this->assign( 'cols', lstcfg.cols ) // 행당 컬럼수 }-->
+<!--{ = this->assign( 'size', lstcfg.size ) // 이미지 크기 }-->
+<!--{ = include_file( "goods/list/" + lstcfg.tpl + ".htm" ) }-->
+</td>
+</tr>
+<tr><td height=1 bgcolor=#DDDDDD style="padding:0px"></td></tr>
+<tr>
+<td>
+<!-- capture_print("list_top") -->
+</td>
+</tr>
+<tr><td height=2 bgcolor=#DDDDDD></td></tr>
+<tr><td align=center height=30 bgcolor="#F3F3F3">{pg->page['navi']}</td></tr>
+</table>
+
+</form>
+<br><br>
+
+</div><!-- End indiv -->
+
+{ # footer }

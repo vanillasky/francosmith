@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="EUC-KR"?>
+<codes>
+<list>
+	<code power="">{.zipcode}</code>
+	<desc>우편번호</desc>
+	<exam>123-456</exam>
+</list>
+<list>
+	<code>{.sido}</code>
+	<desc>시/도</desc>
+	<exam>서울</exam>
+</list>
+<list>
+	<code>{.gugun}</code>
+	<desc>구/군</desc>
+	<exam>강남구</exam>
+</list>
+<list>
+	<code>{.dong}</code>
+	<desc>동</desc>
+	<exam>대치동</exam>
+</list>
+<list>
+	<code>{.bunji}</code>
+	<desc>번지</desc>
+	<exam>123</exam>
+</list>
+<list>
+	<code>{.index_}</code>
+	<desc>반복 인덱스 (0부터 시작, 반복할 때 1씩 증가)</desc>
+	<exam>0</exam>
+</list>
+</codes>

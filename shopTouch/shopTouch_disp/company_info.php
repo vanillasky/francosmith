@@ -1,0 +1,54 @@
+<?
+include dirname(__FILE__) . "/../_shopTouch_header.php"; 
+@include $shopRootDir . "/lib/page.class.php";
+
+# ¾ÐÃàÄÚµå Á¤ÀÇ
+$summary_search = array();
+$summary_search[] = "/__shopname__/is";			# ¼îÇÎ¸ôÀÌ¸§
+$summary_search[] = "/__shopdomain__/is";		# ¼îÇÎ¸ôÁÖ¼Ò
+$summary_search[] = "/__shopcpaddr__/is";		# »ç¾÷ÀåÁÖ¼Ò
+$summary_search[] = "/__shopcoprnum__/is";		# »ç¾÷ÀÚµî·Ï¹øÈ£
+$summary_search[] = "/__shopcpmallceo__/is";	# ¼îÇÎ¸ô ´ëÇ¥
+$summary_search[] = "/__shopcpmanager__/is";	# °³ÀÎÁ¤º¸°ü¸®ÀÚ
+$summary_search[] = "/__shoptel__/is";			# ¼îÇÎ¸ô ÀüÈ­
+$summary_search[] = "/__shopfax__/is";			# ¼îÇÎ¸ô ÆÑ½º
+$summary_search[] = "/__shopmail__/is";			# ¼îÇÎ¸ô ÀÌ¸ÞÀÏ
+
+$summary_replace = array();
+$summary_replace[] = $cfg["shopName"];			# ¼îÇÎ¸ôÀÌ¸§
+$summary_replace[] = $cfg["shopUrl"];			# ¼îÇÎ¸ôÁÖ¼Ò
+$summary_replace[] = $cfg["address"];			# »ç¾÷ÀåÁÖ¼Ò
+$summary_replace[] = $cfg["compSerial"];		# »ç¾÷ÀÚµî·Ï¹øÈ£
+$summary_replace[] = $cfg["ceoName"];			# ¼îÇÎ¸ô ´ëÇ¥
+$summary_replace[] = $cfg["adminName"];			# °³ÀÎÁ¤º¸°ü¸®ÀÚ
+$summary_replace[] = $cfg["compPhone"];			# ¼îÇÎ¸ô ÀüÈ­
+$summary_replace[] = $cfg["compFax"];			# ¼îÇÎ¸ô ÆÑ½º
+$summary_replace[] = $cfg["adminEmail"];		# ¼îÇÎ¸ô ÀÌ¸ÞÀÏ
+
+$company_info = Array();
+$company_info['comp_name'] = $cfg['compName'];
+$company_info['comp_addr'] = $cfg['address'];
+$company_info['comp_serial'] = $cfg['compSerial'];
+$company_info['comp_orderserial'] = $cfg['orderSerial'];
+$company_info['comp_ceo'] = $cfg['ceoName'];
+$company_info['comp_admin'] = $cfg['adminName'];
+$company_info['comp_tel'] = $cfg['compPhone'];
+$company_info['comp_fax'] = $cfg['compFax'];
+
+$skin_dir = $cfg['tplSkin'];
+
+$agreement_path = '../..'.$cfg['rootDir'].'/data/skin/'.$cfg['tplSkin'].'/proc/_agreement.txt';
+
+$fh = @fopen($agreement_path, 'r');
+$agreement_txt = fread($fh, @filesize($agreement_path));
+@fclose($fh);
+
+$agreement_txt = str_replace("{_cfg['compName']}", $cfg['compName'], str_replace("{_cfg['shopName']}", $cfg['shopName'], str_replace("\n", "<br>", $agreement_txt)));
+
+$tpl->assign('comp_info', $company_info);
+$tpl->assign('agreement', $agreement_txt);
+
+### ÅÛÇÃ¸´ Ãâ·Â
+$tpl->print_('tpl');
+
+?>

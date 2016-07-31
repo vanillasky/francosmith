@@ -1,0 +1,1 @@
+<? header("Location: http://guide.godo.co.kr/guide/php/information.by.goods/information.by.goods.htm"); ?>

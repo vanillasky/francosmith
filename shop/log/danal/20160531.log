@@ -1,0 +1,6 @@
+[2016-05-31 00:39:16] Paygate open start
+File : /www/francotr3287_godo_co_kr/shop/order/card/danal/card_gate.php
+Transaction ID : 1464622639135
+Send data : Command=ITEMSEND2&SERVICE=TELEDIT&ItemType=Amount&ItemCount=1&OUTPUTOPTION=DEFAULT&ID=9010S23312&PWD=1FLOF1im&ItemInfo=2%7C21900%7C1%7C22S0rQ0001%7C%B5%B5%B9%CC%B3%EB%C7%C9%2F%C5%D7%B3%ED%C7%C9+10x50+%28100%B0%B3%C0%D4%29+%BF%DC+1%B0%C7&SUBCP=SGD0004644&USERID=guard72%40naver.com&ORDERID=1464622639135&IsPreOtbill=N&IsSubscript=N
+[2016-05-31 00:40:12] 결제 정보 저장 시작
+[2016-05-31 00:40:13] 결제성공

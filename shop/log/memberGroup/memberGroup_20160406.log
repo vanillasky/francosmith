@@ -1,0 +1,38 @@
+
+===== LOG START =====
+IP = 221.165.230.22
+ID = franco
+TYPE = 자동평가
+CONF = Array
+(
+    [automaticFl] => y
+    [apprSystem] => figure
+    [apprPointTitle] => 등급기준
+    [apprPointLabel] => Point
+    [apprPointOrderPrice] => 1
+    [apprPointOrderPriceUnit] => 100000
+    [apprPointOrderPricePoint] => 5
+    [mobile_apprPointOrderPriceUnit] => 
+    [mobile_apprPointOrderPricePoint] => 
+    [apprPointOrderRepeatPoint] => 
+    [mobile_apprPointOrderRepeatPoint] => 
+    [apprPointReviewRepeat] => 1
+    [apprPointReviewRepeatPoint] => 5
+    [mobile_apprPointReviewRepeatPoint] => 
+    [apprPointLoginRepeat] => 1
+    [apprPointLoginRepeatPoint] => 5
+    [mobile_apprPointLoginRepeatPoint] => 
+    [calcPeriodFl] => n
+    [calcPeriodBegin] => -1d
+    [calcPeriodMonth] => 1
+    [calcCycleMonth] => 6
+    [calcCycleDay] => 1
+    [calcKeep] => 6
+    [useMypageLayerBox] => y
+)
+
+STARTTIME = 2016-04-06 17:58:31
+ENDTIME = 2016-04-06 17:58:31
+CONNECT_ERROR = CONNECTION_OK [Connection 정상]
+===== LOG END =====
+

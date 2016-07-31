@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="EUC-KR"?>
+<codes>
+<list>
+	<code power="">{..gapReply}</code>
+	<desc>답글공백 SPAN 태그</desc>
+	<exam>&lt;span style='width:15'&gt;&lt;/span&gt;</exam>
+</list>
+<list>
+	<code power="">{..sub}</code>
+	<desc>답글여부 - 기호:답글, '':원글</desc>
+	<exam></exam>
+</list>
+<list>
+	<code>{..name}</code>
+	<desc>글쓴이</desc>
+	<exam>홍길동</exam>
+</list>
+<list>
+	<code power="">{..subject}</code>
+	<desc>제목</desc>
+	<exam>하루의 시작을 이나무와 함께</exam>
+</list>
+<list>
+	<code>{..notice}</code>
+	<desc>NOTICE 여부 - o:공지글, '':일반글</desc>
+	<exam>o</exam>
+</list>
+<list>
+	<code>{..secret}</code>
+	<desc>비밀글 여부 - o:비밀글, '':일반글</desc>
+	<exam>o</exam>
+</list>
+<list>
+	<code>{..hit}</code>
+	<desc>조회수</desc>
+	<exam>13</exam>
+</list>
+<list>
+	<code>{..comment}</code>
+	<desc>코멘트(댓글) 갯수</desc>
+	<exam>2</exam>
+</list>
+<list>
+	<code>{..regdt}</code>
+	<desc>작성일</desc>
+	<exam>2007-01-01 12:30:30</exam>
+</list>
+<list>
+	<code power="">{..link.view}</code>
+	<desc>링크 A태그 > 상세보기</desc>
+	<exam>&lt;a href='view.php?id=notice&amp;no=1'&gt;</exam>
+</list>
+</codes>

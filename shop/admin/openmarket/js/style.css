@@ -1,0 +1,19 @@
+/*** ºÐ·ù¸ÅÄª (openmarket/category.php) ***/
+#cateMatchList td {border-bottom:solid 1px #DCD8D6; padding-top:4px; padding-bottom:4px;}
+#cateMatchList .step1Tr {background-color:#EEEEEE;}
+#cateMatchList .step2Tr {background-color:#FFFFFF;}
+#cateMatchList .step3Tr {background-color:#FFFFFF;}
+#cateMatchList .step4Tr {background-color:#FFFFFF;}
+#cateMatchList .step1Icon {padding-left:21px; background-image: url(../../img/icon_off.gif); background-repeat:no-repeat; background-position: 10px center;}
+#cateMatchList .step2Icon {padding-left:37px; background-image: url(../../img/tree-leaf-end.gif); background-repeat:no-repeat; background-position: 15px center;}
+#cateMatchList .step3Icon {padding-left:52px; background-image: url(../../img/tree-leaf-end.gif); background-repeat:no-repeat; background-position: 30px center;}
+#cateMatchList .step4Icon {padding-left:67px; background-image: url(../../img/icon_list.gif); background-repeat:no-repeat; background-position: 60px center;}
+
+
+/*** ºÐ·ù¸ÅÄªÇÏ±â (openmarket/popup.category.php) ***/
+#srchCatePrint {height:134px; overflow-y:scroll; border:1px solid #D7D7D7; margin:0px; padding:0px;}
+#stepCate {margin: 10px 0px; padding:0px; width:100%;}
+#stepCate ul {float:left; margin:0px; padding:0px; width:23%;}
+#stepCate .separator{width:2%; border-width:0px; padding:2px; color:#CCCCCC; font-family:µ¸¿ò; font-size:12px;}
+#stepCate h4 {border:solid 1px #3A870C; background-color:#70B600; color:#ffffff; font-family:µ¸¿ò; font-size:12px; padding:2px; margin:0px; text-align:center;}
+#stepCate select {width:100%; height:186;}

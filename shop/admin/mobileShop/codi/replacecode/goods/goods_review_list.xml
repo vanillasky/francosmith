@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="EUC-KR"?>
+<codes>
+<list>
+	<code>{_cfg['reviewWriteAuth']}</code>
+	<desc>상품후기 글쓰기 권한 - '':회원만 가능, free:비회원도 가능</desc>
+	<exam>free</exam>
+</list>
+<list>
+	<code power="">{@ _loop}</code>
+	<desc>상품후기</desc>
+	<exam more="goods/goods_review_list._loop.xml"></exam>
+</list>
+<list>
+	<code>{_goodsno}</code>
+	<desc>상품번호</desc>
+	<exam>37</exam>
+</list>
+<list>
+	<code>{pg->page['navi']}</code>
+	<desc>페이징 > 네비게이션</desc>
+	<exam>1 [2]</exam>
+</list>
+</codes>

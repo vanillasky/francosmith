@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="EUC-KR"?>
+<codes>
+<list>
+	<code power="">{_cfg['shopAlign']}</code>
+	<desc>정렬방식 - left:왼쪽정렬, center:가운데정렬</desc>
+	<exam>center</exam>
+</list>
+<list>
+	<code power="">{_cfg['shopSize']}</code>
+	<desc>전체사이즈</desc>
+	<exam>903</exam>
+</list>
+<list>
+	<code>{_cfg['shopUrl']}</code>
+	<desc>쇼핑몰 URL</desc>
+	<exam>xxx.co.kr</exam>
+</list>
+<list>
+	<code>{_cfg['compName']}</code>
+	<desc>상호명</desc>
+	<exam></exam>
+</list>
+<list>
+	<code>{_cfg['address']}</code>
+	<desc>사업장주소</desc>
+	<exam>서울 ....</exam>
+</list>
+<list>
+	<code>{_cfg['compSerial']}</code>
+	<desc>사업자등록번호</desc>
+	<exam></exam>
+</list>
+<list>
+	<code>{_cfg['orderSerial']}</code>
+	<desc>통신판매업신고번호</desc>
+	<exam></exam>
+</list>
+<list>
+	<code>{_cfg['ceoName']}</code>
+	<desc>대표자명</desc>
+	<exam></exam>
+</list>
+<list>
+	<code>{_cfg['adminName']}</code>
+	<desc>관리자명</desc>
+	<exam></exam>
+</list>
+<list>
+	<code>{_cfg['compPhone']}</code>
+	<desc>회사 전화번호</desc>
+	<exam>02-1234-5678</exam>
+</list>
+<list>
+	<code>{_cfg['compFax']}</code>
+	<desc>회사 팩스번호</desc>
+	<exam>02-8765-4321</exam>
+</list>
+<list>
+	<code>{_cfg['adminEmail']}</code>
+	<desc>관리자 Email</desc>
+	<exam>webmaster@xxx.co.kr</exam>
+</list>
+<list>
+	<code>{ @ dataBanner( 1, 1, 'Y' ) }</code>
+	<desc>배너코드1 위치의 배너를 1개만 랜덤으로 호출 (※ 위치는 1 ~ 60 제공)</desc>
+	<exam more="func/dataBanner.xml"></exam>
+</list>
+<list>
+	<code>{ @ dataBanner( 2 ) }</code>
+	<desc>배너코드2 위치의 배너를 호출</desc>
+	<exam more="func/dataBanner.xml"></exam>
+</list>
+</codes>

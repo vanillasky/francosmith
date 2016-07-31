@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="EUC-KR"?>
+<codes>
+<list>
+	<code>{_cfg['shopName']}</code>
+	<desc>쇼핑몰이름</desc>
+	<exam></exam>
+</list>
+<list>
+	<code>{_cfg['compName']}</code>
+	<desc>상점명</desc>
+	<exam></exam>
+</list>
+</codes>

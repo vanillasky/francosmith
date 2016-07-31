@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="EUC-KR"?>
+<codes>
+<list>
+	<code power="">{ @ dataPopup() }</code>
+	<desc>팝업창</desc>
+	<exam more="func/dataPopup.xml"></exam>
+</list>
+<list>
+	<code power="">{ @ dataBanner( 1, 1, 'Y' ) }</code>
+	<desc>배너코드1 위치의 배너를 1개만 랜덤으로 호출 (※ 위치는 1 ~ 60 제공)</desc>
+	<exam more="func/dataBanner.xml"></exam>
+</list>
+<list>
+	<code>{ @ dataBanner( 2 ) }</code>
+	<desc>배너코드2 위치의 배너를 호출</desc>
+	<exam more="func/dataBanner.xml"></exam>
+</list>
+<list>
+	<code>{ @ dataBanner( 60 ) }</code>
+	<desc>배너코드60 위치의 배너를 호출</desc>
+	<exam more="func/dataBanner.xml"></exam>
+</list>
+<list>
+	<code power="">{ @ dataBoardArticle( 'notice', 7 ) }</code>
+	<desc>아이디가 'notice' 인 게시판의 게시물을 7개 호출</desc>
+	<exam more="func/dataBoardArticle.xml"></exam>
+</list>
+<list>
+	<code>{ @ _cfg_step[0]}</code>
+	<desc>메인페이지 상품진열1 의 설정환경</desc>
+	<exam more="main/index.cfg_step.xml"></exam>
+</list>
+<list>
+	<code power="">{ = this->assign( 'loop', dataDisplayGoods( 0, _cfg_step[0].img, _cfg_step[0].page_num ) ) }</code>
+	<desc>메인페이지 상품진열1 > 상품 변수대입</desc>
+	<exam></exam>
+</list>
+<list>
+	<code power="">{ = this->assign( 'cols', _cfg_step[0].cols ) }</code>
+	<desc>메인페이지 상품진열1 > 라인당 상품수 변수대입</desc>
+	<exam></exam>
+</list>
+<list>
+	<code power="">{ = this->assign( 'size', _cfg[_cfg_step[0].img] ) }</code>
+	<desc>메인페이지 상품진열1 > 이미지 사이즈 변수대입</desc>
+	<exam></exam>
+</list>
+<list>
+	<code power="">{ = this->assign( 'id', "main_list_01" ) }</code>
+	<desc>메인페이지 상품진열1 > 고유 ID 변수대입</desc>
+	<exam></exam>
+</list>
+<list>
+	<code power="">{ = include_file( "goods/list/" + _cfg_step[0].tpl + ".htm" ) }</code>
+	<desc>메인페이지 상품진열1 > 디스플레이파일 인클루드</desc>
+	<exam></exam>
+</list>
+<list>
+	<code>{ @ _cfg_step[1]}</code>
+	<desc>메인페이지 상품진열2 의 설정환경</desc>
+	<exam more="main/index.cfg_step.xml"></exam>
+</list>
+<list>
+	<code power="">{ = this->assign( 'loop', dataDisplayGoods( 1, _cfg_step[1].img, _cfg_step[1].page_num ) ) }</code>
+	<desc>메인페이지 상품진열2 > 상품 변수대입</desc>
+	<exam></exam>
+</list>
+<list>
+	<code power="">{ = this->assign( 'cols', _cfg_step[1].cols ) }</code>
+	<desc>메인페이지 상품진열2 > 라인당 상품수 변수대입</desc>
+	<exam></exam>
+</list>
+<list>
+	<code power="">{ = this->assign( 'size', _cfg[_cfg_step[1].img] ) }</code>
+	<desc>메인페이지 상품진열2 > 이미지 사이즈 변수대입</desc>
+	<exam></exam>
+</list>
+<list>
+	<code power="">{ = this->assign( 'id', "main_list_02" ) }</code>
+	<desc>메인페이지 상품진열2 > 고유 ID 변수대입</desc>
+	<exam></exam>
+</list>
+<list>
+	<code power="">{ = include_file( "goods/list/" + _cfg_step[1].tpl + ".htm" ) }</code>
+	<desc>메인페이지 상품진열2 > 디스플레이파일 인클루드</desc>
+	<exam></exam>
+</list>
+<list>
+	<code>{ @ _cfg_step[2]}</code>
+	<desc>메인페이지 상품진열3 의 설정환경</desc>
+	<exam more="main/index.cfg_step.xml"></exam>
+</list>
+<list>
+	<code power="">{ = this->assign( 'loop', dataDisplayGoods( 2, _cfg_step[2].img, _cfg_step[2].page_num ) ) }</code>
+	<desc>메인페이지 상품진열3 > 상품 변수대입</desc>
+	<exam></exam>
+</list>
+<list>
+	<code power="">{ = this->assign( 'cols', _cfg_step[2].cols ) }</code>
+	<desc>메인페이지 상품진열3 > 라인당 상품수 변수대입</desc>
+	<exam></exam>
+</list>
+<list>
+	<code power="">{ = this->assign( 'size', _cfg[_cfg_step[2].img] ) }</code>
+	<desc>메인페이지 상품진열3 > 이미지 사이즈 변수대입</desc>
+	<exam></exam>
+</list>
+<list>
+	<code power="">{ = this->assign( 'id', "main_list_03" ) }</code>
+	<desc>메인페이지 상품진열3 > 고유 ID 변수대입</desc>
+	<exam></exam>
+</list>
+<list>
+	<code power="">{ = include_file( "goods/list/" + _cfg_step[2].tpl + ".htm" ) }</code>
+	<desc>메인페이지 상품진열3 > 디스플레이파일 인클루드</desc>
+	<exam></exam>
+</list>
+<list>
+	<code>{ @ _cfg_step[3]}</code>
+	<desc>메인페이지 상품진열4 의 설정환경</desc>
+	<exam more="main/index.cfg_step.xml"></exam>
+</list>
+<list>
+	<code power="">{ = this->assign( 'loop', dataDisplayGoods( 3, _cfg_step[3].img, _cfg_step[3].page_num ) ) }</code>
+	<desc>메인페이지 상품진열4 > 상품 변수대입</desc>
+	<exam></exam>
+</list>
+<list>
+	<code power="">{ = this->assign( 'cols', _cfg_step[3].cols ) }</code>
+	<desc>메인페이지 상품진열4 > 라인당 상품수 변수대입</desc>
+	<exam></exam>
+</list>
+<list>
+	<code power="">{ = this->assign( 'size', _cfg[_cfg_step[3].img] ) }</code>
+	<desc>메인페이지 상품진열4 > 이미지 사이즈 변수대입</desc>
+	<exam></exam>
+</list>
+<list>
+	<code power="">{ = this->assign( 'id', "main_list_04" ) }</code>
+	<desc>메인페이지 상품진열4 > 고유 ID 변수대입</desc>
+	<exam></exam>
+</list>
+<list>
+	<code power="">{ = include_file( "goods/list/" + _cfg_step[3].tpl + ".htm" ) }</code>
+	<desc>메인페이지 상품진열4 > 디스플레이파일 인클루드</desc>
+	<exam></exam>
+</list>
+<list>
+	<code>{ @ _cfg_step[4]}</code>
+	<desc>메인페이지 상품진열5 의 설정환경</desc>
+	<exam more="main/index.cfg_step.xml"></exam>
+</list>
+<list>
+	<code power="">{ = this->assign( 'loop', dataDisplayGoods( 4, _cfg_step[4].img, _cfg_step[4].page_num ) ) }</code>
+	<desc>메인페이지 상품진열5 > 상품 변수대입</desc>
+	<exam></exam>
+</list>
+<list>
+	<code power="">{ = this->assign( 'cols', _cfg_step[4].cols ) }</code>
+	<desc>메인페이지 상품진열5 > 라인당 상품수 변수대입</desc>
+	<exam></exam>
+</list>
+<list>
+	<code power="">{ = this->assign( 'size', _cfg[_cfg_step[4].img] ) }</code>
+	<desc>메인페이지 상품진열5 > 이미지 사이즈 변수대입</desc>
+	<exam></exam>
+</list>
+<list>
+	<code power="">{ = this->assign( 'id', "main_list_05" ) }</code>
+	<desc>메인페이지 상품진열5 > 고유 ID 변수대입</desc>
+	<exam></exam>
+</list>
+<list>
+	<code power="">{ = include_file( "goods/list/" + _cfg_step[4].tpl + ".htm" ) }</code>
+	<desc>메인페이지 상품진열5 > 디스플레이파일 인클루드</desc>
+	<exam></exam>
+</list>
+<list>
+	<code>{ # header }</code>
+	<desc>상단과 측면을 크게 감싸는 외곽파일 인클루드, 소스 맨위에 삽입</desc>
+	<exam></exam>
+</list>
+<list>
+	<code>{ # footer }</code>
+	<desc>하단을 크게 감싸는 외곽파일 인클루드, 소스 맨아래에 삽입</desc>
+	<exam></exam>
+</list>
+</codes>

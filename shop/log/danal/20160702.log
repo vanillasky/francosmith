@@ -1,0 +1,6 @@
+[2016-07-02 12:04:59] Paygate open start
+File : /www/francotr3287_godo_co_kr/shop/order/card/danal/card_gate.php
+Transaction ID : 1467428274686
+Send data : Command=ITEMSEND2&SERVICE=TELEDIT&ItemType=Amount&ItemCount=1&OUTPUTOPTION=DEFAULT&ID=9010S23312&PWD=1FLOF1im&ItemInfo=2%7C28500%7C1%7C22S0rQ0001%7C%5B%C3%B5%BA%F1%5D+%C1%B6%B0%A2%B5%B5+%BC%BC%C6%AE+7pcs&SUBCP=SGD0004644&USERID=cjh700904%40naver.com&ORDERID=1467428274686&IsPreOtbill=N&IsSubscript=N
+[2016-07-02 12:06:09] 결제 정보 저장 시작
+[2016-07-02 12:06:09] 결제성공

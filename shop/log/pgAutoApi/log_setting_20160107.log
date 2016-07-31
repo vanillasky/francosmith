@@ -1,0 +1,30 @@
+START----------------------------------------------------------------------
+[로그정보]
+처리페이지 : /shop/_godoConn/link.paycoAutoSetting.php
+정보 : [2016-01-07 18:05:00]	IP	: 211.233.50.18
+
+[중앙서버 Request데이터]
+setting = {\"basic_sno\":\"299153\",\"pg_name\":\"payco\",\"one-stopYn\":\"N\",\"pg_id\":\"GN_SDQZ1B\",\"pg_step\":\"A20\",\"pg_keycodeA\":null,\"pg_keycodeB\":null,\"pg_keycodeC\":null,\"pg_cardYn\":\"Y\",\"pg_transYn\":\"Y\",\"pg_virtualYn\":\"Y\",\"pg_phoneYn\":\"N\",\"mobile_id\":\"GN_SDQZ1B\",\"mobile_step\":\"A20\",\"mobile_keycodeA\":null,\"mobile_keycodeB\":null,\"mobile_keycodeC\":null,\"mobile_cardYn\":\"Y\",\"mobile_transYn\":\"Y\",\"mobile_virtualYn\":\"Y\",\"mobile_phoneYn\":\"N\",\"escro_id\":\"GN_SDQZ1B\",\"escro_step\":\"A20\",\"escro_keycodeA\":null,\"escro_keycodeB\":null,\"escro_keycodeC\":null,\"escro_cardYn\":\"N\",\"escro_transYn\":\"Y\",\"escro_virtualYn\":\"Y\",\"escro_phoneYn\":\"N\"}
+other = []
+
+[conf파일 백업]
+payco.cfg.php = 설정파일 없음.
+
+[payco 중계서버 통신 - 인증키체크 request]
+crypt_key = 1fb510797a
+paycoSellerKey = GN_SDQZ1B
+paycoCpId = GN_SDQZ1B
+testYn = Y
+
+[payco 중계서버 통신 - 인증키체크 response]
+code = 000
+msg = 성공
+
+[처리결과]
+error_code = 
+result = 0000
+error_msg = 설정이 저장되었습니다.
+basic_sno = 299153
+
+END----------------------------------------------------------------------
+

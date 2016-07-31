@@ -1,0 +1,262 @@
+{*** 투데이스킨 푸터 | main/index.php ***}
+
+
+<script type="text/javascript">
+// 정기구독 폼 열고 닫기
+function fnToggleTodayshopSubscribe() {
+
+	var el = event.srcElement;
+
+	var box = document.getElementById('todayshopSubscribe');
+
+	if (box != undefined) {
+
+		if (box.style.display != 'block') {
+
+			var el = event.srcElement;
+
+			var pos = offset(el);
+
+			box.style.position = "absolute";
+			box.style.top = 10 + pos.top + el.offsetHeight + "px";
+			box.style.left = parseInt(pos.left + el.offsetWidth / 2 - parseInt(box.style.width.replace('px','')) / 2) + "px";
+
+			box.style.display = 'block';
+		}
+		else {
+			box.style.display = 'none';
+		}
+
+		return false;
+	}
+}
+
+function fnCheckSubscribe(f) {
+
+	if (f.subscribe_agree.checked == false)
+	{
+		alert('이메일/핸드폰 수집에 동의하셔야 합니다.');
+		return false;
+	}
+
+	var v = 0;
+
+	for (var i=0;i<f.elements.length ;i++ ) {
+		var el = f.elements[i];
+		if (el.getAttribute('type') == 'text' && el.value != '') return true;
+	}
+
+	alert('이메일/핸드폰 번호를 입력해 주세요.');
+	return false;
+}
+</script>
+
+<!-- s:footer-->
+<table  cellpadding='0' cellspacing='0' border='0' width='100%'>
+<tr><td>
+<table border='0' cellpadding='0' width="{_cfg['shopSize']}" align="{_cfg['shopAlign']}" cellspacing='0' >
+<tr>
+	<td style="background:#e7e7e7;border-top:1px solid #cfcfcf;" align="center">
+		<a href='../service/company.php'>회사소개</a>
+		<img src='../../img/footer_m_part.gif' border="0" align="absmiddle">
+		<a href='../service/private.php'>개인정보취급방침</a>
+		<img src='../../img/footer_m_part.gif' border="0" align="absmiddle">
+		<a href='../service/agreement.php'>이용약관</a>
+		<img src='../../img/footer_m_part.gif' border="0" align="absmiddle">
+		<a href='../service/customer.php'>고객센터</a>
+		<img src='../../img/footer_m_part.gif' border="0" align="absmiddle">
+		<a href='../service/cooperation.php'>제휴안내</a>
+		<img src='../../img/footer_m_part.gif' border="0" align="absmiddle">
+		<a href='../member/find_id.php'>아이디/비밀번호찾기</a>
+		<img src='../../img/footer_m_part.gif' border="0" align="absmiddle">
+		<a href='../service/guide.php'>이용안내</a>
+		<img src='../../img/footer_m_part.gif' border="0" align="absmiddle">
+		<a href='../service/sitemap.php'>사이트맵</a>
+	</td>
+</tr>
+<tr>
+	<td>
+	<table width="100%" border="0" cellpadding="0" cellspacing="0" style="height:128px;">
+	<tr>
+		<td style="background:url(../../img/foot_bg_l.gif) top left no-repeat;width:30px"></td>
+		<td style="background:url(../../img/foot_bg.gif) top left repeat-x;">
+		<table border="0" cellpadding="0" cellspacing="0" width='100%'>
+		<tr>
+			<td style="padding-left:30px; padding-right:7px;width:1px;"><a href="/"><img src="../../img/footer_logo.gif" /></a></td>
+			<td style="padding-left:5px;">
+
+				<div style="font:8pt 돋움; color:#676767; text-align:left;line-height:150%;">
+				주소 : {_cfg['address']} <font color=#CECECE>|</font> 사업자등록번호 : {_cfg['compSerial']} <a href="http://www.ftc.go.kr/info/bizinfo/communicationList.jsp" target="_blank"><img src="../../img/common/btn_c_view.gif" align="absmiddle"></a> <font color=#CECECE>|</font> 통신판매업신고번호 : {_cfg['orderSerial']} <br>
+				개인정보관리자 : {_cfg['adminName']} <font color=#CECECE>|</font> 대표 : {_cfg['ceoName']} <font color=#CECECE>|</font> 상호명 : {_cfg['compName']}<br>
+				전화번호 : {_cfg['compPhone']} <font color=#CECECE>|</font> 팩스번호 : {_cfg['compFax']} <font color=#CECECE>|</font> 메일 : <a href="javascript:popup('../proc/popup_email.php?to={_cfg['adminEmail']}&hidden=1',650,600)">{_cfg['adminEmail']}</a><br>
+				Copyright ⓒ <b>{_cfg['shopUrl']}</b> All right reserved
+				</div>
+			</td>
+			<!------------------ 구매안전서비스 표시 시작 ------------------->
+			<td>{=displayEggBanner()}</td>
+			<!------------------ 구매안전서비스 표시 끝 ------------------->
+		</tr>
+		</table>
+		</td>
+		<td style="background:url(../../img/foot_bg_r.gif) top left no-repeat;width:30px"></td>
+	</tr>
+	</table>
+	</td>
+</tr>
+</table>
+
+
+
+
+
+
+<!-- 정기구독 폼 -->
+	<div id="todayshopSubscribe" style="z-index:1000;position:absolute;border:5px solid #3F3F3F;background:#FFFFFF;width:350px;height:270px;display:none;text-align:left;">
+	<form name="frmSubscribe" method="post" action="indb.subscribe.php" target="ifrmHidden" onsubmit="return fnCheckSubscribe(this);">
+
+		<table cellpadding="0" cellspacing="0" border="0">
+		<tr>
+			<td><img src="../../img/img_today_email_pop_01.gif"></td>
+			<td><a href="javascript:void(0)" onClick="fnToggleTodayshopSubscribe();"><img src="../../img/img_today_email_pop_02.gif"></a></td>
+		</tr>
+		<tr>
+			<td colspan="2"><img src="../../img/img_today_email_pop_03.gif"></td>
+		</tr>
+		<tr>
+			<td colspan="2" style="text-align:center;">
+
+			<table width="320" style="background:#F5F5F5;width:320px;">
+			<!--{ ? _interest.use == 'y'}-->
+
+				<!--{ ? _interest.subscribe == 1 }-->
+				<tr height="30">
+					<td align="right"><img src="../../img/img_today_email_pop_08.gif" align="absmiddle"></td>
+					<td>
+					<select name="interest_category">
+					<option value=""> - 분류를 선택해 주세요 - </option>
+					<!--{@ ts_category_all}-->
+					<option value="{.category}">{.catnm}</option>
+					<!--{/}-->
+					</select>
+					</td>
+				</tr>
+				<!--{ / }-->
+
+			<!--{ / }-->
+
+			<!--{ ? _subscribe.email == '1'}-->
+			<tr height="30">
+				<td><input type="checkbox" name="ts_subscribe_email" value="1"/><img src="../../img/img_today_email_pop_04.gif" align="absmiddle"></td>
+				<td><input type="text" name="ts_subscribe_email_val" value="" style="border:1px solid #999999;height:20px;width:225px;" /></td>
+			</tr>
+			<!--{ / }-->
+
+			<!--{ ? _subscribe.sms == '1'}-->
+			<tr height="30">
+				<td><input type="checkbox" name="ts_subscribe_sms" value="1"/><img src="../../img/img_today_email_pop_05.gif" align="absmiddle"></td>
+				<td><input type="text" name="ts_subscribe_sms_val" value="" style="border:1px solid #999999;height:20px;width:225px;" /></td>
+			</tr>
+			<!--{ / }-->
+			</table>
+
+			<p class="agree">
+				<label><input type="checkbox" name="subscribe_agree" value="1"> 구독 신청 하는 이메일/핸드폰 정보를 수집하는데 동의 합니다.</label>
+				수집되는 이메일/ 핸드폰 정보는 상품정보 발송시 사용됩니다.
+			</p>
+
+			<div style="margin: 10px 0 15px 0;">
+			<input type="image" src="../../img/img_today_email_pop_06.gif" />
+			</div>
+
+			</td>
+		</tr>
+		</table>
+	</form>
+	</div>
+	<!-- 정기구독 폼 -->
+
+
+
+
+
+<!-- 관심 분류 -->
+	<!--{? _GET.interest == 1}-->
+	<div id="el-interest-form" style="border:5px solid #3F3F3F;background:#ffffff;display:none;">
+		<form name="frmInterest" method="post" action="indb.interest.php" onSubmit="return fnCheckFrmInterest(this);" >
+		<table border="0" cellpadding="0" cellspacing="0" width="100%">
+		<tr>
+			<td><img src="../../img/today_enjoy_top.gif"></td>
+			<td><a href="javascript:gdUI_block.hide();"><img src="../../img/today_enjoy_colse.gif"></a></td>
+		</tr>
+		</table>
+
+		<img src="../../img/today_enjoy_img01.gif">
+
+		<div style="border:1px solid #DBDBDB;width:295px;margin-left:18px;">
+		<div style="background:#ffffff;padding:2px;">
+		<div style="background:#F6F6F6;padding:8px;text-align:center;">
+
+			<select name="interest_category">
+			<option value=""> - 관심 분류를 선택해 주세요 - </option>
+			<!--{@ts_category_all}-->
+			<option value="{.category}">{.catnm}</option>
+			<!--{/}-->
+			</select>
+		</div>
+		</div>
+		</div>
+
+		<div style="font-size:11px;margin-top:5px;letter-spacing:-1px;margin-left:18px;">
+		* 선택한 관심분류는 <span style="color:#D40011;font-weight:bold;">마이페이지에서 수정</span>하실 수 있습니다.
+		</div>
+
+		<div style="margin-top:10px;text-align:center;"><input type="image" src="../../img/today_enjoy_btn.gif"></div>
+
+		<table border="0" cellpadding="0" cellspacing="0" width="100%" style="margin-top:10px;">
+		<tr>
+			<td><img src="../../img/today_enjoy_foot.gif"></td>
+			<td><a href="javascript:gdUI_block.hide();"><img src="../../img/today_enjoy_foot01.gif"></a></td>
+		</tr>
+		</table>
+		</form>
+	</div>
+	<!--{/}-->
+
+
+
+
+
+<!-- 투데이샵 우측 날개 -->
+
+	<div id="el-todayshop-wing" style="display:none;position:absolute;z-index;10000;background:#ffffff;width:80px;">
+		<!-- 정기구독 -->
+		<!--{ ? _subscribe.use == 'y'}-->
+		<a href="javascript:void(0)" onClick="fnToggleTodayshopSubscribe();"><img src="../../img/btn_viewapply.gif"></a>
+
+		<!-- 4px --><div class="margin" style="height:4px;"></div>
+
+		<!--{ / }-->
+		<!-- 정기구독 -->
+
+		<iframe src="../todayshop/today_thumb.php?tgsno={=tgsno}" frameborder="0" scrolling="n" style="width:78px;height:410px;border:1px solid #c5c5c5"></iframe>
+
+		<!-- 4px --><div class="margin" style="height:4px;"></div>
+
+		<!--{ @ dataBanner( 17 ) }-->{.tag}<!--{ / }-->
+	</div>
+
+<script>
+function fnTodayshopWingPositioning() {
+	var wing = document.getElementById('el-todayshop-wing');
+	var anchor = document.getElementById('el-anchor-side-banner');
+
+	if (wing && anchor) {
+		wing.style.display = 'block';
+		wing.style.marginLeft = {_cfg['shopSize']} + 15 + 'px';
+		wing.style.marginTop = '4px';
+		anchor.appendChild( wing );
+	}
+}
+
+fnTodayshopWingPositioning();
+</script>

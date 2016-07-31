@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="EUC-KR"?>
+<codes>
+<list>
+	<code power="">{@ loop}</code>
+	<desc>상품</desc>
+	<exam more="goods/list/tpl.loop.xml"></exam>
+</list>
+</codes>

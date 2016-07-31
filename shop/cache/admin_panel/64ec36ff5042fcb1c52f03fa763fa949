@@ -1,0 +1,25 @@
+<div style="position:absolute; width:320px; height:381px; top:15%;right:60%;;z-index:999; margin:0; padding:0;" id="dBanner1">
+		<div><img src="http://gongji.godo.co.kr/userinterface/img/s4/design_popup_5.jpg" border="0" useMap="#mMap"></div>
+		<map name="mMap">
+		 <area shape="rect" coords="101,286,221,322" href="http://design.godo.co.kr/goods/goods-list.php?dsGoodsCateNo=0&dsLargeCateNo=&layerControl=&type=pcskin&keyword=%B8%F0%B7%BB%BA%F1%BE%F6%B8%B6%BD%C3%B8%AE%C1%EE&dsGoodsOptPriceStart=0&dsGoodsOptPriceEnd=1000000&verCode=&dsGoodsCodeClrNo=&dsGoodsCodeStyleNo=&dateTerm=all&dateRangeStart=&dateRangeEnd=&x=0&y=0" target="_blank" alt="자세히보기"/>
+		 <area shape="rect" coords="128,353,262,377" href="#" onclick="javascript:var todayDate=new Date();todayDate.setDate(todayDate.getDate()+7);document.cookie = 'maxtab_design=true;expires='+todayDate.toGMTString()+';path=/';_ID('dBanner1').style.display='none';"alt="일주일동안 열지않기"/>
+		 <area shape="rect" coords="266,353,318,377" href="#" onclick="javascript:_ID('dBanner1').style.display='none';" alt="닫기"/>
+		</map>	
+	</div>
+<!--div style="position:absolute; left:1030px; top:200px; z-index:999;" id="dBanner1">
+	
+	<div><img src="http://godo.co.kr/common/img_201110/pop02.png"  border="0" useMap="#dMap"></div>
+	<map name="dMap">
+	 <area shape="rect" coords="130,166,212,189" href="../design/codi.php?ifrmCodiHref=iframe.webfont.intro.php" target="_self" alt="자세히보기"/>
+	 <area shape="rect" coords="109,202,194,213" href="#" onclick="javascript:var todayDate=new Date();todayDate.setDate(todayDate.getDate()+1);document.cookie = 'maxtab_design=true;expires='+todayDate.toGMTString()+';path=/';_ID('dBanner1').style.display='none';" alt="오늘하루 열지않기"/>
+	 <area shape="rect" coords="204,202,236,213" href="#" onclick="javascript:_ID('dBanner1').style.display='none';" alt="닫기"/>
+	</map>
+	</div>
+<div style="position:absolute; left:1030px; top:450px; z-index:999;" id="dBanner2">
+	<div><img src="http://godo.co.kr/common/img_201112/etc/pop03.png"  border="0" useMap="#mMap"></div>
+	<map name="mMap">
+	 <area shape="rect" coords="130,166,212,189" href="http://design.godo.co.kr/shop/goods/goods_list.php?category=004002" target="_blank" alt="자세히보기"/>
+	 <area shape="rect" coords="109,202,194,213" href="#" onclick="javascript:var todayDate=new Date();todayDate.setDate(todayDate.getDate()+1);document.cookie = 'maxtab_design=true;expires='+todayDate.toGMTString()+';path=/';_ID('dBanner2').style.display='none';" alt="오늘하루 열지않기"/>
+	 <area shape="rect" coords="204,202,236,213" href="#" onclick="javascript:_ID('dBanner2').style.display='none';" alt="닫기"/>
+	</map>	
+</div-->

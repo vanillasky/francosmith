@@ -1,0 +1,55 @@
+{*** 하단레이아웃 | main/index.php ***}
+
+</tr>
+</table>
+
+<!--{ ? this->tpl_['footer_inc'] }-->
+<table width="99%" cellpadding=0 cellspacing=0 border=0>
+<tr>
+<td>{ # footer_inc // 하단디자인 }</td>
+</tr>
+<!--{ / }-->
+</table>
+
+<!-- 절대! 지우지마세요 : Start -->
+<iframe name="ifrmHidden" src='{_cfg.rootDir}/blank.php' style="display:none;width:100%;height:600"></iframe>
+<!-- 절대! 지우지마세요 : End -->
+
+<script>
+if (typeof nsGodo_cartTab == 'object' && '{_cfg.cartTabUse}' == 'y' && '{todayshop_cfg['shopMode']}' != 'todayshop') {
+	nsGodo_cartTab.init({
+		logged: { ? !_sess }false{:}true{/},
+		skin  : '{_cfg.tplSkin}',
+		tpl  : '{_cfg.cartTabTpl}',
+		dir	: 'horizon',	// horizon or vertical
+		width:'{_cfg.shopSize}'
+	});
+}
+{? _cfg.preventContentsCopy == '1' }
+addOnloadEvent(function(){ preventContentsCopy() });
+{ / }
+</script>
+
+<script type="text/javascript">
+	
+	var $j = jQuery.noConflict();	
+
+
+;(function(d){d.fn.DB_brandList=function(c){d.extend({},c);return this.each(function(){var g=d(this),e=g.find(".DB_btn li"),c=e.length,f=g.find(".DB_list").find("li"),h=f.length;(function(){for(var a=0;a<c;a++){var b=e.eq(a);b.data("data-key",b.find("a").text())}for(a=0;a<h;a++)b=f.eq(a),b.data("data-key",b.find("a").attr("data-key"))})();(function(){e.bind("click",function(){e.find("a").removeClass("DB_select");d(this).find("a").addClass("DB_select");var a=d(this).data("data-key");if("all"==a)f.show();
+else for(var b=0;b<h;b++){var c=f.eq(b);a==c.data("data-key")?c.show():c.hide()}})})()})}})(jQuery);
+
+	$j(function() {
+    	$j('#DB_etc4').DB_brandList({
+
+		})	
+
+	});
+
+	
+</script>
+
+
+
+
+</body>
+</html>

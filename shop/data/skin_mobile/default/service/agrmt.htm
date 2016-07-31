@@ -1,0 +1,24 @@
+{*** 이용약관 | service/agrmt.php ***}
+{ # header }
+
+<script type="text/javascript">
+$(document).ready(function(){
+	$("#agreement > article").html($("#agreement > article").html().replace(/\n/gi, "<br/>"));
+});
+</script>
+<style type="text/css">
+#agreement{
+	padding: 15px;
+}
+#agreement h2{
+	margin-bottom: 15px;
+	font-size: 15px;
+}
+</style>
+
+<section id="agreement">
+	<h2>이용약관</h2>
+	<article>{=include_file("proc/_agreement.txt")}</article>
+</section>
+
+{ # footer }

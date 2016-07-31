@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="EUC-KR"?>
+<codes>
+<list>
+	<code power="">{.key_}</code>
+	<desc>옵션1 속성명 (=반복 키)</desc>
+	<exam>화이트</exam>
+</list>
+<list>
+	<code power="">{@ .value_}</code>
+	<desc>옵션1 속성과 연결되는 옵션2 속성들 (=반복 값)</desc>
+	<exam more="goods/goods_view.opt.value_.xml"></exam>
+</list>
+<list>
+	<code>{.index_}</code>
+	<desc>반복 인덱스 (0부터 시작, 반복할 때 1씩 증가)</desc>
+	<exam>0</exam>
+</list>
+<list>
+	<code>{.size_}</code>
+	<desc>반복 전체회수</desc>
+	<exam>20</exam>
+</list>
+</codes>

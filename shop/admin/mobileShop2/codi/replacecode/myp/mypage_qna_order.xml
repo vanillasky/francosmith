@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="EUC-KR"?>
+<codes>
+<list>
+	<code power="">{@ _loop}</code>
+	<desc>주문목록</desc>
+	<exam more="mypage/mypage_qna_order._loop.xml"></exam>
+</list>
+<list>
+	<code>{pg->page['navi']}</code>
+	<desc>페이징 > 네비게이션</desc>
+	<exam>1 [2]</exam>
+</list>
+</codes>

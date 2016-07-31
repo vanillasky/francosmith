@@ -1,0 +1,29 @@
+{#header}
+
+<?php {page_title} = "적립금내역";?>
+{#sub_header}
+
+<section id="emoneylist">
+	<table>
+	<tr>
+		<th class="left">내역</th>
+		<th>적립금액</th>
+		<th>사용금액</th>
+	</tr>
+	<!--{ @ loop }-->
+	<tr { ? .emoney < 0 }class="minus"{/}>
+		<td class="el_info">
+			<div class="el_date"">{.regdts}</div>
+			<div class="el_memo">{.memo}</div>
+		</td>
+		<td class="el_emoney_reserve center">{ ? .emoney > 0 }{=number_format(.emoney)}원{ / }</td>
+		<td class="el_emoney_use center">{ ? .emoney < 0 }{=number_format(.emoney)}원{ / }</td>
+	</tr>
+	<!--{ / }-->
+	</table>
+
+	<div class="pagediv">{pg->page['navi']}</div>
+
+</section>
+
+{#footer}

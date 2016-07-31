@@ -1,0 +1,111 @@
+{*** 상품보관함 | mypage/mypage_wishlist.php ***}
+{ # header }
+
+<!-- 상단이미지 || 현재위치 -->
+<div class="page_title_div">
+	<div class="page_title">Wish List</div>
+	<div class="page_path"><a href="/shop/">HOME</a> &gt; <a href="/shop/mypage/mypage.php">마이페이지</a> &gt; <span class='bold'>상품보관함</span></div>
+</div>
+<div class="page_title_line"></div>
+
+<div style="width:100%; padding-top:20px;"></div>
+<script>
+function act(mode, msg)
+{
+	var fm = document.frmWish;
+	if(!isChked('sno[]', msg)) return;
+	
+	fm.mode.value = mode;
+	fm.submit();
+}
+
+function isChked(El,msg)
+{
+	var result  = false;
+	if (!El) return;
+	if (typeof(El)!="object") El = document.getElementsByName(El);
+	
+	for (i=0;i<El.length;i++) {
+		if (El[i].checked) {
+			result = true;
+			break;
+		}
+	}
+	
+	if(!result) {
+		alert ("선택된 사항이 없습니다");
+		return false;
+	}
+	
+	alert(msg);
+	return false;
+}
+
+</script>
+	
+<div class="indiv"><!-- Start indiv -->
+	
+	<form name=frmWish method=post onsubmit="return false;">
+	<input type=hidden name=mode>
+	
+	<table class="mypage-board-table">
+	<colgroup>
+		<col width=50 align=center>
+		<col width=60 align=center>
+		<col align="left">
+		<col width=60 align=center>
+		<col width=80 align=right style="padding-right:10">
+		<col width=100 align=center>
+	</colgroup>
+	<tr class="mypage-board-title">
+		<th><input type="checkbox" onclick="chkBox('sno[]','rev')"></th>
+		<th colspan=2>제품명</th>
+		<th>적립금</th>
+		<th>판매가</th>
+		<th>보관날짜</th>
+	</tr>
+		
+	<!--{ @ loop }-->
+	
+	<tr style="border-bottom:1px solid #ededed">
+		<td align="center">
+			<input type=hidden name=goodsno[{.sno}] value="{.goodsno}">
+			<input type=hidden name=opt[{.sno}][] value="{=implode('|',.opt)}">
+			<!--{ @ .r_addopt }--><input type=hidden name=addopt[{.sno}][] value="{..value_}"><!--{ / }-->
+			<!--{ @ .r_addopt_inputable }--><input type=hidden name=addopt_inputable[{.sno}][] value="{..value_}"><!--{ / }-->
+	
+			<input type=checkbox name=sno[] value="{.sno}">
+		</td>
+		<td height=60>
+			<a href="../goods/goods_view.php?goodsno={.goodsno}">{=goodsimg(.img_s,40)}</a>
+		</td>
+		<td align="left">
+			<div><a href="../goods/goods_view.php?goodsno={.goodsno}">{.goodsnm}</a> <!--{ ? .opt }-->[{=implode("/",.opt)}]<!--{ / }--></div>
+			<!--{ ? .addopt}-->
+			<div>추가옵션 : <!--{ @ .addopt }-->[{..optnm}:{..opt}]<!--{ / }--></div>
+			<!--{ / }-->
+			<!--{ ? .addopt_inputable}-->
+			<div>입력옵션 : <!--{ @ .addopt_inputable }-->[{..optnm}:{..opt}]<!--{ / }--></div>
+			<!--{ / }-->
+		</td>
+		<td>{=number_format(.reserve)}원</td>
+		<td>{=number_format(.price + .addprice)}원</td>
+		<td>{=substr(.regdt,0,10)}</td>
+	</tr>
+	
+	<!--{ / }-->
+	</table>
+	
+	<div class="pagediv">{pg->page['navi']}</div>
+	
+	<div class="std-div" style="text-align:center">
+		<button class="button-big button-dark" onclick="act('delItem', '정말 삭제하시겠습니까?')">선택삭제</button>
+		<button class="button-big button-dark" onclick="act('cart')">장바구니담기</button>
+	</div>
+	</form>
+	
+	<p></p>
+
+</div><!-- End indiv -->
+
+{ # footer }

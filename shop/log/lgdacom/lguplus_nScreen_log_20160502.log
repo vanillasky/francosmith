@@ -1,0 +1,16 @@
+INFO	[2016-05-02 21:43:34]	START lguplus_nScreen PG DATA log
+INFO	[2016-05-02 21:43:34]	Connect IP	: 183.97.149.234
+INFO	[2016-05-02 21:43:34]	Referer URL : http://xpay.lgdacom.net/xpay/SC0010OnepayConfirm.do?org.apache.struts.taglib.html.CANCEL=cancel
+INFO	[2016-05-02 21:43:34]	Request URL	: /shop/order/card/lgdacom/mobile/nscreen_card_return.php?page_type=
+INFO	[2016-05-02 21:43:34]	User Agent	: Mozilla/5.0 (Linux; Android 5.1.1; SAMSUNG SM-N910K/KTU2COL1 Build/LMY47X) AppleWebKit/537.36 (KHTML, like Gecko) SamsungBrowser/2.1 Chrome/34.0.1847.76 Mobile Safari/537.36
+DEBUG	[2016-05-02 21:43:34]	LGD_HASHDATA : 4ef7d48d2089c5a19c3c36c7a2d23a3c
+DEBUG	[2016-05-02 21:43:34]	LGD_MID : go_francosmith
+DEBUG	[2016-05-02 21:43:34]	LGD_AMOUNT : 32500
+DEBUG	[2016-05-02 21:43:34]	LGD_RESPCODE : S053
+DEBUG	[2016-05-02 21:43:34]	LGD_TIMESTAMP : 20160502214334
+DEBUG	[2016-05-02 21:43:34]	LGD_RESPMSG : 사용자가 결제를 취소하였습니다
+DEBUG	[2016-05-02 21:43:34]	LGD_OID : 1462192937904
+DEBUG	[2016-05-02 21:43:34]	LGD_RETURNURL : http://francosmith.com/shop/order/card/lgdacom/mobile/nscreen_card_return.php?page_type=
+INFO	[2016-05-02 21:43:34]	END lguplus_nScreen PG DATA log
+------------------------------------------------------------------------------
+

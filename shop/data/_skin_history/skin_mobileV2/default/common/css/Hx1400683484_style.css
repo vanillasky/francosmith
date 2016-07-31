@@ -1,0 +1,976 @@
+/* 기본설정 */
+
+@charset "euc-kr";
+
+/* Reset */
+html, body, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form, fieldset, legend, p, blockquote, th, td {margin:0px; padding:0px;}
+
+html { overflow-x:hidden; overflow-y:hidden; font-family:Lucida Sans, Arial, Helvetica, sans-serif, verdana,dotum,돋움,gulim,굴림; font-family:dotum,돋움,verdana,gulim,굴림9; font-size:12px; color:#454545; _padding-right:16px; }
+html, body{ width:100%; height:100%; margin:0; padding:0; }
+
+body,ul,li,header,nav,aside,section,article,p {	padding:0; margin:0; border:0; }
+body {	font-size:12px;	-webkit-user-select:none; -webkit-text-size-adjust:none; }
+p {	margin-bottom:1.5em; line-height:150%; }
+table, tbody, td, th, div, span, a, input, textarea, select, iframe, ul, li { margin:0; padding:0; }
+table, tbody { border-collapse:collapse; border-spacing:0; margin:0; padding:0; color:#2C2C2C; }
+header,nav,aside,section,article { display:block; }
+a {text-decoration:none;color:#2C2C2C;}
+input[type=text], input[type=search], input[type=tel], input[type=file], input[type=password], input[type=radio], input[type=email], input[type=number], textarea{ font-family:verdana,dotum,돋움,gulim,굴림; font-family:dotum,돋움,verdana,gulim,굴림9; font-size:14px; padding:3px 4px 0px 3px; border:solid 1px #CFCFCF; vertical-align:middle; }
+
+input[type=text]:focus, input[type=file]:focus, input[type=password]:focus, select:focus, textarea:focus { border:solid 1px #2897FF; }
+input[type=checkbox]{ border:solid 1px #bbbbbb; -webkit-appearance:checkbox; -moz-apperance:checkhbox; -webkit-width:20px; -webkit-height:20px; -moz-width:20px; -moz-height:20px; width:20px; height:20px;}
+input[type=radio] { border:none;-webkit-appearance:radio}
+body {-webkit-tap-highlight:  rgba(0, 0, 0, 0); background-color:#eeeeee; min-height:100%;}
+img {max-width:100%;}
+
+.hidden {display:none;}
+.back_bg {background:url("../img/search/search_bg.png") left top repeat-x; background-size:1px 100%; height:100%;}
+
+/* 메인페이지 배너 */
+#wrap .main_banner {margin-top:10px; text-align:center; line-height: 50px;}
+#wrap .main_banner img { max-width:300px; max-height:50px; vertical-align: middle;}
+
+#ifrmHidden {display:none;}
+
+/* 페이지 타이틀 */
+#page_title .top_title {clear:both; height:40px;background:url('../img/myp/name_bg.png') repeat-x; line-height:40px; padding-left:10px; color:#FFFFFF; font-size:16px; font-weight:bold; text-shadow: 0px 1px 1px #333333;text-align:center; font-family:dotum;}
+.sky_hilight {color:#88EEFF;}
+
+/* gnb 영역 */
+.gnb {height:44px; background:url("../img/gnb/top_bg.png") left top repeat-x; background-size:1px 44px; }
+.gnb #home-btn{float:left;background:transparent url("../img/gnb/btn_home_shape.png") left top no-repeat; background-size:33px 33px; height:33px; width:33px; margin-top:5px; margin-left:11px; -webkit-tap-highlight-color: rgba(0,0,0,0.0);}
+.gnb #home-btn:active{float:left;background:transparent url("../img/gnb/btn_home_effect.png") left top no-repeat; background-size:33px 33px; height:33px; width:33px;}
+.gnb #home-btn .active{float:left;background:transparent url("../img/gnb/btn_home_effect.png") left top no-repeat; background-size:33px 33px; height:33px; width:33px;}
+.gnb #logo {float:left; margin-top:5px; margin-left:11px; width:70%; max-height:35;}
+.gnb #logo .top_title{height:35px; line-height:35px; color:#EEEEEE; font-size:18px; font-weight:bold; text-shadow: 0px 1px 1px #333333; margin-top:2px; font-family:dotum;float:left;}
+.gnb #logo .top_title a{color:#EEEEEE;}
+
+.gnb #search-btn{float:right;background:transparent url("../img/gnb/btn_search_shape.png") left top no-repeat; background-size:33px 33px; height:33px; width:33px; margin-right:2px; margin-top:5px; -webkit-tap-highlight-color: rgba(0,0,0,0.0);}
+.gnb #search-btn:active{float:right;background:transparent url("../img/gnb/btn_search_effect.png") left top no-repeat; background-size:33px 33px; height:33px; width:33px;}
+.gnb #search-btn .active{float:right;background:transparent url("../img/gnb/btn_search_effect.png") left top no-repeat; background-size:33px 33px; height:33px; width:33px;}
+.gnb #menu-btn{float:right;background:transparent url("../img/gnb/btn_menu_shape.png") left top no-repeat; background-size:42px 33px; height:33px; width:42px; margin-top:5px; margin-right:11px; -webkit-tap-highlight-color: rgba(0,0,0,0.0);}
+.gnb #menu-btn:active{float:right;background:transparent url("../img/gnb/btn_search_effect.png") left top no-repeat; background-size:42px 33px; height:33px; width:42px;}
+.gnb #menu-btn .active{float:right;background:transparent url("../img/gnb/btn_search_effect.png") left top no-repeat; background-size:42px 33px; height:33px; width:42px;}
+
+/* search 영역 */
+.search-area {height:44px; background:url("../img/search/search_bg.png") left top repeat-x; background-size:1px 44px; display:none;}
+.search-area #search-box {float:left;margin-left:11px; margin-top:10px; margin-left:11px;}
+.search-area #search-box input {border:solid 1px #CCCCCC; -moz-border-top-left-radius: 7px; -moz-border-bottom-left-radius: 7px; -webkit-border-top-left-radius: 7px; -webkit-border-bottom-left-radius: 7px; border-top-left-radius: 7px; border-bottom-left-radius: 7px; -webkit-border-top-right-radius:1px; -webkit-border-bottom-right-radius:1px; -webkit-appearance: none;height:19px; position:absolute; left:11px; right:53px; -moz-box-shadow: 2px 2px 3px #666;-webkit-box-shadow: 2px 2px 3px #666;box-shadow: 2px 2px 3px #666; }
+.search-area #search-box-btn {float:right;background:url("../img/gnb/search_btn_shape.png") left top no-repeat; background-size:42px 24px; height:24px; width:42px; margin-top:10px; margin-right:11px; position:absolute; right:0px;}
+.search-area #search-box-btn:active{float:right;background:transparent url("../img/gnb/search_btn_effect.png") left top no-repeat; }
+.search-area #search-box-btn .active{float:right;background:transparent url("../img/gnb/search_btn_effect.png") left top no-repeat; }
+
+/* menu 영역 */
+.menu-area {height:36px; background:url("../img/menu/menubar_bg.png") left top repeat-x; background-size:1px 44px; display:; padding:0px 10px 0px 10px;}
+.menu-area #category-btn{float:left;background:transparent url("../img/menu/btn_category_off_shape.png") left top repeat-x; background-size:100% 36px; height:36px; width:20%; margin-top:4px; -webkit-tap-highlight-color: rgba(0,0,0,0.0);  min-width:60px; }
+.menu-area #category-btn:active{float:left;background:transparent url("../img/menu/btn_category_on_shape.png") left top repeat-x; background-size:100% 36px; height:36px; width:20%; -webkit-tap-highlight-color: rgba(0,0,0,0.0); min-width:60px;}
+.menu-area #category-btn .active{float:left;background:transparent url("../img/menu/btn_category_on_shape.png") left top repeat-x; background-size:100% 36px; height:36px; width:20%; -webkit-tap-highlight-color: rgba(0,0,0,0.0); min-width:60px;}
+.menu-area #category-btn-effect{float:left;background:transparent url("../img/menu/btn_category_off_effect.png") left top repeat-x; background-size:100% 36px; height:36px; width:100%;  -webkit-tap-highlight-color: rgba(0,0,0,0.0); text-align:center; min-width:60px;}
+.menu-area #category-btn-effect:active{float:left;background:transparent url("../img/menu/btn_category_on_effect.png") left top repeat-x; background-size:100% 36px; height:36px; width:100%;  -webkit-tap-highlight-color: rgba(0,0,0,0.0); text-align:center; min-width:60px;}
+.menu-area #category-btn-effect .active{float:left;background:transparent url("../img/menu/btn_category_on_effect.png") left top repeat-x; background-size:100% 36px; height:36px; width:100%;  -webkit-tap-highlight-color: rgba(0,0,0,0.0); text-align:center; min-width:60px;}
+.menu-area #category-btn-object{float:left;background:transparent url("../img/menu/btn_category_off_object.png") left top no-repeat; background-size:62px 36px; height:36px; width:100%; -webkit-tap-highlight-color: rgba(0,0,0,0.0); }
+.menu-area #category-btn-object:active{float:left;background:transparent url("../img/menu/btn_category_on_object.png") left top no-repeat; background-size:62px 36px; height:36px; width:100%; -webkit-tap-highlight-color: rgba(0,0,0,0.0); }
+.menu-area #category-btn-object .active{float:left;background:transparent url("../img/menu/btn_category_on_object.png") left top no-repeat; background-size:62px 36px; height:36px; width:100%; -webkit-tap-highlight-color: rgba(0,0,0,0.0);}
+
+.menu-area #my-btn{float:left;background:transparent url("../img/menu/btn01_off_shape.png") left top no-repeat; background-size:100% 36px; height:36px; width:20%; margin-top:4px; -webkit-tap-highlight-color: rgba(0,0,0,0.0); min-width:60px; }
+.menu-area #my-btn:active{float:left;background:transparent url("../img/menu/btn01_on_shape.png") left top no-repeat; background-size:100% 36px; height:36px; width:20%; -webkit-tap-highlight-color: rgba(0,0,0,0.0); min-width:60px;}
+.menu-area #my-btn .active{float:left;background:transparent url("../img/menu/btn01_on_shape.png") left top no-repeat; background-size:100% 36px; height:36px; width:20%; -webkit-tap-highlight-color: rgba(0,0,0,0.0); min-width:60px;}
+.menu-area #my-btn-effect{float:left;background:transparent url("../img/menu/btn01_off_effect.png") left top no-repeat; background-size:100% 36px; height:36px; width:100%;  -webkit-tap-highlight-color: rgba(0,0,0,0.0); text-align:center; min-width:60px;}
+.menu-area #my-btn-effect:active{float:left;background:transparent url("../img/menu/btn01_on_effect.png") left top no-repeat; background-size:100% 36px; height:36px; width:100%;  -webkit-tap-highlight-color: rgba(0,0,0,0.0); text-align:center; min-width:60px;}
+.menu-area #my-btn-effect .active{float:left;background:transparent url("../img/menu/btn01_on_effect.png") left top no-repeat; background-size:100% 36px; height:36px; width:100%;  -webkit-tap-highlight-color: rgba(0,0,0,0.0); text-align:center; min-width:60px;}
+.menu-area #my-btn-object{float:left;background:transparent url("../img/menu/btn01_off_object.png") left top no-repeat; background-size:62px 36px; height:36px; width:100%; -webkit-tap-highlight-color: rgba(0,0,0,0.0); }
+.menu-area #my-btn-object:active{float:left;background:transparent url("../img/menu/btn01_on_object.png") left top no-repeat; background-size:62px 36px; height:36px; width:100%; -webkit-tap-highlight-color: rgba(0,0,0,0.0); }
+.menu-area #my-btn-object .active{float:left;background:transparent url("../img/menu/btn01_on_object.png") left top no-repeat; background-size:62px 36px; height:36px; width:100%; -webkit-tap-highlight-color: rgba(0,0,0,0.0); }
+
+.menu-area #cart-btn{float:left;background:transparent url("../img/menu/btn02_off_shape.png") left top repeat-x; background-size:100% 36px; height:36px; width:20%; margin-top:4px; -webkit-tap-highlight-color: rgba(0,0,0,0.0);  min-width:60px; }
+.menu-area #cart-btn:active{float:left;background:transparent url("../img/menu/btn02_on_shape.png") left top repeat-x; background-size:100% 36px; height:36px; width:20%; -webkit-tap-highlight-color: rgba(0,0,0,0.0); min-width:60px;}
+.menu-area #cart-btn .active{float:left;background:transparent url("../img/menu/btn02_on_shape.png") left top repeat-x; background-size:100% 36px; height:36px; width:20%; -webkit-tap-highlight-color: rgba(0,0,0,0.0); min-width:60px;}
+.menu-area #cart-btn-effect{float:left;background:transparent url("../img/menu/btn02_off_effect.png") left top repeat-x; background-size:100% 36px; height:36px; width:100%;  -webkit-tap-highlight-color: rgba(0,0,0,0.0); text-align:center; min-width:60px;}
+.menu-area #cart-btn-effect:active{float:left;background:transparent url("../img/menu/btn02_on_effect.png") left top repeat-x; background-size:100% 36px; height:36px; width:100%;  -webkit-tap-highlight-color: rgba(0,0,0,0.0); text-align:center; min-width:60px;}
+.menu-area #cart-btn-effect .active{float:left;background:transparent url("../img/menu/btn02_on_effect.png") left top repeat-x; background-size:100% 36px; height:36px; width:100%;  -webkit-tap-highlight-color: rgba(0,0,0,0.0); text-align:center; min-width:60px;}
+.menu-area #cart-btn-object{float:left;background:transparent url("../img/menu/btn02_off_object.png") left top no-repeat; background-size:62px 36px; height:36px; width:100%; -webkit-tap-highlight-color: rgba(0,0,0,0.0); }
+.menu-area #cart-btn-object:active{float:left;background:transparent url("../img/menu/btn02_on_object.png") left top no-repeat; background-size:62px 36px; height:36px; width:100%; -webkit-tap-highlight-color: rgba(0,0,0,0.0); }
+.menu-area #cart-btn-object .active{float:left;background:transparent url("../img/menu/btn02_on_object.png") left top no-repeat; background-size:62px 36px; height:36px; width:100%; -webkit-tap-highlight-color: rgba(0,0,0,0.0);}
+
+.menu-area #wish-btn{float:left;background:transparent url("../img/menu/btn03_off_shape.png") left top repeat-x; background-size:100% 36px; height:36px; width:20%; margin-top:4px; -webkit-tap-highlight-color: rgba(0,0,0,0.0); min-width:60px;}
+.menu-area #wish-btn:active{float:left;background:transparent url("../img/menu/btn03_on_shape.png") left top repeat-x; background-size:100% 36px; height:36px; width:20%; -webkit-tap-highlight-color: rgba(0,0,0,0.0); min-width:60px;}
+.menu-area #wish-btn .active{float:left;background:transparent url("../img/menu/btn03_on_shape.png") left top repeat-x; background-size:100% 36px; height:36px; width:20%; -webkit-tap-highlight-color: rgba(0,0,0,0.0); min-width:60px;}
+.menu-area #wish-btn-effect{float:left;background:transparent url("../img/menu/btn03_off_effect.png") left top repeat-x; background-size:100% 36px; height:36px; width:100%;  -webkit-tap-highlight-color: rgba(0,0,0,0.0); text-align:center; min-width:60px;}
+.menu-area #wish-btn-effect:active{float:left;background:transparent url("../img/menu/btn03_on_effect.png") left top repeat-x; background-size:100% 36px; height:36px; width:100%;  -webkit-tap-highlight-color: rgba(0,0,0,0.0); text-align:center; min-width:60px;}
+.menu-area #wish-btn-effect .active{float:left;background:transparent url("../img/menu/btn03_on_effect.png") left top repeat-x; background-size:100% 36px; height:36px; width:100%;  -webkit-tap-highlight-color: rgba(0,0,0,0.0); text-align:center; min-width:60px;}
+.menu-area #wish-btn-object{float:left;background:transparent url("../img/menu/btn03_off_object.png") left top no-repeat; background-size:62px 36px; height:36px; width:100%; -webkit-tap-highlight-color: rgba(0,0,0,0.0); }
+.menu-area #wish-btn-object:active{float:left;background:transparent url("../img/menu/btn03_on_object.png") left top no-repeat; background-size:62px 36px; height:36px; width:100%; -webkit-tap-highlight-color: rgba(0,0,0,0.0); }
+.menu-area #wish-btn-object .active{float:left;background:transparent url("../img/menu/btn03_on_object.png") left top no-repeat; background-size:62px 36px; height:36px; width:100%; -webkit-tap-highlight-color: rgba(0,0,0,0.0); }
+
+.menu-area #info-btn{float:left;background:transparent url("../img/menu/btn04_off_shape.png") left top repeat-x; background-size:100% 36px; height:36px; width:20%; margin-top:4px; -webkit-tap-highlight-color: rgba(0,0,0,0.0); min-width:60px;}
+.menu-area #info-btn:active{float:left;background:transparent url("../img/menu/btn04_on_shape.png") left top repeat-x; background-size:100% 36px; height:36px; width:20%; -webkit-tap-highlight-color: rgba(0,0,0,0.0); min-width:60px;}
+.menu-area #info-btn .active{float:left;background:transparent url("../img/menu/btn04_on_shape.png") left top repeat-x; background-size:100% 36px; height:36px; width:20%; -webkit-tap-highlight-color: rgba(0,0,0,0.0); min-width:60px;}
+.menu-area #info-btn-effect{float:left;background:transparent url("../img/menu/btn04_off_effect.png") left top repeat-x; background-size:100% 36px; height:36px; width:100%;  -webkit-tap-highlight-color: rgba(0,0,0,0.0); text-align:center; min-width:60px;}
+.menu-area #info-btn-effect:active{float:left;background:transparent url("../img/menu/btn04_on_effect.png") left top repeat-x; background-size:100% 36px; height:36px; width:100%;  -webkit-tap-highlight-color: rgba(0,0,0,0.0); text-align:center; min-width:60px;}
+.menu-area #info-btn-effect .active{float:left;background:transparent url("../img/menu/btn04_on_effect.png") left top repeat-x; background-size:100% 36px; height:36px; width:100%;  -webkit-tap-highlight-color: rgba(0,0,0,0.0); text-align:center; min-width:60px;}
+.menu-area #info-btn-object{float:left;background:transparent url("../img/menu/btn04_off_object.png") left top no-repeat; background-size:62px 36px; height:36px; width:100%; -webkit-tap-highlight-color: rgba(0,0,0,0.0); }
+.menu-area #info-btn-object:active{float:left;background:transparent url("../img/menu/btn04_on_object.png") left top no-repeat; background-size:62px 36px; height:36px; width:100%; -webkit-tap-highlight-color: rgba(0,0,0,0.0); }
+.menu-area #info-btn-object .active{float:left;background:transparent url("../img/menu/btn04_on_object.png") left top no-repeat; background-size:62px 36px; height:36px; width:100%; -webkit-tap-highlight-color: rgba(0,0,0,0.0); }
+
+.menu-area #login-btn{float:left;background:transparent url("../img/menu/btn05_off_shape.png") left top repeat-x; background-size:100% 36px; height:36px; width:20%; margin-top:4px; -webkit-tap-highlight-color: rgba(0,0,0,0.0); border-top-right-radius:7px; border-bottom-right-radius:7px; min-width:60px;}
+.menu-area #login-btn:active{float:left;background:transparent url("../img/menu/btn05_on_shape.png") left top repeat-x; background-size:100% 36px; height:36px; width:20%; -webkit-tap-highlight-color: rgba(0,0,0,0.0); border-top-right-radius:7px; border-bottom-right-radius:7px; min-width:60px;}
+.menu-area #login-btn .active{float:left;background:transparent url("../img/menu/btn05_on_shape.png") left top repeat-x; background-size:100% 36px; height:36px; width:20%; -webkit-tap-highlight-color: rgba(0,0,0,0.0); border-top-right-radius:7px; border-bottom-right-radius:7px; min-width:60px;}
+.menu-area #login-btn-effect{float:left;background:transparent url("../img/menu/btn05_off_effect.png") left top repeat-x; background-size:100% 36px; height:36px; width:100%;  -webkit-tap-highlight-color: rgba(0,0,0,0.0); text-align:center; border-top-right-radius:7px; border-bottom-right-radius:7px; min-width:60px;}
+.menu-area #login-btn-effect:active{float:left;background:transparent url("../img/menu/btn05_on_effect.png") left top repeat-x; background-size:100% 36px; height:36px; width:100%;  -webkit-tap-highlight-color: rgba(0,0,0,0.0); text-align:center; border-top-right-radius:7px; border-bottom-right-radius:7px; min-width:60px;}
+.menu-area #login-btn-effect .active{float:left;background:transparent url("../img/menu/btn05_on_effect.png") left top repeat-x; background-size:100% 36px; height:36px; width:100%;  -webkit-tap-highlight-color: rgba(0,0,0,0.0); text-align:center; border-top-right-radius:7px; border-bottom-right-radius:7px; min-width:60px;}
+.menu-area #login-btn-object{float:left;background:transparent url("../img/menu/btn05_off_object.png") left top no-repeat; background-size:62px 36px; height:36px; width:100%; -webkit-tap-highlight-color: rgba(0,0,0,0.0); }
+.menu-area #login-btn-object:active{float:left;background:transparent url("../img/menu/btn05_on_object.png") left top no-repeat; background-size:62px 36px; height:36px; width:100%; -webkit-tap-highlight-color: rgba(0,0,0,0.0); }
+.menu-area #login-btn-object .active{float:left;background:transparent url("../img/menu/btn05_on_object.png") left top no-repeat; background-size:62px 36px; height:36px; width:100%; -webkit-tap-highlight-color: rgba(0,0,0,0.0); }
+
+.menu-area #logout-btn{float:left;background:transparent url("../img/menu/btn05_off_shape.png") left top repeat-x; background-size:100% 36px; height:36px; width:20%; margin-top:4px; -webkit-tap-highlight-color: rgba(0,0,0,0.0); border-top-right-radius:7px; border-bottom-right-radius:7px; min-width:60px;}
+.menu-area #logout-btn:active{float:left;background:transparent url("../img/menu/btn05_on_shape.png") left top repeat-x; background-size:100% 36px; height:36px; width:20%; -webkit-tap-highlight-color: rgba(0,0,0,0.0); border-top-right-radius:7px; border-bottom-right-radius:7px; min-width:60px;}
+.menu-area #logout-btn .active{float:left;background:transparent url("../img/menu/btn05_on_shape.png") left top repeat-x; background-size:100% 36px; height:36px; width:20%; -webkit-tap-highlight-color: rgba(0,0,0,0.0); border-top-right-radius:7px; border-bottom-right-radius:7px; min-width:60px;}
+.menu-area #logout-btn-effect{float:left;background:transparent url("../img/menu/btn05_off_effect.png") left top repeat-x; background-size:100% 36px; height:36px; width:100%;  -webkit-tap-highlight-color: rgba(0,0,0,0.0); text-align:center; border-top-right-radius:7px; border-bottom-right-radius:7px; min-width:60px;}
+.menu-area #logout-btn-effect:active{float:left;background:transparent url("../img/menu/btn05_on_effect.png") left top repeat-x; background-size:100% 36px; height:36px; width:100%;  -webkit-tap-highlight-color: rgba(0,0,0,0.0); text-align:center; border-top-right-radius:7px; border-bottom-right-radius:7px; min-width:60px;}
+.menu-area #logout-btn-effect .active{float:left;background:transparent url("../img/menu/btn05_on_effect.png") left top repeat-x; background-size:100% 36px; height:36px; width:100%;  -webkit-tap-highlight-color: rgba(0,0,0,0.0); text-align:center; border-top-right-radius:7px; border-bottom-right-radius:7px; min-width:60px;}
+.menu-area #logout-btn-object{float:left;background:transparent url("../img/menu/btn06_off_object.png") left top no-repeat; background-size:53px 36px; height:36px; width:100%; -webkit-tap-highlight-color: rgba(0,0,0,0.0); }
+.menu-area #logout-btn-object:active{float:left;background:transparent url("../img/menu/btn06_on_object.png") left top no-repeat; background-size:53px 36px; height:36px; width:100%; -webkit-tap-highlight-color: rgba(0,0,0,0.0); }
+.menu-area #logout-btn-object .active{float:left;background:transparent url("../img/menu/btn06_on_object.png") left top no-repeat; background-size:53px 36px; height:36px; width:100%; -webkit-tap-highlight-color: rgba(0,0,0,0.0); }
+
+/* 카테고리 영역 */
+
+section#cate-area {display:none; clear:both; z-index:99;}
+section#cate-area .top_title {height:40px;background:url('../img/myp/name_bg.png') repeat-x; line-height:40px; color:#FFFFFF; font-size:16px; font-weight:bold; text-shadow: 0px 1px 1px #333333;text-align:center; }
+section#cate-area .top_title .title { }
+section#cate-area .top_title .now_path { float:left; padding-left:10px;  width:80%;font-size:14px; font-weight:bold; white-space:nowrap; overflow: hidden;text-overflow: ellipsis;-o-text-overflow: ellipsis;}
+section#cate-area .top_title .now_path .pathitem { float:left; text-align:center;  white-space:nowrap; overflow: hidden;text-overflow: ellipsis;-o-text-overflow: ellipsis;}
+section#cate-area .top_title .now_path .patharrow { float:left; width:20px; height:40px; background: url('../img/cate/arrow.png') center no-repeat; -webkit-tap-highlight-color: rgba(0,0,0,0.0);}
+section#cate-area .longtextdot { width:70px; white-space:nowrap; overflow: hidden;text-overflow: ellipsis;-o-text-overflow: ellipsis; }
+section#cate-area .top_title .btnimg {float:right; padding-right:15px;  width:10%; height:100%; line-height:100%; background: transparent url('../img/cate/circle_arrow_left.png') center no-repeat; -webkit-tap-highlight-color: rgba(0,0,0,0.0);}
+
+section#cate-area .cate_path{clear:both;margin-left:-100%;}
+section#cate-area .cate_path .now_path{height:36px; background:url("../img/search/search_bg.png") left top repeat-x; background-size:1px 44px; color:#EEEEEE; font-size:12px; font-weight:bold; text-shadow: 0px 1px 1px #333333; line-height:44px; padding-left:12px; }
+section#cate-area .cate_path .now_path .path_arrow:before { content:url("../img/cate/arrow01.png"); }
+section#cate-area .cate_path .cate_path_item{margin-right:100%; height:74px;background:url('../img/cate/list_bg01.png') repeat-x; line-height:74px; padding:0px 12px 0px 12px; color:#EEEEEE; font-size:22px; font-weight:bold; text-shadow: 0px 1px 1px #333333; -webkit-tap-highlight-color: rgba(0,0,0,0.0);}
+section#cate-area .cate_path .cate_path_item .cate_path_nm {margin-left:-100%; float:left; width:100%; -webkit-tap-highlight-color: rgba(0,0,0,0.0);}
+section#cate-area .cate_list{clear:both;height:100%; margin-left:-100%;}
+section#cate-area .cate_list .cate_item{clear:both;margin-right:100%; height:74px;background:url('../img/cate/list_bg01.png') repeat-x; line-height:74px; padding:0px 12px 0px 12px; color:#EEEEEE; font-size:22px; font-weight:bold; text-shadow: 0px 1px 1px #333333; }
+section#cate-area .cate_list .cate_item .cate_nm {margin-left:-100%; float:left; width:60%; -webkit-tap-highlight-color: rgba(0,0,0,0.0); white-space: nowrap;overflow: hidden;text-overflow: ellipsis;-o-text-overflow: ellipsis;}
+section#cate-area .cate_list .cate_item .cate_nm_arrow {float:left; width:29px; height:100%; line-height:100%; background: transparent url('../img/cate/circle_arrow.png') left repeat-x; -webkit-tap-highlight-color: rgba(0,0,0,0.0);}
+section#cate-area .cate_list .cate_item .cate_prd_btn {float:right; width:83px; height:100%; line-height:100%; background: transparent url('../img/cate/btn_view_default.png') center repeat-x; -webkit-tap-highlight-color: rgba(0,0,0,0.0);}
+section#cate-area .cate_list .cate_item .cate_prd_btn:active{float:right; width:83px; height:100%; line-height:100%; background: transparent url('../img/cate/btn_view_select.png') center repeat-x; -webkit-tap-highlight-color: rgba(0,0,0,0.0);}
+section#cate-area .cate_list .cate_item .cate_prd_btn .active{float:right; width:83px; height:100%; line-height:100%; background: transparent url('../img/cate/btn_view_hover.png') center repeat-x; -webkit-tap-highlight-color: rgba(0,0,0,0.0);}
+
+/* Settle */
+section#settle {padding:0 20px;}
+section#settle ol {border:1px solid red;}
+section#settle fieldset {position:relative; padding:5px;}
+section#settle fieldset>legend {display:none;}
+section#settle fieldset>dl>dt {clear:left; float:left; padding:6px 3px 3px 6px; width:70px; font-size:11px; background:url('../img/bul_s.gif') no-repeat left center;}
+section#settle fieldset>dl>dd {float:left; padding:3px;}
+section#settle fieldset>dl>dd>select {width:185px;}
+section#settle .btn {padding:20px 0;}
+section#settle .btn li {display:inline-block;}
+section#settle .btn .submit {display:inline-block; width:72px; height:29px; background:url('../img/btn_clearance.gif') no-repeat; border:0px;}
+section#settle .btn .cancel {display:inline-block; width:72px; height:29px; background:url('../img/btn_cancel.gif') no-repeat; border:0px;}
+
+
+/* MyPage List*/
+section#mypagelist {background-color:#eeeeee;min-height:100%; font-family:dotum;}
+section#mypagelist .mypagelist_ord {padding:10px;}
+section#mypagelist .mypagelist_ord .roundbox {background-color:#FFFFFF; -webkit-border-radius:0.5em; -moz-border-radius:0.5em; border-radius:0.5em; border:solid 1px #cccccc;}
+section#mypagelist .mypagelist_ord .roundbox .m_list { position:relative; border-bottom:1px solid #cccccc; height:50px; line-height:50px; background-image: -moz-linear-gradient(top, black, white) -webkit-linear-gradient(top, black, white); padding-left:15px; padding-right:15px; font-size:16px; font-weight:bold; -webkit-tap-highlight-color: rgba(0,0,0,0.0);}
+section#mypagelist .mypagelist_ord .roundbox .m_list .m_title { float:left; }
+section#mypagelist .mypagelist_ord .roundbox .m_list .m_content { float:right; text-align:right; font-size:12px; margin-right:5px; font-weight:normal;}
+section#mypagelist .mypagelist_ord .roundbox .m_list .m_right { float:right; text-align:right; background:url('../img/myp/bullet.png') no-repeat right center; width:15px; height:50px; font-size:14px;}
+section#mypagelist .mypagelist_mem {padding:0px 10px 10px 10px;}
+section#mypagelist .mypagelist_mem .roundbox {background-color:#DDDDDD; -webkit-border-radius:0.5em; -moz-border-radius:0.5em; border-radius:0.5em; border:solid 1px #cccccc;}
+section#mypagelist .mypagelist_mem .roundbox .m_list { position:relative; border-bottom:1px solid #cccccc; height:50px; line-height:50px; background-image: -moz-linear-gradient(top, black, white) -webkit-linear-gradient(top, black, white); padding-left:15px; padding-right:15px; font-size:16px; font-weight:bold; -webkit-tap-highlight-color: rgba(0,0,0,0.0);}
+section#mypagelist .mypagelist_mem .roundbox .m_list .m_title { float:left; }
+section#mypagelist .mypagelist_mem .roundbox .m_list .m_content { float:right; text-align:right; font-size:12px; margin-right:5px; font-weight:normal;}
+section#mypagelist .mypagelist_mem .roundbox .m_list .m_right { float:right; text-align:right; background:url('../img/myp/bullet.png') no-repeat right center; width:15px; height:50px; font-size:14px;}
+
+/* 로그인 */
+section#login {background-color:#eeeeee;min-height:100%;position:relative;}
+section#login>form {}
+section#login>form .login_center {}
+section#login>form .login_center .login_b {height:270px;}
+section#login>form .login_center .login_b .login_title {display:block; position:absolute; top:0; left:50%; margin-top:10px; margin-left:-146px; width:293px; padding-left:5px; font-size:20px; font-weight:bold;}
+section#login>form .login_center .login_b .input_id {display:block; position:absolute; top:0; left:50%; margin-top:40px; margin-left:-146px; width:293px; }
+section#login>form .login_center .login_b .input_pw {display:block; position:absolute; top:0; left:50%; margin-top:80px; margin-left:-146px; width:293px; }
+section#login>form .login_center .login_b .save_id {display:block; position:absolute; top:0; left:50%; margin-top:120px; margin-left:0; font-size:15px; }
+section#login>form .login_center .login_b .save_pw {display:block; position:absolute; top:0; left:50%; margin-top:120px; margin-left:0px; font-size:15px; }
+
+section#login>form .login_center .login_b .input_id input{ border:solid 1px #CCCCCC; border-radius: 0.5em;  position:absolute; height:25px; left:0px; right:0px; -webkit-appearance:none; -moz-box-shadow: inset 1px 1px 1px #bbb; -webkit-box-shadow: inset 1px 1px 1px #bbb; box-shadow: inset 1px 1px 1px #bbb; }
+section#login>form .login_center .login_b .input_pw input{ border:solid 1px #CCCCCC; border-radius: 0.5em;  position:absolute; height:25px; left:0px; right:0px; -webkit-appearance:none; -moz-box-shadow: inset 1px 1px 1px #bbb; -webkit-box-shadow: inset 1px 1px 1px #bbb; box-shadow: inset 1px 1px 1px #bbb; }
+section#login>form .login_center .login_b .login_btn {position:absolute; left:50%; top:0; background:url('../img/login/btn_login_shape.png') no-repeat; background-size:293px; margin-top:150px; margin-left:-144px;}
+section#login>form .login_center .login_b .login_btn #login-btn { width:293px; height:44px; border:0; background:url('../img/login/btn_login_off_effect.png') no-repeat; background-size:293px; padding:0px; color:#FFFFFF; font-size:18px; font-weight:bold; -webkit-tap-highlight-color: rgba(0,0,0,0.0);  }
+section#login>form .login_center .login_b .login_btn #login-btn:active{ width:293px; height:44px; border:0; background:url('../img/login/btn_login_on_effect.png') no-repeat; background-size:293px; padding:0px; color:#FFFFFF; font-size:18px; font-weight:bold;}
+section#login>form .login_center .login_b .login_btn #login-btn .active{ width:293px; height:44px; border:0; background:url('../img/login/btn_login_on_effect.png') no-repeat; background-size:293px; padding:0px; color:#FFFFFF; font-size:18px; font-weight:bold;}
+section#login>form .login_center .login_b .nomember_btn {position:absolute; left:50%; top:0; background:url('../img/login/btn_nonmember_shape.png') no-repeat; background-size:143px; margin-top:204px; margin-left:-144px;}
+section#login>form .login_center .login_b .nomember_btn #nomember-btn { width:143px; height:44px; border:0; background:url('../img/login/btn_nonmember_off_effect.png') no-repeat; background-size:143px; padding:0px; color:#FFFFFF; font-size:18px; font-weight:bold; -webkit-tap-highlight-color: rgba(0,0,0,0.0);}
+section#login>form .login_center .login_b .nomember_btn #nomember-btn:active{ width:143px; height:44px; border:0; background:url('../img/login/btn_nonmember_on_effect.png') no-repeat; background-size:143px; padding:0px; color:#FFFFFF; font-size:18px; font-weight:bold;}
+section#login>form .login_center .login_b .nomember_btn #nomember-btn .active{ width:143px; height:44px; border:0; background:url('../img/login/btn_nonmember_on_effect.png') no-repeat; background-size:143px; padding:0px; color:#FFFFFF; font-size:18px; font-weight:bold;}
+section#login>form .login_center .login_b .joinmember_btn {position:absolute; left:50%; top:0; background:url('../img/login/btn_register_shape.png') no-repeat; background-size:143px; margin-top:204px; margin-left:6px;}
+section#login>form .login_center .login_b .joinmember_btn #joinmember-btn { width:143px; height:44px; border:0; background:url('../img/login/btn_register_off_effect.png') no-repeat; background-size:143px; padding:0px; color:#FFFFFF; font-size:18px; font-weight:bold; -webkit-tap-highlight-color: rgba(0,0,0,0.0);}
+section#login>form .login_center .login_b .joinmember_btn #joinmember-btn:active{width:143px; height:44px; border:0; background:url('../img/login/btn_register_on_effect.png') no-repeat; background-size:143px; padding:0px; color:#FFFFFF; font-size:18px; font-weight:bold; }
+section#login>form .login_center .login_b .joinmember_btn #joinmember-btn .active{width:143px; height:44px; border:0; background:url('../img/login/btn_register_on_effect.png') no-repeat; background-size:143px; padding:0px; color:#FFFFFF; font-size:18px; font-weight:bold; }
+section#login>form .login_center .login_b .check_btn {position:absolute; left:50%; top:0; background:url('../img/login/btn_login_shape.png') no-repeat; background-size:293px; margin-top:125px; margin-left:-144px;}
+section#login>form .login_center .login_b .check_btn #check-btn { width:293px; height:44px; border:0; background:url('../img/login/btn_login_off_effect.png') no-repeat; background-size:293px; padding:0px; color:#FFFFFF; font-size:18px; font-weight:bold; -webkit-tap-highlight-color: rgba(0,0,0,0.0);}
+section#login>form .login_center .login_b .check_btn #check-btn:active{ width:293px; height:44px; border:0; background:url('../img/login/btn_login_on_effect.png') no-repeat; background-size:293px; padding:0px; color:#FFFFFF; font-size:18px; font-weight:bold;}
+section#login>form .login_center .login_b .check_btn #check-btn .active{ width:293px; height:44px; border:0; background:url('../img/login/btn_login_on_effect.png') no-repeat; background-size:293px; padding:0px; color:#FFFFFF; font-size:18px; font-weight:bold;}
+section#login>form .login_center .login_b .member_btn {position:absolute; left:50%; top:0; background:url('../img/login/btn_register_shape.png') no-repeat; background-size:143px; margin-top:179px; margin-left:-144px;}
+section#login>form .login_center .login_b .member_btn #member-btn { width:143px; height:44px; border:0; background:url('../img/login/btn_register_off_effect.png') no-repeat; background-size:143px; padding:0px; color:#FFFFFF; font-size:18px; font-weight:bold; -webkit-tap-highlight-color: rgba(0,0,0,0.0);}
+section#login>form .login_center .login_b .member_btn #member-btn:active{width:143px; height:44px; border:0; background:url('../img/login/btn_register_on_effect.png') no-repeat; background-size:143px; padding:0px; color:#FFFFFF; font-size:18px; font-weight:bold; }
+section#login>form .login_center .login_b .member_btn #member-btn .active{width:143px; height:44px; border:0; background:url('../img/login/btn_register_on_effect.png') no-repeat; background-size:143px; padding:0px; color:#FFFFFF; font-size:18px; font-weight:bold; }
+section#login>form .login_center .login_b .joinmember2_btn {position:absolute; left:50%; top:0; background:url('../img/login/btn_register_shape.png') no-repeat; background-size:143px; margin-top:179px; margin-left:6px;}
+section#login>form .login_center .login_b .joinmember2_btn #joinmember2-btn { width:143px; height:44px; border:0; background:url('../img/login/btn_register_off_effect.png') no-repeat; background-size:143px; padding:0px; color:#FFFFFF; font-size:18px; font-weight:bold; -webkit-tap-highlight-color: rgba(0,0,0,0.0);}
+section#login>form .login_center .login_b .joinmember2_btn #joinmember2-btn:active{width:143px; height:44px; border:0; background:url('../img/login/btn_register_on_effect.png') no-repeat; background-size:143px; padding:0px; color:#FFFFFF; font-size:18px; font-weight:bold; }
+section#login>form .login_center .login_b .joinmember2_btn #joinmember2-btn .active{width:143px; height:44px; border:0; background:url('../img/login/btn_register_on_effect.png') no-repeat; background-size:143px; padding:0px; color:#FFFFFF; font-size:18px; font-weight:bold; }
+
+/* 장바구니 */
+section#cart {background-color:#eeeeee;min-height:100%;position:relative; margin-top:0px;padding-top:0px;}
+section#cart ul.order_item_list {margin-top:0px;padding-top:0px;list-style:none;}
+section#cart ul.order_item_list li {position:relative; height:167px; background:transparent url("../img/cart/list_bg.png") repeat-x; background-size:1px 167px; }
+section#cart ul.order_item_list .oil_chk {float:left;height:167px; line-height:167px; padding-left:5px; }
+section#cart ul.order_item_list .oil_chk input{border:solid 1px #aaaaaa; background-color:#ffffff; -webkit-appearance:checkbox; -moz-apperance:checkhbox; -webkit-width:20px; -webkit-height:20px; -moz-:20px; -moz-height:20px; width:10px; height:10px;}
+section#cart ul.order_item_list .oil_img {float:left;height:121px; padding-top:31px; padding-left:5px; }
+section#cart ul.order_item_list .oil_goods {height:132px; padding-left:130px; padding-top:10px;font-size:14px; color:#5e5e5e; font-weight:bold;}
+section#cart ul.order_item_list .oil_goods .oil_name {margin-bottom:3px; font-size:18px; color:#666666; font-weight:bold;text-overflow:ellipsis;overflow:hidden;white-space:nowrap;max-width:170px;}
+section#cart ul.order_item_list .oil_goods .oil_option {text-overflow:ellipsis;overflow:hidden;white-space:nowrap;max-width:150px;}
+section#cart ul.order_item_list .oil_goods .oil_price .r_price{color:#EE4040;}
+section#cart ul.order_item_list .oil_goods .oil_ea .oil_ea_btn{background:url('../img/cart/btn_modify_shape.png') no-repeat; background-size:56px 20px; margin-top:-20px; margin-left:100px;}
+section#cart ul.order_item_list .oil_goods .oil_ea .oil_ea_btn #ea-modify-btn { width:56px; height:20px; border:0; background:url('../img/cart/btn_modify_off_effect.png') no-repeat; background-size:56px 20px; padding:0px; color:#FFFFFF; font-size:14px; font-weight:bold; -webkit-tap-highlight-color: rgba(0,0,0,0.0);  }
+section#cart ul.order_item_list .oil_goods .oil_ea .oil_ea_btn #ea-modify-btn:active { width:56px; height:20px; border:0; background:url('../img/cart/btn_modify_on_effect.png') no-repeat; background-size:56px 20px; padding:0px; color:#FFFFFF; font-size:14px; font-weight:bold; -webkit-tap-highlight-color: rgba(0,0,0,0.0);  }
+section#cart ul.order_item_list .oil_goods .oil_ea .oil_ea_btn #ea-modify-btn .active{ width:56px; height:20px; border:0; background:url('../img/cart/btn_modify_on_effect.png') no-repeat; background-size:56px 20px; padding:0px; color:#FFFFFF; font-size:14px; font-weight:bold; -webkit-tap-highlight-color: rgba(0,0,0,0.0);  }
+
+section#cart ul.order_item_list .oil_delivery_title {float:left; padding-right:5px;white-space:nowrap;max-width:150px;}
+section#cart ul.order_item_list .blt {}
+section#cart ul.order_item_list .oil_delivery {margin-bottom:3px; font-size:14px; color:#666666; font-weight:bold;text-overflow:ellipsis;overflow:hidden;white-space:nowrap;max-width:150px;}
+section#cart .btn_area {position:relative;padding:10px;height:31px;}
+section#cart .btn_area #all-chk-btn{float:left;background:transparent url("../img/cart/btn01_off_shape.png") left top no-repeat; background-size:100% 31px; height:31px; width:33%; -webkit-tap-highlight-color: rgba(0,0,0,0.0);  min-width:60px; }
+section#cart .btn_area #all-chk-btn:active{float:left;background:transparent url("../img/cart/btn01_on_shape.png") left top no-repeat; background-size:100% 31px; height:31px; width:33%; -webkit-tap-highlight-color: rgba(0,0,0,0.0);  min-width:60px;}
+section#cart .btn_area #all-chk-btn .active{float:left;background:transparent url("../img/cart/btn01_on_shape.png") left top no-repeat; background-size:100% 31px; height:31px; width:33%; -webkit-tap-highlight-color: rgba(0,0,0,0.0); min-width:60px;}
+section#cart .btn_area #all-chk-btn-effect{float:left;background:transparent url("../img/cart/btn01_off_effect.png") left top no-repeat; background-size:100% 31px; height:31px; width:100%;  -webkit-tap-highlight-color: rgba(0,0,0,0.0); text-align:center;  min-width:60px; line-height:31px; color:#FFFFFF; font-weight:bold; font-size:14px;}
+section#cart .btn_area #all-chk-btn-effect:active{float:left;background:transparent url("../img/cart/btn01_on_effect.png") left top no-repeat; background-size:100% 31px; height:31px; width:100%;  -webkit-tap-highlight-color: rgba(0,0,0,0.0); text-align:center;  min-width:60px; line-height:31px; color:#FFFFFF; font-weight:bold; font-size:14px;}
+section#cart .btn_area #all-chk-btn-effect .active{float:left;background:transparent url("../img/cart/btn01_on_effect.png") left top no-repeat; background-size:100% 31px; height:31px; width:100%;  -webkit-tap-highlight-color: rgba(0,0,0,0.0); text-align:center;  min-width:60px; line-height:31px; color:#FFFFFF; font-weight:bold; font-size:14px;}
+section#cart .btn_area #chk-del-btn{float:left;background:transparent url("../img/cart/btn02_off_shape.png") left top no-repeat; background-size:100% 31px; height:31px; width:33%; -webkit-tap-highlight-color: rgba(0,0,0,0.0);   min-width:60px; margin-left:1px;}
+section#cart .btn_area #chk-del-btn:active{float:left;background:transparent url("../img/cart/btn02_on_shape.png") left top no-repeat; background-size:100% 31px; height:31px; width:33%; -webkit-tap-highlight-color: rgba(0,0,0,0.0);   min-width:60px;}
+section#cart .btn_area #chk-del-btn .active{float:left;background:transparent url("../img/cart/btn02_on_shape.png") left top no-repeat; background-size:100% 31px; height:31px; width:33%; -webkit-tap-highlight-color: rgba(0,0,0,0.0);  min-width:60px;}
+section#cart .btn_area #chk-del-btn-effect{float:left;background:transparent url("../img/cart/btn02_off_effect.png") left top no-repeat; background-size:100% 31px; height:31px; width:100%;  -webkit-tap-highlight-color: rgba(0,0,0,0.0); text-align:center;  min-width:60px; line-height:31px; color:#FFFFFF; font-weight:bold; font-size:14px;}
+section#cart .btn_area #chk-del-btn-effect:active{float:left;background:transparent url("../img/cart/btn02_on_effect.png") left top no-repeat; background-size:100% 31px; height:31px; width:100%;  -webkit-tap-highlight-color: rgba(0,0,0,0.0); text-align:center;  min-width:60px; line-height:31px; color:#FFFFFF; font-weight:bold; font-size:14px;}
+section#cart .btn_area #chk-del-btn-effect .active{float:left;background:transparent url("../img/cart/btn02_on_effect.png") left top no-repeat; background-size:100% 31px; height:31px; width:100%;  -webkit-tap-highlight-color: rgba(0,0,0,0.0); text-align:center;  min-width:60px; line-height:31px; color:#FFFFFF; font-weight:bold; font-size:14px;}
+section#cart .btn_area #all-del-btn{float:left;background:transparent url("../img/cart/btn03_off_shape.png") left top no-repeat; background-size:100% 31px; height:31px; width:33%; -webkit-tap-highlight-color: rgba(0,0,0,0.0);  min-width:60px; margin-left:1px;}
+section#cart .btn_area #all-del-btn:active{float:left;background:transparent url("../img/cart/btn03_on_shape.png") left top no-repeat; background-size:100% 31px; height:31px; width:33%; -webkit-tap-highlight-color: rgba(0,0,0,0.0);  min-width:60px;}
+section#cart .btn_area #all-del-btn .active{float:left;background:transparent url("../img/cart/btn03_on_shape.png") left top no-repeat; background-size:100% 31px; height:31px; width:33%; -webkit-tap-highlight-color: rgba(0,0,0,0.0);  min-width:60px;}
+section#cart .btn_area #all-del-btn-effect{float:left;background:transparent url("../img/cart/btn03_off_effect.png") left top no-repeat; background-size:100% 31px; height:31px; width:100%;  -webkit-tap-highlight-color: rgba(0,0,0,0.0); text-align:center;  min-width:60px; line-height:31px; color:#FFFFFF; font-weight:bold; font-size:14px;}
+section#cart .btn_area #all-del-btn-effect:active{float:left;background:transparent url("../img/cart/btn03_on_effect.png") left top no-repeat; background-size:100% 31px; height:31px; width:100%;  -webkit-tap-highlight-color: rgba(0,0,0,0.0); text-align:center;  min-width:60px; line-height:31px; color:#FFFFFF; font-weight:bold; font-size:14px;}
+section#cart .btn_area #all-del-btn-effect .active{float:left;background:transparent url("../img/cart/btn03_on_effect.png") left top no-repeat; background-size:100% 31px; height:31px; width:100%;  -webkit-tap-highlight-color: rgba(0,0,0,0.0); text-align:center;min-width:60px; line-height:31px; color:#FFFFFF; font-weight:bold; font-size:14px;}
+section#cart .sum_area{position:relative;padding:0px 10px 10px 10px; }
+section#cart .sum_area .board_area{background-color:#FFFFFF; padding:10px;font-size:14px;font-weight:bold; text-align:right; height:32px; border-radius:7px; border:solid 1px #cccccc;}
+section#cart .sum_area .board_area .title{width:65%;float:left;}
+section#cart .sum_area .board_area .price{width:35%;float:right;}
+section#cart .ord_area {position:relative;padding:0px 10px 10px 10px; height:44px;}
+section#cart .ord_area #all-ord-btn{border:1px solid #ff6767; width:100%; height:44px; border-radius: 8px; font-size:18px; line-height:44px; font-weight:bold; text-align: center; color: #FFFFFF; background-color: #ff9a9a; background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #ff9a9a), color-stop(100%, #ff4040)); background-image: -webkit-linear-gradient(top, #ff9a9a, #ff4040); background-image: -moz-linear-gradient(top, #ff9a9a, #ff4040); background-image: -ms-linear-gradient(top, #ff9a9a, #ff4040); background-image: -o-linear-gradient(top, #ff9a9a, #ff4040); background-image: linear-gradient(top, #ff9a9a, #ff4040);filter:progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr=#ff9a9a, endColorstr=#ff4040); -webkit-tap-highlight-color: rgba(0,0,0,0.0);}
+section#cart .ord_area #all-ord-btn:active{border:1px solid #ff6767; border-radius: 8px; background-color: #ff6767; background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ff6767), color-stop(100%, #ff0d0d)); background-image: -webkit-linear-gradient(top, #ff6767, #ff0d0d); background-image: -moz-linear-gradient(top, #ff6767, #ff0d0d); background-image: -ms-linear-gradient(top, #ff6767, #ff0d0d); background-image: -o-linear-gradient(top, #ff6767, #ff0d0d); background-image: linear-gradient(top, #ff6767, #ff0d0d);filter:progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr=#ff6767, endColorstr=#ff0d0d); -webkit-tap-highlight-color: rgba(0,0,0,0.0);}
+section#cart .ord_area #all-ord-btn .active{border:1px solid #ff6767; border-radius: 8px; background-color: #ff6767; background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ff6767), color-stop(100%, #ff0d0d)); background-image: -webkit-linear-gradient(top, #ff6767, #ff0d0d); background-image: -moz-linear-gradient(top, #ff6767, #ff0d0d); background-image: -ms-linear-gradient(top, #ff6767, #ff0d0d); background-image: -o-linear-gradient(top, #ff6767, #ff0d0d); background-image: linear-gradient(top, #ff6767, #ff0d0d);filter:progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr=#ff6767, endColorstr=#ff0d0d); -webkit-tap-highlight-color: rgba(0,0,0,0.0);}
+
+/* 찜목록 */
+section#wishlist {background-color:#eeeeee;min-height:100%;position:relative; margin-top:0px;padding-top:0px;}
+section#wishlist ul.wish_item_list {margin-top:0px;padding-top:0px;list-style:none;}
+section#wishlist ul.wish_item_list li {position:relative; height:142px; background:transparent url("../img/cart/list_bg.png") repeat-x; background-size:1px 142px; }
+section#wishlist ul.wish_item_list .wl_chk {float:left;height:142px; line-height:142px; padding-left:10px; }
+section#wishlist ul.wish_item_list .wl_chk input{border:solid 1px #aaaaaa; background-color:#ffffff; -webkit-appearance:checkbox; -moz-apperance:checkhbox; -webkit-width:20px; -webkit-height:20px; -moz-width:20px; -moz-height:20px; width:20px; height:20px;}
+section#wishlist ul.wish_item_list .wl_img {float:left;height:121px; padding-top:21px; padding-left:10px; }
+section#wishlist ul.wish_item_list .wl_goods {float:left;height:112px; padding-left:10px; padding-top:30px;font-size:14px; color:#5e5e5e; font-weight:bold;}
+section#wishlist ul.wish_item_list .wl_goods .wl_name {margin-bottom:3px; font-size:18px; color:#666666; font-weight:bold;text-overflow:ellipsis;overflow:hidden;white-space:nowrap;max-width:150px;}
+section#wishlist ul.wish_item_list .wl_goods .wl_option {text-overflow:ellipsis;overflow:hidden;white-space:nowrap;max-width:150px;}
+section#wishlist ul.wish_item_list .wl_goods .wl_price .r_price{color:#EE4040;}
+section#wishlist .btn_area {position:relative;padding:10px;height:31px;}
+section#wishlist .btn_area #all-chk-btn{float:left;background:transparent url("../img/cart/btn01_off_shape.png") left top no-repeat; background-size:100% 31px; height:31px; width:33%; -webkit-tap-highlight-color: rgba(0,0,0,0.0);  min-width:60px; }
+section#wishlist .btn_area #all-chk-btn:active{float:left;background:transparent url("../img/cart/btn01_on_shape.png") left top no-repeat; background-size:100% 31px; height:31px; width:33%; -webkit-tap-highlight-color: rgba(0,0,0,0.0);  min-width:60px;}
+section#wishlist .btn_area #all-chk-btn .active{float:left;background:transparent url("../img/cart/btn01_on_shape.png") left top no-repeat; background-size:100% 31px; height:31px; width:33%; -webkit-tap-highlight-color: rgba(0,0,0,0.0); min-width:60px;}
+section#wishlist .btn_area #all-chk-btn-effect{float:left;background:transparent url("../img/cart/btn01_off_effect.png") left top no-repeat; background-size:100% 31px; height:31px; width:100%;  -webkit-tap-highlight-color: rgba(0,0,0,0.0); text-align:center;  min-width:60px; line-height:31px; color:#FFFFFF; font-weight:bold; font-size:14px;}
+section#wishlist .btn_area #all-chk-btn-effect:active{float:left;background:transparent url("../img/cart/btn01_on_effect.png") left top no-repeat; background-size:100% 31px; height:31px; width:100%;  -webkit-tap-highlight-color: rgba(0,0,0,0.0); text-align:center;  min-width:60px; line-height:31px; color:#FFFFFF; font-weight:bold; font-size:14px;}
+section#wishlist .btn_area #all-chk-btn-effect .active{float:left;background:transparent url("../img/cart/btn01_on_effect.png") left top no-repeat; background-size:100% 31px; height:31px; width:100%;  -webkit-tap-highlight-color: rgba(0,0,0,0.0); text-align:center;  min-width:60px; line-height:31px; color:#FFFFFF; font-weight:bold; font-size:14px;}
+section#wishlist .btn_area #chk-del-btn{float:left;background:transparent url("../img/cart/btn02_off_shape.png") left top no-repeat; background-size:100% 31px; height:31px; width:33%; -webkit-tap-highlight-color: rgba(0,0,0,0.0);   min-width:60px; margin-left:1px;}
+section#wishlist .btn_area #chk-del-btn:active{float:left;background:transparent url("../img/cart/btn02_on_shape.png") left top no-repeat; background-size:100% 31px; height:31px; width:33%; -webkit-tap-highlight-color: rgba(0,0,0,0.0);   min-width:60px;}
+section#wishlist .btn_area #chk-del-btn .active{float:left;background:transparent url("../img/cart/btn02_on_shape.png") left top no-repeat; background-size:100% 31px; height:31px; width:33%; -webkit-tap-highlight-color: rgba(0,0,0,0.0);  min-width:60px;}
+section#wishlist .btn_area #chk-del-btn-effect{float:left;background:transparent url("../img/cart/btn02_off_effect.png") left top no-repeat; background-size:100% 31px; height:31px; width:100%;  -webkit-tap-highlight-color: rgba(0,0,0,0.0); text-align:center;  min-width:60px; line-height:31px; color:#FFFFFF; font-weight:bold; font-size:14px;}
+section#wishlist .btn_area #chk-del-btn-effect:active{float:left;background:transparent url("../img/cart/btn02_on_effect.png") left top no-repeat; background-size:100% 31px; height:31px; width:100%;  -webkit-tap-highlight-color: rgba(0,0,0,0.0); text-align:center;  min-width:60px; line-height:31px; color:#FFFFFF; font-weight:bold; font-size:14px;}
+section#wishlist .btn_area #chk-del-btn-effect .active{float:left;background:transparent url("../img/cart/btn02_on_effect.png") left top no-repeat; background-size:100% 31px; height:31px; width:100%;  -webkit-tap-highlight-color: rgba(0,0,0,0.0); text-align:center;  min-width:60px; line-height:31px; color:#FFFFFF; font-weight:bold; font-size:14px;}
+section#wishlist .btn_area #all-del-btn{float:left;background:transparent url("../img/cart/btn03_off_shape.png") left top no-repeat; background-size:100% 31px; height:31px; width:33%; -webkit-tap-highlight-color: rgba(0,0,0,0.0);  min-width:60px; margin-left:1px;}
+section#wishlist .btn_area #all-del-btn:active{float:left;background:transparent url("../img/cart/btn03_on_shape.png") left top no-repeat; background-size:100% 31px; height:31px; width:33%; -webkit-tap-highlight-color: rgba(0,0,0,0.0);  min-width:60px;}
+section#wishlist .btn_area #all-del-btn .active{float:left;background:transparent url("../img/cart/btn03_on_shape.png") left top no-repeat; background-size:100% 31px; height:31px; width:33%; -webkit-tap-highlight-color: rgba(0,0,0,0.0);  min-width:60px;}
+section#wishlist .btn_area #all-del-btn-effect{float:left;background:transparent url("../img/cart/btn03_off_effect.png") left top no-repeat; background-size:100% 31px; height:31px; width:100%;  -webkit-tap-highlight-color: rgba(0,0,0,0.0); text-align:center;  min-width:60px; line-height:31px; color:#FFFFFF; font-weight:bold; font-size:14px;}
+section#wishlist .btn_area #all-del-btn-effect:active{float:left;background:transparent url("../img/cart/btn03_on_effect.png") left top no-repeat; background-size:100% 31px; height:31px; width:100%;  -webkit-tap-highlight-color: rgba(0,0,0,0.0); text-align:center;  min-width:60px; line-height:31px; color:#FFFFFF; font-weight:bold; font-size:14px;}
+section#wishlist .btn_area #all-del-btn-effect .active{float:left;background:transparent url("../img/cart/btn03_on_effect.png") left top no-repeat; background-size:100% 31px; height:31px; width:100%;  -webkit-tap-highlight-color: rgba(0,0,0,0.0); text-align:center;min-width:60px; line-height:31px; color:#FFFFFF; font-weight:bold; font-size:14px;}
+section#wishlist .sum_area{position:relative;padding:0px 10px 10px 10px; }
+section#wishlist .sum_area .board_area{background-color:#FFFFFF; padding:10px;font-size:14px; font-weight:bold; text-align:right; height:32px; border-radius:7px; border:solid 1px #cccccc;}
+section#wishlist .sum_area .board_area .title{width:65%;float:left;}
+section#wishlist .sum_area .board_area .price{width:35%;float:right;}
+
+/* 주문리스트 */
+section#orderlist {background-color:#eeeeee;min-height:100%}
+section#orderlist .m_ord {padding:10px;}
+section#orderlist .m_ord .roundbox {background-color:#FFFFFF; -webkit-border-radius:0.5em; -moz-border-radius:0.5em; border-radius:0.5em; border:solid 1px #cccccc;}
+section#orderlist .m_ord .roundbox .m_list {position:relative; border-bottom:1px solid #cccccc; height:50px; line-height:50px; background-image: -moz-linear-gradient(top, black, white) -webkit-linear-gradient(top, black, white); font-size:16px; font-weight:bold;}
+section#orderlist .m_ord .roundbox .m_list .m_title {  float:left; width: 70px; background-color:#AAAAAA; color:#FFFFFF; text-align:center; }
+section#orderlist .m_ord .roundbox .m_list .m_top_left { border-top-left-radius:0.3em; -webkit-border-top-left-radius:0.3em; -moz-border-top-left-radius:0.3em; }
+section#orderlist .m_ord .roundbox .m_list .m_right { padding-left: 7px; float:left; text-align:left; font-size:14px; }
+section#orderlist .m_ord .roundbox .m_list .m_bottom_left { border-bottom-left-radius:0.3em; -webkit-border-bottom-left-radius:0.3em; -moz-border-bottom-left-radius:0.3em; }
+section#orderlist .m_ord .roundbox .m_list .m_btn { float:right; position:relative; right:7px; background:url('../img/ord/btn_more_shape.png') no-repeat;  background-size:89px 36px; font-size:14px; width:89px; height:36px; margin-top:7px; line-height:0px;}
+section#orderlist .m_ord .roundbox .m_list .m_btn .more_btn { border:0; width:89px; height:36px; background:url('../img/ord/btn_more_off_effect.png') no-repeat;  background-size:89px 36px;  font-weight:bold; -webkit-tap-highlight-color: rgba(0,0,0,0.0); color:#DDDDDD; font-size:14px;}
+section#orderlist .m_ord .roundbox .m_list .m_btn .more_btn:active { border:0; width:89px; height:36px; background:url('../img/ord/btn_more_on_effect.png') no-repeat;  background-size:89px 36px;  font-weight:bold; -webkit-tap-highlight-color: rgba(0,0,0,0.0); color:#DDDDDD; font-size:14px; }
+section#orderlist .m_ord .roundbox .m_list .m_btn .more_btn.active { border:0; width:89px; height:36px; background:url('../img/ord/btn_more_on_effect.png') no-repeat;  background-size:89px 36px;  font-weight:bold; -webkit-tap-highlight-color: rgba(0,0,0,0.0); color:#DDDDDD; font-size:14px; }
+section#orderlist .pagediv {text-align:center; font-size:16px; margin-bottom:20px;}
+section#orderlist .btn_orverview {float:right; display:block; width:64px; height:21px; background:url('../img/btn_detail.gif') no-repeat;}
+section#orderlist .step {color:#ff0000;}
+section#orderlist .golist {text-align:center;margin-top:10px;}
+
+/* 이머니리스트 */
+section#emoneylist {background-color:#eeeeee;min-height:100%}
+section#emoneylist table {width:100%; }
+section#emoneylist table th {height:50px; border-bottom:solid 1px #bbbbbb; background-color:#cccccc; line-height:50px; font-size:16px; text-align:center; border-right:solid 1px #bbbbbb; color:#444444;}
+section#emoneylist table td {height:60px; border-bottom:solid 1px #bbbbbb; vertical-align:middle; font-size:16px; text-align:left; color:#444444; padding-left:10px;}
+section#emoneylist table td.right{text-align:right; padding-right:10px;}
+section#emoneylist .pagediv {padding:15px 0 5px 0; text-align:center; font-size:16px;}
+
+/* 쿠폰리스트 */
+section#couponlist {background-color:#eeeeee;min-height:100%}
+section#couponlist table {width:100%; }
+section#couponlist table th {height:50px; border-bottom:solid 1px #bbbbbb; background-color:#cccccc; line-height:50px; font-size:16px; text-align:center; border-right:solid 1px #bbbbbb; color:#444444;}
+section#couponlist table td {height:60px; border-bottom:solid 1px #bbbbbb; vertical-align:middle;font-size:16px; text-align:left; color:#444444; padding-left:10px;}
+section#couponlist table td.right{text-align:right; padding-right:10px;}
+section#couponlist .pagediv {padding:15px 0 5px 0; text-align:center; font-size:16px;}
+
+/* 1:1문의리스트 */
+section#qnalist {background-color:#eeeeee;min-height:100%}
+section#qnalist table {width:100%; }
+section#qnalist table th {height:50px; border-bottom:solid 1px #bbbbbb; background-color:#cccccc; line-height:50px; font-size:16px; text-align:center; border-right:solid 1px #bbbbbb; color:#444444;}
+section#qnalist table td {height:60px; border-bottom:solid 1px #bbbbbb; vertical-align:middle;font-size:16px; text-align:left; color:#444444; padding-left:10px;}
+section#qnalist table td.right{text-align:right; padding-right:10px;}
+section#qnalist .pagediv {padding:15px 0 5px 0; text-align:center; font-size:16px;}
+
+/* 상품후기리스트 */
+section#reviewlist {background-color:#eeeeee;min-height:100%}
+section#reviewlist table {width:100%; }
+section#reviewlist table th {height:50px; border-bottom:solid 1px #bbbbbb; background-color:#cccccc; line-height:50px; font-size:16px; text-align:center; border-right:solid 1px #bbbbbb; color:#444444;}
+section#reviewlist table td {height:60px; border-bottom:solid 1px #bbbbbb; vertical-align:middle;font-size:16px; text-align:left; color:#444444; padding-left:10px;}
+section#reviewlist table td.right{text-align:right; padding-right:10px;}
+section#reviewlist .pagediv {padding:15px 0 5px 0; text-align:center; font-size:16px;}
+section#reviewlist .btn_write {background:rgba(0, 0, 0, 0.5);width:60px;height:40px;position:fixed;right:0px;top:50%;color:#EEEEEE; font-size:12px; font-weight:bold; text-shadow: 0px 1px 1px #333333;text-align:center;line-height:40px;border-top-left-radius:0.5em;border-bottom-left-radius:0.5em;margin-top:-20px;}
+section#reviewlist .m_btn { float:right; position:relative; right:7px; background:url('../img/ord/btn_more_shape.png') no-repeat;  background-size:60px 24px; font-size:14px; width:60px; height:24px; margin-top:0px; line-height:0px;}
+section#reviewlist .m_btn .mod_btn { border:0; width:60px; height:24px; background:url('../img/ord/btn_more_off_effect.png') no-repeat;  background-size:60px 24px;  font-weight:bold; -webkit-tap-highlight-color: rgba(0,0,0,0.0); color:#DDDDDD; font-size:14px;}
+section#reviewlist .m_btn .mod_btn:active { border:0; width:60px; height:24px; background:url('../img/ord/btn_more_on_effect.png') no-repeat;  background-size:60px 24px;  font-weight:bold; -webkit-tap-highlight-color: rgba(0,0,0,0.0); color:#DDDDDD; font-size:14px; }
+section#reviewlist .m_btn .mod_btn.active { border:0; width:60px; height:24px; background:url('../img/ord/btn_more_on_effect.png') no-repeat;  background-size:60px 24px;  font-weight:bold; -webkit-tap-highlight-color: rgba(0,0,0,0.0); color:#DDDDDD; font-size:14px; }
+
+/* 마이페이지 주문내역상세 */
+section#orderview {padding:10px 20px;}
+section#orderview .item_list {}
+section#orderview .item_list>ul {border-top:1px solid #e5e5e5;}
+section#orderview .item_list>ul > li {position:relative; padding:10px 0 10px 80px; border-bottom:1px solid #e5e5e5;}
+section#orderview .item_list>ul .oil_chk {position:absolute; top:10px; left:5px;}
+section#orderview .item_list>ul .oil_img {position:absolute; top:10px; left:10px;}
+section#orderview .item_list>ul .oil_name {margin-bottom:5px; max-height:32px; color:#666; font-size:14px; line-height:16px; font-weight: bold; text-shadow: 1px 1px 0 #ddd; overflow:hidden;}
+section#orderview .item_list>ul .oil_option {padding-bottom:5px; color:#666;}
+section#orderview .item_list>ul .oil_price_title {float:left; padding-right:5px;}
+section#orderview .item_list>ul .oil_price {}
+section#orderview .item_list>ul .oil_ea_title {float:left; padding-right:5px;}
+section#orderview .item_list>ul .oil_ea {}
+section#orderview .item_list>ul .oil_dstep_title {float:left; padding-right:5px;}
+section#orderview .item_list>ul .oil_dstep {}
+section#orderview .item_list>ul .blt {padding-left:6px; background:url('../img/bul_s.gif') no-repeat left center;}
+
+section#orderview .info h4		{display:none;}
+section#orderview .info table	{margin-top:10px; width:100%; border-top:1px solid #e5e5e5; border-left:1px solid #e5e5e5;}
+section#orderview .info th		{width:85px; text-align:right; background-color:#f9f9f9;}
+section#orderview .info th,
+section#orderview .info td		{padding:4px;  border-right:1px solid #e5e5e5; border-bottom:1px solid #e5e5e5;}
+
+/* 회원 가입*/
+section#memberjoin {background-color:#eeeeee;min-height:100%;padding:10px;}
+section#memberjoin .join_step {position:relative;}
+section#memberjoin .join_step .join_step1{border:solid 1px #CCCCCC; color:#FFFFFF; background-color: #CCCCCC; float:left; font-size:16px; width:27%; height:30px; text-align:center; line-height:30px; border-radius:0.5em; box-shadow:2px 2px 1px #ABABAB; -webkit-tap-highlight-color: rgba(0,0,0,0.0);}
+section#memberjoin .join_step .join_step2{border:solid 1px #CCCCCC; color:#FFFFFF; background-color: #CCCCCC; float:left; font-size:16px; width:27%; height:30px; text-align:center; line-height:30px; border-radius:0.5em; box-shadow:2px 2px 1px #ABABAB; -webkit-tap-highlight-color: rgba(0,0,0,0.0);}
+section#memberjoin .join_step .join_step3{border:solid 1px #CCCCCC; color:#FFFFFF; background-color: #CCCCCC; float:left; font-size:16px; width:27%; height:30px; text-align:center; line-height:30px; border-radius:0.5em; box-shadow:2px 2px 1px #ABABAB; -webkit-tap-highlight-color: rgba(0,0,0,0.0);}
+section#memberjoin .join_step .join_step4{border:solid 1px #CCCCCC; color:#FFFFFF; background-color: #CCCCCC; float:left; font-size:16px; width:27%; height:30px; text-align:center; line-height:30px; border-radius:0.5em; box-shadow:2px 2px 1px #ABABAB; -webkit-tap-highlight-color: rgba(0,0,0,0.0);}
+section#memberjoin .join_step .now_step{border:solid 1px #446894; color:#FFFFFF; background-color: #446894; font-weight:bold;}
+section#memberjoin .join_step .join_arrow{float:left; background:url('../img/goods/arrow01.png') center center no-repeat; width:7%; height:30px;}
+section#memberjoin .content_border {border-bottom:solid 1px #cccccc; float:left; width:100%; margin-top:10px; margin-bottom:10px;}
+section#memberjoin .none_content_border {border-bottom:solid 0px #cccccc; float:left; width:100%; margin-top:3px; margin-bottom:3px;}
+section#memberjoin .none_content_border2 {border-bottom:solid 1px #eeeeee; float:left; width:100%; margin-top:15px;}
+section#memberjoin .agreement {width:100%; float:left;}
+section#memberjoin .agreement .agreement_title{height:30px;}
+section#memberjoin .agreement .agreement_title .agreement1{height:25px; border:solid 1px #CCCCCC; color:#FFFFFF; background-color:#CCCCCC; float:left; font-size:16px; line-height:25px; padding-left:10px;padding-right:10px; box-shadow:1px 1px 1px #ABABAB;  -webkit-tap-highlight-color: rgba(0,0,0,0.0);}
+section#memberjoin .agreement .agreement_title .agreement_bar{width:0px;height:25px;border-right:solid 1px #BBBBBB; float:left; margin-left:10px; margin-right:10px;}
+section#memberjoin .agreement .agreement_title .agreement2{height:25px; border:solid 1px #CCCCCC; color:#FFFFFF; background-color:#CCCCCC; float:left; font-size:16px; line-height:25px; padding-left:10px;padding-right:10px; box-shadow:1px 1px 1px #ABABAB;  -webkit-tap-highlight-color: rgba(0,0,0,0.0);}
+section#memberjoin .agreement .agreement_title .now_agreement{border:solid 1px #446894; color:#FFFFFF; background-color: #446894; font-weight:bold;}
+section#memberjoin .agreement .agreement_content1 {height:180px; border:solid 1px #BBBBBB; margin-top:10px; background-color:#FFFFFF;}
+section#memberjoin .agreement .agreement_content1 .content-text{border:none; width:97%; height:98%; -webkit-appearance:none; padding:none; font-size:12px;}
+section#memberjoin .agreement .agreement_content2 {height:180px; border:solid 1px #BBBBBB; margin-top:10px; background-color:#FFFFFF;}
+section#memberjoin .agreement .agreement_content2 .content-text{border:none; width:97%; height:98%; -webkit-appearance:none; padding:none; font-size:12px;}
+section#memberjoin .agreement .content_view {width:100%;text-align:right; padding-right:10px; font-size:14px; font-weight:bold; color:#446894; height:20px; line-height:20px;margin-top:5px;}
+section#memberjoin .agreement .view_btn {float:right;  -webkit-tap-highlight-color: rgba(0,0,0,0.0);}
+section#memberjoin .agreement_chk {clear:both;font-size:14px;color:#3e3e3e; margin-bottom:10px;}
+section#memberjoin .agreement_chk label{height:25px; line-height:25px; position:relative;}
+section#memberjoin .agreement_chk label input[type=checkbox]{border:solid 1px #BBBBBB;}
+section#memberjoin .step_btn {margin-bottom:10px; height:44px;}
+section#memberjoin .step_btn .next_btn {position:relative; background:url('../img/login/btn_nonmember_shape.png') no-repeat; background-size:143px; float:left; }
+section#memberjoin .step_btn .next_btn #next-btn { width:143px; height:44px; border:0; background:url('../img/login/btn_nonmember_off_effect.png') no-repeat; background-size:143px; padding:0px; color:#FFFFFF; font-size:18px; font-weight:bold; -webkit-tap-highlight-color: rgba(0,0,0,0.0);}
+section#memberjoin .step_btn .next_btn #next-btn:active{ width:143px; height:44px; border:0; background:url('../img/login/btn_nonmember_on_effect.png') no-repeat; background-size:143px; padding:0px; color:#FFFFFF; font-size:18px; font-weight:bold;}
+section#memberjoin .step_btn .next_btn #next-btn .active{ width:143px; height:44px; border:0; background:url('../img/login/btn_nonmember_on_effect.png') no-repeat; background-size:143px; padding:0px; color:#FFFFFF; font-size:18px; font-weight:bold;}
+section#memberjoin .step_btn .cancel_btn {position:relative; background:url('../img/login/btn_register_shape.png') no-repeat; background-size:143px; float:right; }
+section#memberjoin .step_btn .cancel_btn #cancel-btn { width:143px; height:44px; border:0; background:url('../img/login/btn_register_off_effect.png') no-repeat; background-size:143px; padding:0px; color:#FFFFFF; font-size:18px; font-weight:bold; -webkit-tap-highlight-color: rgba(0,0,0,0.0);}
+section#memberjoin .step_btn .cancel_btn #cancel-btn:active{ width:143px; height:44px; border:0; background:url('../img/login/btn_register_on_effect.png') no-repeat; background-size:143px; padding:0px; color:#FFFFFF; font-size:18px; font-weight:bold;}
+section#memberjoin .step_btn .cancel_btn #cancel-btn .active{ width:143px; height:44px; border:0; background:url('../img/login/btn_register_on_effect.png') no-repeat; background-size:143px; padding:0px; color:#FFFFFF; font-size:18px; font-weight:bold;}
+section#memberjoin .account .account_title {height:25px; width:100%;}
+section#memberjoin .account .account_title .bullet{height:25px; background:url('../img/list/bullet.png') center center no-repeat; width:18px; float:left;}
+section#memberjoin .account .account_title .title {height:25px; line-height:25px; font-size:17px; color:#5e5e5e; font-weight:bold; float:left;}
+section#memberjoin .account .account_content {position:relative; padding:5px;}
+section#memberjoin .account .account_content .input_title{width:27%;min-width:80px;font-size:14px; color:#5e5e5e; float:left; height:20px; line-height:20px; font-weight:bold;}
+section#memberjoin .account .account_content .input_bar{width:0px;height:28px;border-right:solid 1px #BBBBBB; float:left; margin-left:1%; margin-right:3%;}
+section#memberjoin .account .account_content .input_content{width:67%;font-size:14px;float:left;line-height:20px;}
+section#memberjoin .account .account_content .input_content .description{font-size:12px;color:#4992FF;line-height:18px;}
+section#memberjoin .account .account_content .input_content .description input[type=checkbox]{height:15px; border:solid 1px #BBBBBB;}
+section#memberjoin .account .account_content .input_content .chk{color:#5e5e5e;}
+section#memberjoin .account .account_content .input_content .wrong{color:#FF3F3F;}
+section#memberjoin .account .account_content .input_content #zipcode_list {position:absolute; left:0; display:none; z-index:20; width:100%; border-top:1px solid gray; border-bottom:1px solid gray; background-color:#fff; font-size:12px; line-height:15px;}
+section#memberjoin .account .account_content .input_content #zipcode_list li {list-style:none;}
+section#memberjoin .account .account_content .input_content #zipcode_list li>a {display:block; padding:5px 2px; border-bottom:1px solid #e5e5e5;}
+section#memberjoin .account .account_content .input_content .btn_zip{ float:left; background:url('../img/btn_zipcode_shape.png') no-repeat; font-size:12px; width:95px; height:24px; background-size:95px 24px; line-height:0px; }
+section#memberjoin .account .account_content .input_content .btn_zipcode{  border:0; width:95px; height:24px; background:url('../img/btn_zipcode_off_effect.png') no-repeat;  background-size:95px 24px; font-weight:bold; -webkit-tap-highlight-color: rgba(0,0,0,0.0); color:#DDDDDD; font-size:12px; }
+section#memberjoin .account .account_content .input_content .btn_zipcode:active { border:0; width:95px; height:24px; background:url('../img/btn_zipcode_on_effect.png') no-repeat;  background-size:95px 24px; font-weight:bold; -webkit-tap-highlight-color: rgba(0,0,0,0.0); color:#DDDDDD; font-size:12px; }
+section#memberjoin .account .account_content .input_content .btn_zipcode.active { border:0; width:95px; height:24px; background:url('../img/btn_zipcode_on_effect.png') no-repeat;  background-size:95px 24px; font-weight:bold; -webkit-tap-highlight-color: rgba(0,0,0,0.0); color:#DDDDDD; font-size:12px; }
+section#memberjoin .certify {clear:both; font-size:14px; color:#3e3e3e;}
+section#memberjoin .certify .div_RnCheck_ipin, section#memberjoin .certify .div_RnCheck_hpauth {width:100%; border:1px solid #DEDEDE; margin-bottom:10px;}
+section#memberjoin .certify .div_RnCheck_ipin ul.info, section#memberjoin .certify .div_RnCheck_hpauth ul.info {border:5px solid #F3F3F3; padding:5px; list-style-type:none;}
+section#memberjoin .certify .div_RnCheck_ipin ul.info li, section#memberjoin .certify .div_RnCheck_hpauth ul.info li {background:url('../img/ipin/Regist_box_icon.gif') no-repeat 0 2px; padding:2px 0 2px 17px;}
+
+/* 주문폼 */
+section#m_order {background-color:#eeeeee;min-height:100%}
+section#m_order input[type=text]{ border:solid 1px #CCCCCC; border-radius: 0.5em;  -webkit-appearance:none; -moz-box-shadow: inset 1px 1px 1px #bbb; -webkit-box-shadow: inset 1px 1px 1px #bbb; box-shadow: inset 1px 1px 1px #bbb; }
+section#m_order .sub_title{padding-left:10px; margin-top:15px; font-size:18px; font-weight:bold;}
+section#m_order .m_ord {padding:10px;}
+section#m_order .m_ord .roundbox {background-color:#FFFFFF; -webkit-border-radius:0.5em; -moz-border-radius:0.5em; border-radius:0.5em; border:solid 1px #cccccc;}
+section#m_order .m_ord .roundbox .m_list {position:relative; border-bottom:1px solid #cccccc; height:50px; line-height:50px; background-image: -moz-linear-gradient(top, black, white) -webkit-linear-gradient(top, black, white); font-size:16px; font-weight:bold;}
+section#m_order .m_ord .roundbox .m_list .m_title {  float:left; width: 70px; background-color:#AAAAAA; color:#FFFFFF; text-align:center; }
+section#m_order .m_ord .roundbox .m_list .m_top_left { border-top-left-radius:0.3em; -webkit-border-top-left-radius:0.3em; -moz-border-top-left-radius:0.3em; }
+section#m_order .m_ord .roundbox .m_list .m_right { padding-left: 7px; float:left; text-align:left; font-size:14px; }
+section#m_order .m_ord .roundbox .m_list .m_right #zipcode_list {position:absolute; left:0; display:none; z-index:20; width:100%; border-top:1px solid gray; border-bottom:1px solid gray; background-color:#fff; font-size:12px; line-height:15px;}
+section#m_order .m_ord .roundbox .m_list .m_right #zipcode_list li {list-style:none;}
+section#m_order .m_ord .roundbox .m_list .m_right #zipcode_list li>a {display:block; padding:5px 2px; border-bottom:1px solid #e5e5e5;}
+section#m_order .m_ord .roundbox .m_list .m_right .btn_zip{ float:right; margin-top:7px; background:url('../img/btn_zipcode_shape.png') no-repeat; font-size:14px; width:116px; height:36px; line-height:0px; }
+section#m_order .m_ord .roundbox .m_list .m_right .btn_zipcode{  border:0; width:116px; height:36px; background:url('../img/btn_zipcode_off_effect.png') no-repeat;  font-weight:bold; -webkit-tap-highlight-color: rgba(0,0,0,0.0); color:#DDDDDD; font-size:14px; }
+section#m_order .m_ord .roundbox .m_list .m_right .btn_zipcode:active { border:0; width:116px; height:36px; background:url('../img/btn_zipcode_on_effect.png') no-repeat;  font-weight:bold; -webkit-tap-highlight-color: rgba(0,0,0,0.0); color:#DDDDDD; font-size:14px; }
+section#m_order .m_ord .roundbox .m_list .m_right .btn_zipcode.active { border:0; width:116px; height:36px; background:url('../img/btn_zipcode_on_effect.png') no-repeat;  font-weight:bold; -webkit-tap-highlight-color: rgba(0,0,0,0.0); color:#DDDDDD; font-size:14px; }
+section#m_order .m_ord .roundbox .m_list .m_right .btn_coup{ float:right; margin-top:7px; background:url('../img/btn_coupon_shape.png') no-repeat; font-size:14px; width:100px; height:36px; line-height:0px; }
+section#m_order .m_ord .roundbox .m_list .m_right .btn_coupon{  border:0; width:100px; height:36px; background:url('../img/btn_coupon_off_effect.png') no-repeat;  font-weight:bold; -webkit-tap-highlight-color: rgba(0,0,0,0.0); color:#DDDDDD; font-size:14px; }
+section#m_order .m_ord .roundbox .m_list .m_right .btn_coupon:active { border:0; width:134px; height:36px; background:url('../img/btn_coupon_on_effect.png') no-repeat;  font-weight:bold; -webkit-tap-highlight-color: rgba(0,0,0,0.0); color:#DDDDDD; font-size:14px; }
+section#m_order .m_ord .roundbox .m_list .m_right .btn_coupon.active { border:0; width:134px; height:36px; background:url('../img/btn_coupon_on_effect.png') no-repeat;  font-weight:bold; -webkit-tap-highlight-color: rgba(0,0,0,0.0); color:#DDDDDD; font-size:14px; }
+section#m_order .m_ord .roundbox .m_list .m_bottom_left { border-bottom-left-radius:0.3em; -webkit-border-bottom-left-radius:0.3em; -moz-border-bottom-left-radius:0.3em; }
+section#m_order .m_ord .roundbox .m_list2 {position:relative; border-bottom:1px solid #cccccc; background-image: -moz-linear-gradient(top, black, white) -webkit-linear-gradient(top, black, white); font-size:16px; font-weight:bold;}
+section#m_order .m_ord .roundbox .m_list2 .m_title { width: 70px; background-color:#AAAAAA; color:#FFFFFF; text-align:center; vertical-align: middle; }
+section#m_order .m_ord .roundbox .m_list2 .m_content { padding: 7px; }
+section#m_order .m_ord .roundbox .m_list2 .m_top_left { border-top-left-radius:0.3em; -webkit-border-top-left-radius:0.3em; -moz-border-top-left-radius:0.3em; }
+section#m_order .m_ord .roundbox .m_list2 .m_right { padding-left: 7px; float:left; text-align:left; font-size:15px; }
+section#m_order .m_ord .roundbox .m_list2 .m_content label { margin-right:5px; }
+section#m_order .m_ord .roundbox .m_list2 .m_bottom_left { border-bottom-left-radius:0.3em; -webkit-border-bottom-left-radius:0.3em; -moz-border-bottom-left-radius:0.3em; }
+section#m_order .m_ord .btn_center { margin-top:5px; margin-bottom:10px; height:44px; }
+section#m_order .m_ord .btn_center .btn_pay { position:relative; float:left; background:url('../img/btn_payment_shape.png') no-repeat; font-size:16px; width:49%; height:44px; background-size:100% 44px; line-height:0px; max-width:150px;}
+section#m_order .m_ord .btn_center .btn_payment { border:0; width:100%; height:44px; background:url('../img/btn_payment_off_effect.png') no-repeat;  background-size:100% 44px; font-weight:bold; -webkit-tap-highlight-color: rgba(0,0,0,0.0); color:#DDDDDD; font-size:16px; max-width:150px;}
+section#m_order .m_ord .btn_center .btn_payment:active { border:0; width:100%; height:44px; background:url('../img/btn_payment_on_effect.png') no-repeat;  background-size:100% 44px; font-weight:bold; -webkit-tap-highlight-color: rgba(0,0,0,0.0); color:#DDDDDD; font-size:16px; max-width:150px;}
+section#m_order .m_ord .btn_center .btn_payment.active { border:0; width:100%; height:44px; background:url('../img/btn_payment_on_effect.png') no-repeat;  background-size:100% 44px; font-weight:bold; -webkit-tap-highlight-color: rgba(0,0,0,0.0); color:#DDDDDD; font-size:16px; max-width:150px;}
+section#m_order .m_ord .btn_center .btn_pre { float:right; background:url('../img/btn_prev_shape.png') no-repeat; font-size:16px; width:49%; height:44px; background-size:100% 44px; line-height:0px; max-width:150px;}
+section#m_order .m_ord .btn_center .btn_prev { border:0; width:100%; height:44px; background:url('../img/btn_prev_off_effect.png') no-repeat;  background-size:100% 44px; font-weight:bold; -webkit-tap-highlight-color: rgba(0,0,0,0.0); color:#DDDDDD; font-size:16px; max-width:150px;}
+section#m_order .m_ord .btn_center .btn_prev:active { border:0; width:100%; height:44px; background:url('../img/btn_prev_on_effect.png') no-repeat;  background-size:100% 44px; font-weight:bold; -webkit-tap-highlight-color: rgba(0,0,0,0.0); color:#DDDDDD; font-size:16px; max-width:150px;}
+section#m_order .m_ord .btn_center .btn_prev.active { border:0; width:100%; height:44px; background:url('../img/btn_prev_on_effect.png') no-repeat;  background-size:100% 44px; font-weight:bold; -webkit-tap-highlight-color: rgba(0,0,0,0.0); color:#DDDDDD; font-size:16px; max-width:150px;}
+section#m_order ul.order_item_list {margin-top:0px;padding-top:0px;list-style:none;}
+section#m_order ul.order_item_list li {position:relative; height:167px; background:transparent url("../img/cart/list_bg.png") repeat-x; background-size:1px 167px; }
+section#m_order ul.order_item_list .oil_chk {float:left;height:167px; line-height:167px; padding-left:10px; }
+section#m_order ul.order_item_list .oil_chk input{border:solid 1px #aaaaaa; background-color:#ffffff; -webkit-appearance:checkbox; -moz-apperance:checkhbox; -webkit-width:20px; -webkit-height:20px; -moz-width:20px; -moz-height:20px; width:20px; height:20px;}
+section#m_order ul.order_item_list .oil_img {float:left;height:121px; padding-top:21px; padding-left:10px; }
+section#m_order ul.order_item_list .oil_goods {float:left;height:132px; padding-left:10px; padding-top:10px;font-size:14px; color:#5e5e5e; font-weight:bold;}
+section#m_order ul.order_item_list .oil_goods .oil_name {margin-bottom:3px; font-size:18px; color:#666666; font-weight:bold;text-overflow:ellipsis;overflow:hidden;white-space:nowrap;max-width:150px;}
+section#m_order ul.order_item_list .oil_goods .oil_option {text-overflow:ellipsis;overflow:hidden;white-space:nowrap;max-width:150px;}
+section#m_order ul.order_item_list .oil_goods .oil_price .r_price{color:#EE4040;}
+section#m_order ul.order_item_list .oil_goods .oil_ea .oil_ea_btn{background:url('../img/cart/btn_modify_shape.png') no-repeat; background-size:56px 20px; margin-top:-20px; margin-left:100px;}
+section#m_order ul.order_item_list .oil_goods .oil_ea .oil_ea_btn #ea-modify-btn { width:56px; height:20px; border:0; background:url('../img/cart/btn_modify_off_effect.png') no-repeat; background-size:56px 20px; padding:0px; color:#FFFFFF; font-size:14px; font-weight:bold; -webkit-tap-highlight-color: rgba(0,0,0,0.0);  }
+section#m_order ul.order_item_list .oil_goods .oil_ea .oil_ea_btn #ea-modify-btn:active { width:56px; height:20px; border:0; background:url('../img/cart/btn_modify_on_effect.png') no-repeat; background-size:56px 20px; padding:0px; color:#FFFFFF; font-size:14px; font-weight:bold; -webkit-tap-highlight-color: rgba(0,0,0,0.0);  }
+section#m_order ul.order_item_list .oil_goods .oil_ea .oil_ea_btn #ea-modify-btn .active{ width:56px; height:20px; border:0; background:url('../img/cart/btn_modify_on_effect.png') no-repeat; background-size:56px 20px; padding:0px; color:#FFFFFF; font-size:14px; font-weight:bold; -webkit-tap-highlight-color: rgba(0,0,0,0.0);  }
+section#m_order ul.order_item_list .oil_delivery_title {float:left; padding-right:5px;white-space:nowrap;max-width:150px;}
+section#m_order ul.order_item_list .blt {}
+section#m_order ul.order_item_list .oil_delivery {margin-bottom:3px; font-size:14px; color:#666666; font-weight:bold;text-overflow:ellipsis;overflow:hidden;white-space:nowrap;max-width:150px;}
+section#m_order .sum_area{position:relative;padding:0px 10px 10px 10px; }
+section#m_order .sum_area .board_area{background-color:#FFFFFF; padding:10px;font-size:14px;font-weight:bold; text-align:right; height:32px; border-radius:7px; border:solid 1px #cccccc;}
+section#m_order .sum_area .board_area .title{width:65%;float:left;}
+section#m_order .sum_area .board_area .price{width:35%;float:right;}
+section#nm_order .agreement-content table {border: none; margin: 0;}
+section#nm_order .agreement-content th {border: none; background: none;}
+section#nm_order .agreement-content td {border: none;}
+
+/* 상품뷰 */
+section#goodsview {clear:both;background-color:#eeeeee;min-height:100%}
+section#goodsview .top_title{height:40px;background:url('../img/myp/cate_bg.png') repeat-x; line-height:40px; padding-left:10px; padding-right:10px; color:#EEEEEE; font-size:18px; font-weight:bold; text-shadow: 0px 1px 1px #333333;}
+section#goodsview .top_title .goods_nm{float:left;width:200px; white-space:nowrap; overflow: hidden;text-overflow: ellipsis;-o-text-overflow: ellipsis;}
+section#goodsview .top_title .goods_price{float:right;text-align:right;color:#88EEFF;}
+section#goodsview .thumbnail-area{padding:10px;}
+section#goodsview .zoom-area{z-index:1;position:relative; float:right; background:url("../img/goods/zoomicon_bg.png") left top no-repeat; width:46px; height:46px;}
+section#goodsview .thumbnail-img{position:relative; margin-top:-1px;}
+section#goodsview .zoom-area .zoom-icon{background:url("../img/goods/zoomicon.png") left top no-repeat; width:46px; height:46px;}
+
+section#goodsview #goods_coupon {clear:both; padding:10px 0;text-align:center;}
+section#goodsview #goods_coupon li{display:inline-block; vertical-align:top; padding-bottom:10px;}
+section#goodsview #goods_coupon .coupon_img {display:inline-block; font:bold 12px tahoma; color:#FF0000; padding:19px 40px 0 0; width:100px; height:36px;}
+section#goodsview #goods_coupon .coupon_img.type_01 {background:url('../img/coupon01.gif');}
+section#goodsview #goods_coupon .coupon_img.type_02 {background:url('../img/coupon02.gif');}
+section#goodsview #goods_coupon .coupon_img.type_03 {background:url('../img/coupon03.gif');}
+section#goodsview #goods_coupon .coupon_img.type_04 {background:url('../img/coupon04.gif');}
+
+section#goodsview .btn-area {position:fixed; bottom:0px;height:54px; background:url("../img/goods/btn_bg_shape.png") left top repeat-x; background-size:1px 54px; width:100%;}
+section#goodsview .btn-area-effect {height:54px; background:url("../img/goods/btn_bg_effect.png") left top repeat-x; background-size:1px 54px; width:100%;}
+section#goodsview .btn-area #order-btn{float:left; height:54px; width:20%; -webkit-tap-highlight-color: rgba(0,0,0,0.0);  min-width:62px; }
+section#goodsview .btn-area #order-btn:active{float:left;background:transparent url("../img/goods/btn_on_shape01.png") left top no-repeat; background-size:100% 54px; height:54px; width:20%; -webkit-tap-highlight-color: rgba(0,0,0,0.0); min-width:62px;}
+section#goodsview .btn-area #order-btn .active{float:left;background:transparent url("../img/goods/btn_on_shape01.png") left top no-repeat; background-size:100% 54px; height:54px; width:20%; -webkit-tap-highlight-color: rgba(0,0,0,0.0); min-width:62px;}
+section#goodsview .btn-area #order-btn-effect{float:left; height:54px; width:100%;  -webkit-tap-highlight-color: rgba(0,0,0,0.0); text-align:center; min-width:62px;}
+section#goodsview .btn-area #order-btn-effect:active{float:left;background:transparent url("../img/goods/btn_on_effect01.png") left top no-repeat; background-size:100% 54px; height:54px; width:100%;  -webkit-tap-highlight-color: rgba(0,0,0,0.0); text-align:center; min-width:62px;}
+section#goodsview .btn-area #order-btn-effect .active{float:left;background:transparent url("../img/goods/btn_on_effect01.png") left top no-repeat; background-size:100% 54px; height:54px; width:100%;  -webkit-tap-highlight-color: rgba(0,0,0,0.0); text-align:center; min-width:62px;}
+section#goodsview .btn-area #order-btn-object{float:left;background:transparent url("../img/goods/btn_off_object01.png") center top no-repeat; background-size:62px 54px; height:54px; width:100%; -webkit-tap-highlight-color: rgba(0,0,0,0.0); }
+section#goodsview .btn-area #order-btn-object:active{float:left;background:transparent url("../img/goods/btn_on_object01.png") center top no-repeat; background-size:62px 54px; height:54px; width:100%; -webkit-tap-highlight-color: rgba(0,0,0,0.0); }
+section#goodsview .btn-area #order-btn-object .active{float:left;background:transparent url("../img/goods/btn_on_object01.png") center top no-repeat; background-size:62px 54px; height:54px; width:100%; -webkit-tap-highlight-color: rgba(0,0,0,0.0); }
+
+section#goodsview .btn-area #wish-btn{float:left; height:54px; width:20%; -webkit-tap-highlight-color: rgba(0,0,0,0.0);  min-width:62px; }
+section#goodsview .btn-area #wish-btn:active{float:left;background:transparent url("../img/goods/btn_on_shape02.png") left top no-repeat; background-size:100% 54px; height:54px; width:20%; -webkit-tap-highlight-color: rgba(0,0,0,0.0); min-width:62px;}
+section#goodsview .btn-area #wish-btn .active{float:left;background:transparent url("../img/goods/btn_on_shape02.png") left top no-repeat; background-size:100% 54px; height:54px; width:20%; -webkit-tap-highlight-color: rgba(0,0,0,0.0); min-width:62px;}
+section#goodsview .btn-area #wish-btn-effect{float:left; height:54px; width:100%;  -webkit-tap-highlight-color: rgba(0,0,0,0.0); text-align:center; min-width:62px;}
+section#goodsview .btn-area #wish-btn-effect:active{float:left;background:transparent url("../img/goods/btn_on_effect02.png") left top no-repeat; background-size:100% 54px; height:54px; width:100%;  -webkit-tap-highlight-color: rgba(0,0,0,0.0); text-align:center; min-width:62px;}
+section#goodsview .btn-area #wish-btn-effect .active{float:left;background:transparent url("../img/goods/btn_on_effect02.png") left top no-repeat; background-size:100% 54px; height:54px; width:100%;  -webkit-tap-highlight-color: rgba(0,0,0,0.0); text-align:center; min-width:62px;}
+section#goodsview .btn-area #wish-btn-object{float:left;background:transparent url("../img/goods/btn_off_object02.png") center top no-repeat; background-size:62px 54px; height:54px; width:100%; -webkit-tap-highlight-color: rgba(0,0,0,0.0); }
+section#goodsview .btn-area #wish-btn-object:active{float:left;background:transparent url("../img/goods/btn_on_object02.png") center top no-repeat; background-size:62px 54px; height:54px; width:100%; -webkit-tap-highlight-color: rgba(0,0,0,0.0); }
+section#goodsview .btn-area #wish-btn-object .active{float:left;background:transparent url("../img/goods/btn_on_object02.png") center top no-repeat; background-size:62px 54px; height:54px; width:100%; -webkit-tap-highlight-color: rgba(0,0,0,0.0); }
+
+section#goodsview .btn-area #cart-btn{float:left; height:54px; width:20%; -webkit-tap-highlight-color: rgba(0,0,0,0.0);  min-width:62px; }
+section#goodsview .btn-area #cart-btn:active{float:left;background:transparent url("../img/goods/btn_on_shape03.png") left top no-repeat; background-size:100% 54px; height:54px; width:20%; -webkit-tap-highlight-color: rgba(0,0,0,0.0); min-width:62px;}
+section#goodsview .btn-area #cart-btn .active{float:left;background:transparent url("../img/goods/btn_on_shape03.png") left top no-repeat; background-size:100% 54px; height:54px; width:20%; -webkit-tap-highlight-color: rgba(0,0,0,0.0); min-width:62px;}
+section#goodsview .btn-area #cart-btn-effect{float:left; height:54px; width:100%;  -webkit-tap-highlight-color: rgba(0,0,0,0.0); text-align:center; min-width:62px;}
+section#goodsview .btn-area #cart-btn-effect:active{float:left;background:transparent url("../img/goods/btn_on_effect03.png") left top no-repeat; background-size:100% 54px; height:54px; width:100%;  -webkit-tap-highlight-color: rgba(0,0,0,0.0); text-align:center; min-width:62px;}
+section#goodsview .btn-area #cart-btn-effect .active{float:left;background:transparent url("../img/goods/btn_on_effect03.png") left top no-repeat; background-size:100% 54px; height:54px; width:100%;  -webkit-tap-highlight-color: rgba(0,0,0,0.0); text-align:center; min-width:62px;}
+section#goodsview .btn-area #cart-btn-object{float:left;background:transparent url("../img/goods/btn_off_object03.png") center top no-repeat; background-size:62px 54px; height:54px; width:100%; -webkit-tap-highlight-color: rgba(0,0,0,0.0); }
+section#goodsview .btn-area #cart-btn-object:active{float:left;background:transparent url("../img/goods/btn_on_object03.png") center top no-repeat; background-size:62px 54px; height:54px; width:100%; -webkit-tap-highlight-color: rgba(0,0,0,0.0); }
+section#goodsview .btn-area #cart-btn-object .active{float:left;background:transparent url("../img/goods/btn_on_object03.png") center top no-repeat; background-size:62px 54px; height:54px; width:100%; -webkit-tap-highlight-color: rgba(0,0,0,0.0); }
+
+section#goodsview .btn-area #review-btn{float:left; height:54px; width:20%; -webkit-tap-highlight-color: rgba(0,0,0,0.0);  min-width:62px; }
+section#goodsview .btn-area #review-btn:active{float:left;background:transparent url("../img/goods/btn_on_shape04.png") left top no-repeat; background-size:100% 54px; height:54px; width:20%; -webkit-tap-highlight-color: rgba(0,0,0,0.0); min-width:62px;}
+section#goodsview .btn-area #review-btn .active{float:left;background:transparent url("../img/goods/btn_on_shape04.png") left top no-repeat; background-size:100% 54px; height:54px; width:20%; -webkit-tap-highlight-color: rgba(0,0,0,0.0); min-width:62px;}
+section#goodsview .btn-area #review-btn-effect{float:left; height:54px; width:100%;  -webkit-tap-highlight-color: rgba(0,0,0,0.0); text-align:center; min-width:62px;}
+section#goodsview .btn-area #review-btn-effect:active{float:left;background:transparent url("../img/goods/btn_on_effect04.png") left top no-repeat; background-size:100% 54px; height:54px; width:100%;  -webkit-tap-highlight-color: rgba(0,0,0,0.0); text-align:center; min-width:62px;}
+section#goodsview .btn-area #review-btn-effect .active{float:left;background:transparent url("../img/goods/btn_on_effect04.png") left top no-repeat; background-size:100% 54px; height:54px; width:100%;  -webkit-tap-highlight-color: rgba(0,0,0,0.0); text-align:center; min-width:62px;}
+section#goodsview .btn-area #review-btn-object{float:left;background:transparent url("../img/goods/btn_off_object04.png") center top no-repeat; background-size:62px 54px; height:54px; width:100%; -webkit-tap-highlight-color: rgba(0,0,0,0.0); }
+section#goodsview .btn-area #review-btn-object:active{float:left;background:transparent url("../img/goods/btn_on_object04.png") center top no-repeat; background-size:62px 54px; height:54px; width:100%; -webkit-tap-highlight-color: rgba(0,0,0,0.0); }
+section#goodsview .btn-area #review-btn-object .active{float:left;background:transparent url("../img/goods/btn_on_object04.png") center top no-repeat; background-size:62px 54px; height:54px; width:100%; -webkit-tap-highlight-color: rgba(0,0,0,0.0); }
+
+section#goodsview .btn-area #sns-btn{float:left; height:54px; width:20%; -webkit-tap-highlight-color: rgba(0,0,0,0.0);  min-width:62px; }
+section#goodsview .btn-area #sns-btn:active{float:left;background:transparent url("../img/goods/btn_on_shape05.png") left top no-repeat; background-size:100% 54px; height:54px; width:20%; -webkit-tap-highlight-color: rgba(0,0,0,0.0); min-width:62px;}
+section#goodsview .btn-area #sns-btn .active{float:left;background:transparent url("../img/goods/btn_on_shape05.png") left top no-repeat; background-size:100% 54px; height:54px; width:20%; -webkit-tap-highlight-color: rgba(0,0,0,0.0); min-width:62px;}
+section#goodsview .btn-area #sns-btn-effect{float:left; height:54px; width:100%;  -webkit-tap-highlight-color: rgba(0,0,0,0.0); text-align:center; min-width:62px;}
+section#goodsview .btn-area #sns-btn-effect:active{float:left;background:transparent url("../img/goods/btn_on_effect05.png") left top no-repeat; background-size:100% 54px; height:54px; width:100%;  -webkit-tap-highlight-color: rgba(0,0,0,0.0); text-align:center; min-width:62px;}
+section#goodsview .btn-area #sns-btn-effect .active{float:left;background:transparent url("../img/goods/btn_on_effect05.png") left top no-repeat; background-size:100% 54px; height:54px; width:100%;  -webkit-tap-highlight-color: rgba(0,0,0,0.0); text-align:center; min-width:62px;}
+section#goodsview .btn-area #sns-btn-object{float:left;background:transparent url("../img/goods/btn_off_object05.png") center top no-repeat; background-size:62px 54px; height:54px; width:100%; -webkit-tap-highlight-color: rgba(0,0,0,0.0); }
+section#goodsview .btn-area #sns-btn-object:active{float:left;background:transparent url("../img/goods/btn_on_object05.png") center top no-repeat; background-size:62px 54px; height:54px; width:100%; -webkit-tap-highlight-color: rgba(0,0,0,0.0); }
+section#goodsview .btn-area #sns-btn-object .active{float:left;background:transparent url("../img/goods/btn_on_object05.png") center top no-repeat; background-size:62px 54px; height:54px; width:100%; -webkit-tap-highlight-color: rgba(0,0,0,0.0); }
+
+/* 상품뷰_상세 */
+section#goodsdetail {clear:both;background-color:#eeeeee;min-height:100%}
+section#goodsdetail .top_title{height:40px;background:url('../img/myp/cate_bg.png') repeat-x; line-height:40px; padding-left:10px; padding-right:10px; color:#EEEEEE; font-size:18px; font-weight:bold; text-shadow: 0px 1px 1px #333333;}
+section#goodsdetail .top_title .goods_nm{float:left;width:200px; white-space:nowrap; overflow: hidden;text-overflow: ellipsis;-o-text-overflow: ellipsis;}
+section#goodsdetail .top_title .goods_price{float:right;text-align:right;color:#88EEFF;}
+section#goodsdetail .desc-area{padding:10px;}
+section#goodsdetail .zoom-area{z-index:1;position:relative; float:right; background:url("../img/goods/zoomicon_bg.png") left top no-repeat; width:46px; height:46px;}
+section#goodsdetail .thumbnail-img{position:relative; margin-top:-1px;}
+section#goodsdetail .zoom-area .zoom-icon{background:url("../img/goods/zoomicon.png") left top no-repeat; width:46px; height:46px;}
+
+section#goodsdetail .btn-area {position:fixed; bottom:0px;height:54px; background:url("../img/goods/btn_bg_shape.png") left top repeat-x; background-size:1px 54px; width:100%;}
+section#goodsdetail .btn-area-effect {height:54px; background:url("../img/goods/btn_bg_effect.png") left top repeat-x; background-size:1px 54px; width:100%;}
+section#goodsdetail .btn-area #order-btn{float:left; height:54px; width:20%; -webkit-tap-highlight-color: rgba(0,0,0,0.0);  min-width:62px; }
+section#goodsdetail .btn-area #order-btn:active{float:left;background:transparent url("../img/goods/btn_on_shape01.png") left top no-repeat; background-size:100% 54px; height:54px; width:20%; -webkit-tap-highlight-color: rgba(0,0,0,0.0); min-width:62px;}
+section#goodsdetail .btn-area #order-btn .active{float:left;background:transparent url("../img/goods/btn_on_shape01.png") left top no-repeat; background-size:100% 54px; height:54px; width:20%; -webkit-tap-highlight-color: rgba(0,0,0,0.0); min-width:62px;}
+section#goodsdetail .btn-area #order-btn-effect{float:left; height:54px; width:100%;  -webkit-tap-highlight-color: rgba(0,0,0,0.0); text-align:center; min-width:62px;}
+section#goodsdetail .btn-area #order-btn-effect:active{float:left;background:transparent url("../img/goods/btn_on_effect01.png") left top no-repeat; background-size:100% 54px; height:54px; width:100%;  -webkit-tap-highlight-color: rgba(0,0,0,0.0); text-align:center; min-width:62px;}
+section#goodsdetail .btn-area #order-btn-effect .active{float:left;background:transparent url("../img/goods/btn_on_effect01.png") left top no-repeat; background-size:100% 54px; height:54px; width:100%;  -webkit-tap-highlight-color: rgba(0,0,0,0.0); text-align:center; min-width:62px;}
+section#goodsdetail .btn-area #order-btn-object{float:left;background:transparent url("../img/goods/btn_off_object01.png") center top no-repeat; background-size:62px 54px; height:54px; width:100%; -webkit-tap-highlight-color: rgba(0,0,0,0.0); }
+section#goodsdetail .btn-area #order-btn-object:active{float:left;background:transparent url("../img/goods/btn_on_object01.png") center top no-repeat; background-size:62px 54px; height:54px; width:100%; -webkit-tap-highlight-color: rgba(0,0,0,0.0); }
+section#goodsdetail .btn-area #order-btn-object .active{float:left;background:transparent url("../img/goods/btn_on_object01.png") center top no-repeat; background-size:62px 54px; height:54px; width:100%; -webkit-tap-highlight-color: rgba(0,0,0,0.0); }
+
+section#goodsdetail .btn-area #wish-btn{float:left; height:54px; width:20%; -webkit-tap-highlight-color: rgba(0,0,0,0.0);  min-width:62px; }
+section#goodsdetail .btn-area #wish-btn:active{float:left;background:transparent url("../img/goods/btn_on_shape02.png") left top no-repeat; background-size:100% 54px; height:54px; width:20%; -webkit-tap-highlight-color: rgba(0,0,0,0.0); min-width:62px;}
+section#goodsdetail .btn-area #wish-btn .active{float:left;background:transparent url("../img/goods/btn_on_shape02.png") left top no-repeat; background-size:100% 54px; height:54px; width:20%; -webkit-tap-highlight-color: rgba(0,0,0,0.0); min-width:62px;}
+section#goodsdetail .btn-area #wish-btn-effect{float:left; height:54px; width:100%;  -webkit-tap-highlight-color: rgba(0,0,0,0.0); text-align:center; min-width:62px;}
+section#goodsdetail .btn-area #wish-btn-effect:active{float:left;background:transparent url("../img/goods/btn_on_effect02.png") left top no-repeat; background-size:100% 54px; height:54px; width:100%;  -webkit-tap-highlight-color: rgba(0,0,0,0.0); text-align:center; min-width:62px;}
+section#goodsdetail .btn-area #wish-btn-effect .active{float:left;background:transparent url("../img/goods/btn_on_effect02.png") left top no-repeat; background-size:100% 54px; height:54px; width:100%;  -webkit-tap-highlight-color: rgba(0,0,0,0.0); text-align:center; min-width:62px;}
+section#goodsdetail .btn-area #wish-btn-object{float:left;background:transparent url("../img/goods/btn_off_object02.png") center top no-repeat; background-size:62px 54px; height:54px; width:100%; -webkit-tap-highlight-color: rgba(0,0,0,0.0); }
+section#goodsdetail .btn-area #wish-btn-object:active{float:left;background:transparent url("../img/goods/btn_on_object02.png") center top no-repeat; background-size:62px 54px; height:54px; width:100%; -webkit-tap-highlight-color: rgba(0,0,0,0.0); }
+section#goodsdetail .btn-area #wish-btn-object .active{float:left;background:transparent url("../img/goods/btn_on_object02.png") center top no-repeat; background-size:62px 54px; height:54px; width:100%; -webkit-tap-highlight-color: rgba(0,0,0,0.0); }
+
+section#goodsdetail .btn-area #cart-btn{float:left; height:54px; width:20%; -webkit-tap-highlight-color: rgba(0,0,0,0.0);  min-width:62px; }
+section#goodsdetail .btn-area #cart-btn:active{float:left;background:transparent url("../img/goods/btn_on_shape03.png") left top no-repeat; background-size:100% 54px; height:54px; width:20%; -webkit-tap-highlight-color: rgba(0,0,0,0.0); min-width:62px;}
+section#goodsdetail .btn-area #cart-btn .active{float:left;background:transparent url("../img/goods/btn_on_shape03.png") left top no-repeat; background-size:100% 54px; height:54px; width:20%; -webkit-tap-highlight-color: rgba(0,0,0,0.0); min-width:62px;}
+section#goodsdetail .btn-area #cart-btn-effect{float:left; height:54px; width:100%;  -webkit-tap-highlight-color: rgba(0,0,0,0.0); text-align:center; min-width:62px;}
+section#goodsdetail .btn-area #cart-btn-effect:active{float:left;background:transparent url("../img/goods/btn_on_effect03.png") left top no-repeat; background-size:100% 54px; height:54px; width:100%;  -webkit-tap-highlight-color: rgba(0,0,0,0.0); text-align:center; min-width:62px;}
+section#goodsdetail .btn-area #cart-btn-effect .active{float:left;background:transparent url("../img/goods/btn_on_effect03.png") left top no-repeat; background-size:100% 54px; height:54px; width:100%;  -webkit-tap-highlight-color: rgba(0,0,0,0.0); text-align:center; min-width:62px;}
+section#goodsdetail .btn-area #cart-btn-object{float:left;background:transparent url("../img/goods/btn_off_object03.png") center top no-repeat; background-size:62px 54px; height:54px; width:100%; -webkit-tap-highlight-color: rgba(0,0,0,0.0); }
+section#goodsdetail .btn-area #cart-btn-object:active{float:left;background:transparent url("../img/goods/btn_on_object03.png") center top no-repeat; background-size:62px 54px; height:54px; width:100%; -webkit-tap-highlight-color: rgba(0,0,0,0.0); }
+section#goodsdetail .btn-area #cart-btn-object .active{float:left;background:transparent url("../img/goods/btn_on_object03.png") center top no-repeat; background-size:62px 54px; height:54px; width:100%; -webkit-tap-highlight-color: rgba(0,0,0,0.0); }
+
+section#goodsdetail .btn-area #review-btn{float:left; height:54px; width:20%; -webkit-tap-highlight-color: rgba(0,0,0,0.0);  min-width:62px; }
+section#goodsdetail .btn-area #review-btn:active{float:left;background:transparent url("../img/goods/btn_on_shape04.png") left top no-repeat; background-size:100% 54px; height:54px; width:20%; -webkit-tap-highlight-color: rgba(0,0,0,0.0); min-width:62px;}
+section#goodsdetail .btn-area #review-btn .active{float:left;background:transparent url("../img/goods/btn_on_shape04.png") left top no-repeat; background-size:100% 54px; height:54px; width:20%; -webkit-tap-highlight-color: rgba(0,0,0,0.0); min-width:62px;}
+section#goodsdetail .btn-area #review-btn-effect{float:left; height:54px; width:100%;  -webkit-tap-highlight-color: rgba(0,0,0,0.0); text-align:center; min-width:62px;}
+section#goodsdetail .btn-area #review-btn-effect:active{float:left;background:transparent url("../img/goods/btn_on_effect04.png") left top no-repeat; background-size:100% 54px; height:54px; width:100%;  -webkit-tap-highlight-color: rgba(0,0,0,0.0); text-align:center; min-width:62px;}
+section#goodsdetail .btn-area #review-btn-effect .active{float:left;background:transparent url("../img/goods/btn_on_effect04.png") left top no-repeat; background-size:100% 54px; height:54px; width:100%;  -webkit-tap-highlight-color: rgba(0,0,0,0.0); text-align:center; min-width:62px;}
+section#goodsdetail .btn-area #review-btn-object{float:left;background:transparent url("../img/goods/btn_off_object04.png") center top no-repeat; background-size:62px 54px; height:54px; width:100%; -webkit-tap-highlight-color: rgba(0,0,0,0.0); }
+section#goodsdetail .btn-area #review-btn-object:active{float:left;background:transparent url("../img/goods/btn_on_object04.png") center top no-repeat; background-size:62px 54px; height:54px; width:100%; -webkit-tap-highlight-color: rgba(0,0,0,0.0); }
+section#goodsdetail .btn-area #review-btn-object .active{float:left;background:transparent url("../img/goods/btn_on_object04.png") center top no-repeat; background-size:62px 54px; height:54px; width:100%; -webkit-tap-highlight-color: rgba(0,0,0,0.0); }
+
+section#goodsdetail .btn-area #sns-btn{float:left; height:54px; width:20%; -webkit-tap-highlight-color: rgba(0,0,0,0.0);  min-width:62px; }
+section#goodsdetail .btn-area #sns-btn:active{float:left;background:transparent url("../img/goods/btn_on_shape05.png") left top no-repeat; background-size:100% 54px; height:54px; width:20%; -webkit-tap-highlight-color: rgba(0,0,0,0.0); min-width:62px;}
+section#goodsdetail .btn-area #sns-btn .active{float:left;background:transparent url("../img/goods/btn_on_shape05.png") left top no-repeat; background-size:100% 54px; height:54px; width:20%; -webkit-tap-highlight-color: rgba(0,0,0,0.0); min-width:62px;}
+section#goodsdetail .btn-area #sns-btn-effect{float:left; height:54px; width:100%;  -webkit-tap-highlight-color: rgba(0,0,0,0.0); text-align:center; min-width:62px;}
+section#goodsdetail .btn-area #sns-btn-effect:active{float:left;background:transparent url("../img/goods/btn_on_effect05.png") left top no-repeat; background-size:100% 54px; height:54px; width:100%;  -webkit-tap-highlight-color: rgba(0,0,0,0.0); text-align:center; min-width:62px;}
+section#goodsdetail .btn-area #sns-btn-effect .active{float:left;background:transparent url("../img/goods/btn_on_effect05.png") left top no-repeat; background-size:100% 54px; height:54px; width:100%;  -webkit-tap-highlight-color: rgba(0,0,0,0.0); text-align:center; min-width:62px;}
+section#goodsdetail .btn-area #sns-btn-object{float:left;background:transparent url("../img/goods/btn_off_object05.png") center top no-repeat; background-size:62px 54px; height:54px; width:100%; -webkit-tap-highlight-color: rgba(0,0,0,0.0); }
+section#goodsdetail .btn-area #sns-btn-object:active{float:left;background:transparent url("../img/goods/btn_on_object05.png") center top no-repeat; background-size:62px 54px; height:54px; width:100%; -webkit-tap-highlight-color: rgba(0,0,0,0.0); }
+section#goodsdetail .btn-area #sns-btn-object .active{float:left;background:transparent url("../img/goods/btn_on_object05.png") center top no-repeat; background-size:62px 54px; height:54px; width:100%; -webkit-tap-highlight-color: rgba(0,0,0,0.0); }
+
+/* 상품 옵션 선택 */
+section#goodsorder-hide {position:fixed; bottom:60px; padding:0% 5% 0% 5%; width:100%; display:none;}
+section#goodsorder-hide .pop_back{background:transparent url("../img/goods/popup01_bg.png") left top no-repeat; background-size:100% 100%; width:90%; height:100%;}
+section#goodsorder-hide .pop_back .pop_effect {background:transparent url("../img/goods/popup01_effect.png") left top no-repeat; background-size:100% 100%; width:100%; height:100%;}
+section#goodsorder-hide .pop_back .pop_effect .pop_body {padding:0px 20px 0px 20px;}
+section#goodsorder-hide .pop_back .pop_effect .pop_body .pop_title {background:transparent url("../img/goods/popup_title_line.png") left bottom repeat-x; width:100%; height:35px; color:#DDDDDD; font-size:18px; font-weight:bold; line-height:35px; text-shadow:-1px -1px #555555;}
+section#goodsorder-hide .pop_back .pop_effect .pop_body .pop_content {padding:5px;}
+section#goodsorder-hide .pop_back .pop_effect .pop_body .pop_content .pop_content_ttt{line-height:25px; font-size:16px; font-weight:bold; color:#DDDDDD; text-shadow:-1 -1 #555555;}
+section#goodsorder-hide .pop_back .pop_effect .pop_body .pop_content .pop_content_opt{height:30px;}
+section#goodsorder-hide .pop_back .pop_effect .pop_body .pop_content .pop_content_opt .pop_content_title{float:left; line-height:25px; font-size:16px; font-weight:bold; color:#DDDDDD; text-shadow:-1 -1 #555555;}
+section#goodsorder-hide .pop_back .pop_effect .pop_body .pop_content .pop_content_opt .pop_content_content{float:right;}
+section#goodsorder-hide .pop_back .pop_effect .pop_body .pop_content .pop_content_opt .pop_content_content select{height:25px;max-width:120px; }
+section#goodsorder-hide .pop_back .pop_effect .pop_body .pop_content .pop_content_cnt{height:25px;}
+section#goodsorder-hide .pop_back .pop_effect .pop_body .pop_content .pop_content_cnt .pop_content_title{float:left; line-height:25px; font-size:16px; font-weight:bold; color:#DDDDDD; text-shadow:-1 -1 #555555;}
+section#goodsorder-hide .pop_back .pop_effect .pop_body .pop_content .pop_content_cnt .pop_content_content{float:right;}
+section#goodsorder-hide .pop_back .pop_effect .pop_body .pop_content .pop_content_cnt .pop_content_content input{height:20px;}
+section#goodsorder-hide .pop_back .pop_effect .pop_body .pop_btn{overflow:hidden;}
+section#goodsorder-hide .pop_back .pop_effect .pop_body .pop_btn #pop-left-btn{float:left; width:45%; background:transparent url("../img/goods/popup_btn_left_off_effect.png") left top no-repeat; background-size:100% 30px; height:30px; -webkit-tap-highlight-color: rgba(0,0,0,0.0); text-align:center; line-height:30px; color:#DDDDDD; font-size:18px; font-weight:bold;  text-shadow:-1px -1px #555555;}
+section#goodsorder-hide .pop_back .pop_effect .pop_body .pop_btn #pop-left-btn:active {float:left; width:45%; background:transparent url("../img/goods/popup_btn_left_on_effect.png") left top no-repeat; background-size:100% 30px; height:30px; -webkit-tap-highlight-color: rgba(0,0,0,0.0); text-align:center; line-height:30px; color:#DDDDDD; font-size:18px; font-weight:bold;  text-shadow:-1px -1px #555555;}
+section#goodsorder-hide .pop_back .pop_effect .pop_body .pop_btn #pop-left-btn .active{float:left; width:45%; background:transparent url("../img/goods/popup_btn_left_on_effect.png") left top no-repeat; background-size:100% 30px; height:30px; -webkit-tap-highlight-color: rgba(0,0,0,0.0); text-align:center; line-height:30px; color:#DDDDDD; font-size:18px; font-weight:bold;  text-shadow:-1px -1px #555555;}
+section#goodsorder-hide .pop_back .pop_effect .pop_body .pop_btn #pop-right-btn{float:right; width:45%; background:transparent url("../img/goods/popup_btn_right_off_effect.png") left top no-repeat; background-size:100% 30px; height:30px; -webkit-tap-highlight-color: rgba(0,0,0,0.0); text-align:center; line-height:30px; color:#DDDDDD; font-size:18px; font-weight:bold;  text-shadow:-1px -1px #555555;}
+section#goodsorder-hide .pop_back .pop_effect .pop_body .pop_btn #pop-right-btn:active {float:right; width:45%; background:transparent url("../img/goods/popup_btn_right_on_effect.png") left top no-repeat; background-size:100% 30px; height:30px; -webkit-tap-highlight-color: rgba(0,0,0,0.0); text-align:center; line-height:30px; color:#DDDDDD; font-size:18px; font-weight:bold;  text-shadow:-1px -1px #555555;}
+section#goodsorder-hide .pop_back .pop_effect .pop_body .pop_btn #pop-right-btn.active{float:right; width:45%; background:transparent url("../img/goods/popup_btn_right_on_effect.png") left top no-repeat; background-size:100% 30px; height:30px; -webkit-tap-highlight-color: rgba(0,0,0,0.0); text-align:center; line-height:30px; color:#DDDDDD; font-size:18px; font-weight:bold;  text-shadow:-1px -1px #555555;}
+
+section#goodscart-hide {position:fixed; bottom:60px; padding:0% 5% 0% 5%; width:100%; display:none;}
+section#goodscart-hide .pop_back{background:transparent url("../img/goods/popup01_bg.png") left top no-repeat; background-size:100% 100%; width:90%; height:100%;}
+section#goodscart-hide .pop_back .pop_effect {background:transparent url("../img/goods/popup01_effect.png") left top no-repeat; background-size:100% 100%; width:100%; height:100%;}
+section#goodscart-hide .pop_back .pop_effect .pop_body {padding:0px 20px 0px 20px;}
+section#goodscart-hide .pop_back .pop_effect .pop_body .pop_title {background:transparent url("../img/goods/popup_title_line.png") left bottom repeat-x; width:100%; height:35px; color:#DDDDDD; font-size:18px; font-weight:bold; line-height:35px; text-shadow:-1px -1px #555555;}
+section#goodscart-hide .pop_back .pop_effect .pop_body .pop_content {padding:5px;}
+section#goodscart-hide .pop_back .pop_effect .pop_body .pop_content .pop_content_ttt{line-height:25px; font-size:16px; font-weight:bold; color:#DDDDDD; text-shadow:-1 -1 #555555;}
+section#goodscart-hide .pop_back .pop_effect .pop_body .pop_content .pop_content_opt{height:30px;}
+section#goodscart-hide .pop_back .pop_effect .pop_body .pop_content .pop_content_opt .pop_content_title{float:left; line-height:25px; font-size:16px; font-weight:bold; color:#DDDDDD; text-shadow:-1 -1 #555555;}
+section#goodscart-hide .pop_back .pop_effect .pop_body .pop_content .pop_content_opt .pop_content_content{float:right;}
+section#goodscart-hide .pop_back .pop_effect .pop_body .pop_content .pop_content_opt .pop_content_content select{height:25px;max-width:120px;}
+section#goodscart-hide .pop_back .pop_effect .pop_body .pop_content .pop_content_cnt{height:25px;}
+section#goodscart-hide .pop_back .pop_effect .pop_body .pop_content .pop_content_cnt .pop_content_title{float:left; line-height:25px; font-size:16px; font-weight:bold; color:#DDDDDD; text-shadow:-1 -1 #555555;}
+section#goodscart-hide .pop_back .pop_effect .pop_body .pop_content .pop_content_cnt .pop_content_content{float:right;}
+section#goodscart-hide .pop_back .pop_effect .pop_body .pop_content .pop_content_cnt .pop_content_content input{height:25px;}
+section#goodscart-hide .pop_back .pop_effect .pop_body .pop_btn{}
+section#goodscart-hide .pop_back .pop_effect .pop_body .pop_btn #pop-left-btn{float:left; width:45%; background:transparent url("../img/goods/popup_btn_left_off_effect.png") left top no-repeat; background-size:100% 30px; height:30px; -webkit-tap-highlight-color: rgba(0,0,0,0.0); text-align:center; line-height:30px; color:#DDDDDD; font-size:18px; font-weight:bold;  text-shadow:-1px -1px #555555;}
+section#goodscart-hide .pop_back .pop_effect .pop_body .pop_btn #pop-left-btn:active {float:left; width:45%; background:transparent url("../img/goods/popup_btn_left_on_effect.png") left top no-repeat; background-size:100% 30px; height:30px; -webkit-tap-highlight-color: rgba(0,0,0,0.0); text-align:center; line-height:30px; color:#DDDDDD; font-size:18px; font-weight:bold;  text-shadow:-1px -1px #555555;}
+section#goodscart-hide .pop_back .pop_effect .pop_body .pop_btn #pop-left-btn .active{float:left; width:45%; background:transparent url("../img/goods/popup_btn_left_on_effect.png") left top no-repeat; background-size:100% 30px; height:30px; -webkit-tap-highlight-color: rgba(0,0,0,0.0); text-align:center; line-height:30px; color:#DDDDDD; font-size:18px; font-weight:bold;  text-shadow:-1px -1px #555555;}
+section#goodscart-hide .pop_back .pop_effect .pop_body .pop_btn #pop-right-btn{float:right; width:45%; background:transparent url("../img/goods/popup_btn_right_off_effect.png") left top no-repeat; background-size:100% 30px; height:30px; -webkit-tap-highlight-color: rgba(0,0,0,0.0); text-align:center; line-height:30px; color:#DDDDDD; font-size:18px; font-weight:bold;  text-shadow:-1px -1px #555555;}
+section#goodscart-hide .pop_back .pop_effect .pop_body .pop_btn #pop-right-btn:active {float:right; width:45%; background:transparent url("../img/goods/popup_btn_right_on_effect.png") left top no-repeat; background-size:100% 30px; height:30px; -webkit-tap-highlight-color: rgba(0,0,0,0.0); text-align:center; line-height:30px; color:#DDDDDD; font-size:18px; font-weight:bold;  text-shadow:-1px -1px #555555;}
+section#goodscart-hide .pop_back .pop_effect .pop_body .pop_btn #pop-right-btn.active{float:right; width:45%; background:transparent url("../img/goods/popup_btn_right_on_effect.png") left top no-repeat; background-size:100% 30px; height:30px; -webkit-tap-highlight-color: rgba(0,0,0,0.0); text-align:center; line-height:30px; color:#DDDDDD; font-size:18px; font-weight:bold;  text-shadow:-1px -1px #555555;}
+
+section#goodswish-hide {position:fixed; bottom:60px; padding:0% 5% 0% 5%; width:100%; display:none;}
+section#goodswish-hide .pop_back{background:transparent url("../img/goods/popup01_bg.png") left top no-repeat; background-size:100% 100%; width:90%; height:100%;}
+section#goodswish-hide .pop_back .pop_effect {background:transparent url("../img/goods/popup01_effect.png") left top no-repeat; background-size:100% 100%; width:100%; height:100%;}
+section#goodswish-hide .pop_back .pop_effect .pop_body {padding:0px 20px 0px 20px;}
+section#goodswish-hide .pop_back .pop_effect .pop_body .pop_title {background:transparent url("../img/goods/popup_title_line.png") left bottom repeat-x; width:100%; height:35px; color:#DDDDDD; font-size:18px; font-weight:bold; line-height:35px; text-shadow:-1px -1px #555555;}
+section#goodswish-hide .pop_back .pop_effect .pop_body .pop_content {padding:5px;}
+section#goodswish-hide .pop_back .pop_effect .pop_body .pop_content .pop_content_ttt{line-height:25px; font-size:16px; font-weight:bold; color:#DDDDDD; text-shadow:-1 -1 #555555;}
+section#goodswish-hide .pop_back .pop_effect .pop_body .pop_content .pop_content_opt{height:30px;}
+section#goodswish-hide .pop_back .pop_effect .pop_body .pop_content .pop_content_opt .pop_content_title{float:left; line-height:25px; font-size:16px; font-weight:bold; color:#DDDDDD; text-shadow:-1 -1 #555555;}
+section#goodswish-hide .pop_back .pop_effect .pop_body .pop_content .pop_content_opt .pop_content_content{float:right;}
+section#goodswish-hide .pop_back .pop_effect .pop_body .pop_content .pop_content_opt .pop_content_content select{height:25px;max-width:120px;}
+section#goodswish-hide .pop_back .pop_effect .pop_body .pop_btn{}
+section#goodswish-hide .pop_back .pop_effect .pop_body .pop_btn #pop-left-btn{float:left; width:45%; background:transparent url("../img/goods/popup_btn_left_off_effect.png") left top no-repeat; background-size:100% 30px; height:30px; -webkit-tap-highlight-color: rgba(0,0,0,0.0); text-align:center; line-height:30px; color:#DDDDDD; font-size:18px; font-weight:bold;  text-shadow:-1px -1px #555555;}
+section#goodswish-hide .pop_back .pop_effect .pop_body .pop_btn #pop-left-btn:active {float:left; width:45%; background:transparent url("../img/goods/popup_btn_left_on_effect.png") left top no-repeat; background-size:100% 30px; height:30px; -webkit-tap-highlight-color: rgba(0,0,0,0.0); text-align:center; line-height:30px; color:#DDDDDD; font-size:18px; font-weight:bold;  text-shadow:-1px -1px #555555;}
+section#goodswish-hide .pop_back .pop_effect .pop_body .pop_btn #pop-left-btn .active{float:left; width:45%; background:transparent url("../img/goods/popup_btn_left_on_effect.png") left top no-repeat; background-size:100% 30px; height:30px; -webkit-tap-highlight-color: rgba(0,0,0,0.0); text-align:center; line-height:30px; color:#DDDDDD; font-size:18px; font-weight:bold;  text-shadow:-1px -1px #555555;}
+section#goodswish-hide .pop_back .pop_effect .pop_body .pop_btn #pop-right-btn{float:right; width:45%; background:transparent url("../img/goods/popup_btn_right_off_effect.png") left top no-repeat; background-size:100% 30px; height:30px; -webkit-tap-highlight-color: rgba(0,0,0,0.0); text-align:center; line-height:30px; color:#DDDDDD; font-size:18px; font-weight:bold;  text-shadow:-1px -1px #555555;}
+section#goodswish-hide .pop_back .pop_effect .pop_body .pop_btn #pop-right-btn:active {float:right; width:45%; background:transparent url("../img/goods/popup_btn_right_on_effect.png") left top no-repeat; background-size:100% 30px; height:30px; -webkit-tap-highlight-color: rgba(0,0,0,0.0); text-align:center; line-height:30px; color:#DDDDDD; font-size:18px; font-weight:bold;  text-shadow:-1px -1px #555555;}
+section#goodswish-hide .pop_back .pop_effect .pop_body .pop_btn #pop-right-btn.active{float:right; width:45%; background:transparent url("../img/goods/popup_btn_right_on_effect.png") left top no-repeat; background-size:100% 30px; height:30px; -webkit-tap-highlight-color: rgba(0,0,0,0.0); text-align:center; line-height:30px; color:#DDDDDD; font-size:18px; font-weight:bold;  text-shadow:-1px -1px #555555;}
+
+section#goodssns-hide {position:fixed; bottom:54px; padding:0% 2% 0% 2%; width:100%; height:52px;display:none;}
+section#goodssns-hide .sns_icon {width:96%;}
+section#goodssns-hide .sns01{float:right; background:transparent url("../img/goods/sns01_bg_shape.png") left top no-repeat; background-size: 100% 100%; width:50px; height:53px;}
+section#goodssns-hide .sns01_effect{background:transparent url("../img/goods/sns01_bg_effect.png") left top no-repeat; background-size: 100% 100%; width:50px; height:53px;}
+section#goodssns-hide .sns01_object{background:transparent url("../img/goods/sns01_bg_object.png") left top no-repeat; background-size: 100% 100%; width:50px; height:53px;}
+section#goodssns-hide .sns02{float:right; background:transparent url("../img/goods/sns02_bg_shape.png") left top no-repeat; background-size: 100% 100%; width:50px; height:53px;}
+section#goodssns-hide .sns02_effect{background:transparent url("../img/goods/sns02_bg_effect.png") left top no-repeat; background-size: 100% 100%; width:50px; height:53px;}
+section#goodssns-hide .sns02_object{background:transparent url("../img/goods/sns02_bg_object.png") left top no-repeat; background-size: 100% 100%; width:50px; height:53px;}
+section#goodssns-hide .sns03{float:right; background:transparent url("../img/goods/sns03_bg_shape.png") left top no-repeat; background-size: 100% 100%; width:50px; height:53px;}
+section#goodssns-hide .sns03_effect{background:transparent url("../img/goods/sns03_bg_effect.png") left top no-repeat; background-size: 100% 100%; width:50px; height:53px;}
+section#goodssns-hide .sns03_object{background:transparent url("../img/goods/sns03_bg_object.png") left top no-repeat; background-size: 100% 100%; width:50px; height:53px;}
+
+section#goodsres-hide {position:fixed; bottom:120px; padding:0% 10% 0% 10%; width:100%; height:70px;display:none;}
+section#goodsres-hide .pop_back{background:transparent url("../img/goods/popup02_bg.png") left top no-repeat; background-size:100% 100%; width:80%; height:100%;}
+section#goodsres-hide .pop_back .pop_effect {background:transparent url("../img/goods/popup02_effect.png") left top no-repeat; background-size:100% 100%; width:100%; height:100%;}
+section#goodsres-hide .pop_back .pop_effect .text_msg{padding: 0px 20px 0px 20px; text-align:center; color:#DDDDDD; font-weight:bold;  text-shadow:-1px -1px #555555; height:70px; font-size:16px; line-height:60px;}
+
+/* 상품 리스트 */
+section#goodslist {background-color:#eeeeee;min-height:100%;position:relative; margin-top:0px;padding-top:0px;}
+section#goodslist ul.goods_item_list {margin-top:0px;padding-top:0px;list-style:none;}
+section#goodslist ul.goods_item_list li {position:relative; height:119px; background:transparent url("../img/goods/list_bg.png") repeat-x; background-size:1px 119px; }
+section#goodslist ul.goods_item_list li .gl_img {position:absolute;height:109px; padding-top:10px; padding-left:10px; padding-right:10px; overflow:hidden;}
+section#goodslist ul.goods_item_list li .gl_goods {height:89px; padding-left:120px; padding-top:30px;font-size:14px; color:#5e5e5e; font-weight:bold;}
+section#goodslist ul.goods_item_list li .gl_goods .gl_name {margin-bottom:3px; font-size:18px; color:#666666; font-weight:bold;text-overflow:ellipsis;overflow:hidden;white-space:nowrap;max-width:150px;}
+section#goodslist ul.goods_item_list li .gl_goods .gl_price .r_price{color:#EE4040;}
+section#goodslist ul.goods_item_list li .gl_arrow {position: absolute; top: 0; right: 0; background:url('../img/goods/arrow01.png') right top no-repeat; width:15px; height:23px; margin-top:49px; margin-right:10px; -webkit-tap-highlight-color: rgba(0,0,0,0.0);}
+section#goodslist ul.goods_item_list li.more {height:40px; background:transparent url("../img/goods/list_bg.png") repeat-x; background-size:1px 40px; line-height:40px; font-size:20px; font-weight:bold; color:#5e5e5e; text-align:center; -webkit-tap-highlight-color: rgba(0,0,0,0.0);}
+
+section#main {background-color:#eeeeee;min-height:100%; margin-top:0px;padding-top:0px; position:relative;}
+
+section#event {background-color:#eeeeee;min-height:100%; margin-top:0px;padding-top:0px; position:relative;}
+section#event .event_body{padding:10px;}
+/* 상품 리스트 공통 */
+.item_disp1 { width:99%; }
+.item_disp2 { width:49%; }
+.item_disp3 { width:33%; }
+.item_disp4 { width:24%; }
+.item_disp5 { width:19%; }
+.item_disp6 { width:16%; }
+
+/* 상품 진열 설정 - 상품 스크롤 형 */
+.list_goodsscroll {clear:both; padding:10px;margin-top:10px;margin-bottom:10px; position:static;}
+.list_goodsscroll .list_title {height:25px; }
+.list_goodsscroll .list_title .bullet{height:25px; background:url('../img/list/bullet.png') center center no-repeat; width:18px; float:left;}
+.list_goodsscroll .list_title .title {height:25px; line-height:25px; font-size:17px; color:#5e5e5e; font-weight:bold; float:left;}
+
+.list_goodsscroll .swipe_gs { width:100%; }
+.list_goodsscroll .swipe_gs .list_content {width:100%; }
+.list_goodsscroll .swipe_gs .list_content .list_item{margin-bottom:15px;float:left;}
+.list_goodsscroll .swipe_gs .list_content .list_item .item_img {text-align:center; padding-left:3px; padding-right:3px;}
+.list_goodsscroll .swipe_gs .list_content .list_item .item_img img {max-width:74px; height:55px}
+.list_goodsscroll .swipe_gs .list_content .list_item .item_name {text-align:center;font-size:16px; font-weight:bold; color:#444444; padding-left:3px; padding-right:3px; text-overflow:ellipsis;overflow:hidden;white-space:nowrap;}
+.list_goodsscroll .swipe_gs .list_content .list_item .item_price {text-align:center;font-size:16px; font-weight:bold; color:#5e5e5e; padding-left:3px; padding-right:3px; text-overflow:ellipsis;overflow:hidden;white-space:nowrap;}
+.list_goodsscroll .swipe_gs .list_content .list_content_border {border-bottom:solid 1px #cccccc; float:left; width:100%; margin-bottom:10px;}
+
+.list_goodsscroll .list_page {height:29px; text-align:center; padding-left:20%; padding-right:20%; margin-bottom:10px; }
+.list_goodsscroll .list_page .list_page_wrap{min-width:150px;}
+.list_goodsscroll .list_page .list_page_left{background:url('../img/list/arrow_left.png') center right no-repeat; min-width:50px; float:left; height:29px; width:33%; -webkit-tap-highlight-color: rgba(0,0,0,0.0);}
+.list_goodsscroll .list_page .list_page_right{background:url('../img/list/arrow_right.png') center left no-repeat; min-width:50px; float:right;height:29px; width:33%; -webkit-tap-highlight-color: rgba(0,0,0,0.0);}
+.list_goodsscroll .list_page .list_page_num{height:29px; font-size:16px; font-weight:bold; color:#444444; min-width:50px; float:left; line-height:29px; text-align:center; width:34%;}
+.list_goodsscroll .list_page .list_page_num .n_page{color:#1E1EFF;}
+.list_goodsscroll .list_margin {height:10px;float:left; width:100%;}
+
+/* 상품 진열 설정 - 이미지 스크롤 형 */
+.list_imgscroll {clear:both; padding:10px;margin-top:10px;margin-bottom:10px; position:static;}
+.list_imgscroll .list_title {height:25px;}
+.list_imgscroll .list_title .bullet{height:25px; background:url('../img/list/bullet.png') center center no-repeat; width:18px; float:left;}
+.list_imgscroll .list_title .title {height:25px; line-height:25px; font-size:17px; color:#5e5e5e; font-weight:bold; float:left;}
+.list_imgscroll .list_content_wrap {width:100%;float:left;}
+.list_imgscroll .list_content_wrap .swipe_is {width:100%;}
+.list_imgscroll .list_content_wrap .swipe_is .list_content {width:100%;float:left;}
+.list_imgscroll .list_content_wrap .swipe_is .list_content .list_item{margin-bottom:15px;float:left;}
+.list_imgscroll .list_content_wrap .swipe_is .list_content .list_item .item_img {text-align:center; padding-left:3px; padding-right:3px; z-index:1;}
+.list_imgscroll .list_content_wrap .swipe_is .list_content .list_item .item_img img {max-width:74px; height:55px z-index:1;}
+.list_imgscroll .list_content_wrap .swipe_is .list_content .list_item .item_text-wrap { position:relative; padding-left:3px; padding-right:3px; margin-top:-25px; z-index:2; visibility:visible;}
+.list_imgscroll .list_content_wrap .swipe_is .list_content .list_item .item_text {background:rgba(0,0,0, .6); height:46px; width:100%; z-index:2;visibility:visible;}
+.list_imgscroll .list_content_wrap .swipe_is .list_content .list_item .item_name {text-align:center;font-size:16px; font-weight:bold; color:#FFFFFF; height:23px; line-height:23px; text-overflow:ellipsis;overflow:hidden;white-space:nowrap;}
+.list_imgscroll .list_content_wrap .swipe_is .list_content .list_item .item_price {text-align:center;font-size:16px; font-weight:bold; color:#FFFFFF; height:23px; line-height:23px; text-overflow:ellipsis;overflow:hidden;white-space:nowrap;}
+.list_imgscroll .list_content_wrap .swipe_is .list_content .list_content_border {border-bottom:solid 1px #cccccc; float:left; width:100%; margin-bottom:10px;}
+.list_imgscroll .list_page {float:right;height:25px; line-height:25px; font-size:16px; font-weight:bold; color:#444444; }
+.list_imgscroll .list_page .n_page{color:#1E1EFF;}
+.list_imgscroll .list_content_wrap .list_page_btn {width:100%; height:35px; position:relative; float:left; margin-top:-50%;}
+.list_imgscroll .list_content_wrap .list_page_btn .left_btn { position:relative; visibility:visible; background:rgba(255,255,255, .6); float:left; height:35px; width:25px; -webkit-tap-highlight-color: rgba(0,0,0,0.0); z-index:3;}
+.list_imgscroll .list_content_wrap .list_page_btn .left_btn_img {position:relative; visibility:visible; background:url('../img/list/arrow_left2.png')center right no-repeat; float:left; height:35px; width:25px; -webkit-tap-highlight-color: rgba(0,0,0,0.0);z-index:3;}
+.list_imgscroll .list_content_wrap .list_page_btn .right_btn { position:relative; visibility:visible; background:rgba(255,255,255, .6); float:right; height:35px; width:25px; -webkit-tap-highlight-color: rgba(0,0,0,0.0); z-index:3;}
+.list_imgscroll .list_content_wrap .list_page_btn .right_btn_img {position:relative; visibility:visible; background:url('../img/list/arrow_right2.png') center right no-repeat;float:right; height:35px; width:25px; -webkit-tap-highlight-color: rgba(0,0,0,0.0);z-index:3;}
+.list_imgscroll .list_content_wrap .list_margin {height:10px;float:left; width:100%;}
+
+/* 상품 진열 설정 - 탭 형 */
+.list_tab {clear:both; position:static;margin-top:10px;}
+.list_tab .tab_title {height:30px; padding-left:10px; padding-right:10px;}
+.list_tab .tab_title .title_wrap{border-bottom: solid 2px #555555; float:left; color:#bbbbbb;}
+.list_tab .tab_title .title_active{border-bottom: none; border-top: solid 2px #555555; border-left: solid 2px #555555; border-right: solid 2px #555555; width:32%; float:left; color:#5e5e5e; border-top-left-radius:7px; border-top-right-radius:7px;}
+.list_tab .tab_title .title {height:30px; line-height:30px; font-size:17px;  font-weight:bold; float:left; width:100%; text-align:center; text-:ellipsis;:hidden;white-space:nowrap; -webkit-tap-highlight-color: rgba(0,0,0,0.0);}
+.list_tab .list_tabcontent {padding:10px;margin-top:10px;margin-bottom:10px; position:relative;}
+.list_tab .list_tabcontent .swipe_tab {width:100%; }
+.list_tab .list_tabcontent .swipe_tab .list_content {width:100%; }
+.list_tab .list_tabcontent .swipe_tab .list_content .list_item{margin-bottom:15px;float:left;}
+.list_tab .list_tabcontent .swipe_tab .list_content .list_item .item_img {text-align:center; padding-left:3px; padding-right:3px;}
+.list_tab .list_tabcontent .swipe_tab .list_content .list_item .item_img img {max-width:74px; max-height:55px}
+.list_tab .list_tabcontent .swipe_tab .list_content .list_item .item_name {text-align:center;font-size:16px; font-weight:bold; color:#444444; padding-left:3px; padding-right:3px; text-overflow:ellipsis;overflow:hidden;white-space:nowrap;}
+.list_tab .list_tabcontent .swipe_tab .list_content .list_item .item_price {text-align:center;font-size:16px; font-weight:bold; color:#5e5e5e; padding-left:3px; padding-right:3px; text-overflow:ellipsis;overflow:hidden;white-space:nowrap;}
+.list_tab .list_tabcontent .swipe_tab .list_content .list_content_tab_border {border-bottom:solid 1px #cccccc; float:left; width:100%; margin-bottom:10px; margin-top:10px;}
+.list_tab .list_tabcontent .swipe_tab .list_content .list_content_border {border-bottom:solid 1px #cccccc; float:left; width:100%; margin-bottom:10px;}
+.list_tab .list_tabcontent .list_page {height:29px; text-align:center; padding-left:20%; padding-right:20%; margin-bottom:10px; }
+.list_tab .list_tabcontent .list_page .list_page_wrap{min-width:150px;}
+.list_tab .list_tabcontent .list_page .list_page_left{background:url('../img/list/arrow_left.png') center right no-repeat; min-width:50px; float:left; height:29px; width:33%; -webkit-tap-highlight-color: rgba(0,0,0,0.0);}
+.list_tab .list_tabcontent .list_page .list_page_right{background:url('../img/list/arrow_right.png') center left no-repeat; min-width:50px; float:right;height:29px; width:33%; -webkit-tap-highlight-color: rgba(0,0,0,0.0);}
+.list_tab .list_tabcontent .list_page .list_page_num{height:29px; font-size:16px; font-weight:bold; color:#444444; min-width:50px; float:left; line-height:29px; text-align:center; width:34%;}
+.list_tab .list_tabcontent .list_page .list_page_num .n_page{color:#1E1EFF;}
+.list_tab .list_tabcontent .list_margin {height:10px;float:left; width:100%;}
+
+/* 상품 진열 설정 - 매거진 형 */
+.list_magazine {padding:0px;margin-top:10px;margin-bottom:10px; position:static;}
+.list_magazine .list_title {height:25px;}
+.list_magazine .list_title .bullet{height:25px; background:url('../img/list/bullet.png') center center no-repeat; width:18px;float:left;}
+.list_magazine .list_title .title {height:25px; line-height:25px; font-size:17px; color:#5e5e5e; font-weight:bold;width:100px;float:left;}
+.list_magazine .swipe_mg {width:100%;float:left;}
+.list_magazine .swipe_mg .list_content {overflow:hidden; position:relative;}
+.list_magazine .swipe_mg .list_content .list_item{margin-bottom:15px;float:left;}
+.list_magazine .swipe_mg .list_content .list_item .item_img {text-align:center; padding-left:0px; padding-right:0px; z-index:1;}
+.list_magazine .swipe_mg .list_content .list_item .item_img img {max-width:100%; min-width:100%; z-index:1;}
+.list_magazine .swipe_mg .list_content .list_item .item_text-wrap { position:relative; padding-left:0px; padding-right:0px; margin-top:-25px; z-index:2; visibility:visible;}
+.list_magazine .swipe_mg .list_content .list_item .item_text {background:rgba(0,0,0, .6); height:46px; width:100%; z-index:2;visibility:visible;}
+.list_magazine .swipe_mg .list_content .list_item .item_name {text-align:center;font-size:16px; font-weight:bold; color:#FFFFFF; height:23px; line-height:23px; text-overflow:ellipsis;overflow:hidden;white-space:nowrap;}
+.list_magazine .swipe_mg .list_content .list_item .item_price {text-align:center;font-size:16px; font-weight:bold; color:#FFFFFF; height:23px; line-height:23px;}
+.list_magazine .swipe_mg .list_content .list_content_border {border-bottom:solid 1px #cccccc; float:left; width:100%; margin-bottom:10px;}
+.list_magazine .list_page {height:29px; text-align:center; padding-left:20%; padding-right:20%; margin-bottom:10px; }
+.list_magazine .list_page .list_page_wrap{min-width:150px;}
+.list_magazine .list_page .list_page_left{background:url('../img/list/arrow_left.png') center right no-repeat; min-width:50px; float:left; height:29px; width:33%; -webkit-tap-highlight-color: rgba(0,0,0,0.0);}
+.list_magazine .list_page .list_page_right{background:url('../img/list/arrow_right.png') center left no-repeat; min-width:50px; float:right;height:29px; width:33%; -webkit-tap-highlight-color: rgba(0,0,0,0.0);}
+.list_magazine .list_page .list_page_num{height:29px; font-size:16px; font-weight:bold; color:#444444; min-width:50px; float:left; line-height:29px; text-align:center; width:34%;}
+.list_magazine .list_page .list_page_num .n_page{color:#1E1EFF;}
+.list_magazine .list_margin {height:10px;float:left; width:100%;}
+
+/* 상품 진열 설정 - 배너 롤링 형 */
+.list_banner {clear:both;padding:10px;margin-top:10px;margin-bottom:10px; position:static;}
+.list_banner .list_title {height:25px;}
+.list_banner .list_title .bullet {height:25px; background:url('../img/list/bullet.png') center center no-repeat; width:18px; float:left;}
+.list_banner .list_title .title {height:25px; line-height:25px; font-size:17px; color:#5e5e5e; font-weight:bold; width:200px; float:left;}
+.list_banner .swipe_ban {width:100%}
+.list_banner .swipe_ban .list_content_border {border-bottom:solid 1px #cccccc; float:left; width:100%; margin-bottom:10px;}
+.list_banner .swipe_ban .list_content {width:100%; padding-bottom:10px; float:left;}
+.list_banner .swipe_ban .list_content .list_item { text-align:center;}
+.list_banner .swipe_ban .list_content .list_item>img {height:100%;}
+.list_banner .list_page {height:29px; text-align:center; padding-left:32%; padding-right:32%; margin-top:10px;}
+.list_banner .list_page .list_page_wrap {}
+.list_banner .list_page .list_page_box {height:10px; width:26%; border:solid 1px #aaaaaa; float:left; margin-left:2%; margin-right:2%;}
+.list_banner .list_page .now_page {background-color:#cccccc;}
+.list_banner .list_margin {height:10px;float:left; width:100%;}
+
+/* 푸터 */
+section#footer {float:left; width:100%; min-height:100%; margin-top:0px;padding-top:0px;}
+section#footer .button {padding:6px 0; text-align:center; font-size:8pt; font-weight:bold;}
+section#footer .button a.btn_pcmode {display:inline-block; width:101px; height:26px; background:url('../img/btn_pc_view.gif') no-repeat;}
+section#footer .company {width:100%; text-align:center;}
+section#footer .company .company { height:24px; }
+section#footer .company .lineinfo { font-size:11px;  font-family:Arial, dotum; color:#666; clear:both;}
+section#footer .copyright {width:100%; text-align:center; font-size:11px; font-family:Arial, dotum; color:#666;}
+section#footer nav.bottom {margin-bottom: 15px;}
+
+/* 2013.04.03 dn 상품후기작성 css 추가*/
+section#reviewregister .m_review {padding:10px;}
+section#reviewregister .m_review input[type=text]{ border:solid 1px #CCCCCC; border-radius: 0.5em;  -webkit-appearance:none; -moz-box-shadow: inset 1px 1px 1px #bbb; -webkit-box-shadow: inset 1px 1px 1px #bbb; box-shadow: inset 1px 1px 1px #bbb; }
+section#reviewregister .m_review .goods_info {height:50px;padding:10px;}
+section#reviewregister .m_review .goods_info .goods_img {float:left;width:30%;}
+section#reviewregister .m_review .goods_info .goods_text {float:right;width:70%;}
+section#reviewregister .m_review .goods_info .goods_text .goods_nm{height:25px;line-height:25px;}
+section#reviewregister .m_review .goods_info .goods_text .goods_price{height:25px;line-height:25px;}
+section#reviewregister .m_review .btn_center { margin-top:5px; margin-bottom:10px; height:44px; }
+section#reviewregister .m_review .btn_center .btn_sav { position:relative; float:left; background:url('../img/btn_payment_shape.png') no-repeat; font-size:16px; width:49%; height:44px; background-size:100% 44px; line-height:0px; max-width:150px;}
+section#reviewregister .m_review .btn_center .btn_save { border:0; width:100%; height:44px; background:url('../img/btn_payment_off_effect.png') no-repeat;  background-size:100% 44px; font-weight:bold; -webkit-tap-highlight-color: rgba(0,0,0,0.0); color:#DDDDDD; font-size:16px; max-width:150px;}
+section#reviewregister .m_review .btn_center .btn_save:active { border:0; width:100%; height:44px; background:url('../img/btn_payment_on_effect.png') no-repeat;  background-size:100% 44px; font-weight:bold; -webkit-tap-highlight-color: rgba(0,0,0,0.0); color:#DDDDDD; font-size:16px; max-width:150px;}
+section#reviewregister .m_review .btn_center .btn_save.active { border:0; width:100%; height:44px; background:url('../img/btn_payment_on_effect.png') no-repeat;  background-size:100% 44px; font-weight:bold; -webkit-tap-highlight-color: rgba(0,0,0,0.0); color:#DDDDDD; font-size:16px; max-width:150px;}
+section#reviewregister .m_review .btn_center .btn_pre { float:right; background:url('../img/btn_prev_shape.png') no-repeat; font-size:16px; width:49%; height:44px; background-size:100% 44px; line-height:0px; max-width:150px;}
+section#reviewregister .m_review .btn_center .btn_prev { border:0; width:100%; height:44px; background:url('../img/btn_prev_off_effect.png') no-repeat;  background-size:100% 44px; font-weight:bold; -webkit-tap-highlight-color: rgba(0,0,0,0.0); color:#DDDDDD; font-size:16px; max-width:150px;}
+section#reviewregister .m_review .btn_center .btn_prev:active { border:0; width:100%; height:44px; background:url('../img/btn_prev_on_effect.png') no-repeat;  background-size:100% 44px; font-weight:bold; -webkit-tap-highlight-color: rgba(0,0,0,0.0); color:#DDDDDD; font-size:16px; max-width:150px;}
+section#reviewregister .m_review .btn_center .btn_prev.active { border:0; width:100%; height:44px; background:url('../img/btn_prev_on_effect.png') no-repeat;  background-size:100% 44px; font-weight:bold; -webkit-tap-highlight-color: rgba(0,0,0,0.0); color:#DDDDDD; font-size:16px; max-width:150px;}
+section#reviewregister .m_review .roundbox {background-color:#FFFFFF; -webkit-border-radius:0.5em; -moz-border-radius:0.5em; border-radius:0.5em; border:solid 1px #cccccc;}
+section#reviewregister .m_review .roundbox .m_list {position:relative; border-bottom:1px solid #cccccc; height:50px; line-height:50px; background-image: -moz-linear-gradient(top, black, white) -webkit-linear-gradient(top, black, white); font-size:16px; font-weight:bold;}
+section#reviewregister .m_review .roundbox .m_list .m_title {  float:left; width: 20%; background-color:#AAAAAA; color:#FFFFFF; text-align:center;min-width:70px; }
+section#reviewregister .m_review .roundbox .m_list .m_top_left { border-top-left-radius:0.3em; -webkit-border-top-left-radius:0.3em; -moz-border-top-left-radius:0.3em; }
+section#reviewregister .m_review .roundbox .m_list .m_right { padding-left: 7px; float:left; text-align:left; font-size:14px; width: 65%;}
+section#reviewregister .m_review .roundbox .m_list .m_bottom_left { border-bottom-left-radius:0.3em; -webkit-border-bottom-left-radius:0.3em; -moz-border-bottom-left-radius:0.3em; }
+
+/* 2013.05.15 dn 모바일샵 개선 css 추가 시작 */
+.gnb #logo .top_global{height:35px; line-height:35px; color:#E2E2E2; font-size:12px; text-shadow: 0px 1px 1px #333333; margin-top:2px; font-family:dotum; float:right;}
+
+/* gnb new */
+.new-menu-area {height:32px; width:100%;clear:both; font-size:12px;color:#ffffff; font-weight:bold;background:url("../img/menu/new_menu_bg.png") left top repeat-x;}
+.new-menu-area #category-btn{ height:32px; float:left; width:23%;text-align:center; line-height:32px; background:url("../img/menu/new_menu_bg.png") left top repeat-x;}
+.new-menu-area #category-btn:active{height:32px; float:left; width:23%;text-align:center; line-height:32px; background:url("../img/menu/new_menu_on_bg.png") left top repeat-x;color:#353535;}
+.new-menu-area #category-btn .active{height:32px; float:left; width:23%;text-align:center; line-height:32px; background:url("../img/menu/new_menu_on_bg.png") left top repeat-x;color:#353535;}
+.new-menu-area #cart-btn{height:32px; float:left; width:25%;text-align:center; line-height:32px; background:url("../img/menu/new_menu_bg.png") left top repeat-x;}
+.new-menu-area #cart-btn:active{height:32px; float:left; width:25%;text-align:center; line-height:32px; background:url("../img/menu/new_menu_on_bg.png") left top repeat-x;color:#353535;}
+.new-menu-area #cart-btn .active{height:32px; float:left; width:25%;text-align:center; line-height:32px; background:url("../img/menu/new_menu_on_bg.png") left top repeat-x;color:#353535;}
+.new-menu-area #viewgoods-btn{height:32px; float:left; width:29%;text-align:center; line-height:32px; background:url("../img/menu/new_menu_bg.png") left top repeat-x;}
+.new-menu-area #viewgoods-btn:active{height:32px; float:left; width:29%;text-align:center; line-height:32px; background:url("../img/menu/new_menu_on_bg.png") left top repeat-x; color:#353535;}
+.new-menu-area #viewgoods-btn .active{height:32px; float:left; width:29%;text-align:center; line-height:32px; background:url("../img/menu/new_menu_on_bg.png") left top repeat-x; color:#353535;}
+.new-menu-area #wish-btn{height:32px; float:left; width:23%;text-align:center; line-height:32px;background:url("../img/menu/new_menu_bg.png") left top repeat-x;}
+.new-menu-area #wish-btn:active{height:32px; float:left; width:23%;text-align:center; line-height:32px;background:url("../img/menu/new_menu_on_bg.png") left top repeat-x; color:#353535;}
+.new-menu-area #wish-btn .active{height:32px; float:left; width:23%;text-align:center; line-height:32px;background:url("../img/menu/new_menu_on_bg.png") left top repeat-x; color:#353535;}
+.new-menu-area .bar_area {height:32px; float:right;}
+
+/* footer 추가 */
+section#footer .bottom_menu {height:35px;background:url('../img/bottom/menu_bg.png') repeat-x; line-height:40px; color:#353535; font-size:12px; font-weight:bold; text-align:center; border-bottom:solid 1px #ffffff;}
+section#footer .bottom_menu .bottom_menu_contents {padding:0 50px; }
+section#footer .bottom_menu .bottom_menu_contents .bottom_menu_left {width:33%; float:left; text-align:center;}
+section#footer .bottom_menu .bottom_menu_contents .bottom_menu_center {width:34%; float:left; text-align:center;}
+section#footer .bottom_menu .bottom_menu_contents .bottom_menu_right {width:33%; float:left; text-align:center;}
+section#footer .bottom_menu .bar_area {height:12px; float:right; }
+
+/* login 폼 추가 */
+section#login>form .login_center .login_b .save_login_status {display:block; position:absolute; top:0; left:50%; margin-top:120px; margin-left:-146px; font-size:15px; }
+
+/* cate-area 추가 */
+section#cate-area .cate_path .cate_path_item2{margin-right:100%; height:74px;background:url('../img/cate/list_bg.png') repeat-x; line-height:74px; padding:0px 12px 0px 12px; color:#EEEEEE; font-size:22px; font-weight:bold; text-shadow: 0px 1px 1px #333333; -webkit-tap-highlight-color: rgba(0,0,0,0.0);}
+section#cate-area .cate_path .cate_path_item2 .cate_path_nm {margin-left:-100%; float:left; width:100%; -webkit-tap-highlight-color: rgba(0,0,0,0.0);}
+section#cate-area .cate_list{clear:both;height:100%; margin-left:-100%;}
+section#cate-area .cate_list .cate_item2{clear:both;margin-right:100%; height:74px;background:url('../img/cate/list_bg02.png') repeat-x; line-height:74px; padding:0px 12px 0px 12px; color:#EEEEEE; font-size:22px; font-weight:bold; text-shadow: 0px 1px 1px #333333; }
+section#cate-area .cate_list .cate_item2 .cate_nm {margin-left:-100%; float:left; width:60%; -webkit-tap-highlight-color: rgba(0,0,0,0.0); white-space: nowrap;overflow: hidden;text-overflow: ellipsis;-o-text-overflow: ellipsis;}
+section#cate-area .cate_list .cate_item2 .cate_nm_arrow {float:left; width:29px; height:100%; line-height:100%; background: transparent url('../img/cate/circle_arrow.png') left repeat-x; -webkit-tap-highlight-color: rgba(0,0,0,0.0);}
+section#cate-area .cate_list .cate_item2 .cate_prd_btn {float:right; width:83px; height:100%; line-height:100%; background: transparent url('../img/cate/btn_view_default.png') center repeat-x; -webkit-tap-highlight-color: rgba(0,0,0,0.0);}
+section#cate-area .cate_list .cate_item2 .cate_prd_btn:active{float:right; width:83px; height:100%; line-height:100%; background: transparent url('../img/cate/btn_view_select.png') center repeat-x; -webkit-tap-highlight-color: rgba(0,0,0,0.0);}
+section#cate-area .cate_list .cate_item2 .cate_prd_btn .active{float:right; width:83px; height:100%; line-height:100%; background: transparent url('../img/cate/btn_view_hover.png') center repeat-x; -webkit-tap-highlight-color: rgba(0,0,0,0.0);}
+section#cate-area .top_path {height:40px; line-height:40px; background:url('../img/myp/cate_bg.png') repeat-x;  font-size:12px; color:#FFFFFF; text-shadow: 0px 1px 1px #333333;display:none;}
+section#cate-area .top_path .now_path { float:left; width:100%;font-size:12px;}
+section#cate-area .top_path .now_path .activeitem{ color:#a5deff;}
+section#cate-area .top_path .now_path .pathitem { float:left; }
+section#cate-area .top_path .now_path .allpath { padding-left:10px; }
+section#cate-area .top_path .now_path .patharrow { margin:0 5px; float:left; width:12px; height:40px; background: url('../img/cate/arrow03.png') center left no-repeat; -webkit-tap-highlight-color: rgba(0,0,0,0.0);}
+section#cate-area .top_path .btnimg {float:right; padding-right:15px;  width:10%; height:100%; line-height:100%; background: transparent url('../img/cate/circle_arrow_left.png') center no-repeat; -webkit-tap-highlight-color: rgba(0,0,0,0.0);}
+/* 2013.05.15 dn 모바일샵 개선 css 추가 종료 */
+
+h1.specTitle {
+	font-family:Verdana, Geneva, sans-serif;
+	font-size:1.2em;
+	color: #006699;
+}
+
+.descriptionWrapper {
+	width:100%;
+	text-align:center;
+	margin-left:5px;
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+.descriptionImage {
+    text-align:left;
+	margin-right: 10px;
+	float:left;
+	
+}
+
+.specTable {
+	margin-top: 50px;
+	margin-left: 10px;
+}
+
+.img_300 { width:120px; height;120px;}
+.specification { border:1px solid black; border-collapse:collapse;}
+.spec_th { padding:5px;text-align:center;background-color:#99ccff; border:1px solid black; border-collapse:collapse; vertical-align:middle;}
+.specification td {border:1px solid black; border-collapse:collapse; padding:3px; font-size:.9em;}
+.specification tr.odd {background-color:#cccccc;}
+
+col#price { width:80px; }
+col#model { width:80px; }
+col#size  { width: 180px;}
+
+.a_center { text-align:center; }
+.a_right { text-align: right; }

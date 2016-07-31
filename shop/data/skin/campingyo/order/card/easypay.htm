@@ -1,0 +1,155 @@
+<script language="javascript" src="https://pg.easypay.co.kr/plugin/EasyPayPlugin.js"></script>
+
+<script type="text/javascript">
+    
+    /* 플러그인 설치(확인) */
+    StartSmartInstall();
+	    
+    function f_submit() {
+        var frm_pay = document.frm_pay;
+       	<!--{ ? escrow=='Y' }-->
+		frm_pay.EP_escr_type.value='K';
+		<!--{ / }-->
+        var bRetVal = false;
+
+        /* 결제수단 */
+        frm_pay.EP_pay_type.value = frm_pay.pay_type.value;
+                
+       
+        
+		
+		/* 에스크로 */
+		var frm_pay = document.frm_pay;
+        var tmp = 1;
+        var total_prd_amt = 0;
+        var EP_bk_goodinfo = "";
+        
+        var chr30 = String.fromCharCode(30);	// ASCII 코드값 30
+        var chr31 = String.fromCharCode(31);	// ASCII 코드값 31
+
+		 for( var i=0; i <  frm_pay.EP_bk_cnt.value ; i++ ) { 
+            //EP_bk_goodinfo += "prd_no=" + frm_pay.prd_no[i].value + chr31 + "prd_amt=" + frm_pay.prd_amt[i].value + chr31 + "prd_nm=" + frm_pay.prd_nm[i].value + chr31 + chr30;
+			EP_bk_goodinfo += "prd_no=" + document.getElementsByName("prd_no")[i].value + chr31 + "prd_amt=" + document.getElementsByName("prd_amt")[i].value + chr31 + "prd_nm=" + document.getElementsByName("prd_nm")[i].value + chr31 + chr30;
+		} 
+		 frm_pay.EP_bk_goodinfo.value = EP_bk_goodinfo;
+		
+		 /* Easypay Plugin 실행 */
+	    if ( StartPayment( frm_pay ) == true ) {     	
+            if ( frm_pay.EP_res_cd.value == "0000" ) {
+                bRetVal = true;
+            } else {
+                /* 실패 메시지 */
+                alert( "응답코드:"   + frm_pay.EP_res_cd.value + "\n" +
+                       "응답메시지:" + frm_pay.EP_res_msg.value + "\n" );
+            }
+        }else{
+			alert( "응답코드:"   + frm_pay.EP_res_cd.value + "\n" +
+					"응답메시지:" + frm_pay.EP_res_msg.value + "\n" );
+		}	
+        if ( bRetVal ) frm_pay.submit();
+    }
+</script>
+
+<form name="frm_pay" method="post" action="../order/card/easypay/card_return.php">
+<!--에스크로 유무-->
+<input type="hidden" name="EP_escr_type"  value="" />
+<!-- [수정불가] 해외카드인증구분 //-->
+<input type="hidden" name="EP_os_cert_flag"     value="2">
+
+<!-- 플러그인으로 부터 받는 필드 [변경불가] //-->
+<input type="hidden" name="EP_res_cd"           value="">     <!-- 응답코드     //-->
+<input type="hidden" name="EP_res_msg"          value="">     <!-- 응답메시지   //-->
+<input type="hidden" name="EP_tr_cd"            value="">     <!-- 플러그인 요청구분 //-->
+<input type="hidden" name="EP_trace_no"         value="">     <!-- 거래추적번호 //-->
+<input type="hidden" name="EP_sessionkey"       value="">     <!-- 암호화키     //-->
+<input type="hidden" name="EP_encrypt_data"     value="">     <!-- 암호화전문   //-->
+<input type="hidden" name="EP_card_code"        value="">     <!-- 인증카드코드   //-->
+<input type="hidden" name="EP_ret_pay_type"     value="">     <!-- 결제수단 //-->
+<input type="hidden" name="EP_ret_complex_yn"   value="">     <!-- 복합결제여부   //-->
+
+
+   
+<!-- ///////////////////mallinfo start/////////////////// -->		
+<input type="hidden" name="EP_mall_id" value="{_pg.id}" size="50" maxlength="8"> <!-- *가맹점 아이디 //-->
+<input type="hidden" name="EP_mall_pwd" value="" size="50"> <!-- 가맹점패스워드 //-->
+<input type="hidden" name="EP_mall_nm" value="" size="50"> <!-- 가맹점명 //-->
+<input type="hidden" name="EP_ci_url" value="" size="50"> <!-- 가맹점 CI URL(외부 접속이 가능한 URL) //-->
+<input type="hidden" name="EP_lang_flag" value=""> <!-- 영문버젼여부 ( 한글 : 공백 , 영문 : ENG ) //-->
+<input type="hidden" name="EP_agent_ver" value="PHP"> <!-- 가맹점개발언어 ( JSP, PHP, ASP ) //-->
+<!-- ///////////////////mallinfo end/////////////////// -->
+
+<!-- ///////////////////plugin start/////////////////// -->
+
+<!-- *결제수단 start //-->
+	<!--{ ? settlekind == "c" }-->
+	<input type="hidden" name="pay_type" value="11"><!--신용카드-->
+	<!--{ : settlekind == "o" }-->
+	<input type="hidden" name="pay_type" value="21"><!--계좌이체-->
+	<!--{ : settlekind == "v" }-->
+	<input type="hidden" name="pay_type" value="22"><!--가상계좌-->
+	<!--{ : settlekind == "h" }-->
+	<input type="hidden" name="pay_type" value="31"><!--휴대폰-->
+	<!--{ : settlekind == "p" }-->
+	<input type="hidden" name="pay_type" value="41"><!--포인트-->
+	<!--{ / }-->
+	<input type="hidden" name="EP_pay_type">
+<!-- *결제수단 end //-->
+
+<input type="hidden" name="EP_currency" value="00"> <!-- *통화코드 ( 원화 : 00 , 달러 : 01 ) //-->
+<input type="hidden" name="EP_complex_yn" value=""> <!-- 복합결제 허용여부 ( Y , N , 공백 ) //-->
+
+<input type="hidden" name="EP_usedcard_code" value=""> <!-- 가맹점사용 카드리스트 //-->
+
+<input type="hidden" name="EP_cert_type" value=""> <!-- *신용카드인증방식 ( 일반 : 공백, 인증 : 0 , 비인증 : 1 - 인증/비인증의 경우 특약가맹점만 ) //-->
+<input type="hidden" name="EP_quota" value="{_pg.quota}" size="50">	<!-- 할부개월 //-->
+<input type="hidden" name="EP_noinst_flag" value="{_pg.zerofee}"> <!-- 무이자사용여부 ( DB조회 : 공백, 무이자 : Y , 일반 : N ) //-->
+<input type="hidden" name="EP_noinst_term" value="{_pg.zerofee_period}"> <!-- 무이자설정 (카드코드-할부개월) //-->
+
+<!--{ ? settlekind == "v" }-->
+
+<input type="hidden" name="EP_vacct_bank" value=""> <!-- 가상계좌 은행 리스트 //-->
+<input type="hidden" name="EP_vacct_end_date" value="" size="50"> <!-- 가상계좌 입금만료일 //-->
+<input type="hidden" name="EP_vacct_end_time" value="" size="50"> <!-- 가상계좌 입금만료시간 //-->
+
+<!--{ / }-->
+
+<input type="hidden" name="EP_soc_no" value="" size="50"> <!-- 고객 주민번호 (배치결제필수) //-->
+
+<!-- ///////////////////plugin end/////////////////// -->
+
+<!-- ///////////////////order start/////////////////// -->
+
+<input type="hidden" name="EP_order_no" value="{ordno}" size="50"> <!-- *주문번호 //-->
+<input type="hidden" name="EP_user_type" value="{ ? _m_id }2{:}1{/}"> <!-- 사용자구분 ( 일반 : 1 , 회원 : 2 )//-->
+
+<input type="hidden" name="EP_user_id" value="{ ? _m_id }{_m_id}{/}" size="50"> <!-- 고객ID //-->
+<input type="hidden" name="EP_user_nm" value="{nameOrder}" size="50"> <!-- 고객명 //-->
+<input type="hidden" name="EP_user_mail" value="{email}" size="50"> <!-- 고객Email //-->
+<input type="hidden" name="EP_user_phone1" value="{=implode('-',phoneOrder)}" size="50"> <!-- 고객전화번호 //-->
+<input type="hidden" name="EP_user_phone2" value="{=implode('-',mobileOrder)}" size="50"> <!-- *고객휴대폰 //-->
+<input type="hidden" name="EP_user_addr" value="{address}" size="100"> <!-- 고객주소 //-->
+<input type="hidden" name="EP_product_nm" value="{_ordnm}" size="50"> <!-- *상품명 //-->
+<input type="hidden" name="EP_product_amt" value="{settleprice}" size="50"> <!-- *상품금액 //-->
+<input type="hidden" name="EP_product_type" value="0" size="50"> <!-- 상품구분 ( 실물 : 0 , 컨텐츠 : 1 ) //-->
+ 
+<!--#######에스크로 필수정보######-->
+<input type="hidden" name="EP_recv_nm" value="{nameOrder}" size="50" />
+<input type="hidden" name="EP_recv_mob" value="{=str_replace('-','',implode('-',mobileOrder))}" size="50" />
+<input type="hidden" name="EP_recv_tel" value="{=str_replace('-','',implode('-',phoneOrder))}" size="50" />
+<input type="hidden" name="EP_recv_addr1" value="{address}" size="50" />
+<input type="hidden" name="EP_recv_addr2" value="{address_sub}" size="50" />
+<input type="hidden" name="EP_recv_zip" value="{zipcode[0]}{zipcode[1]}" size="50" />
+<input type="hidden" name="EP_recv_id" value="{_m_id}" size="50" />
+<input type="hidden" name="EP_bk_goodinfo" value="">   <!-- 장바구니 정보 -->
+<input type="hidden" name="EP_bk_totamt" value="{=cart->goodsprice}">  <!-- 총 결제가격 -->
+<input type="hidden" name="EP_bk_cnt" value="{=count(cart->item)}"> <!--장바구니 수 -->
+<input type="hidden" name="EP_recv_mail" value="{email}" size="50" />
+
+<!--{ @ cart->item }-->
+<input type="hidden" name="prd_amt" value="{(.price + .addprice)*.ea}"/>
+<input type="hidden" name="prd_no" value="{.goodsno}"/>
+<input type="hidden" name="prd_nm" value="{=pg_text_replace(strip_tags(.goodsnm))}"/>
+<!--{ / }-->
+<!--##배송비##-->
+<!-- ///////////////////order Data END/////////////////// -->
+</form>

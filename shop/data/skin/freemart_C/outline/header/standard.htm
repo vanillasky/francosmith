@@ -1,0 +1,93 @@
+{*** 상단기본파일 | main/index.php ***}
+<a name="top"></a>
+<div id="shop_top_area">
+	<div id="top_area_menu">
+		<ul id="top_links" class="ul_right">
+			
+			<!--{ ? !_sess }-->
+			<li><a href="../member/login.php">로그인</a></li>
+			<li class="top_ul_line">|</li>
+			<li><a href="../member/join.php">회원가입</a></li>
+			<li class="top_ul_line">|</li>
+			<!--{ : }-->
+			<li><a href="../member/logout.php">로그아웃</a></li>
+			<li class="top_ul_line">|</li>
+			<!--{ / }-->
+			<li><a href="../mypage/mypage.php?&" { ? useMypageLayerBox == 'y' }onClick="return fnMypageLayerBox({ ? _sess }true{ / });"{ / }>마이페이지</a></li>
+			<li class="top_ul_line">|</li>
+			<li><a href="../mypage/mypage_orderlist.php">주문/배송</a></li>
+			<li class="top_ul_line">|</li>
+			<li><a href="../service/customer.php">고객센터</a></li>
+			<li class="top_ul_line">|</li>
+			<li><a href="/shop/goods/goods_list.php?&category=031002001" class="top_ul_font">개인결제</a>
+			</li>
+			<li class="top_ul_line">|</li>
+			<li><a href="../goods/goods_cart.php">장바구니({=_sess.cart_count})</a></li>
+			<li class="top_ul_line">
+				<a href="#" id="contact"><span>1599-7835<span></a>	
+			</li>
+		</ul>
+	</div>
+</div>
+
+<div id="header_main">
+	<div id="top_1">
+		<div id="top_board_layer" style="width:{_cfg['shopSize']}px;">
+			<div id="top_logo"><!-- 배너관리에서 수정가능 --><!--{ @ dataBanner( 90 ) }-->{.tag}<!--{ / }--></div>	
+			<div id="top_search">
+				<script>
+				function add_param_submit (param_nm, param_val){
+					var frm = document.searchForm;
+					if( param_nm == 'sword') frm.sword.value = param_val;
+					else frm.disp_type.value = param_val;
+					frm.submit();
+				}
+				</script>
+				<!-- 검색 시작----------------------------------->
+				<form name="searchForm" action="../goods/goods_search.php" onsubmit="return chkForm(this)">
+				<input type=hidden name=searched value="Y">
+				<input type=hidden name=log value="1">
+				<input type=hidden name=skey value="all">
+				<input type="hidden" name="hid_pr_text" value="{_s_type['pr_text']}" />
+				<input type="hidden" name="hid_link_url" value="{_s_type['link_url']}" />
+				<input type="hidden" id="edit" name="edit" value=""/>
+				<!--{? _s_type['keyword_chk'] == 'on' && _s_type['pr_text'] && !_GET['sword']}-->
+				<?php
+					{id} = "sword";
+					{onkeyup} = "document.getElementById('edit').value='Y'";
+					{onclick} = "document.getElementById('sword').value=''";
+					{value} = {_s_type['pr_text']};
+				?>
+				<!--{:}-->
+				<?php
+					{value} = {_GET['sword']};
+				?>
+				<!--{/}-->
+				<div id="top_keywords">
+					<span><!--{? _s_type['keyword'] }-->인기검색어: {_s_type['keyword']}<!--{/}--></span>	
+				</div>
+				<table cellpadding="0" cellspacing="0" border="0" class="search_table">
+				<tr>
+					<td class="search_td"><input name="sword" type=text id="{id}" class="search_input" onkeyup="{onkeyup}" onclick="{onclick}" value="{value}" required label="검색어"></td>
+					<td class="search_btn_top top_red"><button type="submit" title="Search" class="button search-button"></td>
+				</tr>
+				</table>
+				</form>
+				<!-- 검색 끝-------------------------------------->
+			</div>
+			<div id="top_right">
+			</div>
+		</div>
+	</div>
+	
+
+	<!-- 카테고리 메뉴 시작 -->
+	<!-- 관련 세부소스는 '기타/추가페이지(proc) > 카테고리메뉴- menuCategory.htm' 안에 있습니다 -->
+	{ # menuCategory }
+	<!-- 카테고리 메뉴 끝 -->
+			
+</div>
+
+
+		
+<!-- 상단파일 종료 -->

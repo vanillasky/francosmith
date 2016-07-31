@@ -1,0 +1,145 @@
+{*** 쇼핑몰 메인본문 | index.php ***}
+{ # header }
+
+<!-- 메인팝업창 -->
+<!--{ @ dataPopup() }-->
+
+<!--{ ? .type == 'layer' && isset(_COOKIE['blnCookie_' + .code]) === false }-->
+<div id="{'blnCookie_' + .code}" STYLE="position:absolute; width:{.width}px; height:{.height}px; left:{.left}px; top:{.top}px; z-index:200;">
+<!--{ = eval("\$_GET[code]='blnCookie_" + .code + "';") }-->
+<!--{ = include_file( .file ) }-->
+</div>
+<!--{ / }-->
+
+<!--{ ? .type == 'layerMove' && isset(_COOKIE['blnCookie_' + .code]) === false }-->
+<!-- 이동레이어 팝업창 시작 -->
+<div id="{'blnCookie_' + .code}" STYLE="position:absolute; width:{.width}px; height:{.height}px; left:{.left}px; top:{.top}px; z-index:200;">
+<div onmousedown="Start_move(event,'{'blnCookie_' + .code}');" onmouseup="Moveing_stop();" style='cursor:move;'>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td>
+<!--{ = eval("\$_GET[code]='blnCookie_" + .code + "';") }-->
+<!--{ = include_file( .file ) }-->
+</td>
+</tr>
+</table>
+</div>
+</div>
+<!-- 이동레이어 팝업창 끝 -->
+<!--{ / }-->
+
+<!--{ / }-->
+
+<script language="JavaScript"><!--
+<!--{ @ dataPopup() }-->
+<!--{ ? .type == '' }-->
+if ( !getCookie( "blnCookie_{.code}" ) ) { // {.name} 팝업호출
+var property = 'width={.width}, height={.height}, top={.top}, left={.left}, scrollbars=no, toolbar=no';
+var win=window.open( './html.php?htmid={.file}&code=blnCookie_{.code}', '{.code}', property );
+if(win) win.focus();
+}
+<!--{ / }-->
+<!--{ / }-->
+//--></script>
+
+
+<TABLE width=100% border=0 cellpadding=0 cellspacing=0>
+<TR>
+	<TD valign="top"><!-- 메인 이미지 배너 (배너관리에서 수정가능) --><!--{ @ dataBanner( 1 ) }-->{.tag}<!--{ / }--></TD>
+	<TD valign="top">
+	<div><!-- 카테고리위 베스트아이템 --><!--{ @ dataBanner( 2 ) }-->{.tag}<!--{ / }--></div>
+	<div><!-- 카테고리위 뉴아이템 --><!--{ @ dataBanner( 3 ) }-->{.tag}<!--{ / }--></div>
+	<div><img src="../img/main/top_category.gif"></div>
+	<div><!-- 카테고리 메뉴 시작 -->
+	<!-- 관련 세부소스는 '기타/추가페이지(proc) > 카테고리메뉴- menuCategory.htm' 안에 있습니다 -->
+	{ # menuCategory }
+	<!-- 카테고리 메뉴 끝 --></div>
+	<div style="padding-top:5px"><img src="../img/main/cate_btmline.gif"></div>
+	<div><!-- 메인_공지사항 --><!--{ @ dataBanner( 10 ) }-->{.tag}<!--{ / }--></div>
+	<div><!-- 메인_주문배송조회 --><!--{ @ dataBanner( 11 ) }-->{.tag}<!--{ / }--></div>
+	<div><!-- 메인_질문과답변 --><!--{ @ dataBanner( 12 ) }-->{.tag}<!--{ / }--></div>
+	<div style="padding-top:5px"><!-- 메인 cs --><!--{ @ dataBanner( 4 ) }-->{.tag}<!--{ / }--></div>
+	<div style="padding-top:5px"><!-- 메인 bank --><!--{ @ dataBanner( 5 ) }-->{.tag}<!--{ / }--></div>
+	</TD>
+</TR>
+<TR>
+	<TD colspan=2 style="padding-top:15px"><!-- 가운데 배너01 --><!--{ @ dataBanner( 6 ) }-->{.tag}<!--{ / }--><!-- 가운데 배너02 --><!--{ @ dataBanner( 7 ) }-->{.tag}<!--{ / }--><!-- 가운데 배너03 --><!--{ @ dataBanner( 8 ) }-->{.tag}<!--{ / }--><!-- 가운데 배너04 --><!--{ @ dataBanner( 9 ) }-->{.tag}<!--{ / }--></TD>
+</TR>
+<TR>
+	<TD colspan=2></TD>
+</TR>
+</TABLE>
+
+<div style="padding-top:15px"></div>
+
+
+<!-- 아래 상품리스트에 쓰이는 세부소스는 '디자인관리 > 상품(goods) > 상품목록 > 갤러리형,리스트형,리스트그룹형,상품이동형' 에 있습니다  -->
+
+<!-- 상품 리스트 #3 -->
+<!--{ ? _cfg_step[2].chk  }-->
+<table width=100% cellpadding=0 cellspacing=0 >
+<tr><td bgcolor="#f7f7f7" align=center style="border:1 solid; border-color:#dbdbdb;">
+<div><A HREF="../goods/goods_grp_03.php"><img src="../img/main/main_bar_best.gif"></A></div>
+<!--{ = this->assign( 'loop', dataDisplayGoods( 2, _cfg_step[2].img, _cfg_step[2].page_num ) ) // 데이타 호출 }-->
+<!--{ = this->assign( 'cols', _cfg_step[2].cols ) // 행당 컬럼수 }-->
+<!--{ = this->assign( 'size', _cfg[_cfg_step[2].img] ) // 이미지 사이즈 }-->
+<!--{ = this->assign( 'id', "main_list_03" ) // 고유 ID }-->
+<!--{ = this->assign( 'dpCfg', _cfg_step[2] ) // 설정 }-->
+<!--{ = include_file( "goods/list/" + _cfg_step[2].tpl + ".htm" ) }-->
+</td></tr></table>
+<!--{ / }-->
+
+<div style="padding-top:25px"></div>
+
+<!-- 상품 리스트 #1 -->
+<!--{ ? _cfg_step[0].chk  }-->
+<div><A HREF="../goods/goods_grp_01.php"><img src="../img/main/main_bar_new.gif"></A></div>
+<table width=100% cellpadding=0 cellspacing=0 border=0>
+<tr><td align=center>
+<!--{ = this->assign( 'loop', dataDisplayGoods( 0, _cfg_step[0].img, _cfg_step[0].page_num ) ) // 데이타 호출 }-->
+<!--{ = this->assign( 'cols', _cfg_step[0].cols ) // 행당 컬럼수 }-->
+<!--{ = this->assign( 'size', _cfg[_cfg_step[0].img] ) // 이미지 사이즈 }-->
+<!--{ = this->assign( 'id', "main_list_01" ) // 고유 ID }-->
+<!--{ = this->assign( 'dpCfg', _cfg_step[0] ) // 설정 }-->
+<!--{ = include_file( "goods/list/" + _cfg_step[0].tpl + ".htm" ) }-->
+</td></tr></table>
+<!--{ / }-->
+
+
+<!-- 상품 리스트 #2 -->
+<!--{ ? _cfg_step[1].chk  }-->
+<!-- <div><A HREF="../goods/goods_grp_02.php"><img src="../img/main/main_bar_priceoff.gif"></A></div> -->
+<!--{ = this->assign( 'loop', dataDisplayGoods( 1, _cfg_step[1].img, _cfg_step[1].page_num ) ) // 데이타 호출 }-->
+<!--{ = this->assign( 'cols', _cfg_step[1].cols ) // 행당 컬럼수 }-->
+<!--{ = this->assign( 'size', _cfg[_cfg_step[1].img] ) // 이미지 사이즈 }-->
+<!--{ = this->assign( 'id', "main_list_02" ) // 고유 ID }-->
+<!--{ = this->assign( 'dpCfg', _cfg_step[1] ) // 설정 }-->
+<!--{ = include_file( "goods/list/" + _cfg_step[1].tpl + ".htm" ) }-->
+<!--{ / }-->
+
+<!-- 상품 리스트 #4 -->
+<!--{ ? _cfg_step[3].chk  }-->
+<!-- <div><A HREF="../goods/goods_grp_04.php"><img src="../img/main/main_bar_hotitem.gif"></A></div> -->
+<!--{ = this->assign( 'loop', dataDisplayGoods( 3, _cfg_step[3].img, _cfg_step[3].page_num ) ) // 데이타 호출 }-->
+<!--{ = this->assign( 'cols', _cfg_step[3].cols ) // 행당 컬럼수 }-->
+<!--{ = this->assign( 'size', _cfg[_cfg_step[3].img] ) // 이미지 사이즈 }-->
+<!--{ = this->assign( 'id', "main_list_04" ) // 고유 ID }-->
+<!--{ = this->assign( 'dpCfg', _cfg_step[3] ) // 설정 }-->
+<!--{ = include_file( "goods/list/" + _cfg_step[3].tpl + ".htm" ) }-->
+<!--{ / }-->
+
+
+<!-- 상품 리스트 #5 -->
+<!--{ ? _cfg_step[4].chk  }-->
+<!-- <div><A HREF="../goods/goods_grp_05.php"><img src="../img/main/main_bar_popitem.gif"></A></div> -->
+<!--{ = this->assign( 'loop', dataDisplayGoods( 4, _cfg_step[4].img, _cfg_step[4].page_num ) ) // 데이타 호출 }-->
+<!--{ = this->assign( 'cols', _cfg_step[4].cols ) // 행당 컬럼수 }-->
+<!--{ = this->assign( 'size', _cfg[_cfg_step[4].img] ) // 이미지 사이즈 }-->
+<!--{ = this->assign( 'id', "main_list_05" ) // 고유 ID }-->
+<!--{ = this->assign( 'dpCfg', _cfg_step[4] ) // 설정 }-->
+<!--{ = include_file( "goods/list/" + _cfg_step[4].tpl + ".htm" ) }-->
+<!--{ / }-->
+
+<div style="padding-top:15px"></div>
+
+{ # footer }

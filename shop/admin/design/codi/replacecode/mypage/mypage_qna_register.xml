@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="EUC-KR"?>
+<codes>
+<list>
+	<code power="">{_mode}</code>
+	<desc>모드 - add_qna:작성, mod_qna:수정, reply_qna:답글</desc>
+	<exam>mod_qna</exam>
+</list>
+<list>
+	<code>{_itemcd}</code>
+	<desc>질문유형코드</desc>
+	<exam>10</exam>
+</list>
+<list>
+	<code power="">{_sno}</code>
+	<desc>게시물번호</desc>
+	<exam>2</exam>
+</list>
+<list>
+	<code>{_data.m_id}</code>
+	<desc>회원아이디</desc>
+	<exam>testid</exam>
+</list>
+<list>
+	<code>{ @ codeitem( 'question' ) }</code>
+	<desc>질문유형</desc>
+	<exam>array("01" => 배송지연/불만, ..., "10" => 기타문의)</exam>
+</list>
+<list>
+	<code>{_data.ordno}</code>
+	<desc>주문번호</desc>
+	<exam>1179379386763</exam>
+</list>
+<list>
+	<code>{_data.email}</code>
+	<desc>이메일</desc>
+	<exam>test@test.co.kr</exam>
+</list>
+<list>
+	<code>{_data.mailling}</code>
+	<desc>답변 이메일 회신여부 - y, n</desc>
+	<exam>y</exam>
+</list>
+<list>
+	<code>{_data.mobile[0]}</code>
+	<desc>핸드폰1</desc>
+	<exam>010</exam>
+</list>
+<list>
+	<code>{_data.mobile[1]}</code>
+	<desc>핸드폰2</desc>
+	<exam>0000</exam>
+</list>
+<list>
+	<code>{_data.mobile[2]}</code>
+	<desc>핸드폰3</desc>
+	<exam>0000</exam>
+</list>
+<list>
+	<code>{_data.sms}</code>
+	<desc>답변 SMS 회신여부 - y, n</desc>
+	<exam>y</exam>
+</list>
+<list>
+	<code>{_formtype}</code>
+	<desc>답변작성모드 - reply:답변작성, '':그외</desc>
+	<exam>reply</exam>
+</list>
+<list>
+	<code power="">{_data.subject}</code>
+	<desc>제목</desc>
+	<exam>언제쯤 배송이 될까요?</exam>
+</list>
+<list>
+	<code power="">{_data.contents}</code>
+	<desc>내용</desc>
+	<exam>3일전에 구매했는데 ... 언제쯤?</exam>
+</list>
+</codes>

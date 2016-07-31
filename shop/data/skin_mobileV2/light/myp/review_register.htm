@@ -1,0 +1,118 @@
+{*** 이용후기 작성 | myp/review_register.php ***}
+{ # header }
+<?php {page_title} = "상품평 쓰기";?>
+{#sub_header}
+<style type="text/css">
+section#nreviewregister {background:#FFFFFF; padding:12px;}
+section#nreviewregister table{border:none; border-top:solid 1px #dbdbdb;width:100%;}
+section#nreviewregister table td{padding:8px 0px 8px 10px; vertical-align:middle; border-bottom:solid 1px #dbdbdb;}
+section#nreviewregister table th{text-align:center; background:#f5f5f5; width:70px; vertical-align:middle; border-bottom:solid 1px #dbdbdb; color:#353535; font-size:12px;}
+section#nreviewregister table .img{padding:5px; width:60px;}
+section#nreviewregister table .img img{border:solid 1px #d9d9d9;}
+section#nreviewregister table td input[type=text], input[type=password], select{width:95%;height:21px;}
+section#nreviewregister table td textarea{width:95%;height:116px;}
+section#nreviewregister .btn_center {margin:auto; width:198px; height:34px; margin-top:20px; margin-bottom:20px;}
+section#nreviewregister .btn_center .btn_save{border:none; background:#f35151; border-radius:3px; color:#FFFFFF; font-size:13px; width:94px; height:34px; float:left; font-family:dotum; font-weight:bold;}
+section#nreviewregister .btn_center .btn_prev{border:none; background:#808591; border-radius:3px; color:#FFFFFF; font-size:13px; width:94px; height:34px; float:right; font-family:dotum; font-weight:bold;}
+section#nreviewregister .goods-nm{color:#353535; font-weight:bold; fonst-size:14px; margin-bottom:5px; overflow:hidden; word-break:break-all;}
+section#nreviewregister .goods-price{color:#f03c3c; font-size:12px;}
+section#nreviewregister .attach{float:left;}
+section#nreviewregister .camera_btn{width:80px; height:27px; line-height:27px; font-size:12px; color:#FFFFFF; font-weight:normal;text-align:center; background:#808591; border-radius:3px;}
+section#nreviewregister .camera_btn :active{background:#808591; border-radius:3px; float:left;}
+</style>
+
+<form method=post action="indb.php" enctype="multipart/form-data" onSubmit="return chkForm(this)">
+<input type=hidden name=mode value="{_mode}">
+<input type=hidden name=goodsno value="{_goodsno}">
+<input type=hidden name=sno value="{_sno}">
+<input type=hidden name=referer value="{_referer}">
+
+<section id="nreviewregister"  class="content">
+	<table>
+	<tr>
+		<th class="img">{=goodsimgMobile(_goods.img_s,50)}</th>
+		<td>
+			<div class="goods-nm">
+				{_goods.goodsnm}
+			</div>
+			<div class="goods-price">
+				{=number_format(_goods.price)}원
+			</div>
+		</td>
+	</tr>
+	</table>
+	<div style="height:12px;"></div>
+	<table>
+	<tr>
+		<th>작성자</th>
+		<td>
+			<input type="text" name="name" required label="작성자" value="{_data.name}" />
+		</td>
+	</tr>
+	<!--{ ? ! _sess && empty(_data['m_no']) // 작성자==회원 }-->
+	<tr>
+		<th>비밀번호</th>
+		<td>
+			<input type=password name=password style="width:100" required label="비밀번호">
+		</td>
+	</tr>
+	<!--{ / }-->
+	<tr>
+		<th>제목</th>
+		<td>
+			<input type="text" name="subject" required label="제목" value="{_data.subject}" />
+		</td>
+	</tr>
+	<tr>
+		<th>내용</th>
+		<td>
+			<textarea name="contents" required label="내용"  >{_data.contents}</textarea>
+		</td>
+	</tr>
+	<tr>
+		<th>사진</th>
+		<td>
+			<table width=100% cellpadding=0 cellspacing=0 border=0>
+			<col align=center>
+			<tr>
+				<td colspan="2"><div style="font-size:10px;">
+				* 파일은 최대 <!--{ _reviewFileNum }-->개까지 업로드가 지원됩니다.<br>
+				<!--{ ? _cfg.reviewLimitPixel }-->* 파일은 가로 사이즈가 {=number_format(_cfg.reviewLimitPixel)}px보다 클 경우 자동 리사이즈 됩니다.<br><!--{ / }-->
+				<!--{ ? _cfg.reviewFileSize }-->* 파일은 장당 최대 {_cfg.reviewFileSize}KB를 넘을 수 없습니다.<br><!--{ / }-->
+				</div></td>
+			</tr>
+			{ _data.fileupload }
+			</table>
+		</td>
+	</tr>
+	<tr>
+		<th>평가</th>
+		<td>
+			<select name="point">
+				<option value="5" {_data.point['5']}>★★★★★</option>
+				<option value="4" {_data.point['4']}>★★★★☆</option>
+				<option value="3" {_data.point['3']}>★★★☆☆</option>
+				<option value="2" {_data.point['2']}>★★☆☆☆</option>
+				<option value="1" {_data.point['1']}>★☆☆☆☆</option>
+			</select>
+		</td>
+	</tr>
+	<!--{ ? _cfg.reviewSpamBoard&2 }-->
+	<tr>
+		<th>자동등록방지</th>
+		<td class=cell_L><!--{ = include_file( "proc/_captcha.htm" ) }--></td>
+	</tr>
+	<!--{ / }-->
+	</table>
+
+	<div class="m_review">
+		<div class="btn_center">
+			<button type="submit" id="save-btn" class="btn_save">확 인</button>
+			<button type="button" id="prev-btn" class="btn_prev"  onclick="history.back();">취 소</button>
+		</div>
+	</div>
+
+</section>
+</form>
+
+{ # footer }

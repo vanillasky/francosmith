@@ -1,0 +1,101 @@
+{*** 게시판 상세보기 | board/view.php ***}
+{ # header }
+
+{#sub_header}
+
+<!--{ @ loop }-->
+<section id="page_title">
+	<button class="btn_list" type="button" onclick="location.href='list.php?id={_GET.id}'">목록보기</button>
+	<div class="top_title">{=_bdName}</div>
+</section>
+
+<section id="content-wrap" class="content">
+	<section id="boardContent">
+			<div class="title">
+				<div class="subject-text">
+					<!--{ ? .sub }-->{.gapReply}<div class="icon-reply"></div><!--{ / }-->
+					<!--{ ? .notice }--><div class="icon-notice"></div><!--{ / }-->
+					<!--{ ? .secret }--><div class="icon-secret"></div><!--{ / }-->
+					<!--{ ? _bdUseSubSpeech && .category }-->[{.category}] <!--{ / }-->{.subject}
+					<div style="clear:both"></div>
+				</div>
+				<div style="font-size:12px">{.name} | {.regdt}</div>
+			</div>
+			<!--{ ? .urlLink }-->
+			<div class="link">
+					외부링크 : <a href="{.urlLink}" target='_blank' style='color:'><u>{.urlLink}</u></a><br/><br/>
+			</div>
+			<!--{ / }-->
+			<div class="contents_holder">
+			{=(.contents)}
+			</div>
+			
+			<!--{ ? .uploadedFile  }-->
+			<div class="uploadFile">
+				<div style="margin-left:10px">{.uploadedFile}</div>
+			</div>
+			 <!--{ / }-->
+
+			<!--{ ? _bdUseComment }-->
+						<div>
+							<table width="100%">
+								<col width="90%" />
+								<col />
+							<!--{ @ .loopComment }-->
+								<tr style="height:50px;border-top:1px solid #DBDBDB;">
+									<td style="padding:5px">
+										<div style="padding:5px">
+										{..name} | {..regdt}</div>
+										<div class="contents_holder">{..comment}</div>
+									</td>
+									<td valign="middle" style="position:relative">
+										<!--{ ? ..link.delete }-->{..link.delete}<div style="position:absolute;top:5px"><img src="../../common/img/new/btn_reply_del.png" width="26" height="26" /></div>{link.end}<!--{ / }-->
+									</td>
+								</tr>
+							<!--{ / }-->
+				 
+							</table>
+						</div>
+		<!--{ ? !_bdDenyComment }-->
+			<form name="frmComment_{no}" method="post" action="comment_ok.php" onsubmit="return chkForm(this)">
+			<input type="hidden" name="id" value="{id}">
+			<input type="hidden" name="no" value="{.no}">
+			<input type="hidden" name="mode" value="write">
+			<input type="hidden" name="returnUrl" value="{_SERVER.REQUEST_URI}">	
+				<table  width="100%" cellspacing="0" cellpadding="0" >
+					<col width="75%" />
+					<col />
+					<!--{?!_member.name}-->
+					<tr>
+						<td class="input_line" colspan="2" align="center">
+							<input type="text" name="name" placeholder="이름" required fld_esssential msgR="이름을 입력해주세요"  /> &nbsp;<input type="password" name="password" placeholder="비밀번호"  required fld_esssential msgR="비밀번호를 입력해주세요" />
+						</td>
+					</tr>
+					<!--{/}-->
+					<tr>
+						<td valign="top">
+							<div class="memo-box"><textarea class="memo" name="memo" placeholder=" 댓글을 작성하세요." required fld_esssential msgR="댓글을 작성해주세요."></textarea>
+							</div>
+							<div style="float:left;width:28%"><button type="submit" class="comment_button" >작성 완료</button></div>
+							
+							<div style="clear:both"></div>
+						</td>
+					</tr>
+					<!--{ ? _bdSpamComment&2 }-->
+					<tr>
+						<td colspan="2"><!--{ = include_file( "proc/_captcha.htm" ) }--></td>
+					</tr>
+					<!--{/}-->
+				</table>
+		<!--{ / }-->
+		<!--{ / }-->
+			<div class="btn_center">
+				<!--{ ? .link.modify}--><!-- <button type="button" onclick="location.href='{.link.modify}'" >수정</button> --><!--{/}-->
+				<!--{ ? .link.delete}--><button type="button" onclick="location.href='{.link.delete}'" >삭제</button><!--{/}-->
+				<!--{ ? .link.reply && _bdSkin != 'gallery' }--><button type="button" onclick="location.href='{.link.reply}'" >답글</button><!--{/}-->
+			</div>
+	</section>
+</section>
+ <!--{ / }-->
+
+{ # footer }

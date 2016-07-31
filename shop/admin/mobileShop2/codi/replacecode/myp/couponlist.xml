@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="EUC-KR"?>
+<codes>
+<list>
+	<code power="">{ @ loop }</code>
+	<desc>쿠폰</desc>
+	<exam more="myp/mypage_coupon.goods.xml"></exam>
+</list>
+<list>
+	<code power="">{.cnt}</code>
+	<desc>쿠폰가능여부</desc>
+	<exam>사용</exam>
+</list>
+<list>
+	<code power="">{.coupon}</code>
+	<desc>쿠폰이름</desc>
+	<exam>오늘만 30% 할인!</exam>
+</list>
+<list>
+	<code power="">{.goodsnm}</code>
+	<desc>쿠폰 적용 상품명</desc>
+	<exam>이중 스커트</exam>
+</list>
+<list>
+	<code power="">{.priodtype}</code>
+	<desc>쿠폰 기간 종류</desc>
+	<exam> 0 : 기간으로 설정 , 1 : 일 수로 설정</exam>
+</list>
+<list>
+	<code power="">{.sdate}</code>
+	<desc>쿠폰 적용 일수</desc>
+	<exam>90</exam>
+</list>
+<list>
+	<code power="">{.sdate}</code>
+	<desc>쿠폰 적용 시작일</desc>
+	<exam>0000-00-00 00:00:00</exam>
+</list>
+<list>
+	<code power="">{.edate}</code>
+	<desc>쿠폰 적용 종료일</desc>
+	<exam>0000-00-00 00:00:00</exam>
+</list>
+<list>
+	<code power="">{.price}</code>
+	<desc>할인금액</desc>
+	<exam>10%</exam>
+</list>
+<list>
+	<code>{ # header }</code>
+	<desc>상단과 측면을 크게 감싸는 외곽파일 인클루드, 소스 맨위에 삽입</desc>
+	<exam></exam>
+</list>
+<list>
+	<code>{ # footer }</code>
+	<desc>하단을 크게 감싸는 외곽파일 인클루드, 소스 맨아래에 삽입</desc>
+	<exam></exam>
+</list>
+<list>
+	<code>{ # sub_header }</code>
+	<desc>페이지 안의 작은 상단(구분) 라인</desc>
+	<exam></exam>
+</list>
+</codes>

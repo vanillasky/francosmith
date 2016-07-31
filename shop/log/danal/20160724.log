@@ -1,0 +1,6 @@
+[2016-07-24 10:17:39] Paygate open start
+File : /www/francotr3287_godo_co_kr/shop/order/card/danal/card_gate.php
+Transaction ID : 1469322939055
+Send data : Command=ITEMSEND2&SERVICE=TELEDIT&ItemType=Amount&ItemCount=1&OUTPUTOPTION=DEFAULT&ID=9010S23312&PWD=1FLOF1im&ItemInfo=2%7C6400%7C1%7C22S0rQ0001%7C%5BTitebond%5D+%C5%B8%C0%CC%C6%AE%BA%BB%B5%E5II+%C7%C1%B8%AE%B9%CC%BE%F6+%BF%EC%B5%E5%B1%DB%B7%E7%2F%B9%E6%BC%F6%2F%BF%EB%B7%AE%BC%B1%C5%C3%5B4oz%28118ml%29%5D&SUBCP=SGD0004644&USERID=jasung2310%40naver.com&ORDERID=1469322939055&IsPreOtbill=N&IsSubscript=N
+[2016-07-24 10:18:32] 결제 정보 저장 시작
+[2016-07-24 10:18:32] 결제성공

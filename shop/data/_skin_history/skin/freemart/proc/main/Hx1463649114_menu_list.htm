@@ -1,0 +1,38 @@
+{*** 메뉴리스트 | main/html.php?htmid=proc/main/menu_list.htm ***}
+{ # header }
+
+
+<table width=100% cellpadding=0 cellspacing=0 class="cateUnfold">
+	<!--{ @ dataCategory( _cfg.subCategory, 1 ) }-->
+	<tr>
+		<td class="catebar">
+		<p class="lv1"><a href="#">수공구</a></p>
+		{.catnm}</a></td>
+	</tr>
+	<!--{ ? .sub }-->
+	<tr>
+		<td class="catesub">
+		<table>
+		<!--{ @ .sub }-->
+		<tr><td class="cate">
+			<a href="../goods/goods_list.php?category={..category}">{..catnm}</a>
+			
+			<!--{ @ dataSubCategory( _category, true ) }-->
+			
+			<!-- { / } -->
+		
+		
+		</td></tr>
+			
+		
+		<!--{ / }-->
+		</table>
+		</td>
+	</tr>
+	<!--{ / }-->
+	<!--{ / }-->
+	</table>
+
+
+
+{ # footer }

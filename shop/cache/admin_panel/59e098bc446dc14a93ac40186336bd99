@@ -1,0 +1,11 @@
+<div id="popup_smscallback_member" style="width:460px; height:746px; position:absolute;top:5%;left:60%;z-index:999; margin:0; padding:0;">
+		<div style="position:relative; overflow:hidden; background-color:#FFFFFF; border:1px solid #000000;">
+			<img src="http://gongji.godo.co.kr/userinterface/img/s4/201512/layer_popup_02.png" usemap="#map_popup_sms_self">
+			<map name="map_popup_sms_self">
+				<area shape="rect" coords="132,323,329,373" href="http://www.godo.co.kr/news/notice_view.php?board_idx=1247&page=1" target="_blank"/>
+			</map>
+			<div style="width:460px; height:20px; line-height:19px; font-size:11px; color:#7C7C7C; background-color:#E7E7E7; text-align:right;">
+				<span style="padding-right:15px;"><input type="checkbox" onclick="javascript:var todayDate=new Date();todayDate.setDate(todayDate.getDate()+1);document.cookie = 'maxtab_member=true;expires='+todayDate.toGMTString()+';path=/';_ID('popup_smscallback_member').style.display='none';" title="오늘하루 열지않기" style="vertical-align:middle;"/>오늘하루 열지않기 <input type="checkbox" onclick="_ID('popup_smscallback_member').style.display='none';ifrmHidden.location.href='http://gongji.godo.co.kr/userinterface/banner-agree.php?code=smscallback&sno=299153'" title="닫기" style="vertical-align:middle;"/>닫기</span>
+			</div>
+		</div>
+	</div>

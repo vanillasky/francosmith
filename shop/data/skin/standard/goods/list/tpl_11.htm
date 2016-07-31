@@ -1,0 +1,35 @@
+{*** 장바구니 | goods/goods_list.php ***}
+
+<script>
+function fnPreviewGoods_{id}(goodsno) {
+	popup('../goods/goods_view.php?goodsno='+goodsno+'&preview=y','800','450');
+
+}
+</script>
+
+<!-- 상품 리스트 -->
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+<tr>
+	<!--{ @ loop }-->
+	<!--{ ? .index_ && .index_%cols==0 }--></tr><tr><td height="10"></td></tr><tr><td height="10"></td></tr><tr><!--{ / }-->
+	<td align="center" valign="top" width="{100/cols}%">
+	<!--{ ? .goodsnm }--><div><a href="{.goods_view_url}" title="{.goodsnm}">{=goodsimg(.img_s,size,'class="'+ .css_selector +'"')}</a></div><!--{ / }-->
+	<div>
+		<a href="javascript:void(0);" onClick="fnPreviewGoods_{id}({.goodsno});"><img src="../../img/common/icon_basket.gif"></a>
+	</div>
+
+	<!--{ ? .soldout_icon }--><div style="padding:3px">{? .soldout_icon == 'custom'}<img src="../data/goods/icon/custom/soldout_icon">{:}<img src="../../img/icon/good_icon_soldout.gif">{/}</div><!--{ / }-->
+	<!--{ ? .icon }--><div>{.icon}</div><!--{ / }-->
+	<!--{ ? .coupon }--><div class="eng"><b style="color:red">{.coupon}<font class="small">원</font></b> <img src="../../img/icon/good_icon_coupon.gif" align="absmiddle"></div><!--{ / }-->
+	</td>
+	<!--{ / }-->
+</tr>
+<tr><td height="10"></td></tr>
+</table>
+
+
+<!-- 품절상품 마스크 -->
+<div id="el-goods-soldout-image-mask" style="display:none;position:absolute;top:0;left:0;background:url({ ? _cfg_soldout.display_overlay == 'custom'}../data/goods/icon/custom/soldout_overlay{:}../data/goods/icon/icon_soldout{_cfg_soldout.display_overlay}{/}) no-repeat center center;"></div>
+<script>
+addOnloadEvent(function(){ setGoodsImageSoldoutMask() });
+</script>

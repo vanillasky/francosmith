@@ -1,0 +1,1044 @@
+{*** 상품상세화면(새창) | goods/goods_view.php ***}
+
+<html>
+<head>
+<title>상품 미리보기</title>
+<meta http-equiv="Content-Type" content="text/html; charset=euc-kr">
+<script src="../common.js"></script>
+<script src="../../../lib/js/prototype.js"></script>
+<link rel="styleSheet" href="../style.css">
+<style>
+/* goods_spec list */
+#goods_spec table {
+	width:100%;
+}
+#goods_spec .top {
+	border-top-width:1; border-top-style:solid;border-top-color:#DDDDDD;
+	border-bottom-width:1; border-bottom-style:solid;border-bottom-color:#DDDDDD;
+	background:#f7f7f7;
+}
+#goods_spec .sub {
+	border-bottom-width:1; border-bottom-style:solid;border-bottom-color:#DDDDDD;
+	margin-bottom:10;
+}
+#goods_spec th, #goods_spec td {
+	padding:3px;
+}
+#goods_spec th {
+	width: 80px;
+	text-align:right;
+	font-weight:normal;
+}
+#goods_spec td {
+	text-align:left;
+}
+</style>
+<script>
+function fitwin()
+{
+	window.resizeTo(750,150);
+	var borderY = document.body.clientHeight;
+
+	width	= 750;
+	height	= document.body.scrollHeight + borderY + 10;
+
+	windowX = (window.screen.width-width)/2;
+	windowY = (window.screen.height-height)/2;
+
+	if(width>screen.width){
+		width = screen.width;
+		windowX = 0;
+	}
+	if(height>screen.height){
+		height = screen.height;
+		windowY = 0;
+	}
+
+	window.moveTo(windowX,windowY);
+	window.resizeTo(width,height);
+}
+</script>
+<script>
+
+var price = new Array();
+var reserve = new Array();
+var consumer = new Array();
+var memberdc = new Array();
+var realprice = new Array();
+var couponprice = new Array();
+var special_discount_amount = new Array();
+var coupon = new Array();
+var cemoney = new Array();
+var opt1img = new Array();
+var opt2icon = new Array();
+var opt2kind = "{optkind[1]}";
+var oldborder = "";
+<!--{ @ _opt }--><!--{ @ .value_ }-->
+<!--{ ? .index_ == 0 && ..index_ == 0 }-->
+var fkey = '{=get_js_compatible_key(..opt1)}{?..opt2}|{=get_js_compatible_key(..opt2)}{/}';
+<!--{ / }-->
+price['{=get_js_compatible_key(..opt1)}{?..opt2}|{=get_js_compatible_key(..opt2)}{/}'] = {..price};
+reserve['{=get_js_compatible_key(..opt1)}{?..opt2}|{=get_js_compatible_key(..opt2)}{/}'] = {..reserve};
+consumer['{=get_js_compatible_key(..opt1)}{?..opt2}|{=get_js_compatible_key(..opt2)}{/}'] = {..consumer};
+memberdc['{=get_js_compatible_key(..opt1)}{?..opt2}|{=get_js_compatible_key(..opt2)}{/}'] = {..memberdc};
+realprice['{=get_js_compatible_key(..opt1)}{?..opt2}|{=get_js_compatible_key(..opt2)}{/}'] = {..realprice};
+coupon['{=get_js_compatible_key(..opt1)}{?..opt2}|{=get_js_compatible_key(..opt2)}{/}'] = {..coupon};
+couponprice['{=get_js_compatible_key(..opt1)}{?..opt2}|{=get_js_compatible_key(..opt2)}{/}'] = {..couponprice};
+cemoney['{=get_js_compatible_key(..opt1)}{?..opt2}|{=get_js_compatible_key(..opt2)}{/}'] = {..coupon_emoney};
+special_discount_amount['{=get_js_compatible_key(..opt1)}{?..opt2}|{=get_js_compatible_key(..opt2)}{/}'] = {..special_discount_amount};
+<!--{ / }--><!--{ / }-->
+<!--{ @ _opt1img }-->
+opt1img['{.key_}'] = "{.value_}";
+<!--{ / }-->
+<!--{ @ _opticon[1] }-->
+opt2icon['{.key_}'] = "{.value_}";
+<!--{ / }-->
+
+/* 필수 옵션 분리형 스크립트 start */
+var opt = new Array();
+opt[0] = new Array("('1차옵션을 먼저 선택해주세요','')");
+<!--{ @ _opt }-->
+opt['{.index_+1}'] = new Array("('== 옵션선택 ==','')",<!--{ @ .value_ }-->"('{..opt2}{?..price!=price} ({=number_format(..price)}원){/}{?usestock&&!..stock} [품절]{/}','{..opt2}','{?usestock&&!..stock}soldout{/}')"{?..index_!=..size_-1},{/}<!--{ / }-->);
+<!--{ / }-->
+function subOption(obj)
+{
+	var el = document.getElementsByName('opt[]');
+	var sub = opt[obj.selectedIndex];
+	while (el[1].length>0) el[1].options[el[1].options.length-1] = null;
+	for (i=0;i<sub.length;i++){
+		var div = sub[i].replace("')","").split("','");
+		eval("el[1].options[i] = new Option" + sub[i]);
+		if (div[2]=="soldout"){
+			el[1].options[i].style.color = "#808080";
+			el[1].options[i].setAttribute('disabled','disabled');
+		}
+	}
+	el[1].selectedIndex = el[1].preSelIndex = 0;
+	if (el[0].selectedIndex == 0) chkOption(el[1]);
+}
+/* 필수 옵션 분리형 스크립트 end */
+
+function chkOptimg(){
+	var opt = document.getElementsByName('opt[]');
+	var key = opt[0].selectedIndex;
+	var opt1 = opt[0][key].value;
+	var ropt = opt1.split('|');
+	chgOptimg(ropt[0])
+}
+
+function chgOptimg(opt1){
+	if(opt1img[opt1]){
+		objImg.src = (/^http(s)?:\/\//.test(opt1img[opt1])) ? opt1img[opt1] : "../data/goods/"+opt1img[opt1];
+	}else{
+		objImg.src = (/^http(s)?:\/\//.test('{r_img[0]}')) ? '{r_img[0]}' : "../data/goods/{r_img[0]}";
+	}
+}
+
+function chkOption(obj)
+{
+	if (!selectDisabled(obj)) return false;
+}
+
+function act(target,frmTarget)
+{
+	var form = document.frmView;
+	var actClose=false;
+	form.action = target + ".php";
+	if (frmTarget=='opener'){
+		opener.name="mainPage";
+		form.target="mainPage";
+		actClose=true;
+	}
+
+	var opt_cnt = 0, data;
+
+	nsGodo_MultiOption.clearField();
+
+	for (var k in nsGodo_MultiOption.data) {
+		data = nsGodo_MultiOption.data[k];
+		if (data && typeof data == 'object') {
+			nsGodo_MultiOption.addField(data, opt_cnt);
+			opt_cnt++;
+		}
+	}
+	
+	if (opt_cnt > 0) {
+		form.submit();
+	}
+	else {
+		if (chkGoodsForm(form))
+			form.submit();
+		else
+			return;
+	}
+	
+	if(actClose)self.close();
+
+	return;
+}
+
+function chgImg(obj)
+{
+	var objImg = document.getElementById('objImg');
+	if (obj.getAttribute("ssrc")) objImg.src = obj.src.replace(/\/t\/[^$]*$/g, '/')+obj.getAttribute("ssrc");
+	else objImg.src = obj.src.replace("/t/","/");
+	<!--{?detailView=='y'}-->
+	// 디테일뷰 추가내용 2010.11.09
+	if (obj.getAttribute("lsrc")) objImg.setAttribute("lsrc", obj.src.replace(/\/t\/[^$]*$/g, '/')+obj.getAttribute("lsrc"));
+	else objImg.setAttribute("lsrc", obj.getAttribute("src").replace("/t/", "/").replace("_sc.", '.'));
+	ImageScope.setImage(objImg, beforeScope, afterScope);
+	// 디테일뷰 추가내용 2010.11.09
+	<!--{/}-->
+}
+
+function innerImgResize()	// 본문 이미지 크기 리사이징
+{
+	var objContents = document.getElementById('contents');
+	var innerWidth = 645;
+	var img = objContents.getElementsByTagName('img');
+	for (var i=0;i<img.length;i++){
+		img[i].onload = function(){
+			if (this.width>innerWidth) this.width = innerWidth;
+		};
+	}
+}
+
+<!--{?detailView=='y'}-->
+// 디테일뷰 추가내용 2010.11.09
+function beforeScope() {
+	document.getElementsByName("frmView")[0].style.visibility = "hidden";
+}
+
+function afterScope() {
+	document.getElementsByName("frmView")[0].style.visibility = "visible";
+}
+// 디테일뷰 추가내용 2010.11.09
+<!--{/}-->
+
+<!--{?naverNcash=='Y'}-->
+// 네이버 마일리지 추가 내용 2011.06.10
+function mileage_info(status) {
+	document.getElementById("n_mileage").style.display = status;
+	document.getElementById("n_mileage").style.left = document.body.scrollLeft + event.clientX;
+	document.getElementById("n_mileage").style.top = document.body.scrollTop + event.clientY;
+}
+// 네이버 마일리지 추가 내용 2011.06.10
+<!--{/}-->
+
+function fnRequestStockedNoti(goodsno) {
+
+	popup('./popup_request_stocked_noti.php?goodsno='+goodsno,360,160);
+
+}
+
+</script>
+{=systemHeadTagEnd}
+</head>
+<body onload="fitwin()">
+
+
+<div class="indiv"><!-- Start indiv -->
+
+<!-- 상품 이미지 -->
+<div style="margin:0px auto 0px auto">
+<div style="width:49%;float:left;text-align:center;">
+<div style="padding-bottom:10"><span onclick="popup('goods_popup_large.php?goodsno={goodsno}',800,600)" style="cursor:pointer"><!--디테일뷰수정--><!--{?detailView=='y'}--><!--{? sc_img[0]}-->{=goodsimg(sc_img[0],300,'id="objImg"','','zoom_view')}<!--{:}-->{=goodsimg(r_img[0],300,'id="objImg"','','zoom_view')}<!--{/}--><!--{:}-->{=goodsimg(r_img[0],300,'id=objImg')}<!--{/}--><!--디테일뷰수정--></span></div>
+<div style="padding-bottom:10">
+<img src="../img/common/btn_zoom.gif" onclick="popup('goods_popup_large.php?goodsno={goodsno}',800,600)" style="cursor:pointer" align=absmiddle>
+</div>
+<div align=center>
+<!--{ @ t_img }-->
+<!--{?detailView=='y'}-->
+{=goodsimg(.value_,45,"onmouseover='chgImg(this)' ssrc='"+sc_img[.index_]+"' lsrc='"+r_img[.index_]+"' class=hand style='border-width:1; border-style:solid; border-color:#cccccc'")}
+<!--{:}-->
+{=goodsimg(.value_,45,"onmouseover='chgImg(this)' class=hand style='border-width:1; border-style:solid; border-color:#cccccc'")}
+<!--{/}-->
+<!--{ / }-->
+</div>
+</div>
+
+<!-- 상품 스펙 리스트 -->
+<div id=goods_spec style="width:49%;float:left;">
+<!--디테일뷰수정--><!--{?detailView=='y'}--><div id="zoom_view" style="display:none; position:absolute; width:340px; height:370px;"></div><!--{/}--><!--디테일뷰수정-->
+<form name=frmView method=post onsubmit="return false" target="ifrmHidden">
+<input type=hidden name=preview value="y">
+<input type=hidden name=mode value="addItem">
+<input type=hidden name=goodsno value="{goodsno}">
+<input type=hidden name=goodsCoupon value="{coupon}">
+<!--{ ? min_ea>1}--><input type="hidden" name="min_ea" value="{min_ea}"><!--{/}-->
+<!--{ ? max_ea!='0'}--><input type="hidden" name="max_ea" value="{max_ea}"><!--{ / }-->
+<div style="padding:10px 0 10px 5px" align=left>
+<b style="font:bold 12pt 돋움;">
+<!--{? clevel == '0' || slevel >= clevel }-->
+{goodsnm}
+<!--{: slevel < clevel && auth_step[1] == 'Y' }-->
+{goodsnm}
+<!--{/}-->
+</b>
+</div>
+<div style="padding:0 0 10px 5px;font:11px dotum;letter-spacing:-1px;color:#666666">{shortdesc}</div>
+<!--{? clevel == '0' || slevel >= clevel || (slevel < clevel && auth_step[2] == 'Y') }-->
+<table border=0 cellpadding=0 cellspacing=0 class=top>
+	<tr><td height=2></td></tr>
+	<!--{ ? sales_status == 'ing'}-->
+	<!--tr><td colspan="2"><span style="padding-bottom:5px; padding-left:14px; color:#EF1C21">절찬리 판매중!!</span></td></tr-->
+	<!--{ : sales_status == 'range'}-->
+	<tr><th>남은시간 :</th><td><span id="el-countdown-1" style="padding-bottom:5px;font:13pt bold;color:#EF1C21"></span></td></tr>
+	<script type="text/javascript">
+	Countdown.init('{=date('Y-m-d H:i:s',sales_range_end)}', 'el-countdown-1');
+	</script>
+	<!--{ : sales_status == 'before'}-->
+	<tr><td colspan="2"><span style="padding-bottom:5px; padding-left:14px; color:#EF1C21">{=date('Y-m-d H:i:s',sales_range_start)} 판매시작합니다.</span></td></tr>
+	<!--{ : sales_status == 'end'}-->
+	<tr><td colspan="2"><span style="padding-bottom:5px; padding-left:14px; color:#EF1C21">판매가 종료되었습니다.</span></td></tr>
+	<!--{ / }-->
+	<!--{ ? runout && _cfg_soldout.price == 'image'}-->
+	<tr><th>판매가격 :</th><td><img src="../data/goods/icon/custom/soldout_price"></td></tr>
+	<!--{ : runout && _cfg_soldout.price == 'string'}-->
+	<tr><th>판매가격 :</th><td><b>{_cfg_soldout.price_string}</b></td></tr>
+	<!--{ : !strprice }-->
+	<tr>
+		<th>판매가격 :</th>
+		<td>
+		<!--{ ? consumer }-->
+		<strike><span id=consumer>{=number_format(consumer)}</span></strike> →
+		<!--{ / }-->
+		<b><span id=price>{=number_format(price)}</span>원</b>
+		</td>
+	</tr>
+	<!--{ ? memberdc }-->
+	<tr>
+		<th>회원할인가 :</th>
+		<td style="font-weight:bold"><span id=obj_realprice>{=number_format(realprice)}원&nbsp;(-{=number_format(memberdc)}원)</span></b></td>
+	</tr>
+	<!--{ / }-->
+	<!--{ ? coupon }-->
+	<tr><th>쿠폰적용가 :</th>
+	<td>
+	<span id=obj_coupon style="font-weight:bold;color:#EF1C21">{=number_format(couponprice)}원&nbsp;(-{=number_format(coupon)}원)</span>
+	<div>{about_coupon}</div>
+	</td></tr>
+	<!--{ / }-->
+	<tr><th>적립금 :</th><td><span id=reserve>{=number_format(reserve)}</span>원</td></tr>
+	<!--{ ? naverNcash == 'Y' }-->
+	<tr><th>네이버&nbsp;&nbsp;<br/>마일리지 :</th><td>{ ? exception }{exception}{:}{ ? N_ba }<span style="font:bold;color:#1ec228;">{N_ba}%</span>{/} {? N_aa }<span style="font:bold;color:#1ec228;">+ 추가 {N_aa}%</span>{/} 적립{/}&nbsp;&nbsp;<img src="../img/nmileage/n_mileage_info2.gif" onmouseover="javascript:mileage_info('block');"></td></tr>
+	<div onmouseover="this.style.display='block';" onmouseout="this.style.display='none';" style='width:210px; height:100px; display:none; position:absolute; z-index:50; border:1px solid #1ec228; background-color:#ffffff; padding:10px; line-height:150%;' id='n_mileage' class='stxt'>네이버마일리지는 가맹점 어디서나<br/>네이버 아이디 하나로 편리하게 적립받고<br/>사용할 수 있는 통합적립금 입니다.<br/><a href="http://mileage.naver.com/customer/introduction/serviceIntroduction" target="_blank"><img src="../img/nmileage/n_mileage_help.gif" border="1px" vspace="5"></a></div>
+	<!--{ / }-->
+	<!--{ ? coupon_emoney }-->
+	<tr><th>쿠폰적립금 :</th>
+	<td>
+	<span id=obj_coupon_emoney style="font-weight:bold;color:#EF1C21"></span> &nbsp;<span style="font:bold 9pt tahoma; color:#FF0000" >{=number_format(coupon_emoney)}원</span>
+	</td></tr>
+	<!--{ / }-->
+	<!--{ ? delivery_type == 1 }-->
+	<tr><th>배송비 :</th><td>무료배송</td></tr>
+	<!--{ : delivery_type == 2 }-->
+	<tr><th>개별배송비 :</th><td>{=number_format(goods_delivery)}원</td></tr>
+	<!--{ : delivery_type == 3 }-->
+	<tr><th>착불배송비 :</th><td>{=number_format(goods_delivery)}원</td></tr>
+	<!--{ : delivery_type == 4 }-->
+	<tr><th>고정배송비 :</th><td>{=number_format(goods_delivery)}원</td></tr>
+	<!--{ : delivery_type == 5 }-->
+	<tr><th>수량별배송비 :</th><td>{=number_format(goods_delivery)}원 (수량에 따라 배송비가 추가됩니다.)</td></tr>
+	<!--{ / }-->
+	<!--{ : }-->
+	<tr><th>판매가격 :</th><td><b>{strprice}</b></td></tr>
+	<!--{ / }-->
+</table>
+<!--{/}-->
+<table border=0 cellpadding=0 cellspacing=0>
+	<tr><td height=5></td></tr>
+	<!--{ ? goodscd }--><tr height><th>제품코드 :</th><td>{goodscd}</td></tr><!--{ / }-->
+	<!--{ ? origin }--><tr><th>원산지 :</th><td>{origin}</td></tr><!--{ / }-->
+	<!--{ ? maker }--><tr><th>제조사 :</th><td>{maker}</td></tr><!--{ / }-->
+	<!--{ ? brand }--><tr><th>브랜드 :</th><td>{brand} <a href="../goods/goods_brand.php?brand={brandno}">[브랜드바로가기]</a></td></tr><!--{ / }-->
+	<!--{ ? launchdt }--><tr><th>출시일 :</th><td>{launchdt}</td></tr><!--{ / }-->
+	<!--{ @ ex }--><tr><th>{.key_} :</th><td>{.value_}</td></tr><!--{ / }-->
+
+	<!--{ ? !_opt }-->
+	<tr><th>구매수량 :</th>
+	<td>
+	<!--{ ? !runout }-->
+	<div style="float:left;"><input type=text name=ea size=2 value={? min_ea}{min_ea}{:}1{/} class=line style="text-align:right;height:18px"></div>
+	<div style="float:left;padding-left:3">
+	<div style="padding:1 0 2 0"><img src="../img/common/btn_plus.gif" onClick="chg_cart_ea(frmView.ea,'up')" style="cursor:pointer"></div>
+	<div><img src="../img/common/btn_minus.gif" onClick="chg_cart_ea(frmView.ea,'dn')" style="cursor:pointer"></div>
+	</div>
+	<div style="padding-top:3; float:left">개</div>
+	<div style="padding-left:10px;float:left" class="stxt">
+	<!--{ ? min_ea>1}--><div>최소구매수량 : {min_ea}개</div><!--{ / }-->
+	<!--{ ? max_ea!='0'}--><div>최대구매수량 : {max_ea}개</div><!--{ / }-->
+	</div>
+	<!--{ : }-->
+	품절된 상품입니다
+	<!--{ / }-->
+	</td></tr>
+	<!--{ : }-->
+	<input type=hidden name=ea value={? min_ea}{min_ea}{:}1{/}>
+	<!--{ / }-->
+
+	<!--{ ? chk_point}-->
+	<tr><th>고객선호도 :</th><td><!--{ @ array_fill(0,chk_point,'') }-->★<!--{ / }--></td></tr>
+	<!--{ / }-->
+	<!--{ ? icon }--><tr><th>제품상태 :</th><td>{icon}</td></tr><!--{ / }-->
+</table>
+
+<!--{ ? !strprice }-->
+
+<!-- 추가 옵션 입력형 -->
+<!--{ ? _addopt_inputable }-->
+<table border=0 cellpadding=0 cellspacing=0 class=top>
+	<!--{ @ _addopt_inputable }-->
+	<tr><th>{.key_} :</th>
+	<td>
+		<input type="hidden" name="_addopt_inputable[]" value="">
+		<input type="text" name="addopt_inputable[]" label="{.key_}" option-value="{.sno}^{.key_}^{.opt}^{.addprice}" value="" { ? _addopt_inputable_req[.index_] }required fld_esssential{/} maxlength="{.opt}">
+	</td></tr>
+	<!--{ / }-->
+</table>
+<!--{ / }-->
+
+<!-- 필수 옵션 일체형 -->
+<!--{ ? _opt && _typeOption=="single" }-->
+<table border=0 cellpadding=0 cellspacing=0 class=top>
+	<tr><td height=6></td></tr>
+	<tr><th  valign="top">{optnm} :</th>
+	<td>
+	<div>
+	<select name="opt[]" onchange="chkOption(this);chkOptimg();nsGodo_MultiOption.set();" required msgR="{optnm} 선택을 해주세요">
+	<option value="">== 옵션선택 ==
+	<!--{ @ _opt }--><!--{ @ .value_ }-->
+	<option value="{..opt1}{?..opt2}|{..opt2}{/}" {?usestock&&!..stock} disabled class=disabled{/}>{..opt1}{?..opt2}/{..opt2}{/} {?..price!=price}({=number_format(..price)}원){/}
+	<!--{ ? usestock && !..stock }--> [품절]<!--{ / }-->
+	<!--{ / }--><!--{ / }-->
+	</select></div>
+	</td>
+	</tr>
+	<tr><td height=6></td></tr>
+</table>
+<!--{ / }-->
+
+<!-- 필수 옵션 분리형 -->
+<!--{ ? _opt && _typeOption=="double" }-->
+<table border=0 cellpadding=0 cellspacing=0 class=top>
+	<tr><td height=6></td></tr>
+	<!--{ @ _optnm }-->
+	<tr><th valign="top" >{.value_} :</th>
+	<td >
+
+	<!-- 옵션 선택 -->
+	<div>
+	<!--{ ? !.index_ }-->
+	<div>
+	<select name="opt[]" onchange="subOption(this);chkOptimg();selicon(this);nsGodo_MultiOption.set();" required msgR="{.value_} 선택을 해주세요">
+	<option value="">== 옵션선택 ==
+	<!--{ @ (_opt) }--><option value="{..key_}">{..key_}<!--{ / }-->
+	</select>
+	</div>
+	<!--{ : }-->
+	<select name="opt[]" onchange="chkOption(this);selicon(this);nsGodo_MultiOption.set();" required msgR="{.value_} 선택을 해주세요"><option value="">==선택==</select>
+	<!--{ / }-->
+	</div>
+
+	<!-- 옵션 이미지 아이콘 -->
+	<!--{? optkind[.index_] == 'img'}-->
+	<!--{ ? !.index_ }-->
+		<!--{ @ _opticon[.index_] }-->
+		<div style='width:43px;float:left;padding:5 0 5 0'><a href="javascript:click_opt_fastion('{.index_}','{..index_}','{_opt[..key_][..index_].opt1}');" name="icon[]"><img width="40" id="opticon0_{..index_}" id="opticon_{.index_}_{..index_}" style="border:1px #cccccc solid" src='../data/goods/{..value_}'  onmouseover="onicon(this);chgOptimg('{..key_}');" onmouseout="outicon(this)" onclick="clicon(this)"></a></div>
+		<!--{ / }-->
+	<!--{ : }-->
+	<div id="dtdopt2"></div>
+	<!--{ / }-->
+	<!--{ / }-->
+
+	<!-- 옵션 색상타입 아이콘 -->
+	<!--{? optkind[.index_] == 'color'}-->
+	<!--{ ? !.index_ }-->
+		<!--{ @ _opticon[.index_] }-->
+		<div style='width:18px;float:left;padding-top:5px ' ><a href="javascript:click_opt_fastion('{.index_}','{..index_}','{..key_}');" style="cursor:hand;"  name="icon[]"><span  style="float:left;width:15;height:15;border:1px #cccccc solid;background-color:#{..value_}" onmouseover="onicon(this);chgOptimg('{..key_}');" onmouseout="outicon(this)" onclick="clicon(this)"></span></a></div>
+		<!--{ / }-->
+	<!--{ : }-->
+	<div id="dtdopt2"></div>
+	<!--{ / }-->
+	<!--{ / }-->
+
+	<input type="hidden" name="opt_txt[]" value="">
+	</td></tr>
+	<!--{ / }-->
+	<tr><td height=6></td></tr>
+</table>
+<script>subOption(document.getElementsByName('opt[]')[0])</script>
+<!--{ / }-->
+
+<!-- 추가 옵션 -->
+<table border=0 cellpadding=0 cellspacing=0 class=sub>
+	<!--{ @ _addopt }-->
+	<tr><th>{.key_} :</th>
+	<td>
+	<!--{ ? _addoptreq[.index_] }-->
+	<select name="addopt[]" required label="{.key_}" onchange="nsGodo_MultiOption.set();">
+	<option value="">=={.key_} 선택==
+	<!--{ : }-->
+	<select name="addopt[]" label="{.key_}" onchange="nsGodo_MultiOption.set();">
+	<option value="">=={.key_} 선택==
+	<option value="-1">선택안함
+	<!--{ / }-->
+	<!--{ @ .value_ }-->
+	<option value="{..sno}^{.key_}^{..opt}^{..addprice}">{..opt}
+	<!--{ ? ..addprice }-->({=number_format(..addprice)}원 추가)<!--{ / }-->
+	<!--{ / }-->
+	</select>
+	</td></tr>
+	<!--{ / }-->
+</table>
+
+
+<!-- ? 옵션 있으면 -->
+<script>
+var nsGodo_MultiOption = function() {
+
+	function size(e) {
+
+		var cnt = 0;
+		var type = '';
+
+		for (var i in e) {
+			cnt++;
+		}
+
+		return cnt;
+	}
+
+	return {
+		_soldout : {?runout}true{:}false{/},
+		data : [],
+		data_size : 0,
+		_optJoin : function(opt) {
+
+			var a = [];
+
+			for (var i=0,m=opt.length;i<m ;i++)
+			{
+				if (typeof opt[i] != 'undefined' && opt[i] != '')
+				{
+					a.push(opt[i]);
+				}
+			}
+
+			return a.join(' / ');
+
+		},
+		getFieldTag : function (name, value) {
+			var el = document.createElement('input');
+			el.type = "hidden";
+			el.name = name;
+			el.value = value;
+
+			return el;
+
+		},
+		clearField : function() {
+
+			var form = document.getElementsByName('frmView')[0];
+
+			var el;
+
+			for (var i=0,m=form.elements.length;i<m ;i++) {
+				el = form.elements[i];
+
+				if (typeof el == 'undefined' || el.tagName == "FIELDSET") continue;
+
+				if (/^multi\_.+/.test(el.name)) {
+					el.parentNode.removeChild(el);
+					i--;
+				}
+
+			}
+
+		},
+		addField : function(obj, idx) {
+
+			var _tag;
+			var form = document.getElementsByName('frmView')[0];
+
+			for(var k in obj) {
+
+				if (typeof obj[k] == 'undefined' || typeof obj[k] == 'function' || (k != 'opt' && k != 'addopt' && k != 'ea' && k != 'addopt_inputable')) continue;
+
+				switch (k)
+				{
+					case 'ea':
+						_tag = this.getFieldTag('multi_'+ k +'['+idx+']', obj[k]);
+						form.appendChild(_tag);
+						break;
+					case 'addopt_inputable':
+					case 'opt':
+					case 'addopt':
+						//hasOwnProperty
+						for(var k2 in obj[k]) {
+							if (typeof obj[k][k2] == 'function') continue;
+							_tag = this.getFieldTag('multi_'+ k +'['+idx+'][]', obj[k][k2]);
+							form.appendChild(_tag);
+						}
+
+						break;
+					default :
+						continue;
+						break;
+				}
+			}
+		},
+		set : function() {
+
+			var add = true;
+
+			// 선택 옵션
+			var opt = document.getElementsByName('opt[]');
+			for (var i=0,m=opt.length;i<m ;i++ )
+			{
+				if (typeof(opt[i])!="undefined") {
+					if (opt[i].value == '') add = false;
+				}
+			}
+
+			// 추가 옵션?
+			var addopt = document.getElementsByName('addopt[]');
+			for (var i=0,m=addopt.length;i<m ;i++ )
+			{
+				if (typeof(addopt[i])!="undefined") {
+					if (addopt[i].value == '' /*&& addopt[i].getAttribute('required') != null*/) add = false;
+				}
+			}
+
+			// 입력 옵션은 이곳에서 체크 하지 않는다.
+			if (add == true)
+			{
+				this.add();
+			}
+		},
+		del : function(key) {
+
+			this.data[key] = null;
+			var tr = document.getElementById(key);
+			tr.parentNode.removeChild(tr);
+			this.data_size--;
+
+			// 총 금액
+			this.totPrice();
+
+		},
+		add : function() {
+
+			var self = this;
+
+			if (self._soldout)
+			{
+				alert("품절된 상품입니다.");
+				return;
+			}
+
+			var form = document.frmView;
+			if(!(form.ea.value>0))
+			{
+				alert("구매수량은 1개 이상만 가능합니다");
+				return;
+			}
+			else
+			{
+				try
+				{
+					var step = form.ea.getAttribute('step');
+					if (form.ea.value % step > 0) {
+						alert('구매수량은 '+ step +'개 단위로만 가능합니다.');
+						return;
+					}
+				}
+				catch (e)
+				{}
+			}
+
+			if (chkGoodsForm(form)) {
+
+				var _data = {};
+
+				_data.ea = document.frmView.ea.value;
+				_data.sales_unit = document.frmView.ea.getAttribute('step') || 1;
+				_data.opt = new Array;
+				_data.addopt = new Array;
+				_data.addopt_inputable = new Array;
+
+				// 기본 옵션
+				var opt = document.getElementsByName('opt[]');
+
+				if (opt.length > 0) {
+
+					_data.opt[0] = opt[0].value;
+					_data.opt[1] = '';
+					if (typeof(opt[1]) != "undefined") _data.opt[1] = opt[1].value;
+
+					var key = _data.opt[0] + (_data.opt[1] != '' ? '|' + _data.opt[1] : '');
+
+					// 가격
+					if (opt[0].selectedIndex == 0) key = fkey;
+					key = self.get_key(key);	// get_js_compatible_key 참고
+
+					if (typeof(price[key])!="undefined"){
+
+						_data.price = price[key];
+						_data.reserve = reserve[key];
+						_data.consumer = consumer[key];
+						_data.realprice = realprice[key];
+						_data.couponprice = couponprice[key];
+						_data.coupon = coupon[key];
+						_data.cemoney = cemoney[key];
+						_data.memberdc = memberdc[key];
+						_data.special_discount_amount = special_discount_amount[key];
+
+					}
+					else {
+						// @todo : 메시지 정리
+						alert('추가할 수 없음.');
+						return;
+					}
+
+				}
+				else {
+					// 옵션이 없는 경우(or 추가 옵션만 있는 경우) 이므로 멀티 옵션 선택은 불가.
+					return;
+				}
+
+				// 추가 옵션
+				var addopt = document.getElementsByName('addopt[]');
+				for (var i=0,m=addopt.length;i<m ;i++ ) {
+
+					if (typeof addopt[i] == 'object') {
+						_data.addopt.push(addopt[i].value);
+					}
+
+				}
+
+				// 입력 옵션
+				var addopt_inputable = document.getElementsByName('addopt_inputable[]');
+				for (var i=0,m=addopt_inputable.length;i<m ;i++ ) {
+
+					if (typeof addopt_inputable[i] == 'object') {
+						var v = addopt_inputable[i].value.trim();
+						if (v) {
+							var tmp = addopt_inputable[i].getAttribute("option-value").split('^');
+							tmp[2] = v;
+							_data.addopt_inputable.push(tmp.join('^'));
+						}
+
+						// 필드값 초기화
+						addopt_inputable[i].value = '';
+
+					}
+
+				}
+
+				// 이미 추가된 옵션인지
+				if (self.data[key] != null)
+				{
+					alert('이미 추가된 옵션입니다.');
+					return false;
+				}
+
+				// 옵션 박스 초기화
+				for (var i=0,m=addopt.length;i<m ;i++ )
+				{
+					if (typeof addopt[i] == 'object') {
+						addopt[i].selectedIndex = 0;
+					}
+				}
+				//opt[0].selectedIndex = 0;
+				//subOption(opt[0]);
+
+				document.getElementById('el-multi-option-display').style.display = 'block';
+
+				// 행 추가
+				var childs = document.getElementById('el-multi-option-display').childNodes;
+				for (var k in childs)
+				{
+					if (childs[k].tagName == 'TABLE') {
+						var table = childs[k];
+						break;
+					}
+				}
+
+				var td, tr = table.insertRow(0);
+				var html = '';
+
+				tr.id = key;
+
+				// 입력 옵션명
+				td = tr.insertCell(-1);
+				html = '<div style="font-size:11px;color:#010101;padding:3px 0 0 8px;">';
+				var tmp,tmp_addopt = [];
+				for (var i=0,m=_data.addopt_inputable.length;i<m ;i++ )
+				{
+					tmp = _data.addopt_inputable[i].split('^');
+					if (tmp[2]) tmp_addopt.push(tmp[2]);
+				}
+				html += self._optJoin(tmp_addopt);
+				html += '</div>';
+
+				// 옵션명
+				html += '<div style="font-size:11px;color:#010101;padding:3px 0 0 8px;">';
+				html += self._optJoin(_data.opt);
+				html += '</div>';
+
+				// 추가 옵션명
+				html += '<div style="font-size:11px;color:#A0A0A0;padding:3px 0 0 8px;">';
+				var tmp,tmp_addopt = [];
+				for (var i=0,m=_data.addopt.length;i<m ;i++ )
+				{
+					tmp = _data.addopt[i].split('^');
+					if (tmp[2]) tmp_addopt.push(tmp[2]);
+				}
+				html += self._optJoin(tmp_addopt);
+				html += '</div>';
+
+				td.innerHTML = html;
+
+				// 수량
+				td = tr.insertCell(-1);
+				html = '';
+				html += '<div style="float:left;"><input type=text name=_multi_ea[] id="el-ea-'+key+'" size=2 value='+ _data.ea +' style="border:1px solid #D3D3D3;width:30px;text-align:right;height:20px" onblur="nsGodo_MultiOption.ea(\'set\',\''+key+'\',this.value);"></div>';
+				html += '<div style="float:left;padding-left:3">';
+				html += '<div style="padding:1 0 2 0"><img src="../img/common/btn_multioption_ea_up.gif" onClick="nsGodo_MultiOption.ea(\'up\',\''+key+'\');" style="cursor:pointer"></div>';
+				html += '<div><img src="../img/common/btn_multioption_ea_down.gif" onClick="nsGodo_MultiOption.ea(\'down\',\''+key+'\');" style="cursor:pointer"></div>';
+				html += '</div>';
+				td.innerHTML = html;
+
+				// 옵션가격
+				_data.opt_price = _data.price;
+				for (var i=0,m=_data.addopt.length;i<m ;i++ )
+				{
+					tmp = _data.addopt[i].split('^');
+					if (tmp[3]) _data.opt_price = _data.opt_price + parseInt(tmp[3]);
+				}
+				for (var i=0,m=_data.addopt_inputable.length;i<m ;i++ )
+				{
+					tmp = _data.addopt_inputable[i].split('^');
+					if (tmp[3]) _data.opt_price = _data.opt_price + parseInt(tmp[3]);
+				}
+				td = tr.insertCell(-1);
+				td.style.cssText = 'padding-right:10px;text-align:right;font-weight:bold;color:#6A6A6A;';
+				html = '';
+				html += '<span id="el-price-'+key+'">'+comma( _data.opt_price *  _data.ea) + '원</span>';
+				html += '<a href="javascript:void(0);" onClick="nsGodo_MultiOption.del(\''+key+'\');return false;"><img src="../img/common/btn_multioption_del.gif"></a>';
+				td.innerHTML = html;
+
+				self.data[key] = _data;
+				self.data_size++;
+
+				// 총 금액
+				self.totPrice();
+
+
+			}
+		},
+		ea : function(dir, key,val) {	// up, down
+
+			var min_ea = 0, max_ea = 0, remainder = 0;
+
+			if (document.frmView.min_ea) min_ea = parseInt(document.frmView.min_ea.value);
+			if (document.frmView.max_ea) max_ea = parseInt(document.frmView.max_ea.value);
+
+			if (dir == 'up') {
+				this.data[key].ea = (max_ea != 0 && max_ea <= this.data[key].ea) ? max_ea : parseInt(this.data[key].ea) + parseInt(this.data[key].sales_unit);
+			}
+			else if (dir == 'down')
+			{
+				if ((parseInt(this.data[key].ea) - 1) > 0)
+				{
+					this.data[key].ea = (min_ea != 0 && min_ea >= this.data[key].ea) ? min_ea : parseInt(this.data[key].ea) - parseInt(this.data[key].sales_unit);
+				}
+
+			}
+			else if (dir == 'set') {
+
+				if (val && !isNaN(val))
+				{
+					val = parseInt(val);
+
+					if (max_ea != 0 && val > max_ea)
+					{
+						val = max_ea;
+					}
+					else if (min_ea != 0 && val < min_ea) {
+						val = min_ea;
+					}
+					else if (val < 1)
+					{
+						val = parseInt(this.data[key].sales_unit);
+					}
+
+					remainder = val % parseInt(this.data[key].sales_unit);
+
+					if (remainder > 0) {
+						val = val - remainder;
+					}
+
+					this.data[key].ea = val;
+
+				}
+				else {
+					alert('수량은 1 이상의 숫자로만 입력해 주세요.');
+					return;
+				}
+			}
+
+			document.getElementById('el-ea-'+key).value = this.data[key].ea;
+			document.getElementById('el-price-'+key).innerText = comma(this.data[key].ea * this.data[key].opt_price) + '원';
+
+			// 총금액
+			this.totPrice();
+
+		},
+		totPrice : function() {
+			var self = this;
+			var totprice = 0;
+			for (var i in self.data)
+			{
+				if (self.data[i] !== null && typeof self.data[i] == 'object') totprice += self.data[i].opt_price * self.data[i].ea;
+			}
+
+			document.getElementById('el-multi-option-total-price').innerText = comma(totprice) + '원';
+		},
+		get_key : function(str) {
+
+			str = str.replace(/&/g, "&amp;").replace(/\"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+
+			var _key = "";
+
+			for (var i=0,m=str.length;i<m;i++) {
+				_key += str.charAt(i) != '|' ? str.charCodeAt(i) : '|';
+			}
+
+			return _key.toUpperCase();
+		}
+	}
+}();
+
+function chkGoodsForm(form) {
+
+	if (form.min_ea)
+	{
+		if (parseInt(form.ea.value) < parseInt(form.min_ea.value))
+		{
+			alert('최소구매수량은 ' + form.min_ea.value+'개 입니다.');
+			return false;
+		}
+	}
+
+	if (form.max_ea)
+	{
+		if (parseInt(form.ea.value) > parseInt(form.max_ea.value))
+		{
+			alert('최대구매수량은 ' + form.max_ea.value+'개 입니다.');
+			return false;
+		}
+	}
+
+	try
+	{
+		var step = form.ea.getAttribute('step');
+		if (form.ea.value % step > 0) {
+			alert('구매수량은 '+ step +'개 단위만 가능합니다.');
+			return false;
+		}
+	}
+	catch (e)
+	{}
+
+	var res = chkForm(form);
+
+	// 입력옵션 필드값 설정
+	if (res)
+	{
+		var addopt_inputable = document.getElementsByName('addopt_inputable[]');
+		for (var i=0,m=addopt_inputable.length;i<m ;i++ ) {
+
+			if (typeof addopt_inputable[i] == 'object') {
+				var v = addopt_inputable[i].value.trim();
+				if (v) {
+					var tmp = addopt_inputable[i].getAttribute("option-value").split('^');
+					tmp[2] = v;
+					v = tmp.join('^');
+				}
+				else {
+					v = '';
+				}
+				document.getElementsByName('_addopt_inputable[]')[i].value = v;
+			}
+		}
+	}
+
+	return res;
+
+}
+
+</script>
+
+<style type="text/css">
+.goods-multi-option {display:none;}
+.goods-multi-option table {border:1px solid #D3D3D3;}
+.goods-multi-option table td {border-bottom:1px solid #D3D3D3;padding:10px;}
+</style>
+<div id="el-multi-option-display" class="goods-multi-option">
+	<table border="0" cellpadding="0" cellspacing="0">
+	<col width=""><col width="50"><col width="80">
+	</table>
+
+	<div style="font-size:12px;text-align:right;padding:10px 20px 10px 0;border-bottom:1px solid #D3D3D3;margin-bottom:5px;">
+		<img src="../img/common/btn_multioption_br.gif" align="absmiddle"> 총 금액 : <span style="color:#E70103;font-weight:bold;" id="el-multi-option-total-price"></span>
+	</div>
+</div>
+<!-- / -->
+
+<!--{ / }-->
+{cyworldScrap}
+{snsBtn}
+<!-- 각종 버튼 -->
+<div style="width:330px;">
+<!--{ ? !strprice && !runout && (sales_status == 'ing' || sales_status == 'range')}-->
+<!--{? clevel == '0' || slevel >= clevel }-->
+<a href="javascript:act('../order/order')"><img src="../img/common/btn_direct_buy.gif"></a>
+<a href="javascript:cartAdd(frmView,'{ cartCfg->redirectType }')"><img src="../img/common/btn_cart.gif"></a>
+<a href="javascript:act('../mypage/mypage_wishlist')"><img src="../img/common/btn_wish_m_un.gif"></a>
+<!--{ / }-->
+<!--{ : runout && use_stocked_noti}-->
+<a href="javascript:fnRequestStockedNoti('{goodsno}');"><img src="../img/stocked_noti/btn_alarm.gif"></a>
+<!--{ / }-->
+<a href="javascript:opener.location.href='goods_list.php?category={_GET.category}';self.close()"><img src="../img/common/btn_list.gif"></a>
+</div>
+<div>{naverCheckout}</div>
+<div>{auctionIpayBtn}</div>
+<div>{qrcode_view}</div>
+{plusCheeseBtn}
+</form>
+</div>
+</div>
+
+
+
+</div><!-- End indiv -->
+
+
+
+<!--디테일뷰수정-->
+<!--{?detailView=='y'}-->
+<script type="text/javascript">
+var objImg = document.getElementById("objImg");
+objImg.setAttribute("lsrc", objImg.getAttribute("src").replace("/t/", "/").replace("_sc.", '.'));
+ImageScope.setImage(objImg, beforeScope, afterScope);
+</script>
+<!--{/}-->
+<!--디테일뷰수정-->
+
+
+<iframe name="ifrmHidden" src='../../../blank.php' style="display:none;width:100%;height:600"></iframe>
+
+</body>
+</html>

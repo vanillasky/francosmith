@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="EUC-KR"?>
+<codes>
+<list>
+	<code>{.goodsno}</code>
+	<desc>상품번호</desc>
+	<exam>37</exam>
+</list>
+<list>
+	<code>{.goodsnm}</code>
+	<desc>상품명</desc>
+	<exam>런닝 운동화</exam>
+</list>
+<list>
+	<code>{.price}</code>
+	<desc>판매가</desc>
+	<exam>4800</exam>
+</list>
+<list>
+	<code>{.ea}</code>
+	<desc>수량</desc>
+	<exam>1</exam>
+</list>
+<list>
+	<code>{=goodsimgMobile(array(.img_mobile,.img_i,.img_s,.img_m),60)}</code>
+	<desc>리스트이미지 태그</desc>
+	<exam>&lt;img src="이미지경로" width=60 onerror="this.src='/~/noimg_100.gif'"&gt;</exam>
+</list>
+<list>
+	<code>{.opt1}</code>
+	<desc>옵션1</desc>
+	<exam>화이트</exam>
+</list>
+<list>
+	<code>{.opt2}</code>
+	<desc>옵션2</desc>
+	<exam>M</exam>
+</list>
+<list>
+	<code>{.addopt}</code>
+	<desc>추가상품</desc>
+	<exam>악세사리:열쇠고리^사은품:파우치</exam>
+</list>
+<list>
+	<code>{=_r_istep[.istep]}</code>
+	<desc>배송상태</desc>
+	<exam>주문접수</exam>
+</list>
+</codes>

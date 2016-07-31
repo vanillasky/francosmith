@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="EUC-KR"?>
+<codes>
+<list>
+	<code power="">{_cfg['shopSideSize']}</code>
+	<desc>측면사이즈</desc>
+	<exam>200</exam>
+</list>
+<list>
+	<code power="">{_cfg['outline_sidefloat']}</code>
+	<desc>측면위치 - left:왼쪽, right:오른쪽</desc>
+	<exam>left</exam>
+</list>
+<list>
+	<code>{this->tpl_['side_inc']}</code>
+	<desc>측면디자인 템플릿(tpl) 파일명</desc>
+	<exam>array('tpl', 'outline/side/standard.htm');</exam>
+</list>
+<list>
+	<code power="">{ # side_inc }</code>
+	<desc>측면디자인 파일 인클루드</desc>
+	<exam></exam>
+</list>
+<list>
+	<code>{this->tpl_['footer_inc']}</code>
+	<desc>하단디자인 템플릿(tpl) 파일명</desc>
+	<exam>array('tpl', 'outline/footer/standard.htm');</exam>
+</list>
+<list>
+	<code power="">{ # footer_inc }</code>
+	<desc>하단디자인 파일 인클루드</desc>
+	<exam></exam>
+</list>
+<list>
+	<code>{ @ _todayGoodsList}</code>
+	<desc>오늘본상품</desc>
+	<exam more="outline/_footer._todayGoodsList.xml"></exam>
+</list>
+<list>
+	<code>{ @ dataBanner( 1, 1, 'Y' ) }</code>
+	<desc>배너코드1 위치의 배너를 1개만 랜덤으로 호출 (※ 위치는 1 ~ 60 제공)</desc>
+	<exam more="func/dataBanner.xml"></exam>
+</list>
+<list>
+	<code>{ @ dataBanner( 22 ) }</code>
+	<desc>배너코드22 위치의 배너를 호출</desc>
+	<exam more="func/dataBanner.xml"></exam>
+</list>
+</codes>

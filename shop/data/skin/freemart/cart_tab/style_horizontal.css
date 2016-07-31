@@ -1,0 +1,95 @@
+#el-godo-cart-tab {
+	height:258px;
+	width:100%;;
+	position:fixed;
+	bottom:0px;
+	left:0px;
+	z-index:10000;
+	display:block;
+	padding:0 0 0 0;
+}
+
+#el-godo-cart-tab * {color:#808080;font-size:11px;}
+
+img.blank {width:1px; height:0px;border:none;display:block;}
+#el-godo-cart-tab .wrap {margin:0 auto;height:100%;display:block;overflow:hidden;}
+#el-godo-cart-tab table {width:100%;height:100%;text-align:center;}
+
+#el-godo-cart-tab div.head {height:32px;}
+#el-godo-cart-tab div.head .toggler {float:right;cursor:pointer;}
+#el-godo-cart-tab div.head .menu {height:100%;float:left;width:300px;}
+#el-godo-cart-tab div.head .menu ul {margin:0;padding:0;list-style:none;}
+#el-godo-cart-tab div.head .menu ul li {float:left;text-align:left;cursor:pointer;height:20px;_height:32px;padding:12px 0 0 0;_padding-top:13px;}
+#el-godo-cart-tab div.head .menu ul li.tab1 {width:35px;_width:93px;padding-left:58px;}
+#el-godo-cart-tab div.head .menu ul li.tab2 {width:32px;_width:109px;padding-left:77px;}
+#el-godo-cart-tab div.head .menu ul li.tab3 {width:30px;_width:83px;padding-left:53px;}
+
+#el-godo-cart-tab div.body {height:221px;}
+
+#el-godo-cart-tab div.body div.loader {text-align:center;border:none;display:none;}
+#el-godo-cart-tab div.body div.contents {height:100%;}
+#el-godo-cart-tab div.body div.contents ul.goodslist {margin:20px auto 0 0;padding:0;list-style:none;}
+#el-godo-cart-tab div.body div.contents ul.goodslist li {float:left;}
+#el-godo-cart-tab div.body div.contents ul.goodslist li.nav {width:35px;text-align:center;padding-top:35px;}
+#el-godo-cart-tab div.body div.contents ul.goodslist li ol {margin:0;padding:0;list-style:none;}
+#el-godo-cart-tab div.body div.contents ul.goodslist li ol li {float:left;width:110px;text-align:center;}
+#el-godo-cart-tab div.body div.contents ul.goodslist li ol li div {color:#808080;font-size:11px;margin:0 0 2px 0;text-align:center;}
+#el-godo-cart-tab div.body div.contents ul.goodslist li ol li div.goodsimg {width:100px;height:100px;padding:0;margin-bottom:10px;text-align:right;border:1px solid #f0f0f0;position:relative;z-index:1000;}
+#el-godo-cart-tab div.body div.contents ul.goodslist li ol li div.goodsimg .del {position:absolute;right:2px;top:2px;z-index:1100;}
+#el-godo-cart-tab div.body div.contents ul.goodslist li ol li .bold {color:#7f7f7f;font-weight:bold;}
+#el-godo-cart-tab div.body div.contents .login {padding-top:60px;}
+
+#el-godo-cart-tab div.body div.cart {}
+#el-godo-cart-tab div.body div.cart  div.c {display:block;}
+#el-godo-cart-tab div.body div.cart  div.b {display:none;}
+#el-godo-cart-tab div.body div.cart  div.a {display:none;}
+
+#el-godo-cart-tab div.body div.wishlist {}
+#el-godo-cart-tab div.body div.wishlist  div.c {display:none;}
+#el-godo-cart-tab div.body div.wishlist  div.b {display:block;}
+#el-godo-cart-tab div.body div.wishlist  div.a {display:none;}
+
+#el-godo-cart-tab div.body div.today {}
+#el-godo-cart-tab div.body div.today  div.c {display:none;}
+#el-godo-cart-tab div.body div.today  div.b {display:none;}
+#el-godo-cart-tab div.body div.today  div.a {display:block;}
+
+#el-godo-cart-tab div.foot {height:5px;}
+
+
+/* ≈€«√∏¥∫∞ ≈« Ω∫≈∏¿œ */
+#el-godo-cart-tab.tpl01 .body {background-color:#ffffff;color:#808080}
+#el-godo-cart-tab.tpl01 .menu ul li {color:#fff;font-weight:bold;}
+#el-godo-cart-tab.tpl01 .a ul li.tab1 {color:#e1000c;}
+#el-godo-cart-tab.tpl01 .b ul li.tab2 {color:#e1000c;}
+#el-godo-cart-tab.tpl01 .c ul li.tab3 {color:#e1000c;}
+
+#el-godo-cart-tab.tpl02 .body {background-color:#ffffff;color:#808080}
+#el-godo-cart-tab.tpl02 .menu ul li {color:#fff;font-weight:bold;}
+#el-godo-cart-tab.tpl02 .a ul li.tab1 {color:#e1000c;}
+#el-godo-cart-tab.tpl02 .b ul li.tab2 {color:#e1000c;}
+#el-godo-cart-tab.tpl02 .c ul li.tab3 {color:#e1000c;}
+
+#el-godo-cart-tab.tpl03 .body {background-color:#ffffff;color:#808080}
+#el-godo-cart-tab.tpl03 .menu ul li {color:#959595;font-weight:bold;}
+#el-godo-cart-tab.tpl03 .a ul li.tab1 {color:#e1000c;}
+#el-godo-cart-tab.tpl03 .b ul li.tab2 {color:#e1000c;}
+#el-godo-cart-tab.tpl03 .c ul li.tab3 {color:#e1000c;}
+
+#el-godo-cart-tab.tpl04 .body {background-color:#ffffff;color:#808080}
+#el-godo-cart-tab.tpl04 .menu ul li {color:#959595;font-weight:bold;}
+#el-godo-cart-tab.tpl04 .a ul li.tab1 {color:#e1000c;}
+#el-godo-cart-tab.tpl04 .b ul li.tab2 {color:#e1000c;}
+#el-godo-cart-tab.tpl04 .c ul li.tab3 {color:#e1000c;}
+
+#el-godo-cart-tab.tpl05 .body {background-color:#ffffff;color:#808080}
+#el-godo-cart-tab.tpl05 .menu ul li {color:#373737;font-weight:bold;}
+#el-godo-cart-tab.tpl05 .a ul li.tab1 {color:#e1000c;}
+#el-godo-cart-tab.tpl05 .b ul li.tab2 {color:#e1000c;}
+#el-godo-cart-tab.tpl05 .c ul li.tab3 {color:#e1000c;}
+
+#el-godo-cart-tab.tpl06 .body {background-color:#ffffff;color:#808080}
+#el-godo-cart-tab.tpl06 .menu ul li {color:#ffffff;font-weight:bold;}
+#el-godo-cart-tab.tpl06 .a ul li.tab1 {color:#e1000c;}
+#el-godo-cart-tab.tpl06 .b ul li.tab2 {color:#e1000c;}
+#el-godo-cart-tab.tpl06 .c ul li.tab3 {color:#e1000c;}

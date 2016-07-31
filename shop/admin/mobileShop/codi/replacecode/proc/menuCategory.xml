@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="EUC-KR"?>
+<codes>
+<list>
+	<code>{_cfg.subCategory}</code>
+	<desc>메뉴레이어사용 - 0:레이어 사용안함, 1:레이어 사용함, 2:서브메뉴 하단출력</desc>
+	<exam>1</exam>
+</list>
+<list>
+	<code>{ @ dataCategory( _cfg.subCategory, 1 ) }</code>
+	<desc>분류, subCategory=0 이면 1단계만 출력하고 subCategory!=0 이면 서브 분류(sub)도 출력</desc>
+	<exam more="func/dataCategory.xml"></exam>
+</list>
+</codes>

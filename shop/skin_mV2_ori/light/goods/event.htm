@@ -1,0 +1,22 @@
+{*** 모바일이벤트 | goods/event.php ***}
+{#header}
+<!--{ ? page_title }-->
+{#sub_header}
+<!--{ / }-->
+<section id="event" class="content" >
+	<div class="event_body">
+		{=event_body}
+	</div>
+	<!--{ = this->assign( 'id', "event_01" ) // 고유 ID }-->
+	<!--{ = this->assign( 'dpCfg', _dpCfg ) // 설정 }-->
+	<!--{ = include_file( "goods/list/" + tpl + ".htm" ) }-->
+	<audio id="speach-description-player"></audio>
+</section>
+
+<!-- 품절상품 마스크 -->
+<div id="el-goods-soldout-image-mask" style="display:none;position:absolute;top:0;left:0;background:url({ ? _cfg_soldout.mobile_display_overlay == 'custom'}{_cfg.rootDir}/data/goods/icon/mobile_custom_soldout{:}{_cfg.rootDir}/data/goods/icon/mobile_icon_soldout{_cfg_soldout.mobile_display_overlay}{/}) no-repeat center center; background-size: cover;"></div>
+<script>
+addOnloadEvent(function(){ setGoodsImageSoldoutMask() });
+</script>
+
+{#footer}

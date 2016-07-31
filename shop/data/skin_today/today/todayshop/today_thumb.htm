@@ -1,0 +1,74 @@
+{*** 오늘의 상품 리스트 | todayshop/today_thumb.php ***}
+<html>
+<style>
+a {cursor:pointer;}
+ul { list-style-type:none; }
+img { border:0px; }
+
+/* 상품썸네일 */
+.thumbBlock { width:80px; }
+.thumbBlock .btns { height:16px; overflow:hidden; }
+.thumbBlock .imageBlock { overflow:hidden; width:80px; height:380px; background-image:url(../img/btn_s_bg.gif); text-align:center;}
+.thumbBlock .imageBlock .imgBox { overflow:hidden; width:72px; height:72px; margin:0px auto; }
+.thumbBlock .imageBlock .curgoods { border:solid 1px #c4040d; }
+.thumbBlock .imageBlock .others { border:solid 1px #D9D9D9; }
+.thumbBlock .imageBlock .space { height:5px; overflow:hidden; }
+</style>
+<script type="text/javascript">
+// 상품선택
+function selectGoods(tgsno) {
+	try
+	{
+		var regexp = /tgsno=([0-9]*)/g;
+		var res = regexp.exec(location.href);
+		
+		if (res && res.length > 1) {
+			var obj = document.getElementById("thumbGoods"+res[1]);
+			if (obj) {
+				obj.className = obj.className.replace(/others/g, "curgoods");
+			}			
+		}
+	}
+	catch (e)
+	{}
+}
+
+function upTodayGoods() {
+	var obj = document.getElementById("thumbList");
+	var top = parseInt(obj.style.marginTop);
+	if (isNaN(top)) top = 0;
+	top += 77;
+	if (top > 0) top = 0;
+	obj.style.marginTop = top;
+}
+
+function downTodayGoods() {
+	var obj = document.getElementById("thumbList");
+	var top = parseInt(obj.style.marginTop);
+	if (isNaN(top)) top = 0;
+	top -= 77;
+	if (top < -obj.scrollHeight + 380) top = -obj.scrollHeight + 380;
+	obj.style.marginTop = top + "px";
+}
+</script>
+
+<body style="margin:0px;" scroll="no">
+<!-- 썸네일 나오는 부분시작-------------->
+<div class="thumbBlock">
+	<!--{? count(todayThumb) > 4}--><div class="btns"><a onclick="upTodayGoods()"><img src="../img/btn_s_up.gif" /></a></div>
+	<!--{:}--><div class="btns"><img src="../img/btn_s_up.gif" /></div>
+	<!--{/}-->
+	<div class="imageBlock"><div id="thumbList">
+			<!--{@ todayThumb}-->
+			<div class="imgBox others" id="thumbGoods{=.tgsno}"><a href="../todayshop/today_goods.php?tgsno={=.tgsno}" target="_parent">{=goodsimgTS(.img_s,70)}</a></div>
+			<div class="space"></div><!--{/}-->
+		</div>
+	</div>
+	<!--{? count(todayThumb) > 4}--><div class="btns"><a onclick="downTodayGoods()"><img src="../img/btn_s_down.gif" /></a></div>
+	<!--{:}--><div class="btns"><img src="../img/btn_s_down.gif" /></div>
+	<!--{/}-->
+</div>
+<!-- 썸네일 나오는 부분끝 --------------->
+<script type="text/javascript">selectGoods()</script>
+</body>
+</html>

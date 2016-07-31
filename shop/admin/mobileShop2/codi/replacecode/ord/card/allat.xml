@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="EUC-KR"?>
+<codes>
+<list>
+	<code power="">{pg.id}</code>
+	<desc>상점ID</desc>
+	<exam></exam>
+</list>
+<list>
+	<code power="">{pg.zerofee}</code>
+	<desc>무이자여부 - N:일반결제, Y:무이자결제</desc>
+	<exam>N</exam>
+</list>
+<list>
+	<code power="">{pg.quota}</code>
+	<desc>일반할부기간</desc>
+	<exam>0:2:3:4:5:6:7:8:9:10:11:12</exam>
+</list>
+<list>
+	<code>{pg.real}</code>
+	<desc>상품 실물여부 - Y:실물, N:실물아님</desc>
+	<exam>Y</exam>
+</list>
+<list>
+	<code>{pg.bonus}</code>
+	<desc>보너스포인트 사용 여부 - Y:사용, N:사용 않음</desc>
+	<exam>N</exam>
+</list>
+<list>
+	<code>{pg.cert}</code>
+	<desc>카드 인증 여부 - Y:인증, N:인증 사용않음, X:인증만 사용</desc>
+	<exam></exam>
+</list>
+<list>
+	<code>{pg.tax}</code>
+	<desc>계좌이체 과세여부(현금영수증사용시 필요) - Y:현금영수증등록, N:미사용</desc>
+	<exam></exam>
+</list>
+<list>
+	<code power="">{settlekind}</code>
+	<desc>결제수단 - c:신용카드, o:계좌이체, v:가상계좌, h:핸드폰</desc>
+	<exam>c</exam>
+</list>
+<list>
+	<code>{_POST.escrow}</code>
+	<desc>에스크로 여부 - Y:적용, N:미적용</desc>
+	<exam>N</exam>
+</list>
+<list>
+	<code power="">{ordno}</code>
+	<desc>주문번호</desc>
+	<exam>1187054690353</exam>
+</list>
+<list>
+	<code power="">{settleprice}</code>
+	<desc>승인금액</desc>
+	<exam>5200</exam>
+</list>
+<list>
+	<code>{cart->item[0]['goodsno']}</code>
+	<desc>상품코드</desc>
+	<exam></exam>
+</list>
+<list>
+	<code>{=strcut(cart->item[0]['goodsnm'],100)}</code>
+	<desc>상품명</desc>
+	<exam></exam>
+</list>
+<list>
+	<code>{_sess.m_id}</code>
+	<desc>회원아이디</desc>
+	<exam></exam>
+</list>
+<list>
+	<code>{email}</code>
+	<desc>이메일</desc>
+	<exam>xxx@godo.co.kr</exam>
+</list>
+<list>
+	<code>{nameOrder}</code>
+	<desc>결제자성명</desc>
+	<exam>홍길동</exam>
+</list>
+<list>
+	<code>{nameReceiver}</code>
+	<desc>수취인성명</desc>
+	<exam>홍길동</exam>
+</list>
+<list>
+	<code>{address}</code>
+	<desc>수취인주소1</desc>
+	<exam>서울 강남구 대치동</exam>
+</list>
+<list>
+	<code>{address_sub}</code>
+	<desc>수취인주소2</desc>
+	<exam>123번지</exam>
+</list>
+<list>
+	<code>{_cfg.shopName}</code>
+	<desc>가상계좌 예금주명(=쇼핑몰이름)</desc>
+	<exam></exam>
+</list>
+<list>
+	<code>{=implode('',mobileOrder)}</code>
+	<desc>가상계좌 인증번호(=연락처)</desc>
+	<exam>01012345678</exam>
+</list>
+</codes>

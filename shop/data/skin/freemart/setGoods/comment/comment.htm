@@ -1,0 +1,246 @@
+{*** 코디댓글 | setGoods/comment/comment.htm ***}
+<script type="text/javascript" src="../../../../../setGoods/js/jquery.autogrowtextarea.js"></script>
+<script>
+function MemConfirm(){ 
+	var confRet = window.confirm("회원전용 서비스 입니다. \r\n로그인/회원가입 페이지로 이동하시겠습니까?");
+	if (confRet) {
+		location.href="/shop/member/login.php?returnUrl={=urlencode(_SERVER.HTTP_REFERER)}";
+		return false;
+	}
+	return true;
+}
+
+function check(form){
+
+	{ ? (setGConfig.memo_permission == 'user') && (!sess.m_no) }
+	if(MemConfirm()) return false;
+	else return false;
+	{/}
+
+	var f1 = form;
+	if (f1.memo.value == "") {
+		alert("내용을 입력하세요");
+		f1.memo.focus();
+		return false;
+	}
+	if (f1.nickname !== undefined && f1.nickname.value == "") {
+		alert("이름을 입력하세요");
+		f1.nickname.focus();
+		return false;
+	}
+	if (f1.password !== undefined && f1.password.value == "") {
+		alert("비밀번호를 입력하세요");
+		f1.password.focus();
+		return false;
+	}
+}
+
+
+function del_confirm(form){ 
+	return confirm('등록하신 댓글을 삭제하시겠습니까?');
+}
+
+</script>
+
+<!--댓글사용 : Y-->
+<div class="codiComment">
+	<div class="codiComment-title"><img src="../img/comment/subtitle_comment.gif"/></div>
+	
+	<!-- 댓글쓰기 : 전체허용 -->
+	<!--{ ? setGConfig.memo_permission == "all" }-->
+		<!-- 비회원쓰기 -->
+		<!--{ ? !sess.m_no }-->	
+		<div class="codiComment-input">
+			<form name="f1" method="post" action="../setGoods/comment/indb.php" onSubmit="return check(this)">
+			<input type="hidden" name="cody_idx" value="{cody_idx}" />
+			<input type="hidden" name="mode" value="register" />
+				<div class="inputForm">
+					<div style="float:left;">
+						<input type="text" name="memo" style="width:478px" class="input" /> 
+						<div style="margin-top:11px;text-align:right;">
+							<span class="fieldFont"><b>이름</b>&nbsp;<input type="text" name="nickname" style="width:105px;" class="input"/>&nbsp;&nbsp;<b>비밀번호</b>&nbsp;<input type="password" name="password" style="width:136px;" class="input"/></span>
+						</div>
+					</div>
+					<div>
+						<input type="image" alt="등록" src="../img/comment/btn_comment.gif" style="margin-left:15px" />
+					</div>
+					<div class="clear"></div>
+				</div>
+			</form>
+		</div>
+		<!-- 회원쓰기 -->
+		<!--{ : }-->
+		<div class="codiComment-input">
+			<form name="f1" method="post" action="../setGoods/comment/indb.php" onSubmit="return check(this)">
+			<input type="hidden" name="cody_idx" value="{cody_idx}" />
+			<input type="hidden" name="mode" value="register" />
+				<div class="inputForm">
+					<div style="float:left;">
+						<input type="text" name="memo" style="width:478px" class="input" /> 
+						<div style="margin-top:11px;text-align:right;">
+							<span class="fieldFont"><b>이름</b>&nbsp;<input type="text" name="nickname" value="{member.name}" style="width:105px;" class="input" /></span>
+						</div>
+					</div>
+					<div>
+						<input type="image" alt="등록" src="../img/comment/btn_comment.gif" style="margin-left:15px" />
+					</div>
+					<div class="clear"></div>
+				</div>
+			</form>
+		</div>
+		<!--{ / }-->
+
+	<!-- 댓글쓰기 : 회원허용 -->
+	<!--{ : }-->
+		<div class="codiComment-input">
+			<form name="f1" method="post" action="../setGoods/comment/indb.php" onSubmit="return check(this)">
+			<input type="hidden" name="cody_idx" value="{cody_idx}" />
+			<input type="hidden" name="mode" value="register" />
+				<div class="inputForm">
+					<div style="float:left;">
+						<input type="text" name="memo" style="width:478px" class="input" { ? !sess.m_no } onclick="MemConfirm(this);" onkeypress="MemConfirm(this);"{ / } /> 
+						<div style="margin-top:11px;text-align:right;">
+							<span class="fieldFont"><b>이름</b>&nbsp;<input type="text" name="nickname" value="{member.name}" style="width:105px;" class="input" { ? !sess.m_no } onclick="MemConfirm(this);" onkeypress="MemConfirm(this);"{ / } /></span>
+						</div>
+					</div>
+					<div>
+						<input type="image" alt="등록" src="../img/comment/btn_comment.gif" style="margin-left:15px" />
+					</div>
+					<div class="clear"></div>
+				</div>
+			</form>
+		</div>
+	<!--{ / }-->
+	
+	<!-- 댓글리스트 -->
+	<!--{@ obj}-->
+	<div class="codiComment-box">		
+		<table cellspacing=0 cellpadding=0 class="tbl-list" border=0>
+		<tr id="memo_content_{.idx}">
+			<td class="td1"><span class="fieldFont"><b>{.nickname}</b>님</span></td>
+			<td class="td2"><span class="commentFont">{.memo}</span></td>
+			<!-- 비회원이라면 -->			
+			<!--{ ? !sess.m_no }-->
+				<!-- 비회원이 쓴 글만 수정/삭제버튼 보임 -->
+				<!--{ ? .m_no == 0 }-->
+				<td class="td3" align="right">
+					<span class="b_modify" id="b_modify_{.idx}" data-value="{.idx}"><img src="../img/comment/btn_modify.gif" alt="수정" style="cursor:pointer" /></span>
+					<span class="b_delete" id="b_delete_{.idx}" data-value="{.idx}"><img src="../img/comment/btn_delete.gif" alt="삭제" style="cursor:pointer" /></span>
+				</td>
+				<!--{ / }-->
+			<!-- 회원이라면 -->
+			<!--{ : }-->
+				<!-- 내가 쓴 댓글에만 수정/삭제버튼 보임 (관리자는 다보임) -->
+				<!--{ ? sess.m_no == .m_no || sess.level>=80 }-->
+				<td class="td3" align="right">
+					<span class="b_modify" id="b_modify_{.idx}" data-value="{.idx}"><img src="../img/comment/btn_modify.gif" alt="수정" style="cursor:pointer" /></span>
+					<span class ="b_modify_cancle" id="b_modify_cancle_{.idx}" style="display:none;" data-value="{.idx}"><img src="../img/comment/btn_modify.gif" alt="수정안함" style="cursor:pointer" /></span>
+					<span><a href="javascript:" onClick="if (confirm('등록하신 댓글을 삭제하시겠습니까?')) { window.location.href='../setGoods/comment/indb.php?mode=delete&idx={.idx}&cody_idx={cody_idx}' } else { void('') }"><img src="../img/comment/btn_delete.gif" style="cursor:pointer" /></a></span>				
+				</td>
+				<!--{ / }-->
+			<!--{ / }-->
+		</tr>
+		<tr id="mod_form_{.idx}" style="display:none;">
+			<td>
+				<!-- 댓글수정폼 -->
+				<div class="codiComment-input">
+					<form name="f1_{.idx}" method="post" action="../setGoods/comment/indb.php" onSubmit="return check(this)">
+					<input type="hidden" name="cody_idx" value="{cody_idx}" />
+					<input type="hidden" name="idx" value="{.idx}" />
+					<input type="hidden" name="mode" value="modify" />					
+						<div class="inputForm">
+							<div style="float:left;">
+								<div style="width:60px;float:left;">
+									<span class="fieldFont" style="padding-right:6px;"><b>{.nickname}</b>님</span>
+								</div>
+								<input type="text" name="memo" value="{.memo}" style="width:413px" class="input" />
+								<!-- 비회원이 쓴 댓글 -->
+								<!--{ ? !sess }-->
+								<input type="hidden" name="no_member" value="1" />
+								<div style="margin-top:11px;text-align:right;">
+									<span class="fieldFont"><b>비밀번호</b>&nbsp;<input type="password" name="password" style="width:136px;" class="input"/></span>
+								</div>
+								<!--{ / }-->
+							</div>
+							<div>								
+								<input type="image" alt="수정" src="../img/comment/btn_modify.gif" style="margin-left:15px;cursor:pointer" />
+								<span class ="b_modify_cancle" id="b_modify_cancle_{.idx}" data-value="{.idx}"><img src="../img/comment/btn_cancel.gif" alt="수정취소" style="cursor:pointer" /></span>
+							</div>
+							<div class="clear"></div>
+						</div>
+					</form>
+				</div>
+				<!-- 댓글수정폼 끝-->
+			</td>
+		</tr>
+		<!-- 비회원일 경우 댓글 삭제 -->
+		<!--{ ? !sess.m_no }-->
+		<tr id="del_form_{.idx}" style="display:none;">
+			<td>
+				<!-- 댓글삭제폼 -->
+				<div class="codiComment-input">
+					<form name="f1" method="post" action="../setGoods/comment/indb.php" onSubmit="return check(this)">
+					<input type="hidden" name="cody_idx" value="{cody_idx}" />
+					<input type="hidden" name="idx" value="{.idx}" />
+					<input type="hidden" name="mode" value="delete" />
+					<input type="hidden" name="no_member" value="1" />
+						<div class="inputForm">
+							<div style="float:left;">
+								<div style="width:60px;float:left;">
+									<span class="fieldFont" style="padding-right:6px"><b>{.nickname}</b>님</span>
+								</div>
+								<input type="text" name="memo" value="{.memo}" style="width:413px;" class="input" disabled />
+								<div style="margin-top:11px;text-align:right;">
+									<span class="fieldFont"><b>비밀번호</b>&nbsp;<input type="password" name="password" style="width:136px;" class="input"/></span>
+								</div>	
+							</div>
+							<div>
+								<input type="image" alt="삭제" src="../img/comment/btn_delete.gif" style="margin-left:15px;cursor:pointer" onclick="return del_confirm(this);" />
+								<span class ="b_delete_cancle" id="b_delete_cancle_{.idx}" data-value="{.idx}"><img src="../img/comment/btn_cancel.gif" alt="삭제취소" style="cursor:pointer" /></span>
+							</div>
+							<div class="clear"></div>
+						</div>
+					</form>
+				</div>
+				<!-- 댓글삭제폼 끝-->
+			</td>
+		</tr>
+		<!--{ / }-->
+		</table>		
+	</div>	
+	<!--{ / }-->
+	<!-- 댓글리스트 끝 -->
+</div> 
+
+<script>
+//댓글수정박스 숨기기 보이기
+jQuery(".b_modify").click(function () {
+    jQuery("#memo_content_"+jQuery(this).attr("data-value")).css({"display":"none"});    
+    jQuery("#mod_form_"+jQuery(this).attr("data-value")).css({"display":""});
+    jQuery("#b_modify_"+jQuery(this).attr("data-value")).css({"display":"none"});
+    jQuery("#b_modify_cancle_"+jQuery(this).attr("data-value")).css({"display":""});   
+});	
+
+jQuery(".b_modify_cancle").click(function () {
+    jQuery("#memo_content_"+jQuery(this).attr("data-value")).css({"display":""});    
+    jQuery("#mod_form_"+jQuery(this).attr("data-value")).css({"display":"none"});
+    jQuery("#b_modify_"+jQuery(this).attr("data-value")).css({"display":""});
+    jQuery("#b_modify_cancle_"+jQuery(this).attr("data-value")).css({"display":"none"});
+});
+
+//비회원댓글삭제박스 숨기기 보이기
+jQuery(".b_delete").click(function () {
+    jQuery("#memo_content_"+jQuery(this).attr("data-value")).css({"display":"none"});    
+    jQuery("#del_form_"+jQuery(this).attr("data-value")).css({"display":""});
+    jQuery("#b_delete_"+jQuery(this).attr("data-value")).css({"display":"none"});
+    jQuery("#b_delete_cancle_"+jQuery(this).attr("data-value")).css({"display":""});
+   
+});	
+
+jQuery(".b_delete_cancle").click(function () {
+    jQuery("#memo_content_"+jQuery(this).attr("data-value")).css({"display":""});    
+    jQuery("#del_form_"+jQuery(this).attr("data-value")).css({"display":"none"});
+    jQuery("#b_delete_"+jQuery(this).attr("data-value")).css({"display":""});
+    jQuery("#b_delete_cancle_"+jQuery(this).attr("data-value")).css({"display":"none"});
+});
+</script>

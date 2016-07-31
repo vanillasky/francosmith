@@ -1,0 +1,325 @@
+<html>
+<head>
+<title>하나은행 매매보호 서비스 제휴사택배 배송시지 데모</title>
+<meta http-equiv="Content-Type" content="text/html; charset=euc-kr">
+
+<style type="text/css">
+	BODY{font-size:9pt; line-height:160%}
+	TD{font-size:9pt; line-height:160%}
+	A {color:blue;line-height:160%; background-color:#E0EFFE}
+	INPUT{font-size:9pt;}
+	SELECT{font-size:9pt;}
+	.emp{background-color:#FDEAFE;}
+</style>
+</head>
+
+<body>
+<form name=ini method=post action=INIescrow.php >
+
+
+<table border=0 width=500>
+	<tr>
+	<td>
+	<hr noshade size=1>
+	<b>하나은행 매매보호 서비스 제휴사택배 배송지시 데모</b>
+	<hr noshade size=1>
+	</td>
+	</tr>
+</table>	
+<br>
+
+<table border=0 width=500>
+	<tr>
+		<td align=center>
+			<table width=500 cellspacing=0 cellpadding=0 border=0 bgcolor=#6699CC>
+				<tr>
+					<td>
+						<table width=100% cellspacing=1 cellpadding=2 border=0>
+							<tr bgcolor=#BBCCDD height=25>
+								<td align=center>
+								정보를 기입하신 후 확인버튼을 눌러주십시오
+								</td>
+							</tr>
+							<tr bgcolor=#FFFFFF>		
+								<td valign=top>
+									<table width=100% cellspacing=0 cellpadding=2 border=0>
+										<tr>
+											<td align=center>
+											<br>
+												<table>
+													<tr>
+														<td width=30%>거래번호 : </td>
+														<td width=70%><input type=text name=hanatid size=45 maxlength=40 value="IniTechPG_hanatest0120040920162039000002"></td>
+													</tr>
+													<tr>
+														<td>상점 이름 : </td>
+														<td><input type=text name=mername size=30 maxlength=30 value="이니시스"</td>
+													</tr>
+													<tr>
+														<td>상점 아이디 : </td>
+														<td><input type=text name=mid size=10 maxlength=10 value="hanatest01"</td>
+													</tr>
+													
+													<tr>
+														<td>고객사 코드 : </td>
+														<td><input type=text name=customcode size=10 maxlength=10 value="">
+														(배송사에서 상점으로 할당하는 고객사번호)</td>
+													</tr>
+													
+													<tr>
+														<td>운송 구분 : </td>
+														<td><select name=transtype>
+															<option value="" selected>선택하십시오
+															<option value="0">배송
+															<option value="1">반송
+															</select>
+														</td>
+													</tr>
+													
+													<tr>
+														<td>택배사 ID : </td>
+														<td><select name=transid > 
+														<option value='CJGLSLOGIS'>CJ GLS:CJGLSLOGIS</option>
+														</td>
+													</tr>
+													
+													
+													
+													<tr>
+														<td>주문번호(출하/지시) : </td>
+														<td><input type=text name=orderno size=40 maxlength=40 value="test_order_no"></td>
+													</tr>
+													
+													<tr>
+														<td>결제 번호 : </td>
+														<td><input type=text name=settleno size=40 maxlength=40 value="test_settle_no"></td>
+													</tr>
+													
+													<tr>
+														<td>출고지 코드 : </td>
+														<td>	<input type=text name=sendareacode size=20 maxlength=20 value="test_sendarea_code"></td>
+													</tr>
+													
+													<tr>
+														<td>
+														<br>
+														</td>
+													</tr>
+													
+													<tr>
+														<td >
+														===== 집하지 정보 =====
+														</td>
+													</tr>
+													
+													<tr>
+														<td>집하지 전화번호 : </td>
+														<td>
+														<input type=text name=sendtel size=16 maxlength=15 value="02-123-1234">
+														</td>
+													</tr>
+													
+													<tr>
+														<td>집하지담당자핸드폰 번호 : </td>
+														<td>
+														<input type=text name=sendhpp size=16 maxlength=15 value="011-123-1234">
+														</td>
+													</tr>
+													
+													
+													<tr>
+														<td>집하지 우편번호 : </td>
+														<td>
+														<input type=text name=sendzip size=7 maxlength=7 value="123-123">
+														</td>
+													</tr>
+													
+													<tr>
+														<td>집하지 주소  : </td>
+														<td>
+														<input type=text name=sendaddr size=50 maxlength=50 value="서울시 관악구 봉천동">
+														</td>
+													</tr>
+													
+													<tr>
+														<td>집하지 상세 주소  : </td>
+														<td>
+														<input type=text name=sendaddr1 size=50 maxlength=50 value="123번지 자티전자 빌딩 5층">
+														</td>
+													</tr>
+													
+													<tr>
+														<td >
+														<br>
+														</td>
+													</tr>
+													
+													<tr>
+														<td >
+														수취인 정보
+														</td>
+													</tr>
+													
+													<tr>
+														<td>수취인 이름  : </td>
+														<td>
+														<input type=text name=recvname size=10 maxlength=10 value="홍길동">
+														</td>
+													</tr>
+													
+													<tr>
+														<td>수취인 전화번호  : </td>
+														<td>
+														<input type=text name=recvtel size=12 maxlength=12 value="021231234">
+														</td>
+													</tr>
+													
+													<tr>
+														<td>수취인 우편번호  : </td>
+														<td>
+														<input type=text name=recvzip size=6 maxlength=6 value="123234">
+														</td>
+													</tr>
+													
+													<tr>
+														<td>수취인 주소  : </td>
+														<td>
+														<input type=text name=recvaddr size=50 maxlength=50 value="서울시 서초구 방배동 ">
+														</td>
+													</tr>
+													
+													<tr>
+														<td>수취인 상세주소  : </td>
+														<td>
+														<input type=text name=recvaddr1 size=50 maxlength=50 value="123-123번지 INI빌딩3층">
+														</td>
+													</tr>
+													
+													<tr>
+														<td>수취인 핸드폰 번호  : </td>
+														<td>
+														<input type=text name=recvhpp size=16 maxlength=16 value="011-1234-1234">
+														</td>
+													</tr>
+													
+													<tr>
+														<td>
+														<br>
+														</td>
+													</tr>
+													
+													<tr>
+														<td >
+														기타 설정
+														</td>
+													</tr>
+													
+													<tr>
+														<td>지시 구분 : </td>
+														<td>	
+															<select name=ordertype >
+																<option value="1">일반
+																<option value="2">교환
+																<option value="3">A S
+															</select>
+														</td>
+													</tr>
+													<tr>
+														<td>운임 구분 : </td>
+														<td>	
+															<select name=feetype >
+																<option value="1">선불
+																<option value="2">착불
+																<option value="3">신용
+																<option value="4">착지신용
+															</select>
+														</td>
+													</tr>
+														
+													<tr>
+														<td>박스 타입 : </td>
+														<td>	
+															<select name=boxtype >
+																<option value="1">소
+																<option value="2">중
+																<option value="3">대
+															</select>
+														</td>
+													</tr>
+													<tr>
+														<td>대표 상품명  : </td>
+														<td>
+														<input type=text name=goodname size=40 maxlength=40 value="흑염소 1set">
+														</td>
+													</tr>
+													<tr>
+														<td>대표 상품코드  : </td>
+														<td>
+														<input type=text name=goodcode size=40 maxlength=40 value="">
+														</td>
+													</tr>
+													
+													<tr>
+														<td>총상품 종류 수  : </td>
+														<td>
+														<input type=text name=goodsort size=5 maxlength=5 value="1">
+														</td>
+													</tr>
+													
+													<tr>
+														<td>수량  : </td>
+														<td>
+														<input type=text name=qty size=5 maxlength=5 value="">
+														</td>
+													</tr>
+													
+													<tr>
+														<td>원 배송 송장번호(반송시에 사용)  : </td>
+														<td>
+														<input type=text name=origininvoice size=50 maxlength=50 value="">
+														</td>
+													</tr>
+													
+													<tr>
+														<td>주문 메모 : </td>
+														<td>
+														<input type=text name=orderremark size=50 maxlength=50 value="">
+														</td>
+													</tr>
+													
+													<tr>
+														<td>전달 사항  : </td>
+														<td>
+														<input type=text name=transmsg size=50 maxlength=50 value="">
+														</td>
+													</tr>
+													
+													<tr>
+														<td colspan=2 align=center>
+														<br>
+														<input type="submit" value="확 인" >
+														<br><br>
+														</td>
+													</tr>
+											</table>
+										</td>
+									</tr>
+								</table>
+							</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+		</table>
+	</td>
+	</tr>
+</table>
+
+<!-- 
+하나은행 매매보호 서비스 배송지시 유형
+절대 수정 금지
+-->
+<input type=hidden name=EscrowType value="dd">
+</form>
+</body>
+</html>

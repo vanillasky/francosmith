@@ -1,0 +1,80 @@
+
+.smart-search-wrap {width:190px;}
+.smart-search-wrap div.title { 
+	width:100%; padding:7px 0px 7px 10px; 
+	font-size:14px; 
+	font-family:notokr-regular,Arial,dotum; 
+	color:#FFFFFF; 
+	font-weight:bold;
+	text-align:left;
+}
+
+.ssMoreSearchBox div.title { 
+	width:100%; padding:7px 0px 7px 10px; 
+	font-size:14px; 
+	font-family:notokr-regular,Arial,dotum; 
+	color:#FFFFFF; 
+	font-weight:bold;
+	text-align:left;
+}
+
+.smart-search-wrap div.form { width:100%; padding:5px 0px 4px 7px; border:1px solid #E0E0E0; }
+
+.smart-search-wrap div.form .searchListTab { height:20px; border-bottom:1px #E4E4E4 solid; color:#666666; font-family:dotum; font-size:12px; font-weight:bold; margin:5px 5px 10px 0px; }
+
+.smart-search-wrap div.form .searchListTab .searchListTab_title { float:left; color:#666666; padding:4px 0px 0px 7px; }
+.smart-search-wrap div.form .searchListTab .searchListTab_more { float:right; padding:4px 4px 0px 4px; cursor:pointer; }
+
+.smart-search-wrap div.form .searchListBox { 
+	padding:3px 10px; 
+	margin-right:5px; 
+	border-right:#E0E0E0 1px solid; 
+	border-bottom:#E0E0E0 1px solid; 
+	border-left:#E0E0E0 1px solid; 
+	background-color:#F5F5F5; 
+	font-family:dotum; 
+	font-size:11px; 
+	color:#666666; 
+	text-align:left;
+}
+
+.smart-search-wrap div.form .searchListBox ul {margin:0px;list-style:none;padding-left:0px;}
+.smart-search-wrap div.form .searchListBox ul li {clear:both;}
+.smart-search-wrap div.form .searchListBox ul li.hidden {display:none;}
+
+.smart-search-wrap div.form .searchListBox { padding:3px 10px; border-right:#E0E0E0 1px solid; border-bottom:#E0E0E0 1px solid; border-left:#E0E0E0 1px solid; background-color:#F5F5F5; font-family:dotum; font-size:11px; color:#666666; }
+.smart-search-wrap div.form .searchListBox ul {margin:0px;list-style:none;padding-left:0px;}
+.smart-search-wrap div.form .searchListBox ul li {clear:both;}
+.smart-search-wrap div.form .searchListBox ul li.hidden {display:none;}
+
+
+.smart-search-wrap div.form .searchListBar { height:85px; margin:2px 0px; font-family:dotum; font-size:12px; color:#666666; }
+
+/**
+.smart-search-wrap div.form .searchListBar .barArea { height:26px; background:url(./img/banner/scroll_bar.gif); }
+.smart-search-wrap div.form .searchListBar .barArea .ssPrcArrow { position:relative; cursor:pointer; }
+.smart-search-wrap div.form .searchListBar .barArea #minArrow { top:0px; left:0px; }
+.smart-search-wrap div.form .searchListBar .barArea #maxArrow { top:0px; left:156px; }
+*/
+.smart-search-wrap div.form .searchListBar .inputArea { padding:6px 6px 0px 6px; }
+.smart-search-wrap div.form .searchListBar .inputArea input { width:60px; height:18px; border:1px #CCCCCC solid; color:#666666; font-family:dotum; font-size:11px; font-weight:bold; text-align:right; }
+
+
+.smart-search-wrap div.form .ssMoreSearchBox { width:600px; position:absolute; background-color:#9D9D9D; margin-left:190px; border:3px #9D9D9D solid; }
+.smart-search-wrap div.form .ssMoreSearchBox .ssMoreOption { top:-1px; width:100%; height:200px; padding:6px; position:relative; border:1px #E0E0E0 solid; background:#F5F5F5; font-family:dotum; font-size:11px; overflow-y:scroll; }
+.smart-search-wrap div.form .ssMoreSearchBox .ssMoreOption ul {margin:0px;list-style:none;padding-left:0px;width:100%;}
+.smart-search-wrap div.form .ssMoreSearchBox .ssMoreOption ul li {width:33%;float:left;}
+
+.smart-search-wrap div.form .ssMoreSearchBox .ssMoreButton { height:24px; overflow:hidden; background:#FFFFFF; text-align:center; margin-top:14px; }
+
+.smart-search-wrap div.form .paletteColor { width:16px; height:16px; cursor:pointer; }
+.smart-search-wrap div.form .paletteColor_selected { float:left; width:16px; height:16px; margin:1px; cursor:pointer; }
+
+#selectedColor { background:#E9E9E9; border:1px solid #E0E0E0; margin:1px; padding-left:1px; }
+
+.smart-search-wrap div.form .ssBtnArea { text-align:right; margin-top:10px; margin-right:5px;}
+
+.price-box { width:90%; padding-left:5px; padding-right:5px; }
+
+.find-button { width:100%; height:32px; position:relative; clear:both; }
+.find-button div {float:right; margin-right:5px}

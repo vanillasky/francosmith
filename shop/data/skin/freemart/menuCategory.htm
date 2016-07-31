@@ -1,0 +1,51 @@
+{*** 카테고리메뉴 | proc/menuCategory.php ***}
+
+<div id="top_cate_wrapper" class="top_red">
+	<div id="top_cate" style="width:{_cfg['shopSize']}px;">
+		<ul class="top_cate_ul">
+			<li class="brand-container icon">
+				<p class="lv1"><a id="brand_link" href="#">Brands</a></p>
+				<div class="dropdown" style="width:{_cfg['shopSize']}px;">
+				{= include_file('proc/main/brand_list.htm') }
+				</div>
+			</li>
+			
+			<!--{ @ dataCategory( _cfg.subCategory, 1 ) }-->
+			<li class="menu-container">
+				<p class="lv1"><a href="#">{.catnm}</a></p>
+				<div class="dropdown" style="width:{_cfg['shopSize']}px;">
+				<!--{ ? .sub }-->
+					<!--{ @ .sub }-->
+					<div class="menu_lv2">
+					
+						<p><a href="../goods/goods_list.php?category={..category}"><span class="mlink boldf">{..catnm}</span></a>
+							<div class="menu_lv3">
+								<ul>
+							<!--{ @ dataSubCategory( ..category, false ) }-->
+							<!--{ ? .sub }-->
+									<li><a href="/shop/goods/goods_list.php?&category={...category}"><span class="mlink">{...catnm}</span></a></li>
+							<!--{ / }-->
+							<!--{ / }-->
+								</ul>
+							</div>
+						</p>
+					</div>	
+					<!--{ / }-->
+				<!--{ / }-->
+					<div class="dd_bottom">
+										
+					</div>
+				</div>
+			</li>	
+			<!--{ / }-->
+			
+		</ul>
+	</div>	
+</div>
+<script>
+	bindTopMenu();
+</script>
+
+
+
+	

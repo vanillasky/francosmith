@@ -1,0 +1,411 @@
+/*
+	ÃÊ±âÈ­
+*/
+* {
+	margin: 0;
+	padding: 0;
+}
+body {
+	position: relative;
+}
+body,input,textarea,select,button {
+	color: #000;
+	font-size: 11px;
+	font-family: dotum,"µ¸¿ò",sans-serif;
+	line-height: 1.25;
+}
+h1,h2,h3,h4,h5,h6 {}
+img {
+	border: none;
+	vertical-align: top;
+}
+ul, ol , li {list-style: none;}
+table, th ,td {
+	margin: 0;
+	padding: 0;
+	border-spacing: 0;
+	border: 0;
+	word-break: break-all;
+}
+table img {vertical-align: middle}
+caption,legend,hr {
+	width: 0;
+	height: 0;
+	visibility: hidden;
+	font-size: 0;
+	line-height: 0;
+	text-indent: -9999px;
+}
+fieldset, abbr, acronym {border: 0;}
+address {font-style: normal;}
+caption, cite, code, dfn, em, var {}
+hr {display: none;}
+a {
+	color: #666;
+	text-decoration: none;
+}
+a: focus, a: hover, a: active {
+	color: #666;
+}
+textarea, pre {overflow: auto;}
+label {
+	cursor: pointer;
+	vertical-align: top;
+}
+select {
+	height: 20px;
+	vertical-align: top;
+}
+button {
+	border: none;
+	background: none;
+	cursor: pointer;
+	vertical-align: top;
+}
+button span {
+	display: inline-block;
+	position: relative;
+	z-index: -1;
+	font-size: 11px;
+	line-height: 0;
+}
+button: : -moz-focus-inner {
+    padding:  0;
+    border:  0
+}
+.alt {
+	overflow: hidden;
+	visibility: hidden;
+	width: 0;
+	height: 0;
+	margin: 0 !important;
+	font-size: 0;
+	text-indent: -9999px;
+}
+.hidden {
+	overflow: hidden;
+	position: absolute;
+	top: -9999px;
+	left: -9999px;
+	visibility: hidden;
+	width: 0;
+	height: 0;
+	margin: 0;
+	font-size: 0;
+	text-indent: -9999px;
+	line-height: 0;
+	z-index: -9999;
+}
+input.radio {
+	width: 13px;
+	height: 13px;
+	vertical-align: top;
+}
+input.checkbox {
+	width: 13px;
+	height: 13px;
+	vertical-align: top;
+}
+span.checkbox input {
+	width: 13px;
+	height: 13px;
+	vertical-align: middle;
+}
+input.image {
+	vertical-align: top;
+	border: none;
+}
+input.button {
+	border: none;
+	background: none;
+	cursor: pointer;
+}
+
+/*
+	main contents array
+*/
+div.main-contents {
+	overflow: visible;
+	width: 1226px;
+	height: 1671px;
+}
+
+/*
+	left
+*/
+div.main-contents div.left {
+	float: left;
+	width: 190px;
+	height: 100%;
+	background: url('../../img/main/right_line.gif') repeat-y right top;
+}
+div.main-contents div.left h2 {
+	padding: 16px 0 12px 12px;
+}
+div.main-contents div.left div.remainder {
+	overflow: hidden;
+	width: 175px;
+	height: 58px;
+	padding: 0 0 0 14px;
+	background: #66676b;
+	border-top: 1px solid #5f6064;
+	border-bottom: 1px solid #5f6064;
+	border-right: 1px solid #3d3e40;
+}
+div.main-contents div.left div.remainder span {
+	float: left;
+	padding: 32px 0 0;
+}
+div.main-contents div.left div.remainder div {
+	float: left;
+	padding: 8px 4px 0 6px;
+}
+div.main-contents div.left div.remainder div img {
+	float: left;
+	padding: 0 0 0 3px;
+}
+div.main-contents div.left ul.state {
+	margin: 10px 10px 20px;
+	padding: 17px 0 6px;
+	border: 1px solid #C3C3C3;
+}
+div.main-contents div.left ul.state li {
+	padding: 0 0 14px;
+}
+div.main-contents div.left ul.state li strong {
+	padding: 0 0 0 10px;
+	color: #3080de;
+	letter-spacing: -1px;
+}
+div.main-contents div.left ul.state li em {
+	color: #aeaeae;
+	font-family: Tahoma;
+	font-style: normal;
+}
+div.main-contents div.left ul.state li em strong {
+	padding: 0;
+	color: #aeaeae;
+}
+div.main-contents div.left ul.state li span {
+	color: #444;
+	font-family: Tahoma;
+	font-size: 10px;
+}
+div.main-contents div.left ul.state li span.dotum {
+	font-family: dotum,'µ¸¿ò',sans-serif;
+	font-size: 11px;
+}
+div.main-contents div.left ul.state li span strong {
+	padding: 0;
+	color: #444;
+}
+div.main-contents div.left ul.state li span a {}
+div.main-contents div.left ul.state li div.downlayer {
+	padding: 0 0 0 10px;
+}
+div.main-contents div.left ul.state li div.downlayer strong {
+	padding: 0;
+}
+div.main-contents div.left ul.state li div.downlayer a img {
+	vertical-align: -3px;
+}
+div.main-contents div.left ul.state li div.downlayer span {
+	display: block;
+	padding: 2px 0 0 6px;
+	background: url('../../img/main/state_domain_bg.gif') no-repeat left 6px;
+	font-size: 10px;
+	color: #444;
+}
+div.main-contents div.left ul.state li div.graph {
+	position: relative;
+	width: 140px;
+	height: 21px;
+	margin: 11px 0 0 9px;
+	padding: 0 9px 0 4px;
+	background: url('../../img/main/state_graph_bg.gif') no-repeat left top;
+}
+div.main-contents div.left ul.state li div.graph div.graph-side {
+	position: absolute;
+	left: 4px;
+	top: 0;
+	z-index: 10;
+	width: 140px;
+	height: 8px;
+	background: url('../../img/main/state_graph_bg_side.png') no-repeat left top;
+}
+div.main-contents div.left ul.state li div.graph span {
+	display: block;
+	position: relative;
+	left: 0;
+	top: 0;
+	height: 8px;
+	background: url('../../img/main/state_graph_fill.gif') repeat-x left top;
+}
+div.main-contents div.left div.ad {
+	position: relative;
+	width: 169px;
+	height: 96px;
+}
+
+/*
+	center
+*/
+div.main-contents div.center {
+	float: left;
+	width: 812px;
+	height: 100%;
+	background: url('../../img/main/bg_right.gif') repeat-y right top;
+}
+div.main-contents div.center span.navi {
+	display: block;
+	height: 25px;
+	padding: 17px 0 0 30px;
+	background: url('../../img/main/ico_navi.gif') no-repeat 15px 16px;
+	border-bottom: 1px solid #d9d9d9;
+	letter-spacing: -1px;
+}
+div.main-contents div.center ul.top-banner {
+	width: 811px;
+}
+div.main-contents div.center ul.bottom-banner {
+	width: 100%;
+}
+div.main-contents div.center div.footer {
+	overflow: hidden;
+	position: absolute;
+	left: 191px;
+	bottom: 0;
+	width: 810px;
+	height: 31px;
+	padding: 8px 0 0;
+	border-top: 1px solid #e0e0e0;
+}
+div.main-contents div.center div.footer img {
+	float: left;
+	padding-left: 10px;
+}
+div.main-contents div.center div.footer p {
+	float: left;
+	padding: 3px 10px 0 19px;
+	color: #8a8a8a;
+	font-family: Tahoma;
+}
+div.main-contents div.center div.footer p span {
+	color: #222;
+}
+div.main-contents div.center div.footer p span.blue {
+	color: #005aab;
+}
+div.main-contents div.center div.footer p span.red {
+	color: #ed1c24;
+}
+div.main-contents div.center div.footer a {
+	float: left;
+	width: 52px;
+	height: 14px;
+	padding: 6px 0 0;
+	background: url('../../img/main/footer_btn_terms.gif') no-repeat left top;
+	text-align: center;
+}
+
+/*
+	right
+*/
+div.right {
+	float: left;
+	width: 214px;
+	padding: 42px 0 0 10px;
+}
+
+div.right div.memo {
+	width: 214px;
+	min-height: 330px;
+	scrollbar-base-color: #fffce3;
+	scrollbar-arrow-color: #a09c81;
+	scrollbar-face-color: #f3eed0;
+	scrollbar-track-color: #fffce3;
+	scrollbar-shadow-color: #fffce3;
+}
+
+div.memo ::-webkit-scrollbar { width: 14px;}
+div.memo ::-webkit-scrollbar-thumb		{ background-color: #f3eed0; }
+div.memo ::-webkit-resizer	{ background-color: #f3eed0; }
+
+div.right div.memo div.top {
+	height: 36px;
+	background: url('../../img/main/memo_bg_top.gif') no-repeat;
+}
+
+div.right div.memo div.top p {
+	height: 26px;
+	padding: 12px 0 0 20px;
+	color: #b5b49d;
+	letter-spacing: -1px;
+}
+
+div.right div.memo div.middle {
+	width: 198px;
+	min-height: 264px;
+	max-height: 500px;
+	color: #a3a18e;
+	line-height: 24px;
+	padding: 0 0 0 17px;
+	background: url('../../img/main/memo_bg_middle.gif') repeat-y;
+}
+
+div.right div.memo div.middle div.textMiddle {
+	width: 196px;
+	min-height: 264px;
+	max-height: 500px;
+	color: #a3a18e;
+	overflow-y: auto;
+	overflow-x: hidden;
+	line-height: 24px;
+}
+
+
+div.right div.memo div.bottom {
+	height: 29px;
+	background: url('../../img/main/memo_bg_bottom.gif') no-repeat;
+}
+
+div.right div.memo p span {
+	margin-left: 7px;
+	padding-left: 7px;
+	background: url('../../img/main/memo_bar.gif') no-repeat left 50%;
+	color: #c8c6ae;
+	font-family: Tahoma;
+	letter-spacing: 0;
+}
+div.right div.memo p span strong {}
+div.right div.memo div.btn {
+	padding: 6px 0 0;
+	text-align: center;
+}
+div.right div.memo div.btn button {
+	height: 14px;
+	color: #cac9b2;
+	letter-spacing: -1px;
+	text-align: right;
+}
+div.right div.memo div.btn button.save {
+	width: 54px;
+	background: url('../../img/main/memo_save.gif') no-repeat left top;
+}
+
+div.right div.memo div.btn div {
+	display: inline;
+	margin-left: 5px;
+	padding-left: 9px;
+	background: url('../../img/main/memo_bar.gif') no-repeat left top;
+}
+div.right div.memo div.btn div button.del {
+	width: 64px;
+	background: url('../../img/main/memo_del.gif') no-repeat left top;
+}
+div.right div.banner {}
+div.right div.banner a {
+	display: block;
+	width: 214px;
+	height: 150px;
+}

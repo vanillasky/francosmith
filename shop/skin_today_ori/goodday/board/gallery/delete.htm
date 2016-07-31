@@ -1,0 +1,50 @@
+{*** 삭제 | board/delete.php ***}
+{ # header } {_bdHeader}
+
+<table width={_bdWidth} align={_bdAlign} cellpadding=0 cellspacing=0><tr><td>
+
+<form name=frmDelete action="delete_ok.php" method=post onSubmit="return chkForm(this)">
+<input type=hidden name=id value={_GET.id}>
+<input type=hidden name=sel[] value={_no}>
+<input type=hidden name=mode value="{_mode}">
+<input type=hidden name=returnUrl value="{_returnUrl}">
+
+<table width=100%>
+<tr><td height=3 bgcolor=#efefef></td></tr>
+<tr>
+	<td height=150 align=center bgcolor=#f7f7f7>
+
+	<!--{ ? (_m_no && _m_no==_sess.m_no) || _ici_admin }-->
+	<b>정말로 삭제하시겠습니까?</b><p>
+	글을 삭제합니다. 데이터 삭제시 복구가 불가능 합니다<br>
+	<font color=#FF6600>또한 이 게시물의 작성자가 <b>업로드한 이미지도 같이 삭제</b>됩니다.<br>
+	업로드 되어 있던 이미지는 다른 곳에서도 사용되고 있을 수 있으므로<br>
+	<b>신중히 확인하시고 삭제하세요.</b></font>
+	<!--{ : _m_no }-->
+	<b>삭제권한이 없습니다</b><p>
+	글을 삭제할수 있는 권한을 가지고 있지 않습니다
+	<!--{ : }-->
+	<input type=password name=password required class=line><p>
+	글을 삭제합니다. 비밀번호를 입력하여 주십시오<br>
+	데이터 삭제시 복구가 불가능 합니다<br>
+	<font color=#FF6600>또한 이 게시물의 작성자가 <b>업로드한 이미지도 같이 삭제</b>됩니다.<br>
+	업로드 되어 있던 이미지는 다른 곳에서도 사용되고 있을 수 있으므로<br>
+	<b>신중히 확인하시고 삭제하세요.</b></font>
+	<!--{ / }-->
+
+	</td>
+</tr>
+<tr><td height=2 bgcolor=#efefef></td></tr>
+<tr>
+	<td align=center><br>
+	<input type=image src="img/board_btn_ok.gif">
+	<a href="javascript:history.back()"><img src="img/board_btn_back.gif"></a>
+	</td>
+</tr>
+</table>
+
+</form>
+
+</td></tr></table>
+
+{_bdFooter} { # footer }

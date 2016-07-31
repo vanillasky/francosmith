@@ -1,0 +1,306 @@
+{*** 상품리스트 | todayshop/list.php ***}
+<!--header start-->
+<!--삭제하지마세요.-->
+{ # header }
+<!--header end-->
+
+<!--일반몰과 병행 사용시 상단 카테고리를 출력하기 위함-->
+<!--{? todayshop_cfg['shopMode'] == 'regular'}-->
+{ # tsCategory }
+<!--{/}-->
+
+
+<style>
+
+.today_search {background:#f5f5f5;border-top:2px solid #d5d5d5;border-bottom:2px solid #d5d5d5;padding:10px;margin-bottom:10px;}
+.today_search .sel {margin-right:20px;height:26px;_font-size:16px;border:1px solid #A9A9A9;}
+.today_search .input {border:none;background:url(../img/list_search_bg.gif) top left no-repeat;width:196px;height:26px;padding:7px 0 0 23px;}
+
+.item { width:100%;table-layout:fixed; }
+.item .image { width:165px; height:150px; overflow:hidden; margin:10px; border:solid 1px #363636; }
+.item .image img {height:150px;}
+.item .info1 { margin-top:15px; }
+.item .info1 .name { color:#db0511; font:bold 14px 'dotum','굴림'; margin-top:5px; }
+.item .info1 .date { color:#373737; font:12px 'dotum','굴림'; height:20px; margin-top:5px; }
+.item .info1 .label { color:#373737; font:12px 'dotum','굴림'; }
+.item .info1 .label .won { font-family: "돋움", "굴림"; font-size: 12px; color: #898989; }
+.item .info1 .label .consumer { font-family: "Arial", "굴림"; font-size: 16px; font-weight: bold; color: #a09f9f; text-decoration:line-through; }
+.item .info1 .label .price { font-family: "Arial", "Vernada"; font-size: 24px; font-weight: bold; color: #ee151d; }
+.item .info1 .timer { display:block; margin-top:5px; }
+.item .info1 .timer div { float:left; }
+.item .info1 .timer .contents { float:left; background:url(../img/t0day_list01_count01.gif); height:44px; padding-top:7px; }
+ item .info1 .timer .contents div {padding-right:7px;}
+.item .info2 { width:100%; border:solid 3px #E3E3E3; }
+.item .snsBox { margin:10px; }
+.item .statusBox { font:12px 'dotum','굴림'; }
+.item .statusBox .bar { float:left; }
+.item .statusBox span { font:bold 14px 'dotum','굴림'; color:#e00715; }
+.item .btnBox { padding:10px 0px; text-align:center; }
+.item_underbar { margin-top:10px; margin-bottom:10px; border-bottom:solid 1px #E3E3E3; width:100%; }
+</style>
+<script type="text/javascript" src="../../../lib/js/prototype.js"></script>
+<script type="text/javascript" src="../../../lib/js/todayshop.js"></script>
+<script type="text/javascript">
+var imgs = new Array();
+imgs[0] = "../img/time_0.gif";
+imgs[1] = "../img/time_1.gif";
+imgs[2] = "../img/time_2.gif";
+imgs[3] = "../img/time_3.gif";
+imgs[4] = "../img/time_4.gif";
+imgs[5] = "../img/time_5.gif";
+imgs[6] = "../img/time_6.gif";
+imgs[7] = "../img/time_7.gif";
+imgs[8] = "../img/time_8.gif";
+imgs[9] = "../img/time_9.gif";
+
+Timer.initImg(imgs);
+
+var member = null;
+var runout = new Array();
+var goodsStatus = new Array();
+
+function initList() {
+	//TodayShop.getListData("{=_GET['category']}", "{=date.year}", "{=date.mon}", "{=date.mday}", setListData);
+	TodayShop.getListDataByPage("{=_GET['page']}","{=_GET['category']}","{=_GET['category']}", setListData);
+}
+
+function initGoods(tgsno, startdt, enddt) {
+	var arrSdt = new Array();
+	if (startdt) arrSdt = startdt.split(" ");
+	var arrEdt = new Array();
+	if (enddt) arrEdt = enddt.split(" ");
+	if (arrSdt.length == 2 && arrSdt.length == 2) {
+		Timer.getTimer(tgsno, arrSdt[0], arrSdt[1], arrEdt[0], arrEdt[1], timerCallback);
+	}
+	else {
+		timerCallback(tgsno, 'noperiod');
+	}
+}
+
+function timerCallback(tgsno, status) {
+	goodsStatus[tgsno] = status;
+	setGoodsStatus(tgsno);
+}
+
+function setListData(res) {
+
+	try
+	{
+		if (res.member == "y") member=true;
+		else throw null;
+	}
+	catch (e) {
+		member=false;
+	}
+
+	try
+	{
+		if (res.data.length == 0) return;
+	}
+	catch (e) {
+		return;
+	}
+
+	// 현재 구매인원 표시(text)
+	for(var i = 0; i < res.data.length; i++) {
+		try
+		{
+			// 품절여부
+			try
+			{
+				runout[res.data[i].tgsno] = (res.data[i].runout == "1")? "y" : "n";
+			}
+			catch (e) {
+				runout[res.data[i].tgsno] = "n";
+			}
+
+			setGoodsStatus(res.data[i].tgsno);
+		}
+		catch (e)
+		{
+			if (smsobj) smsobj.style.display = "none";
+		}
+	}
+}
+
+function setGoodsStatus(tgsno) {
+
+	if (typeof(goodsStatus[tgsno]) == "undefined" || typeof(runout[tgsno]) == "undefined") return;
+
+	var tobj = document.getElementById("timerBlock"+tgsno);
+	var bobj = document.getElementById("btnBlock"+tgsno);
+	if (runout[tgsno] == "y") goodsStatus[tgsno] = "closed";
+	switch(goodsStatus[tgsno]) {
+		case 'ing' : {
+			var tbobj = document.getElementById("timerBox"+tgsno);
+			if (tbobj) tbobj.style.display = "inline-block";
+
+			if (tobj) tobj.innerHTML = "<div><span id='rTime_d"+tgsno+"'><img src='../img/time_0.gif' /></span><img src='../img/time_day.png' border='0'><span id='rTime_h"+tgsno+"'><img src='../img/time_0.gif' /><img src='../img/time_0.gif' /></span><img src='../img/time_colon.gif' border='0'><span id='rTime_m"+tgsno+"'><img src='../img/time_0.gif' /><img src='../img/time_0.gif' /></span><img src='../img/time_colon.gif' border='0'><span id='rTime_s"+tgsno+"'><img src='../img/time_0.gif' /><img src='../img/time_0.gif' /></span></div>";
+			if (bobj) bobj.innerHTML = "<a href=\"../todayshop/today_goods.php?tgsno="+tgsno+"&category={=ts_curcate.category}\"><img src='../img/t0day_list01_btndetail.gif' border='0'></a>";
+			break;
+		}
+		case 'closed': {
+			Timer.stopTimer(tgsno);
+			if (bobj) bobj.innerHTML = "<a href=\"../todayshop/today_goods.php?tgsno="+tgsno+"&category={=ts_curcate.category}\"><img src='../img/t0day_list01_btnend.gif' border='0'></a>";
+			break;
+		}
+		case 'noperiod': {
+			if (bobj) bobj.innerHTML = "<a href=\"../todayshop/today_goods.php?tgsno="+tgsno+"&category={=ts_curcate.category}\"><img src='../img/t0day_list01_btndetail.gif' border='0'></a>";
+		}
+		default :
+			if (bobj) bobj.innerHTML = "머지";
+	}
+
+}
+</script>
+<script type="text/javascript">
+function navi(year, month, day) {
+	location.href = "today_list.php?year="+year+"&month="+month+"&day="+day+"&category={=_GET['category']}";
+}
+
+function sendSms(tgsno) {
+	if (member === null) {
+		alert("잠시만 기다리세요.");
+		return;
+	}
+	if (member === true) window.open('../todayshop/today_sms.php?tgsno='+tgsno, 'todaysms', 'width=490, height=360');
+	else if(confirm("로그인후에 사용이 가능합니다. 로그인페이지로 이동하시겠습니까?")) location.href = "../member/login.php";
+}
+</script>
+
+<div id="el-anchor-side-banner" style="position:relative;border:none;"></div>
+
+<!-- s:tab-->
+<table width="{_cfg['shopSize']}" border="0" cellpadding="0" cellspacing="0">
+<tr>
+	<td><a href="./today_goods.php"><img src="../img/tab_m1.gif"></a></td>
+	<td><a href="./list.php"><img src="../img/tab_m2_on.gif"></a></td>
+	<td><a href="./calendar.php"><img src="../img/tab_m3.gif"></a></td>
+	<td><a href="./goods_review.php"><img src="../img/tab_m4.gif"></a></td>
+</tr>
+</table>
+<!-- e:tab-->
+
+<!-- 44px --><div class="margin" style="height:44px;"></div>
+
+
+
+<!-- s:page title & date indicator -->
+<table width="{_cfg['shopSize']}" border="0" cellpadding="0" cellspacing="0">
+<tr>
+	<td align="left">
+		<img src="../img/tit_list.gif">
+	</td>
+</tr>
+</table>
+<!-- e:page title & date indicator -->
+
+
+<!-- 검색 폼 -->
+<div class="today_search">
+<form method="get">
+	<select name="category" class="sel">
+		<option value="">:::: 전체 ::::</option>
+		<!--{ @ category }-->
+		<option value="{.category}" {? _GET.category == .category}selected{/}>{.catnm}</option>
+		<!--{ / }-->
+	</select>
+
+	<img src="../img/list_search_bn01.gif" align="absmiddle">
+
+	<div style="display:inline;border:1px solid #a9a9a9;width:196px;height:26px;background:#ffffff url(../img/bu_glass.gif) 3px 2px no-repeat;padding:3px 0 0 23px;">
+	<input type="text" name="keyword" value="{ _GET.keyword }" style="border:none;background:transparent;height:20px;width:169px;" />
+
+
+	</div>
+
+
+
+	<input type="image" src="../img/list_search_btn01.gif" align="absmiddle" />
+	<a href="./list.php"><img src="../img/list_search_btn02.gif" align="absmiddle"></a>
+</form>
+</div>
+<!-- 검색 폼 끝 -->
+
+<!--{@ data}-->
+<div>
+	<table class="item" border="0" cellspacing="0" cellpadding="0">
+	<colgroup><col width="190" /><col /><col width="205" /></colgroup>
+	<tr>
+		<td>
+			<div class="image"><a href="../todayshop/today_goods.php?tgsno={=.tgsno}&category={=ts_curcate.category}" />{=goodsimgTS(.img_i)}</a></div>
+		</td>
+		<td valign="top">
+			<div class="info1">
+				<div class="name"><a href="../todayshop/today_goods.php?tgsno={=.tgsno}&category={=ts_curcate.category}" />{=.goodsnm}</a></div>
+				<!--{? .enddt}--><div class="date">판매기간 : {=.startdt} ~ {=.enddt}</div><!--{:}--><div class="date"></div><!--{/}-->
+				<div class="label">정상가격 : <span class="consumer">{=number_format(.consumer)}</span><span class="won">원</span></div>
+				<div class="label">할인가격 : <span class="price">{=number_format(.price)}</span><span class="won">원</span></div>
+				<!--{? .showtimer == 'y' && .status == 'ing'}-->
+				<div class="timer" id="timerBox{=.tgsno}">
+					<div><img src="../img/t0day_list01_count.gif" /></div>
+					<div class="contents" id="timerBlock{=.tgsno}" />
+					<div><span id='rTime_d{.tgsno}'><img src='../img/time_0.gif' /></span><img src='../img/time_day.png' border='0'><span id='rTime_h{.tgsno}'><img src='../img/time_0.gif' /><img src='../img/time_0.gif' /></span><img src='../img/time_colon.gif' border='0'><span id='rTime_m{.tgsno}'><img src='../img/time_0.gif' /><img src='../img/time_0.gif' /></span><img src='../img/time_colon.gif' border='0'><span id='rTime_s{.tgsno}'><img src='../img/time_0.gif' /><img src='../img/time_0.gif' /></span></div>
+					</div>
+					<div><img src="../img/t0day_list01_count02.gif" /></div>
+				</div>
+				<!--{/}-->
+			</div>
+		</td>
+		<td>
+			<table width="100%" height="100%" border="0" cellpadding="0" cellspacing="0" style="border:3px solid #E3E3E3">
+			<tr>
+				<td style="padding:5px;">
+					<img src='../img/bn_friend.gif' border="0">
+					<a href='{=.snspost.twitter}' target="_blank"><img src='../img/icon_tweeter.gif' border="0"></a>
+					<a href='{=.snspost.facebook}' target="_blank"><img src='../img/icon_facebook.gif' border="0"></a>
+					<a href='{=.snspost.me2day}' target="_blank"><img src='../img/icon_me2day.gif' border="0"></a>
+					<!--{? .smsCnt > 0}--><a onclick="sendSms({=.tgsno})"><img src='../img/icon_sms.gif' border="0"></a><!--{/}-->
+				</td>
+			</tr>
+			<!--{? .limit_ea > 0}-->
+			<tr>
+				<td style="padding:5px;line-height:150%;">
+					현재 <span style="font:bold 14px 'dotum','굴림'; color:#e00715;">{.buyercnt}</span>명이 <br>
+					구매를 결정하셨습니다.
+				</td>
+			</tr>
+			<!--{/}-->
+			<tr>
+				<td align="center">
+				<!--{? .status == 'ing'}-->
+				<a href="../todayshop/today_goods.php?tgsno={.tgsno}&category={=ts_curcate.category}"><img src='../img/t0day_list01_btndetail.gif' border='0'></a>
+				<!--{: .status == 'closed'}-->
+				<a href="../todayshop/today_goods.php?tgsno={.tgsno}&category={=ts_curcate.category}"><img src='../img/t0day_list01_btnend.gif' border='0'></a>
+				<!--{: .status == 'noperiod'}-->
+				<a href="../todayshop/today_goods.php?tgsno={.tgsno}&category={=ts_curcate.category}"><img src='../img/t0day_list01_btndetail.gif' border='0'></a>
+				<!--{/}-->
+				</td>
+			</tr>
+			</table>
+
+
+
+
+
+		</td>
+	</tr>
+	</table>
+</div>
+<div class="item_underbar"></div>
+<script type="text/javascript">initGoods({=.tgsno}, "{=.startdt}", "{=.enddt}");</script>
+<!--{/}-->
+<script type="text/javascript">//initList();</script>
+
+
+
+	<div class="paging">
+	{pg->page['navi']}
+	</div>
+
+
+
+<!--footer start-->
+<!--삭제하지마세요.-->
+{ # footer }
+<!--footer end-->

@@ -1,0 +1,4 @@
+<div style="width:320px;position:absolute;top:130px;right:20px;z-index:999;" id="smsPopup_pro">
+	<div><a href="/shop/admin/member/sms.pay.php"><img src="http://gongji.godo.co.kr/userinterface/img/201412/admin_SMS_2.gif"></a></div>
+	<div style="width:100%;display:block; background-color:#333333;text-align:right;"><img src="http://gongji.godo.co.kr/userinterface/img/201412/btn_cls_weekly.gif" style="margin-right:10px;cursor:pointer;" onclick="javascript:var todayDate=new Date();todayDate.setDate(todayDate.getDate()+7);document.cookie = 'maxtab_promotion=true;expires='+todayDate.toGMTString()+';path=/';_ID('smsPopup_pro').style.display='none';" title="일주일동안 열지않기" ><img src="http://gongji.godo.co.kr/userinterface/img/201412/btn_cls.gif" onclick="javascript:_ID('smsPopup_pro').style.display='none';" alt="닫기" style="cursor:pointer;"></div>
+</div>

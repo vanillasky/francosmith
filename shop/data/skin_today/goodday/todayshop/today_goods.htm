@@ -1,0 +1,854 @@
+{*** 오늘의 상품 | todayshop/today_goods.php ***}
+
+<!--header start-->
+<!--삭제하지마세요.-->
+{ # header }
+<!--header end-->
+
+<!--일반몰과 병행 사용시 상단 카테고리를 출력하기 위함-->
+<!--{? todayshop_cfg['shopMode'] == 'regular'}-->
+{ # tsCategory }
+<!--{/}-->
+
+<script type="text/javascript" src="../../../lib/js/prototype.js"></script>
+<script type="text/javascript" src="../../../lib/js/todayshop.js"></script>
+<style type="text/css" media="all">
+/* css reset */
+/*body, div, span, iframe, a, img, strong, td, th, ol, ul, li, table, tbody, thead, tfoot {margin:0;padding:0;border:0;outline:0;}*/
+
+
+/* */
+#timerBlock {width:100%;}
+#timerBlock div {text-align:center;margin:0 0 5px 0;}
+#timerBlock div p {margin:0;text-align:left;}
+#timerBlock div p img {margin:1px;}
+
+table.goods-spec {}
+table.goods-spec th {width:80px;}
+table.goods-spec td {text-align:left;line-height:200%;}
+
+
+table.contents {}
+table.contents td {text-align:left;}
+
+
+/* 상품썸네일 */
+#eaBlock li.lbox { width:63px; }
+#eaBlock li.rbox { width:222px; text-align:left; }
+#eaBlock li.rbox .eaBox { float:left; }
+#eaBlock li.rbox .eaBox input { text-align:right;height:18px; }
+#eaBlock li.rbox .eaBtn { float:left; padding-left:3px; }
+#eaBlock li.rbox .eaBtn .upBtn { padding:1px 0px 2px 0px; }
+#eaBlock li.rbox .eaBtn img { cursor:pointer; }
+#eaBlock li.rbox .eaLabel { padding-top:3px; float:left; }
+</style>
+
+<script type="text/javascript">
+/* 상품페이지 초기화 script */
+<!--{? category}-->
+// 해당 상품의 카테고리 헤더에 출력
+//if (typeof(setCategory) != "undefined") setCategory('{=category.category}', '{=category.catnm}');
+<!--{/}-->
+
+var imgs = new Array();
+imgs[0] = "../img/time_0.gif";
+imgs[1] = "../img/time_1.gif";
+imgs[2] = "../img/time_2.gif";
+imgs[3] = "../img/time_3.gif";
+imgs[4] = "../img/time_4.gif";
+imgs[5] = "../img/time_5.gif";
+imgs[6] = "../img/time_6.gif";
+imgs[7] = "../img/time_7.gif";
+imgs[8] = "../img/time_8.gif";
+imgs[9] = "../img/time_9.gif";
+
+var dimgs = new Array();
+dimgs[0] = "../img/dday_0.png";
+dimgs[1] = "../img/dday_1.png";
+dimgs[2] = "../img/dday_2.png";
+dimgs[3] = "../img/dday_3.png";
+dimgs[4] = "../img/dday_4.png";
+dimgs[5] = "../img/dday_5.png";
+dimgs[6] = "../img/dday_6.png";
+dimgs[7] = "../img/dday_7.png";
+dimgs[8] = "../img/dday_8.png";
+dimgs[9] = "../img/dday_9.png";
+
+Timer.initImg(imgs,dimgs);
+
+imgs = dimgs = null;
+
+var imgs = new Array();
+imgs[1] = {def:"../img/photo_off.gif", over:"../img/photo_on.gif"};
+imgs[2] = {def:"../img/photo_off.gif", over:"../img/photo_on.gif"};
+imgs[3] = {def:"../img/photo_off.gif", over:"../img/photo_on.gif"};
+imgs[4] = {def:"../img/photo_off.gif", over:"../img/photo_on.gif"};
+imgs[5] = {def:"../img/photo_off.gif", over:"../img/photo_on.gif"};
+imgs[6] = {def:"../img/photo_off.gif", over:"../img/photo_on.gif"};
+imgs[7] = {def:"../img/photo_off.gif", over:"../img/photo_on.gif"};
+imgs[8] = {def:"../img/photo_off.gif", over:"../img/photo_on.gif"};
+imgs[9] = {def:"../img/photo_off.gif", over:"../img/photo_on.gif"};
+imgs[10] = {def:"../img/photo_off.gif", over:"../img/photo_on.gif"};
+
+MainImage.initImg(imgs);
+imgs = null;
+
+var price = new Array();
+var consumer = new Array();
+var stock = new Array();
+var fkey = null;
+var member = { ? _sess}true{:}false{/};
+var useEncor = null;
+var useSMS = null;
+var useGoodsTalk = null;
+var runout = null;
+var goodsStatus = null;
+
+function initGoods() {
+	<!--{? (startdt[0] && startdt[1]) || (enddt[0] && enddt[1])}-->
+	Timer.getTimer(0, "{=startdt[0]}", "{=startdt[1]}", "{=enddt[0]}", "{=enddt[1]}", timerCallback)
+	<!--{:}-->
+	timerCallback(0, 'noperiod');
+	<!--{/}-->
+
+	// 그래프 조정
+	try
+	{
+		var el_graph = $('el-buyercnt-graph');
+		var el_graph_width = parseInt( el_graph.style.width.replace('px','') );
+		var graph_fill = {buyercnt} >= {? limit_ea}{=limit_ea}{:}0{/} ? el_graph_width : Math.floor({buyercnt} * el_graph_width / {? limit_ea}{=limit_ea}{:}0{/});
+		$('el-buyercnt-graph-fill').style.width = graph_fill + 'px';
+		$('el-buyercnt-graph-dial').style.left = (graph_fill - 4) + 'px';
+
+	}
+	catch (e) { }
+
+
+	// 가격 이미지
+	var consumer = $('el-consumer').innerText;
+	$('el-consumer').innerHTML = '';
+	for (var i=0, m = consumer.length, c;i<m ;i++ ) {
+		c = consumer.substring(i, i+1);
+		if (c == ',') c = 'comma';
+		$('el-consumer').innerHTML += '<img src="../img/price_' + c + '.gif">';
+	}
+
+	// 할인가격 이미지
+	var consumer = $('el-price').innerText;
+	$('el-price').innerHTML = '<img src="../img/price_sale_won.gif">';
+	for (var i=0, m = consumer.length, c;i<m ;i++ ) {
+		c = consumer.substring(i, i+1);
+		if (c == ',') c = 'comma';
+		$('el-price').innerHTML += '<img src="../img/price_sale_' + c + '.gif">';
+	}
+
+	// 할인율
+	if ($('el-dc-rate')) $('el-dc-rate').src = '../img/sale_{dc_rate}.png';
+
+
+}
+
+function timerCallback(idx, status) {
+	goodsStatus = status;
+	setGoodsStatus();
+}
+
+// 상품 정보 초기화
+function setGoodsData(res) {
+
+}
+
+function setGoodsStatus() {
+
+	if (goodsStatus == null) return;
+	var tobj = document.getElementById("timerBlock");
+	var bobj = document.getElementById("buybtnBlock");
+
+	if (runout == "y") goodsStatus = "closed";
+
+	switch(goodsStatus) {
+		case 'cart' :
+		case 'ing' : {
+			<!--{ ? use_cart == 'y'}-->
+			if (bobj) bobj.innerHTML = "<a href=\"javascript:act('../todayshop/order')\"><img src='../img/btn_buy2.gif' border='0'></a><a href=\"javascript:void(0);\" onClick=\"add_cart()\"><img src='../img/btn_shopping.gif' border='0'></a>";
+			<!--{ : }-->
+			if (bobj) bobj.innerHTML = "<a href=\"javascript:act('../todayshop/order')\"><img src='../img/btn_buy1.gif' border='0'></a>";
+			<!--{ / }-->
+			break;
+		}
+		case 'closed': {
+			Timer.stopTimer(0);
+			if (tobj) tobj.innerHTML = "<img src='../img/txt_close.png' />";
+			if (useEncor == 'y') {
+				if (bobj) bobj.innerHTML = "<a href=\"javascript:encor({=tgsno})\"><img src='../img/btn_encore.png' /></a>";
+			}
+			else {
+				if (bobj) bobj.innerHTML = "<img src='../img/btn_close.png' />";
+			}
+			if (document.getElementById("stockBlock")) document.getElementById("stockBlock").style.display = "none";
+			if (document.getElementById("optBlock")) document.getElementById("optBlock").style.display = "none";
+			if (document.getElementById("eaBlock")) document.getElementById("eaBlock").style.display = "none";
+			if (document.getElementById("limitBlock")) document.getElementById("limitBlock").style.display = "none";
+			break;
+		}
+		case 'noperiod': {
+			if (tobj) tobj.style.display = "none";
+			<!--{ ? use_cart == 'y'}-->
+			if (bobj) bobj.innerHTML = "<a href=\"javascript:act('../todayshop/order')\"><img src='../img/btn_buy2.gif' border='0'></a><a href=\"javascript:void(0);\" onClick=\"add_cart()\"><img src='../img/btn_shopping.gif' border='0'></a>";
+			<!--{ : }-->
+			if (bobj) bobj.innerHTML = "<a href=\"javascript:act('../todayshop/order')\"><img src='../img/btn_buy1.gif' border='0'></a>";
+			<!--{ / }-->
+		}
+	}
+}
+
+
+function nnnnn_drawImageNumber() {
+
+}
+
+</script>
+<script type="text/javascript">
+// 상품페이지 script
+function chkOption(obj)
+{
+	if (!selectDisabled(obj)) return false;
+
+	var opt = document.getElementsByName('opt[]');
+	var opt1 = opt[0].value; var opt2 = '';
+	if (typeof(opt[1])!="undefined") opt2 = "|" + opt[1].value;
+	var key = opt1 + opt2;
+	if (opt[0].selectedIndex == 0) key = fkey;
+	key = key.replace('"','&quot;');
+	if (typeof(price[key])!="undefined"){
+		if (document.getElementById('price')) document.getElementById('price').innerHTML = comma(price[key]);
+		if (document.getElementById('consumer')) document.getElementById('consumer').innerHTML = comma(consumer[key]);
+		if (document.getElementById('stock')) document.getElementById('stock').innerHTML = comma(stock[key]);
+	}
+}
+
+function act(target)
+{
+	var form = document.frmView;
+	if(!(form.ea.value>0)) {
+		alert("구매수량은 1개 이상만 가능합니다");
+		return;
+	}
+
+	<!--{? usestock}-->
+	var optobj = document.getElementsByName("opt[]");
+	var key = '';
+	if (optobj.length > 0) key = optobj[0][optobj[0].selectedIndex].value;
+	if (parseInt(stock[key]) == 0) {
+		alert("품절입니다.");
+		return;
+	}
+	if (parseInt(stock[key]) < parseInt(form.ea.value)) {
+		alert("해당 상품의 남은 수량은 "+stock[key]+"개입니다.");
+		return;
+	}
+	<!--{/}-->
+	form.action = target + ".php";
+	if (chkForm(form)) form.submit();
+}
+function add_cart() {
+
+	var form = document.frmView;
+
+	if(!(form.ea.value>0)) {
+		alert("구매수량은 1개 이상만 가능합니다");
+		return false;
+	}
+
+	<!--{? usestock}-->
+	var optobj = document.getElementsByName("opt[]");
+	var key = '';
+	if (optobj.length > 0) key = optobj[0][optobj[0].selectedIndex].value;
+	if (parseInt(stock[key]) == 0) {
+		alert("품절입니다.");
+		return false;
+	}
+	if (parseInt(stock[key]) < parseInt(form.ea.value)) {
+		alert("해당 상품의 남은 수량은 "+stock[key]+"개입니다.");
+		return false;
+	}
+	<!--{/}-->
+	if (! chkForm(form)) return false;
+
+	var el = event.srcElement;
+
+	var rn = 1301;
+	new Ajax.Request("./indb.cart.php", { method: "post", parameters: Form.serialize(form)+'&rn='+rn,
+		onSuccess: function(req) {
+			var resCode = '';
+			if (rn >= 1301 && req.responseText.substr(2,3) == 'xml' && typeof(createXMLFromString) != 'undefined') {
+				var xml = createXMLFromString(req.responseText);
+				var result = xml.getElementsByTagName('result');
+				var code = result[0].getElementsByTagName('code')[0].firstChild.nodeValue;
+				var aceScript = result[0].getElementsByTagName('aceScript')[0].firstChild.nodeValue;
+				resCode = code; // ok or error
+				if (aceScript !='') {
+					eval(aceScript);
+				}
+			} else {
+				resCode = req.responseText; // ok or error
+			}
+
+			if (resCode == 'ok')
+			{
+				var box = document.getElementById('todayshopCartNoti');
+
+				if (box != undefined) {
+
+					if (box.style.display != 'block') {
+
+						var pos = offset(el);
+
+						box.style.position = "absolute";
+						box.style.top = 10 + pos.top + el.offsetHeight + "px";
+						box.style.left = parseInt(pos.left + el.offsetWidth / 2 - parseInt(box.style.width.replace('px','')) / 2) + "px";
+
+						box.style.display = 'block';
+					}
+					else {
+						box.style.display = 'none';
+					}
+				}
+			}
+		},
+		onFailure: function() { }
+}	);
+}
+
+function chgImg(obj)
+{
+	var objImg = document.getElementById('objImg');
+	objImg.src = obj.src.replace("/t/","/");
+}
+
+function innerImgResize(width)	// 본문 이미지 크기 리사이징
+{
+	return;
+	var objContents = document.getElementById('desc');
+	var innerWidth = width;
+	var img = objContents.getElementsByTagName('img');
+	for (var i=0;i<img.length;i++){
+		if (img[i].width>innerWidth) img[i].width = innerWidth;
+		img[i].onload = function(){
+			if (this.width>innerWidth) this.width = innerWidth;
+		};
+	}
+}
+
+function chk_ea() {
+	var obj = document.getElementById("ea");
+	<!--{?min_ea != 0}-->
+	if (obj.value < {=min_ea}) {
+		obj.value = {=min_ea};
+		alert("최소 구매수량은 {=min_ea}개입니다.");
+	}
+	<!--{/}-->
+	<!--{?max_ea != 0}-->
+	if ({=max_ea} != 0 && obj.value > {=max_ea}) {
+		obj.value = {=max_ea};
+		alert("최대 구매수량은 {=max_ea}개입니다.");
+	}
+	<!--{/}-->
+}
+</script>
+<script type="text/javascript">
+// 투데이샵 script
+function showTab(n) {
+
+	var tabs = document.getElementsByName("contents-tab");	// 탭 이미지(메뉴)
+	var img, div;
+
+	for (var i=0,m=tabs.length;i<m ;i++) {
+
+		img = tabs[i];
+		div = document.getElementById( img.getAttribute('link_id') );
+		ifm = document.getElementById( img.getAttribute('link_id') + '-iframe' );
+
+		if (i == (n-1)) {
+			img.src = img.getAttribute('onsrc') || img.src;
+			div.style.display = 'block';
+
+			if (ifm) {
+				ifm.contentWindow.resizeFrame();
+			}
+
+		}
+		else {
+			img.src = img.getAttribute('offsrc') || img.src;
+			div.style.display = 'none';
+		}
+
+	}
+
+}
+</script>
+<script type="text/javascript">
+// 로그인여부가 필요한 script
+function encor(tgsno) {
+
+	if (member !== true) {
+		if(confirm("앵콜추천 참여는 회원만이 참여할 수 있습니다. 로그인하시겠습니까?")) {
+			location.href="../member/login.php";
+		}
+	}
+	else {
+		if(confirm("선택하신 상품을 앵콜 추천하시겠습니까?")) {
+			var fobj = document.frmEncor;
+			fobj.tgsno.value = tgsno;
+			fobj.submit();
+		}
+	}
+}
+
+function sendSms(tgsno) {
+	if (member === null) {
+		alert("잠시만 기다리세요.");
+		return;
+	}
+	if (member === true) window.open('../todayshop/today_sms.php?tgsno='+tgsno, 'todaysms', 'width=490, height=360');
+	else if(confirm("로그인후에 사용이 가능합니다. 로그인페이지로 이동하시겠습니까?")) location.href = "../member/login.php";
+}
+</script>
+
+
+
+<div id="el-anchor-side-banner" style="position:relative;border:none;"></div>
+
+
+<!--
+	일반몰과 멀티 운영이 가능하므로 헤더에 메뉴를 삽입할 수 없음.
+
+-->
+<!-- s:tab-->
+<table width="{_cfg['shopSize']}" border="0" cellpadding="0" cellspacing="0">
+<tr>
+	<td><a href="./today_goods.php"><img src="../img/tab_m1_on.gif"></a></td>
+	<td><a href="./list.php"><img src="../img/tab_m2.gif"></a></td>
+	<td><a href="./calendar.php"><img src="../img/tab_m3.gif"></a></td>
+	<td><a href="./goods_review.php"><img src="../img/tab_m4.gif"></a></td>
+</tr>
+</table>
+<!-- e:tab-->
+
+
+
+<!-- 44px --><div class="margin" style="height:44px;"></div>
+
+
+<!-- s:page title & date indicator -->
+<table width="{_cfg['shopSize']}" border="0" cellpadding="0" cellspacing="0">
+<tr>
+	<td align="left">
+		<img src="../img/tit_today.gif">
+		<!--{? opendt}-->
+		<img src='../img/d_year_{=opendt[0]}.gif' border="0"><img src='../img/d_year_{=opendt[1]}.gif' border="0"><img src='../img/d_year_{=opendt[2]}.gif' border="0"><img src='../img/d_year_{=opendt[3]}.gif' border="0"><img src='../img/d_year_dot.gif' border="0"><img src='../img/d_month_{=opendt[5]}.gif' border="0"><img src='../img/d_month_{=opendt[6]}.gif' border="0"><img src='../img/d_month_dot.gif' border="0"><img src='../img/d_month_{=opendt[8]}.gif' border="0"><img src='../img/d_month_{=opendt[9]}.gif' border="0">
+		<!--{/}-->
+		<!--{? closedt}-->
+		<img src="../img/d_hyphen.gif">
+		<img src='../img/d_year_{=closedt[0]}.gif' border="0"><img src='../img/d_year_{=closedt[1]}.gif' border="0"><img src='../img/d_year_{=closedt[2]}.gif' border="0"><img src='../img/d_year_{=closedt[3]}.gif' border="0"><img src='../img/d_year_dot.gif' border="0"><img src='../img/d_month_{=closedt[5]}.gif' border="0"><img src='../img/d_month_{=closedt[6]}.gif' border="0"><img src='../img/d_month_dot.gif' border="0"><img src='../img/d_month_{=closedt[8]}.gif' border="0"><img src='../img/d_month_{=closedt[9]}.gif' border="0">
+		<!--{/}-->
+
+	</td>
+
+</tr>
+</table>
+<!-- e:page title & date indicator -->
+
+
+<!-- 16px --><div class="margin" style="height:16px;"></div>
+
+
+
+
+<!-- s:goods -->
+<!--{ ? extra_header != '' }-->
+<div class="extra_header">
+{ extra_header }
+</div>
+<!--{ /	}-->
+<table width="{_cfg['shopSize']}" border="0" cellpadding="0" cellspacing="0">
+<tr>
+	<td style="width:900px;height:470px;border:1px solid #000000;">
+	<table width="100%" height="100%" border="0" cellpadding="0" cellspacing="0">
+	<tr>
+		<td valign="top">
+		<div style="position:relative;width:898px;height:470px;overflow:hidden;">
+
+			<!-- 상품 이미지 -->
+			<div id="goodsMainImg" style="z-index:10;width:100%;position:absolute;top:0;left:0;"><!--{@ r_img}--><!--{? .index_==0}--><div>{=goodsimgTS(.value_,898)}</div><!--{:}--><div>{=goodsimgTS(.value_,898,'style="display:none;"')}</div><!--{/}--><!--{/}--></div>
+
+			<!-- 상품 이미지 번호 -->
+			<!--{? count(r_img) > 1}-->
+			<div id="goodsMainImgNum" style="z-index:20;position:absolute;bottom:25px;right:20px;">
+				<!--{@ r_img}-->
+				<span style="cursor:pointer;" onmouseover="MainImage.show({=.index_})">
+					<!--{? .index_==0}--><img src="../img/photo_on.gif" />
+					<!--{:}--><img src="../img/photo_off.gif" />
+					<!--{/}-->
+				</span>
+				<!--{/}-->
+			</div>
+			<!--{/}-->
+
+			<div style="z-index:100;position:absolute;top:0;left:0;width:220px;height:100%;">
+
+				<div style="z-index:100;position:absolute;top:0;left:0;width:100%;height:100%;background:#000000;border-right:1px solid #000000;filter:alpha(opacity=60); opacity:0.6; -moz-opacity:0.6;"></div><!--alpha bg-->
+
+				<div style="z-index:1000;position:absolute;top:0;left:0;width:100%;height:100%;">
+					<table height="100%" border="0" cellpadding="0" cellspacing="0">
+					<!--{? showpercent == 'y'}-->
+					<tr><td valign="top"><img src="../img/sale_67.png" id="el-dc-rate" onerror='this.src="../img/sale_00.png"'><!-- dc rate --></td></tr>
+					<!--{/}-->
+
+
+					<!--{? showtimer=='y'}-->
+					<tr><td valign="bottom" style="padding:10px;">
+					<div id="timerBlock">
+						<div>
+						<p><img src='../img/dday_tit.png' /><span id='rTime_d0'><img src='../img/dday_0.png' /></span></p>
+						<p><span id='rTime_h0'><img src='../img/time_0.gif' /><img src='../img/time_0.gif' /></span><img src='../img/time_colon.gif' border='0'><span id='rTime_m0'><img src='../img/time_0.gif' /><img src='../img/time_0.gif' /></span><img src='../img/time_colon.gif' border='0'><span id='rTime_s0'><img src='../img/time_0.gif' /><img src='../img/time_0.gif' /></span></p>
+						</div>
+					</div>
+					</td></tr>
+					<!--{/}-->
+
+					<tr><td valign="top" style="height:80px;border-top:1px solid #434343;padding:10px;">
+					<table width="100%">
+					<tr>
+						<td style="color:#ffffff;" align="left">친구에게 소문내기</td>
+					</tr>
+					<tr>
+						<td align="left">
+						<a href="{=snspost.twitter}" target="_blank"><img src="../img/icon_tweeter.gif"></a>
+						<a href="{=snspost.facebook}" target="_blank"><img src="../img/icon_facebook.gif"></a>
+						<a href="{=snspost.me2day}" target="_blank"><img src="../img/icon_me2day.gif"></a>
+						<span id="smsBlock"><a href="javascript:void(0);" onClick="sendSms({=tgsno})"><img src="../img/icon_sms.gif"></a></span>
+						</td>
+					</tr>
+					</table>
+					</td></tr>
+					</table>
+				</div>
+			</div>
+
+		</div>
+		</td>
+
+	</tr>
+	</table>
+	</td>
+</tr>
+</table>
+<!-- e:goods -->
+
+
+
+
+<!-- 2px --><div class="margin" style="height:2px;"></div>
+
+
+<!-- s:goods info-->
+<form name=frmView method=post onsubmit="return false">
+<input type=hidden name=mode value="addItem">
+<input type=hidden name=goodsno value="{=goodsno}">
+<table width="{_cfg['shopSize']}" border="0" cellpadding="0" cellspacing="0" style="background:#dfdfdf;border:1px solid #cccccc;">
+<tr>
+	<!--{? limit_ea > 0 // 구매인원}-->
+	<td style="width:257px;">
+
+		<div style="margin-left:26px;width:202px;">
+			<!-- 현재 xx 명 구매-->
+			<div style="text-align:left;">
+			<img src="../img/now_p_txt1.gif"><span id="buyercnt" style="font-family:Arial;font-size:28px;color:#147cf1;font-weight:bold;">{=buyercnt}</span><img src="../img/now_p_txt2.gif">
+			</div>
+
+			<!-- 그래프 -->
+			<div id="el-buyercnt-graph" style="background:url(../img/gage_bg.gif) top left no-repeat;width:202px;height:12px;position:relative;">
+				<div id="el-buyercnt-graph-dial" style="position:absolute;top:-4px;z-index:10;"><img src="../img/gage_bu.gif"></div><!-- left = 그래프 길이 - 4px -->
+				<div id="el-buyercnt-graph-fill" style="position:absolute;top:0;left:0px;background:url(../img/gage_on_bg.gif) top left repeat-x;">
+				<img src="../img/gage_on_l.gif" style="float:left;margin-left:-3px;">
+				<img src="../img/gage_on_r.png" align="right" style="position:relative;margin-right:-6px;">
+				</div>
+				<div style="position:absolute;top:12px;left:0">0</div>
+				<div style="position:absolute;top:12px;right:0">{=limit_ea}</div>
+			</div>
+
+			<!-- xx명이 뭉치면 싸진다 !-->
+			<div style="margin-top:10px;">
+				<table border="0" cellpadding="0" cellspacing="0" align="center">
+				<tr>
+					<td style="width:14px"><img src="../img/balloon_l.gif"></td>
+					<td style="font-size:11px;color:#444444;background:url(../img/balloon_bg.gif) top left repeat-x;padding-top:4px;"><strong>{=limit_ea}</strong>명이 뭉치면 싸진다!</td>
+					<td style="width:14px"><img src="../img/balloon_r.gif"></td>
+				</tr>
+				</table>
+			</div>
+		</div>
+	</td>
+	<td style="background:url(../img/info_p_line.gif) top left repeat-y;width:2px;font-size:1px;"></td><!-- | -->
+	<!--{ /}-->
+	<td>
+		<table border="0" cellpadding="0" cellspacing="0" class="goods-spec">
+		<tr><th><img src="../img/goods_name.gif"></th><td style="color:#d80d00;font-weight:bold;padding:2px;">{=goodsnm}</td></tr>
+		<!--{? showstock == 'y'}-->
+		<tr><th><img src="../img/goods_num.gif"></th><td style="font-size:14px;font-weight:bold;padding:2px;">{=number_format(totstock)}개</td></tr>
+		<!--{/}-->
+		<!--{ ? sizeof(_option) > 1 || sizeof(_addopt) > 0}-->
+		<tr><th><img src="../img/goods_option.gif"></th>
+		<td style="padding:2px;">
+		<!-- 옵션 일체형 && 추가옵션 -->
+			<div id="optBlock" <!--{? !_addopt && !_option}-->style="display:none;"<!--{/}-->>
+
+			<!--{ ? sizeof(_option) > 1 }-->
+			<table border=0 cellpadding=0 cellspacing=0>
+			<tr><td>
+				<select name="opt[]" onchange="chkOption(this)" required msgR="{optnm} 선택을 해주세요">
+				<option value="">== 옵션선택 ==
+				<!--{ @ _option }-->
+				<option value="{.opt1}{?.opt2}|{.opt2}{/}" {?usestock&&!.stock} disabled class=disabled{/}>{.opt1}{?.opt2}/{.opt2}{/} {?.price!=price}({=number_format(.price)}원){/} <!--{?usestock}-->{ ? !.stock}[품절]{:}(수량 : {=number_format(.stock)}개){/}<!--{/}-->
+				<!--{ ? usestock && !.stock }--> [품절]<!--{ / }-->
+				<!--{ / }-->
+				</select>
+				</td></tr>
+			</table>
+			<!--{ / }-->
+
+			<!--{ @ _addopt }-->
+			<table border=0 cellpadding=0 cellspacing=0>
+			<tr><td>
+				<select name="addopt[]" <!--{ ? _addoptreq[.index_] }--> required label="{.key_}"<!--{ / }-->>
+					<option value="">=={.key_} 선택==</option>
+					<!--{ @ .value_ }-->
+					<option value="{..sno}^{.key_}^{..opt}^{..addprice}^{..addno}">{..opt}
+					<!--{ ? ..addprice }-->({=number_format(..addprice)}원 추가)<!--{ / }-->
+					</option>
+					<!--{ / }-->
+				</select>
+			</td></tr>
+			</table>
+			<!--{ / }-->
+			</div>
+		<!-- 옵션 일체형 && 추가옵션 -->
+		</td>
+		<!--{/}-->
+		</tr>
+		<tr><th><img src="../img/goods_buynum.gif"></th>
+		<td style="padding:2px;">
+		<!--구매수량-->
+		<div style="float:left;"><input type=text name=ea size=2 value=1 class=line style="text-align:right;height:18px"></div>
+		<div style="float:left;padding-left:3">
+		<div style="padding:1 0 1 0"><img src="../img/btn_plus.gif" onClick="chg_cart_ea(frmView.ea,'up'); chk_ea();" style="cursor:pointer"></div>
+		<div style="margin-top:1px;"><img src="../img/btn_minus.gif" onClick="chg_cart_ea(frmView.ea,'dn'); chk_ea();" style="cursor:pointer"></div>
+		</div>
+		<div style="padding-top:3; float:left">&nbsp;개</div>
+		<!--구매수량-->
+		</td>
+		</tr>
+		</table>
+	</td>
+	<td style="background:url(../img/info_p_line.gif) top left repeat-y;width:2px;font-size:1px;"></td><!-- | -->
+	<td style="width:190px">
+		<table width="100%" border="0" cellpadding="0" cellspacing="0">
+			<tr><td align="right"><span id="el-consumer">{=number_format(consumer)}</span></td></tr>
+			<tr><td align="right"><span id="el-price">{=number_format(price)}</span></td></tr>
+		</table>
+	</td>
+	<td width="160" style="width:160px;padding:10px 0 10px 0;text-align:center;">
+		<!--구매하기 버튼-->
+
+<!--
+	if (runout == "y") goodsStatus = "closed";
+	switch(goodsStatus) {
+		case 'closed': {
+			Timer.stopTimer(0);
+			if (tobj) tobj.innerHTML = "<img src='../img/bn_end.gif' />";
+			if (useEncor == 'y') {
+				if (bobj) bobj.innerHTML = "<a href=\"javascript:encor({=tgsno})\"><img src='../img/btn_encor.gif' /></a>";
+			}
+			else {
+				if (bobj) bobj.innerHTML = "<img src='../img/btn_end.gif' />";
+			}
+			if (document.getElementById("stockBlock")) document.getElementById("stockBlock").style.display = "none";
+			if (document.getElementById("optBlock")) document.getElementById("optBlock").style.display = "none";
+			if (document.getElementById("eaBlock")) document.getElementById("eaBlock").style.display = "none";
+			if (document.getElementById("limitBlock")) document.getElementById("limitBlock").style.display = "none";
+			break;
+		}
+		case 'noperiod': {
+			if (tobj) tobj.style.display = "none";
+			if (bobj) bobj.innerHTML = "<a href=\"javascript:act('../todayshop/order')\"><img src='../img/btn_buy.gif' border='0'></a>";
+		}
+		-->
+
+		<div id="buybtnBlock">
+
+		<!--{ ? use_cart == 'y'}-->
+		<a href="javascript:act('../todayshop/order')"><img src='../img/btn_buy2.gif' border='0'></a><a href="javascript:void(0);" onClick="add_cart()"><img src='../img/btn_shopping.gif' border='0'></a>
+		<!--{ : }-->
+		<a href="javascript:act('../todayshop/order')"><img src='../img/btn_buy1.gif' border='0'></a>
+		<!--{ / }-->
+
+		</div>
+
+		<!--구매하기 버튼-->
+	</td>
+</tr>
+</table>
+</form>
+<!-- e:goods info-->
+
+
+<!-- 5px --><div class="margin" style="height:50px;"></div>
+
+
+<!-- s:상품설명 & 상품 토크 -->
+<table width="{_cfg['shopSize']}" border="0" cellpadding="0" cellspacing="0" style="background:url(../img/tab_c_bg.gif) top left repeat-x;margin-bottom:60px;" class="contents">
+<tr>
+	<td><a href="javascript:void(0);" onclick="showTab(1)"><img src="../img/tab_c_view_on.gif" onsrc="../img/tab_c_view_on.gif" offsrc="../img/tab_c_view.gif" link_id="contents-div-longdesc" name="contents-tab"></a><a href="javascript:void(0);" onclick="showTab(2)"><img src="../img/tab_c_talk.gif" onsrc="../img/tab_c_talk_on.gif" offsrc="../img/tab_c_talk.gif" link_id="contents-div-talk" name="contents-tab"></a></td>
+</tr>
+<tr>
+	<td style="padding:60px 0 0 0;">
+
+	<!-- s:상품 설명 -->
+	<div id="contents-div-longdesc" style="display:block;">
+	{longdesc}
+	</div>
+	<!-- e:상품 설명 -->
+
+	<!-- s:상품 토크 -->
+	<div id="contents-div-talk" style="display:none;">
+	<iframe id="contents-div-talk-iframe" src="../todayshop/today_talk.php?tgsno={=tgsno}" width="100%" scrolling="no" frameborder="0"></iframe>
+	</div>
+	<!-- e:상품 토크 -->
+	</td>
+</tr>
+</table>
+<!-- e:상품설명 & 상품 토크 -->
+
+
+
+<!-- s:배송안내 -->
+<table width="{_cfg['shopSize']}" border="0" cellpadding="0" cellspacing="0" style="background:url(../img/tab_c_bg.gif) top left repeat-x;margin-bottom:60px;" class="contents">
+<tr>
+	<td><img src="../img/tab_c_delivery_on.gif"></td>
+</tr>
+<tr>
+	<td style="padding:20px;">
+	<ul style="margin:0px;">
+		<li>배송비 : 기본배송료는 {?_set.delivery.default}{=number_format(_set.delivery.default)}원{:}무료{/} 입니다. (도서,산간,오지 일부지역은 배송비가 추가될 수 있습니다) {?_set.delivery.free}&nbsp;{=number_format(_set.delivery.free)}원 이상 구매시 무료배송입니다.{/}</li>
+		<li>본 상품의 평균 배송일은 일입니다.(입금 확인 후) 설치 상품의 경우 다소 늦어질수 있습니다.[배송예정일은 주문시점(주문순서)에 따른 유동성이 발생하므로 평균 배송일과는 차이가 발생할 수 있습니다.]</li>
+		<li>본 상품의 배송 가능일은 일 입니다. 배송 가능일이란 본 상품을 주문 하신 고객님들께 상품 배송이 가능한 기간을 의미합니다. (단, 연휴 및 공휴일은 기간 계산시 제외하며 현금 주문일 경우 입금일 기준 입니다.)</li>
+	</ul>
+	</td>
+</tr>
+</table>
+<!-- e:배송안내 -->
+
+
+
+<!-- s:교환 및 반품 안내 -->
+<table width="{_cfg['shopSize']}" border="0" cellpadding="0" cellspacing="0" style="background:url(../img/tab_c_bg.gif) top left repeat-x;margin-bottom:60px;" class="contents">
+<tr>
+	<td><img src="../img/tab_c_refund_on.gif"></td>
+</tr>
+<tr>
+	<td style="padding:20px;">
+	<ul style="margin:0px;">
+		<li>상품 청약철회 가능기간은 상품 수령일로 부터 일 이내 입니다.</li>
+		<li>상품 택(tag)제거 또는 개봉으로 상품 가치 훼손 시에는 일 이내라도 교환 및 반품이 불가능합니다.</li>
+		<li>저단가 상품, 일부 특가 상품은 고객 변심에 의한 교환, 반품은 고객께서 배송비를 부담하셔야 합니다(제품의 하자,배송오류는 제외)</li>
+		<li>일부 상품은 신모델 출시, 부품가격 변동 등 제조사 사정으로 가격이 변동될 수 있습니다.</li>
+		<li>신발의 경우, 실외에서 착화하였거나 사용흔적이 있는 경우에는 교환/반품 기간내라도 교환 및 반품이 불가능 합니다.</li>
+		<li>수제화 중 개별 주문제작상품(굽높이,발볼,사이즈 변경)의 경우에는 제작완료, 인수 후에는 교환/반품기간내라도 교환 및 반품이 불가능 합니다. </li>
+		<li>수입,명품 제품의 경우, 제품 및 본 상품의 박스 훼손, 분실 등으로 인한 상품 가치 훼손 시 교환 및 반품이 불가능 하오니, 양해 바랍니다.</li>
+		<li>일부 특가 상품의 경우, 인수 후에는 제품 하자나 오배송의 경우를 제외한 고객님의 단순변심에 의한 교환, 반품이 불가능할 수 있사오니, 각 상품의 상품상세정보를 꼭 참조하십시오. </li>
+	</ul>
+	</td>
+</tr>
+</table>
+<!-- e:교환 및 반품 안내 -->
+
+
+
+
+<!-- -->
+	<div id="todayshopCartNoti" style="z-index:1000;position:absolute;border:5px solid #3F3F3F;background:#FFFFFF;width:286px;height:180px;display:none;text-align:left;">
+		<table cellpadding="0" cellspacing="0" border="0">
+		<tr>
+			<td><img src="../img/today_basket_top_sh01.gif"></td>
+			<td><a href="javascript:void(0)" onClick="document.getElementById('todayshopCartNoti').style.display='none';"><img src="../img/today_basket_top_shclose.gif"></a></td>
+		</tr>
+		<tr>
+			<td colspan="2"><img src="../img/today_basket_img.gif"></td>
+		</tr>
+		<tr>
+			<td colspan="2" style="text-align:center;">
+			<div style="margin: 10px 0 15px 0;">
+			<a href="../todayshop/today_cart.php"><img src="../img/today_basket_btn01.gif" /></a>
+			<a href="javascript:void(0)" onClick="document.getElementById('todayshopCartNoti').style.display='none';"><img src="../img/today_basket_btn02.gif" /></a>
+			</div>
+			</td>
+		</tr>
+		</table>
+	</div>
+<!-- -->
+
+
+
+
+<form name="frmEncor" action="../todayshop/indb.calendar.php" method="post" target="ifrmHidden">
+<input type="hidden" name="tgsno" />
+</form>
+<script type="text/javascript">initGoods(); innerImgResize(890);</script>
+
+<!-- 메인팝업창 -->
+<!--{ @ dataTodayshopPopup() }-->
+
+<!--{ ? .type == 'layer' && isset(_COOKIE['blnCookie_' + .code]) === false }-->
+<div id="{'blnCookie_' + .code}" STYLE="position:absolute; width:{.width}; height:{.height}; left:{.left}; top:{.top}; z-index:200;">
+<!--{ = eval("\$_GET[code]='blnCookie_" + .code + "';") }-->
+<!--{ = include_file( .file ) }-->
+</div>
+<!--{ / }-->
+
+<!--{ ? .type == 'layerMove' && isset(_COOKIE['blnCookie_' + .code]) === false }-->
+<!-- 이동레이어 팝업창 시작 -->
+<div id="{'blnCookie_' + .code}" STYLE="position:absolute; width:{.width}; height:{.height}; left:{.left}; top:{.top}; z-index:200;">
+<div onmousedown="Start_move(event,'{'blnCookie_' + .code}');" onmouseup="Moveing_stop();" style='cursor:move;'>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td>
+<!--{ = eval("\$_GET[code]='blnCookie_" + .code + "';") }-->
+<!--{ = include_file( .file ) }-->
+</td>
+</tr>
+</table>
+</div>
+</div>
+<!-- 이동레이어 팝업창 끝 -->
+<!--{ / }-->
+
+<!--{ / }-->
+
+<script language="JavaScript"><!--
+<!--{ @ dataTodayshopPopup() }-->
+<!--{ ? .type == '' }-->
+if ( !getCookie( "blnCookie_{.code}" ) ) { // {.name} 팝업호출
+var property = 'width={.width}, height={.height}, top={.top}, left={.left}, scrollbars=no, toolbar=no';
+var win=window.open( './html.php?htmid={.file}&code=blnCookie_{.code}', '{.code}', property );
+if(win) win.focus();
+}
+<!--{ / }-->
+<!--{ / }-->
+//--></script>
+
+
+<!--footer start-->
+<!--삭제하지마세요.-->
+{ # footer }
+<!--footer end-->

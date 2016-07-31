@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="EUC-KR"?>
+<codes>
+<list>
+	<code power="">{id}</code>
+	<desc>게시판 아이디</desc>
+	<exam>notice</exam>
+</list>
+<list>
+	<code>{_bdField&amp;8}</code>
+	<desc>이름 항목감추기 - 0:출력, 8:감추기</desc>
+	<exam></exam>
+</list>
+<list>
+	<code power="">{@ loop}</code>
+	<desc>게시물</desc>
+	<exam more="board/default/view.loop.xml"></exam>
+</list>
+<list>
+	<code>{_member.name}</code>
+	<desc>코멘트(댓글) 작성 이름란의 기본값(=회원이름)</desc>
+	<exam>홍길동</exam>
+</list>
+<list>
+	<code>{readonly.name}</code>
+	<desc>코멘트(댓글) 작성 이름란의 스타일</desc>
+	<exam>readonly style='border:0;font-weight:bold'</exam>
+</list>
+<list>
+	<code>{link.list}</code>
+	<desc>링크 A태그 > 목록</desc>
+	<exam>&lt;a href='list.php?id=notice&amp;page=1'&gt;</exam>
+</list>
+<list>
+	<code>{link.write}</code>
+	<desc>링크 A태그 > 글쓰기</desc>
+	<exam>&lt;a href='write.php?id=notice&amp;page=1'&gt;</exam>
+</list>
+<list>
+	<code>{link.end}</code>
+	<desc>링크 A태그 닫기</desc>
+	<exam>&lt;/a&gt;</exam>
+</list>
+<list>
+	<code power="">{ # list }</code>
+	<desc>리스트파일 인클루드 (View타입 설정이 리스트 경우 활용됨)</desc>
+	<exam></exam>
+</list>
+<list>
+	<code>{_ici_admin}</code>
+	<desc>관리자여부 - true, false</desc>
+	<exam>true</exam>
+</list>
+<list>
+	<code>{_bdIp}</code>
+	<desc>IP 출력 - on:출력, '':미출력</desc>
+	<exam>on</exam>
+</list>
+<list>
+	<code>{_bdUseComment}</code>
+	<desc>코멘트(댓글)기능 - on:사용, '':미사용</desc>
+	<exam>on</exam>
+</list>
+<list>
+	<code>{_bdDenyComment}</code>
+	<desc>코멘트(댓글)작성 - true:가능(폼출력), false:불가능(폼미출력)</desc>
+	<exam>true</exam>
+</list>
+<list>
+	<code>{_bdTypeView}</code>
+	<desc>View 타입 - 0:내용만, 1:관련글, 2:리스트</desc>
+	<exam>2</exam>
+</list>
+<list>
+	<code>{_bdHeader}</code>
+	<desc>상단디자인 (Header)</desc>
+	<exam></exam>
+</list>
+<list>
+	<code>{_bdFooter}</code>
+	<desc>하단디자인 (Footer)</desc>
+	<exam></exam>
+</list>
+<list>
+	<code>{_bdWidth}</code>
+	<desc>게시판 넓이</desc>
+	<exam>95%</exam>
+</list>
+<list>
+	<code>{_bdAlign}</code>
+	<desc>게시판 위치</desc>
+	<exam>center</exam>
+</list>
+<list>
+	<code>{ # header }</code>
+	<desc>상단과 측면을 크게 감싸는 외곽파일 인클루드, 소스 맨위에 삽입</desc>
+	<exam></exam>
+</list>
+<list>
+	<code>{ # footer }</code>
+	<desc>하단을 크게 감싸는 외곽파일 인클루드, 소스 맨아래에 삽입</desc>
+	<exam></exam>
+</list>
+</codes>

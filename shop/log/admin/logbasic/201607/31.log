@@ -1,0 +1,15 @@
+=============
+*SERVER=>REQUEST_TIME=2016.07.31 13:51:11&SCRIPT_FILENAME=/www/francotr3287_godo_co_kr/shop/admin/goods/makeMainAutoSort.php&REMOTE_ADDR=118.223.252.230
+*SESSION=>adminId=franco&adminLevel=100
+*POST=>
+*GET=>
+=============
+*SERVER=>REQUEST_TIME=2016.07.31 14:01:11&SCRIPT_FILENAME=/www/francotr3287_godo_co_kr/shop/admin/design/indb.skin.php&REMOTE_ADDR=118.223.252.230
+*SESSION=>adminId=franco&adminLevel=100
+*POST=>
+*GET=>mode=skinDel
+=============
+*SERVER=>REQUEST_TIME=2016.07.31 14:01:18&SCRIPT_FILENAME=/www/francotr3287_godo_co_kr/shop/admin/design/indb.skin.php&REMOTE_ADDR=118.223.252.230
+*SESSION=>adminId=franco&adminLevel=100
+*POST=>
+*GET=>mode=skinCopy

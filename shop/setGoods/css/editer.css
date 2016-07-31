@@ -1,0 +1,54 @@
+body{margin:0; font:9pt tahoma;}
+img{border:none;vertical-align:middle}
+
+a		{text-decoration:none; color:#000000;}
+a:hover {text-decoration:none; color:#006697;}
+a.white			{text-decoration:none; color:#FFFFFF;}
+a.white:hover	{text-decoration:none; color:#FFFFFF;}
+
+#wrap{width:916px;height:844px;border:0px solid #17191c}
+#header{height:52px;background:url(../images/editer/bg_layerpop_title.gif);}
+.title{height:50px;font:16px dotum;color:#ffffff;margin-left:18px;}
+.naviBar{float:right;height:50px;width:686px;background:url(../images/editer/text_codyprocess.gif) no-repeat center }
+
+
+#content{height:752px;}
+
+#layerType{width:66px;height:100%;background:url(../images/editer/bg_layerpop_type.gif);float:left}
+.layerSelect{margin-top:26px;text-align:center;list-style:none;padding:0px}
+.layerSelect li{margin-bottom:8px}
+.selImg{border:3px solid #0077b5;padding:2px}
+.menualBtn{text-align:center;margin-top:154px}
+
+#layerBox{width:476px;height:100%;border-right:1px dotted #cccccc;float:left;}
+.templateForm{margin-left:18px;margin-top:18px;width:438px;border:0px solid;height:558px}
+.control{margin-left:18px;margin-top:15px;width:100%}
+.control-txt{width:100px;float:left}
+.control-box{float:left;margin-left:28px;border:1px solid;width:318px;height:23px}
+.newBtn{text-align:center;width:100%;margin-top:24px}
+
+#editor{float:left}
+.editorHeader{margin-left:18px;margin-top:18px}
+.itemBox{width:335px;height:535px;}
+.textarea{width:335px;height:505px;border:1px solid #cccccc;overflow:auto;}
+
+
+.conValue{width:40px;height:20px;font:14px arial;color:#0077b5;font-weight:bold;top:-5px;border:0px }
+.close{left:860px;top:10px;position:absolute}
+.input{height:18px;border:1px solid #e6e6e6;margin-bottom:5px;}
+.input2{height:22px;border:1px solid #e6e6e6;}
+.clear{clear:both;}
+.selectOpt{width:80px; margin:0 4px 0 0;}
+.selectOpt2{width:80px;}
+
+/* 내용입력 */
+#content2{height:598px;border-bottom:1px #ffffff solid}
+#layerBox2{width:474px;border-right:1px dotted #cccccc;float:left;height:100%}
+.htmlArea{margin-left:18px;margin-top:18px;width:438px;border:0px solid;height:558px;}
+.htmlArea2{margin-left:18px;margin-top:18px;width:438px;border:1px solid;height:558px;}
+#editor2{float:left;width:440px;background-color:#f3f3f3;height:100%;}
+.codiname{font:14px dotum;color:#000000;font-weight:bold}
+.textarea2{margin-top:10px;border:0px solid;width:401px;height:517px;overflow:hidden;}
+#footer{border-top:1px solid #e0e0e0;text-align:center;}
+.naviBtn{text-align:center;}
+.naviBtn img{margin-right:10px}

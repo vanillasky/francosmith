@@ -1,0 +1,681 @@
+{*** 주문하기(주문서작성) | order/order.php ***}
+{ # header }
+
+<style>
+#orderbox {border:5px solid #F3F3F3; height:100%;}
+#orderbox div {float:left; width:150; height:100%; background-color:#F3F3F3; text-align:right;}
+#orderbox table {float:left; margin:10px 0px 10px 20px; }
+#orderbox table th {width:100; text-align:left; font-weight:normal; height:25;}
+#orderbox table td {padding-left:10px}
+.scroll {
+scrollbar-face-color: #FFFFFF;
+scrollbar-shadow-color: #AFAFAF;
+scrollbar-highlight-color: #AFAFAF;
+scrollbar-3dlight-color: #FFFFFF;
+scrollbar-darkshadow-color: #FFFFFF;
+scrollbar-track-color: #F7F7F7;
+scrollbar-arrow-color: #838383;
+}
+#boxScroll{width:96%; height:130px; overflow: auto; BACKGROUND: #ffffff; COLOR: #585858; font:9pt 돋움;border:1px #dddddd solid; overflow-x:hidden;text-align:left; }
+</style>
+<script id="delivery"></script>
+
+<!-- 상단이미지 || 현재위치 -->
+<TABLE width=100% cellpadding=0 cellspacing=0 border=0>
+<tr>
+	<td><img src="../img/common/title_order_01.gif" border=0></td>
+</tr>
+<TR>
+	<td class="path">HOME > <B>주문하기</B></td>
+</TR>
+</TABLE>
+
+
+<div class="indiv"><!-- Start indiv -->
+
+<div><img src="../img/common/order_txt_01.gif" border=0></div>
+<!--{ = include_file( "proc/orderitem.htm" ) }-->
+
+<div style="margin-top:20;"><img src="../img/common/order_txt_02.gif" border=0></div>
+<form id=form name=frmOrder action="../todayshop/settle.php" method=post onsubmit="return chkForm2(this)">
+<input type=hidden name=ordno value="{ordno}">
+<!--{ @ cart->item }-->
+<input type=hidden name=item_apply_coupon[]>
+<!--{ / }-->
+
+<div id=apply_coupon></div>
+
+<!-- 01 주문자정보 -->
+<table width=100% style="border:1px solid #DEDEDE" cellpadding=0 cellspacing=0>
+<tr>
+	<td width=150 valign=top align=right bgcolor="#F3F3F3"><img src="../img/common/order_step_01.gif"></td>
+	<td style="padding:10px">
+
+	<table>
+	<col width=100>
+	<tr>
+		<td>주문하시는분</td>
+		<td><input type=text name=nameOrder value="{name}" style="font-weight:bold" {_style_member} required msgR="주문하시는분의 이름을 적어주세요"></td>
+	</tr>
+	<!--{? cart->item[0]['goodstype'] == 'goods' }-->
+	<tr>
+		<td>주소</td>
+		<td>{address} {address_sub}</td>
+	</tr>
+	<!--{/}-->
+	<tr>
+		<td>전화번호</td>
+		<td>
+		<input type=text name=phoneOrder[] value="{phone[0]}" size=3 maxlength=3 required> -
+		<input type=text name=phoneOrder[] value="{phone[1]}" size=4 maxlength=4 required> -
+		<input type=text name=phoneOrder[] value="{phone[2]}" size=4 maxlength=4 required>
+		</td>
+	</tr>
+	<tr>
+		<td>핸드폰번호</td>
+		<td>
+		<input type=text name=mobileOrder[] value="{mobile[0]}" size=3 maxlength=3 required> -
+		<input type=text name=mobileOrder[] value="{mobile[1]}" size=4 maxlength=4 required> -
+		<input type=text name=mobileOrder[] value="{mobile[2]}" size=4 maxlength=4 required>
+		</td>
+	</tr>
+	<tr>
+		<td>이메일</td>
+		<td><input type=text name=email value="{email}" required option=regEmail></td>
+	</tr>
+	</table>
+
+	</td>
+</tr>
+</table><div style="font-size:0;height:5px"></div>
+
+<!-- 02 배송정보 -->
+<table width=100% style="border:1px solid #DEDEDE" cellpadding=0 cellspacing=0>
+<tr>
+	<td width=150 valign=top align=right bgcolor="#F3F3F3"><img src="../img/common/order_step_02.gif"></td>
+	<td style="padding:10px">
+	<p style="margin:3px;">
+	구매하시는 상품을 친구에게 선물할 수 있습니다.<br>
+	받는 사람이 주문고객과 다른 경우 정보를 입력해 주세요.
+	</p>
+	<!--{? cart->item[0]['goodstype'] == 'goods' }-->
+	<table width="100%">
+	<col width=100>
+	<tr>
+		<td>받으실분 확인</td>
+		<td class=noline>
+		<input type=checkbox onclick="ctrl_field(this.checked)" {?_sess}checked{/}> 주문고객 정보와 동일합니다
+		</td>
+	</tr>
+	<tr>
+		<td>받으실분</td>
+		<td><input type=text name=nameReceiver value="{name}" required></td>
+	</tr>
+	<tr>
+		<td>받으실곳</td>
+		<td>
+		<input type=text name=zipcode[] size=3 class=line readonly value="{zipcode[0]}" required> -
+		<input type=text name=zipcode[] size=3 class=line readonly value="{zipcode[1]}" required>
+		<a href="javascript:popup_zipcode('opener.document.frmOrder')"><img src="../img/common/btn_zipcode.gif" align=absmiddle></a>
+		</td>
+	</tr>
+	<tr>
+		<td></td>
+		<td><input type=text name=address class=lineBig readonly value="{address}" required></td>
+	</tr>
+	<tr>
+		<td></td>
+		<td><input type=text name=address_sub class=lineBig value="{address_sub}" required label="세부주소"></td>
+	</tr>
+	<tr>
+		<td>전화번호</td>
+		<td>
+		<input type=text name=phoneReceiver[] value="{phone[0]}" size=3 maxlength=3> -
+		<input type=text name=phoneReceiver[] value="{phone[1]}" size=4 maxlength=4> -
+		<input type=text name=phoneReceiver[] value="{phone[2]}" size=4 maxlength=4>
+		</td>
+	</tr>
+	<tr>
+		<td>핸드폰번호</td>
+		<td>
+		<input type=text name=mobileReceiver[] value="{mobile[0]}" size=3 maxlength=3 required> -
+		<input type=text name=mobileReceiver[] value="{mobile[1]}" size=4 maxlength=4 required> -
+		<input type=text name=mobileReceiver[] value="{mobile[2]}" size=4 maxlength=4 required>
+		</td>
+	</tr>
+	<tr>
+		<td>남기실 말씀</td>
+		<td><input type=text name=memo style="width:100%"></td>
+	</tr>
+	<tr><td colspan=2>&nbsp;</td></tr>
+	<tr id="paper_delivery_menu">
+		<td>배송선택</td>
+		<td class="noline">
+
+		<div style='float:left'><input type="radio" name="deliPoli" value="0" checked onclick="getDelivery()" onblur="chk_emoney(document.frmOrder.emoney)"> 기본배송</div>
+		<!--{ @ _r_deli}-->
+		<!--{? .value_ }-->
+		<div style='float:left;padding-left:10'><input type="radio" name="deliPoli" value="{.index_ + 1}" onclick="getDelivery()" onblur="chk_emoney(document.frmOrder.emoney)"> {.value_}</div>
+		<!--{ / }-->
+		<!--{ / }-->
+		</td>
+	</tr>
+	</table>
+	<!--{:}-->
+	<table width="100%">
+	<col width=100>
+	<tr>
+		<td>받으실분 확인</td>
+		<td class=noline>
+		<input type=checkbox onclick="ctrl_field(this.checked)" {?_sess}checked{/}> 주문고객 정보와 동일합니다
+		</td>
+	</tr>
+	<tr>
+		<td>받으실분</td>
+		<td><input type=text name=nameReceiver value="{name}" required></td>
+	</tr>
+	<tr>
+		<td>핸드폰번호</td>
+		<td>
+		<input type=text name=mobileReceiver[] value="{mobile[0]}" size=3 maxlength=3 required> -
+		<input type=text name=mobileReceiver[] value="{mobile[1]}" size=4 maxlength=4 required> -
+		<input type=text name=mobileReceiver[] value="{mobile[2]}" size=4 maxlength=4 required>
+		</td>
+	</tr>
+	<tr>
+		<td>남기실 말씀</td>
+		<td><input type=text name=memo style="width:100%"></td>
+	</tr>
+	</table>
+	<!--{/}-->
+
+	</td>
+</tr>
+</table><div style="font-size:0;height:5px"></div>
+
+<!-- 03 결제금액 -->
+<table width=100% style="border:1px solid #DEDEDE" cellpadding=0 cellspacing=0>
+<tr>
+	<td width=150 valign=top align=right bgcolor="#F3F3F3"><img src="../img/common/order_step_03.gif"></td>
+	<td style="padding:10px">
+
+	<table>
+	<col width=100>
+	<tr>
+		<td>상품합계금액</td>
+		<td><p id="paper_goodsprice" style="width:146px;text-align:right;font-weight:bold;float:left;margin:0">{=number_format(cart->goodsprice)}</p> 원</td>
+	</tr>
+	<!--{? cart->item[0]['goodstype']=='goods'}-->
+	<tr>
+		<td>배송비</td>
+		<td>
+		<div id="paper_delivery_msg1"><div id="paper_delivery" style="width:146px;text-align:right;font-weight:bold;float:left;margin:0"></div>원</div>
+		<div id="paper_delivery_msg2" style="width:160;text-align:right"></div>
+		</td>
+	</tr>
+	<!--{/}-->
+	<!--{ ? view_aboutdc //어바웃쿠폰}-->
+	<tr>
+		<td>어바웃 쿠폰</td>
+		<td><span style="width:145;text-align:right">{=number_format(about_coupon)}</span> 원</td>
+	</tr>
+	<!--{ / }-->
+	<tr>
+		<td>회원할인</td>
+		<td><span id='memberdc' style="width:145;text-align:right">{=number_format(cart->dcprice)}</span> 원</td>
+	</tr>
+
+	<!--{ ? todayshop_cfg.useReserve == 'y' //적립금사용}-->
+	<tr>
+		<td valign=top style="padding-top:4px">적립금 적용</td>
+		<td>
+
+		<table cellpadding=0 cellspacing=0>
+		<div style="display:{?_member.emoney}block;{ : }none;{ / }}">
+		<tr>
+			<td width=60 align=right>적립금 :</td>
+			<td style="padding-left:3px">
+			<input type=text name=emoney size=12 style="text-align:right" value=0 onblur="chk_emoney(this);" onkeyup="calcu_settle();" onkeydown="if (event.keyCode == 13) {return false;}"> 원
+			(보유적립금 : {=number_format(_member.emoney)}원)
+			</td>
+		</tr>
+		</div>
+		<tr>
+			<td colspan=2 class="small red">
+			<!--{ ? _member.emoney < _set.emoney.hold }-->
+			<div>보유적립금이 {=number_format(_set.emoney.hold)}원이상 일 경우 사용하실 수 있습니다.</div>
+			<!--{ : }-->
+			<!--{ ? _emoney_max && _emoney_max >= _set.emoney.min}-->
+			적립금은 {=number_format(_set.emoney.min)}원부터 <span id=print_emoney_max>{=number_format(_emoney_max)}</span>원까지 사용이 가능합니다.
+			<!--{ : _emoney_max && _emoney_max < _set.emoney.min}-->
+			적립금은 최소 {=number_format(_set.emoney.min)}원 이상 사용하여야 합니다.
+			<!--{ / }-->
+			<!--{ / }-->
+			<input type=hidden name=emoney_max value="{ _emoney_max }">
+			</td>
+		</tr>
+		</table>
+
+		</td>
+	</tr>
+	<!--{ / }-->
+	<!--{ ? _egg.use=="Y" && (_egg.scope=="A" || (_egg.scope=="P" && cart->totalprice-cart->dcprice>=_egg.min)) && _egg.feepayer == "B" }-->
+	<tr>
+		<td>보증보험 수수료</td>
+		<td><p id=paper_eggFee style="width:146px;text-align:right;font-weight:bold;float:left;margin:0">0</p> 원</td>
+	</tr>
+	<!--{ / }-->
+
+	<tr>
+		<td>총 결제금액</td>
+		<td><span id=paper_settlement style="width:146px;text-align:right;font:bold 14px tahoma; color:FF6C68;">{=number_format(cart->totalprice-cart->dcprice)}</span> 원</td>
+	</tr>
+	</table>
+	</td>
+</tr>
+</table><div style="font-size:0;height:5px"></div>
+<!-- 구매안전표시 start -->{=displayEggBanner(1)}<!-- 구매안전표시 end -->
+<!-- 04 결제수단 -->
+<table width=100% style="border:1px solid #DEDEDE" cellpadding=0 cellspacing=0>
+<tr>
+	<td width=150 valign=top align=right bgcolor="#F3F3F3"><img src="../img/common/order_step_04.gif"></td>
+	<td style="padding:10px">
+
+	<input type=hidden name=escrow value="N">
+	<table>
+	<col width=100>
+	<tr>
+		<td>일반결제</td>
+		<td class=noline>
+		<!--{ ? _set.use.a }-->
+		<input type=radio name=settlekind value="a" onclick="input_escrow(this,'N')"> 무통장입금
+		<!--{ / }-->
+		<!--{ ? _set.use.c }-->
+		<input type=radio name=settlekind value="c" onclick="input_escrow(this,'N')"> 신용카드
+		<!--{ / }-->
+		<!--{ ? _set.use.o }-->
+		<input type=radio name=settlekind value="o" onclick="input_escrow(this,'N')"> 계좌이체
+		<!--{ / }-->
+		<!--{ ? _set.use.v }-->
+		<input type=radio name=settlekind value="v" onclick="input_escrow(this,'N')"> 가상계좌
+		<!--{ / }-->
+		<!--{ ? _set.use.h }-->
+		<input type=radio name=settlekind value="h" onclick="input_escrow(this,'N')"> 핸드폰
+		<!--{ / }-->
+		<!--{ ? _set.use.p }-->
+		<input type=radio name=settlekind value="p" onclick="input_escrow(this,'N')"> 포인트
+		<!--{ / }-->
+		<!--{ ? _set.use.y }-->
+		<input type=radio name=settlekind value="y" onclick="input_escrow(this,'N')"> 옐로페이
+		<!--{ / }-->
+		</td>
+	</tr>
+
+	<!--{ ?  _escrow.use=="Y" && cart->totalprice-cart->dcprice>=_escrow.min }-->
+	<tr>
+		<td>에스크로결제</td>
+		<td class=noline>
+		<!--{ ? _escrow.c }-->
+		<input type=radio name=settlekind value="c" onclick="input_escrow(this,'Y')"> 신용카드
+		<!--{ / }-->
+		<!--{ ? _escrow.o }-->
+		<input type=radio name=settlekind value="o" onclick="input_escrow(this,'Y')"> 계좌이체
+		<!--{ / }-->
+		<!--{ ? _escrow.v }-->
+		<input type=radio name=settlekind value="v" onclick="input_escrow(this,'Y')"> 가상계좌
+		<!--{ / }-->
+		</td>
+	</tr>
+	<!--{ / }-->
+
+	<!--{ ? _set.use.a }-->
+	<tr>
+		<th></th>
+		<td class="small red">(무통장입금의 경우 입금확인 후부터 배송단계가 진행됩니다)</td>
+	</tr>
+	<!--{ / }-->
+	</table>
+
+	<!--{ ? _egg.use=="Y" && (_egg.scope=="A" || (_egg.scope=="P" && cart->totalprice-cart->dcprice>=_egg.min)) }-->
+	<table id="egg" style="display:none; margin-top:10px;">
+	<col width=100>
+	<tr>
+		<td valign=top style="padding-top:4px">전자보증보험</td>
+		<td>
+		<!--{ ? _egg.scope == "P" }-->
+		<div>구매 시 안전거래(매매보호) 사용유무를 직접 선택하실 수 있습니다.</div>
+		<!--{ / }-->
+
+		<div style="color:#FF6C68; font-weight:bold; margin-bottom:5px;">아래의 주의사항을 꼭 확인하세요!</div>
+
+		<!--{ ? _egg.scope == "P" }-->
+		<div class=noline>&#149; 전자보증보험 발급여부 : <input type=radio name=eggIssue value="Y" onclick="egg_required()"> 발급 <input type=radio name=eggIssue value="N" onclick="egg_required()"> 미발급</div>
+		<!--{ / }-->
+
+		<div>&#149; <font color=444444>전자보증보험 안내 (100% 매매보호 안전결제)<br>
+		물품대금결제시 구매자의 피해보호를 위해 '(주)서울보증보험'의 보증보험증권이 발급됩니다. 증권이 발급되는 것의 의미는,
+		물품대금 결제시에 소비자에게 서울보증보험의 쇼핑몰보증보험 계약체결서를 인터넷상으로 자동 발급하여,
+		피해발생시 쇼핑몰보증보험으로써 완벽하게 보호받을 수 있습니다.<br>
+		또한, <span class='red'>입력하신 개인정보는 증권발급을 위한 정보로 사용되며 다른 용도로는 사용되지 않습니다.</span>
+		</font></div>
+
+		<!--{ ? _egg.feepayer != "B" }-->
+		<div>&#149; <font color=444444>보증보험 발행으로 구매시 별도의 수수료가 부과되지 않습니다.</font></div>
+		<!--{ : _egg.feepayer == "B" && _egg.feerate > 0 }-->
+		<div>&#149; <font color=444444>보증보험 발행으로 구매시 <span style="color:#FF6C68; font-weight:bold;">보증보험증권 발급수수료는 구매자께서 부담</span>하시게 됩니다.<br>
+		보증보험 발급수수료(총 결제금액의 {_egg.feerate}%) : <span id=infor_eggFee></span></font>
+		</div>
+		<input type=hidden name=eggFee>
+		<input type=hidden name=eggFeeRateYn value=Y>
+		<!--{ / }-->
+
+		<div style="padding-top:10px;">&#149; 생년월일 :
+			<input type="text"t name="eggBirthYear" size=4 maxlength=4 />년
+			<select name="eggBirthMon">
+			<option value="">선택</option>
+			<? for ($i = 1; $i <= 12; $i++ ){ echo '<option value="'.$i.'">'.$i.'</option>'; } ?>
+			</select>월
+			<select name="eggBirthDay">
+			<option value="">선택</option>
+			<? for ($i = 1; $i <= 31; $i++ ){ echo '<option value="'.$i.'">'.$i.'</option>'; } ?>
+			</select>일
+		</div>
+		<div class=noline>&#149; 성별 : <input type=radio name=eggSex value="1"> 남성 <input type=radio name=eggSex value="2"> 여성</div>
+		<div style="text-align:center;" class=noline><input type=checkbox name=eggAgree value="Y"> 개인정보 이용에 동의합니다</div>
+		</td>
+	</tr>
+	</table>
+	<!--{ / }-->
+
+	<!--{ ? _pg.receipt=='Y' && _set.receipt.order=='Y' }-->
+	<!--{ = include_file( "proc/_cashreceiptOrder.htm" ) }-->
+	<!--{ / }-->
+
+	</td>
+</tr>
+</table><div style="font-size:0;height:5px"></div>
+
+<div style="padding:20px" align=center class="noline">
+<input type="image" src="../img/common/btn_payment.gif">
+<img src="../img/common/btn_cancel.gif" onclick="history.back()" style="cursor:pointer">
+</div>
+
+</form>
+
+</div><!-- End indiv -->
+<div id=dynamic></div>
+
+<script>
+var emoney_max = {_emoney_max};
+function chkForm2(fm)
+{
+	if (typeof(fm.settlekind)=="undefined"){
+		alert("결제수단이 활성화가 안 되었습니다. 관리자에게 문의하세요.");
+		return false;
+	}
+
+	var obj = document.getElementsByName('settlekind');
+	if (obj[0].getAttribute('required') == undefined){
+		obj[0].setAttribute('required', '');
+		obj[0].setAttribute('label', '결제수단');
+	}
+
+	return chkForm(fm);
+}
+function input_escrow(obj,val)
+{
+	obj.form.escrow.value = val;
+	if (typeof(egg_required) == 'function') egg_required();
+	if (typeof(cash_required) == 'function') cash_required();
+}
+function popup_zipcode(form)
+{
+	window.open("../proc/popup_zipcode.php?form="+form,"","width=400,height=500");
+}
+function ctrl_field(val)
+{
+	if (val) copy_field();
+	else clear_field();
+}
+function copy_field()
+{
+	var form = document.frmOrder;
+	form.nameReceiver.value = form.nameOrder.value;
+	<!--{? cart->item[0]['goodstype']=='goods'}-->
+	form['zipcode[]'][0].value = "{zipcode[0]}";
+	form['zipcode[]'][1].value = "{zipcode[1]}";
+	form.address.value = "{address}";
+	form.address_sub.value = "{address_sub}";
+	form['phoneReceiver[]'][0].value = form['phoneOrder[]'][0].value;
+	form['phoneReceiver[]'][1].value = form['phoneOrder[]'][1].value;
+	form['phoneReceiver[]'][2].value = form['phoneOrder[]'][2].value;
+	<!--{/}-->
+	form['mobileReceiver[]'][0].value = form['mobileOrder[]'][0].value;
+	form['mobileReceiver[]'][1].value = form['mobileOrder[]'][1].value;
+	form['mobileReceiver[]'][2].value = form['mobileOrder[]'][2].value;
+
+	getDelivery();
+}
+function clear_field()
+{
+	var form = document.frmOrder;
+	form.nameReceiver.value = "";
+	<!--{? cart->item[0]['goodstype']=='goods'}-->
+	form['zipcode[]'][0].value = "";
+	form['zipcode[]'][1].value = "";
+	form.address.value = "";
+	form.address_sub.value = "";
+	form['phoneReceiver[]'][0].value = "";
+	form['phoneReceiver[]'][1].value = "";
+	form['phoneReceiver[]'][2].value = "";
+	<!--{/}-->
+	form['mobileReceiver[]'][0].value = "";
+	form['mobileReceiver[]'][1].value = "";
+	form['mobileReceiver[]'][2].value = "";
+}
+function cutting(emoney)
+{
+	var chk_emoney = new String(emoney);
+	reg = /({=substr(_set.emoney.base,1)})$/g;
+	if (emoney && !chk_emoney.match(reg)){
+		emoney = Math.floor(emoney/{_set.emoney.base}) * {_set.emoney.base};
+	}
+	return emoney;
+}
+function chk_emoney(obj)
+{
+	var form = document.frmOrder;
+	var my_emoney = {emoney+0};
+	var max = '{_set.emoney.max}';
+	var min = '{_set.emoney.min}';
+	var hold = '{_set.emoney.hold}';
+
+	<!--{? cart->item[0]['goodstype'] == 'goods'}-->
+	var delivery	= uncomma(document.getElementById('paper_delivery').innerHTML);
+	<!--{:}-->
+	var delivery	= 0;
+	<!--{/}-->
+	var goodsprice = uncomma(document.getElementById('paper_goodsprice').innerText);
+	var erangeprice = goodsprice;
+	var max_base = erangeprice - uncomma(_ID('memberdc').innerHTML);
+
+	max = getDcprice(max_base,max,{_set.emoney.base});
+	min = parseInt(min);
+
+	if (max > max_base)  max = max_base;
+	if( _ID('print_emoney_max') && _ID('print_emoney_max').innerHTML != comma(max)  )_ID('print_emoney_max').innerHTML = comma(max);
+
+	var emoney = uncomma(obj.value);
+	if (emoney>my_emoney) emoney = my_emoney;
+
+	if(my_emoney > 0 && emoney > 0 && my_emoney < hold){
+		alert("보유적립금이 "+ comma(hold) + "원 이상 일 경우에만 사용하실 수 있습니다.");
+		emoney = 0;
+	}
+	if (min && emoney > 0 && emoney < min){
+		alert("적립금은 " + comma(min) + "원 부터 " + comma(max) + "원 까지만 사용이 가능합니다");
+		emoney = 0;
+	} else if (max && emoney > max && emoney > 0){
+		if(emoney_max < min){
+			alert("주문 상품 금액이 최소 사용 적립금 " + comma(min) + "원 보다  작습니다.");
+			emoney = 0;
+		}else{
+			alert("적립금은 " + comma(min) + "원 부터 " + comma(max) + "원 까지만 사용이 가능합니다");
+			emoney = max;
+		}
+	}
+	obj.value = comma(cutting(emoney));
+	calcu_settle();
+}
+function calcu_settle()
+{
+	var dc=0;
+	var coupon = settleprice = 0;
+	var goodsprice	= uncomma(document.getElementById('paper_goodsprice').innerHTML);
+	<!--{? cart->item[0]['goodstype'] == 'goods'}-->
+	var delivery	= uncomma(document.getElementById('paper_delivery').innerHTML);
+	<!--{:}-->
+	var delivery	= 0;
+	<!--{/}-->
+	if(_ID('memberdc')) dc = uncomma(_ID('memberdc').innerHTML);
+	var emoney = (document.frmOrder.emoney) ? uncomma(document.frmOrder.emoney.value) : 0;
+	if (emoney > 0) {
+		if (goodsprice + delivery - dc - emoney < 0){
+			<!--{? _set.emoney.emoney_use_range }-->
+			emoney = goodsprice + delivery - dc;
+			<!--{:}-->
+			emoney = goodsprice - dc;
+			<!--{/}-->
+			document.frmOrder.emoney.value = comma(cutting(emoney));
+		}
+		dc += coupon + emoney;
+	}
+	var settlement = (goodsprice + delivery - dc);
+
+	{ ? view_aboutdc //어바웃쿠폰할인계산}
+	settlement = settlement - {about_coupon};
+	{ / }
+
+	settlement += calcu_eggFee(settlement); // 전자보증보험 발급수수료 계산
+	document.getElementById('paper_settlement').innerHTML = comma(settlement);
+}
+function egg_required()
+{
+	egg_display();
+	calcu_settle();
+}
+function calcu_eggFee(settlement)
+{
+	egg_display(settlement);
+	var eggFee = 0;
+	if (typeof(document.getElementsByName('eggFee')[0]) != "undefined"){
+		var feerate = ({_egg.feerate} / 100);
+		if (document.getElementsByName('eggFee')[0].disabled == false) eggFee = parseInt(settlement * feerate);
+		document.getElementsByName('eggFee')[0].value = eggFee;
+	}
+	if (_ID('paper_eggFee') != null) _ID('paper_eggFee').innerHTML = comma(eggFee);
+	if (_ID('infor_eggFee') != null){
+		_ID('infor_eggFee').innerHTML = '<b>' + comma(eggFee) + '</b> 원';
+		if (eggFee) _ID('infor_eggFee').innerHTML += ' (총 결제금액에 포함되었습니다.)';
+	}
+	return eggFee;
+}
+function egg_display(settlement)
+{
+	var min = parseInt('{_egg.min}');
+	var display = 'block';
+	if (_ID('egg') == null) return;
+	if (typeof(settlement) != "undefined"){
+		if (settlement < min && typeof(document.getElementsByName('eggIssue')[0]) != "undefined") display = 'none';
+		else if (settlement <= 0) display = 'none';
+		else if (_ID('egg').style.display != 'none') return;
+	}
+	if (display != 'none'){
+		var obj = document.getElementsByName('settlekind');
+		for (var i = 0; i < obj.length; i++){
+			if (obj[i].checked != true) continue;
+			var settlekind = obj[i];
+			break;
+		}
+		if (settlekind == null) display = 'none';
+		else if (settlekind.value == 'h') display = 'none';
+		else if (document.getElementsByName('escrow')[0].value == 'Y') display = 'none';
+		else if (typeof(document.getElementsByName('eggIssue')[0]) != "undefined"){
+			if (settlekind.value != 'a') display = 'none';
+			else if(typeof(settlement) == "undefined"){
+				settlement = uncomma(_ID('paper_settlement').innerHTML);
+				if (typeof(document.getElementsByName('eggFee')[0]) != "undefined") settlement -= document.getElementsByName('eggFee')[0].value;
+				if (settlement < min) display = 'none';
+			}
+		}
+	}
+	if (_ID('egg').style.display == display && display =='none') return;
+	_ID('egg').style.display = display;
+
+	items = new Array();
+	items.push( {name : "eggIssue", label : "전자보증보험 발급여부", msgR : ""} );
+	items.push( {name : "eggBirthYear", label : "생년월일(년)", msgR : "전자보증보험을 발급받으시려면, 생년월일(년)을 입력하셔야 결제가 가능합니다."} );
+	items.push( {name : "eggBirthMon", label : "생년월일(월)", msgR : "전자보증보험을 발급받으시려면, 생년월일(월)을 입력하셔야 결제가 가능합니다."} );
+	items.push( {name : "eggBirthDay", label : "생년월일(일)", msgR : "전자보증보험을 발급받으시려면, 생년월일(일)을 입력하셔야 결제가 가능합니다."} );
+	items.push( {name : "eggSex", label : "성별", msgR : "전자보증보험을 발급받으시려면, 성별을 입력하셔야 결제가 가능합니다."} );
+	items.push( {name : "eggAgree", label : "개인정보 이용동의", msgR : "전자보증보험을 발급받으시려면, 개인정보 이용동의가 필요합니다."} );
+	items.push( {name : "eggFee", label : "발급수수료", msgR : ""} );
+	for (var i = 0; i < items.length; i++){
+		var obj = document.getElementsByName(items[i].name);
+		if (display == 'block' && items[i].name != 'eggIssue' && typeof(document.getElementsByName('eggIssue')[0]) != "undefined")
+			state = (document.getElementsByName('eggIssue')[0].checked ? 'block' : 'none');
+		else state = display;
+		for (var j = 0; j < obj.length; j++){
+			if (state == 'block'){
+				obj[j].setAttribute('required', '');
+				obj[j].setAttribute('label', items[i].label);
+				obj[j].setAttribute('msgR', items[i].msgR);
+				obj[j].disabled = false;
+			}
+			else {
+				obj[j].removeAttribute('required');
+				obj[j].removeAttribute('label');
+				obj[j].removeAttribute('msgR');
+				obj[j].disabled = true;
+			}
+		}
+	}
+}
+
+function getDelivery(){
+	<!--{? cart->item[0]['goodstype']=='goods'}-->
+	var form = document.frmOrder;
+	var obj = form.deliPoli;
+	var coupon = 0;
+	var emoney = 0;
+
+	var deliPoli = 0;
+	for(var i=0;i<obj.length;i++){
+		if(obj[i].checked){
+			deliPoli = i;
+		}
+	}
+	if( form.coupon ) coupon = form.coupon.value;
+	if( form.emoney ) emoney = form.emoney.value;
+	var zipcode = form['zipcode[]'][0].value + '-' + form['zipcode[]'][1].value;
+	var mode = 'order';
+	delivery.src = "../proc/getdelivery.php?cart_type=todayshop&zipcode="+zipcode+"&deliPoli="+deliPoli+"&coupon="+coupon+"&emoney="+emoney+"&mode="+mode;
+	<!--{/}-->
+}
+
+/*** 결제수단 첫번째 객체 자동 선택 ***/
+window.onload = function (){
+	var obj = document.getElementsByName('settlekind');
+	for (var i = 0; i < obj.length; i++){
+		if (obj[i].checked != true) continue;
+		obj[i].onclick();
+		var idx = i;
+		break;
+	}
+	if (obj[0] && idx == null){ obj[0].checked = true; obj[0].onclick(); }
+
+	getDelivery();
+}
+</script>
+
+{ # footer }

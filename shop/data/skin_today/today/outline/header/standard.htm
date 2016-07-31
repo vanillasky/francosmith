@@ -1,0 +1,277 @@
+{*** 투데이스킨 헤더 | main/index.php ***}
+
+<style>
+.today_header { width:100%; background: url('../../img/top_allbg.gif') repeat-x; text-align:{_cfg['shopAlign']};}
+.today_header .contents { width:{_cfg['shopSize']}px; display:inline-block; }
+.today_header .contents .leftbox { float:left; }
+.today_header .contents .rightbox { float:right; }
+
+#header_cate .topbg img { width:100%; height:13px; }
+
+#header_cate #hcg_closed .hcg_bg { width:100%; background-color:#49494A; display:inline-block; }
+#header_cate #hcg_closed #curHCateOuter { width:{_cfg['shopSize']}px; <!--{?_cfg['shopAlign']=='center'}-->margin:0px auto;<!--{:}-->float:{_cfg['shopAlign']};<!--{/}--> <!--{? !ts_curcate}-->display:none;<!--{/}--> }
+#header_cate #hcg_closed #curHCateOuter div { text-align:left; padding-left:23px; }
+#header_cate #hcg_closed #curHCateOuter div #curHCateBlock { color:#FFFFFF; }
+#header_cate #hcg_closed .togglebtn { background:url(../../img/today_footbg.gif) top repeat-x; text-align:center; cursor:pointer; }
+
+#header_cate #hcg_opened .hcg_bg { width:100%; background-color:#49494A; display:inline-block; }
+#header_cate #hcg_opened .hcg_bg .hcg_list { width:{_cfg['shopSize']}px; <!--{?_cfg['shopAlign']=='center'}-->margin:0px auto;<!--{:}-->float:{_cfg['shopAlign']};<!--{/}--> }
+#header_cate #hcg_opened .hcg_bg .hcg_list .catenm { width:195px; height:25px; text-align:left; }
+#header_cate #hcg_opened .hcg_bg .hcg_list .catenm span { padding-left:30px; }
+#header_cate #hcg_opened .hcg_bg .hcg_list .catenm span a { color:#FFFFFF; }
+#header_cate #hcg_opened .hcg_bg .hcg_list .split { text-align:center; }
+#header_cate #hcg_opened .hcg_bg .hcg_list .hei1 { height:1px; }
+#header_cate #hcg_opened .togglebtn { background:url(../../img/today_footbg.gif) top repeat-x; text-align:center; padding-top:8px; cursor:pointer; }
+</style>
+<script type="text/javascript">
+// 즐겨 찾기 추가
+function addFavorite(){
+	window.external.AddFavorite('http://<?=$_SERVER['HTTP_HOST']?>{=_cfg['rootDir']}/', '{=_cfg['shopName']}');
+}
+
+// 카테고리 열기/닫기
+function showHCate() {
+	var expires = 0;
+	var objc = document.getElementById("hcg_closed");
+	var objo = document.getElementById("hcg_opened");
+	if (objc.style.display == "none") {
+		objc.style.display = "block";
+		objo.style.display = "none";
+		setCookie( '_TOGGLE_TSCATE_', 0, expires, '/');
+	}
+	else {
+		objc.style.display = "none";
+		objo.style.display = "block";
+		setCookie( '_TOGGLE_TSCATE_', 1, expires, '/');
+	}
+}
+
+function setCategory(category, catnm) {
+	var cbobj = document.getElementById("curHCateBlock");
+	if (cbobj.innerHTML == "") {
+		if (cbobj) cbobj.innerHTML = catnm;
+		var coobj = document.getElementById("curHCateOuter");
+		if (coobj) coobj.style.display = "block";
+		var cateobj = document.getElementById("tsCate"+category);
+		if (cateobj) cateobj.style.background = "url(../../img/today_pointbox.gif)";
+	}
+}
+
+function fnCheckFrmInterest(f) {
+	if (f.interest_category.value == '')
+	{
+		alert('관심 분류를 선택해 주세요.');
+		return false;
+	}
+
+	return true;
+}
+</script>
+<a name="top"></a>
+
+<div class="today_header">
+	<div class="contents">
+		<div class="leftbox"><a href="/"><img src="../../img/h_logo.gif" /></a><a onclick="addFavorite()" style="cursor:pointer"><img src='../../img/n_topenjoy.gif' border="0"></a><img src='../../img/bg_topbar.gif' /></div>
+		<div class="rightbox"><!--{ ? _sess }--><a href="../member/logout.php"><img src="../../img/n_logout.gif"></a><!--{:}--><a href="../member/login.php"><img src="../../img/n_login.gif"></a><!--{/}--><a href='../service/customer.php'><img src='../../img/n_customer.gif' border="0"></a><!--{ ? _sess }--><a href='../member/myinfo.php'><img src='../../img/n_mypage.gif' border="0"></a><!--{:}--><a href='../member/join.php'><img src='../../img/n_member.gif' border="0"></a><!--{/}--><a href="goods_review.php"><img src="../../img/n_review.gif"></a><a href="../todayshop/today_cart.php"><img src="../../img/n_basket.gif" /></a></div>
+	</style>
+</div>
+
+<!-- 카테고리 노출 시작-->
+<div id="header_cate">
+	<div class="topbg"><img src="../../img/today_topbgsh.gif" /></div>
+	<div id="hcg_closed" style="display:none;">
+		<div class="hcg_bg">
+			<div id="curHCateOuter">
+				<div><img src="../../img/bullet_category.gif" /> <span id="curHCateBlock">{=ts_curcate['catnm']}</span></div>
+			</div>
+		</div>
+		<div onclick="showHCate()">
+			<div class="togglebtn"><img src="../../img/today_btnopen.gif" /></div>
+		</div>
+	</div>
+	<script>document.getElementById("hcg_closed").style.display = getCookie('_TOGGLE_TSCATE_') == 1 ? 'none' : 'block';</script>
+	<div id="hcg_opened" style="display:none;">
+		<div class="hcg_bg">
+			<table class="hcg_list" cellpadding=0 cellspacing=0 border=0>
+			<tr><td class="catenm hei1"></td><td class="split hei1"></td><td class="catenm hei1"></td><td class="split hei1"></td><td class="catenm hei1"></td><td class="split hei1"></td><td class="catenm hei1"></td></tr>
+			<tr>
+			<!--{@ ts_category}-->
+				<td class="catenm" id="tsHCate{=.category}" {? .category==ts_curcate['category']}style="background:url(../../img/today_pointbox.gif) no-repeat"{/}><span><a href="../todayshop/today_list.php?category={=.category}" onmouseover="this.style.color='#F9B000'" onmouseout="this.style.color='#FFFFFF'">{=.catnm}</a></span></td>
+				<!--{? .index_ != 0 && (.index_+1) % 4 == 0}--></tr><tr><!--{:}--><td class="split"><img src="../../img/today_split.gif" /></td><!--{/}-->
+			<!--{/}-->
+			</tr>
+			</table>
+		</div>
+		<div onclick="showHCate()">
+			<div class="togglebtn"><img src="../../img/today_btnclose.gif" /></div>
+		</div>
+		<script>document.getElementById("hcg_opened").style.display = getCookie('_TOGGLE_TSCATE_') == 1 ? 'block' : 'none';</script>
+	</div>
+</div>
+<!-- 카테고리 노출 시작-->
+
+<!--{? _GET.interest == 1}-->
+<div id="el-interest-form" style="border:5px solid #3F3F3F;background:#ffffff;display:none;">
+	<form name="frmInterest" method="post" action="indb.interest.php" onSubmit="return fnCheckFrmInterest(this);" >
+	<table border="0" cellpadding="0" cellspacing="0" width="100%">
+	<tr>
+		<td><img src="../../img/today_enjoy_top.gif"></td>
+		<td><a href="javascript:gdUI_block.hide();"><img src="../../img/today_enjoy_colse.gif"></a></td>
+	</tr>
+	</table>
+
+	<img src="../../img/today_enjoy_img01.gif">
+
+	<div style="border:1px solid #DBDBDB;width:295px;">
+	<div style="background:#ffffff;padding:2px;">
+	<div style="background:#F6F6F6;padding:8px;">
+
+		<select name="interest_category">
+		<option value=""> - 관심 분류를 선택해 주세요 - </option>
+		<!--{@ts_category_all}-->
+		<option value="{.category}">{.catnm}</option>
+		<!--{/}-->
+		</select>
+	</div>
+	</div>
+	</div>
+
+	<div style="font-size:11px;margin-top:5px;letter-spacing:-1px;">
+	* 선택한 관심분류는 <span style="color:#D40011;font-weight:bold;">마이페이지에서 수정</span>하실 수 있습니다.
+	</div>
+
+	<div style="margin-top:10px;"><input type="image" src="../../img/today_enjoy_btn.gif"></div>
+
+	<table border="0" cellpadding="0" cellspacing="0" width="100%" style="margin-top:10px;">
+	<tr>
+		<td><img src="../../img/today_enjoy_foot.gif"></td>
+		<td><a href="javascript:gdUI_block.hide();"><img src="../../img/today_enjoy_foot01.gif"></a></td>
+	</tr>
+	</table>
+	</form>
+</div>
+
+<script type="text/javascript">
+
+var gdUI_block = function() {
+
+	return {
+		_div : null,
+		_bg : null,
+		_doc_size : {},
+		_win_size : {},
+		/*
+			id  : 블록id
+			opt : 옵션 (object) , init 메서드내 def 변수 참조
+			show: 초기화 후 바로 레이어를 보여줄지.
+		 */
+		init : function(id,opt,show) {
+
+			var self = this;
+
+			var def = {
+				width : 500,
+				height: 300,
+				zIndex: 99999
+			}
+
+			// 여기부터 수정 금지
+			var option = opt || def;
+			var px = 'px';
+
+			self._doc_size = {
+				width : document.body.scrollWidth || document.documentElement.scrollWidth,
+				height: document.body.scrollHeight || document.documentElement.scrollHeight
+			}
+
+			self._win_size = {
+				width : window.innerWidth	|| (window.document.documentElement.clientWidth	|| window.document.body.clientWidth),
+				height: window.innerHeight	|| (window.document.documentElement.clientHeight|| window.document.body.clientHeight)
+			}
+
+			// 내용
+			self._div = document.getElementById(id);
+
+			with (self._div.style) {
+				position = "absolute";
+				width = option.width + px;
+				height = option.height + px;
+				zIndex = option.zIndex || 99999;
+				left = (self._doc_size.width + option.width) / 2 - option.width + px;
+				top = (self._win_size.height + option.height) / 2 - option.height + px;
+				display = "none";
+			};
+
+			if (self._bg == null) {
+				self._bg = document.createElement("div");
+
+				with (self._bg){
+					id = id + '_bg';
+					style.position = "absolute";
+					style.left = 0;
+					style.top = 0;
+					style.zIndex = self._div.style.zIndex - 10;
+					style.width = self._doc_size.width;
+					style.height = self._doc_size.height;
+					style.backgroundColor = "#000000";
+					style.filter = "alpha(opacity=40)";
+					style.opacity = "0.4";
+					style.display = "none";
+				}
+
+				document.body.appendChild(self._bg);
+			}
+
+			if (show) self.show();
+
+		}
+		,
+		show : function() {
+
+			if (this._div != null && this._bg != null) {
+
+				this._div.style.display = 'block';
+				this._bg.style.display = 'block';
+
+			}
+
+		}
+		,
+		hide : function() {
+
+			if (this._div != null && this._bg != null) {
+
+				this._div.style.display = 'none';
+				this._bg.style.display = 'none';
+			}
+
+		}
+		,
+		toggle : function() {
+
+			if (this._div != null && this._bg != null) {
+
+				if (this._div.style.display != 'none') {
+					this._div.style.display = 'none';
+					this._bg.style.display = 'none';
+				}
+				else {
+					this._div.style.display = 'block';
+					this._bg.style.display = 'block';
+				}
+			}
+
+		}
+	}
+
+}();
+
+
+
+window.onload = function() {
+	gdUI_block.init('el-interest-form',{width:340, height:240},true);
+}
+
+
+</script>
+<!--{/}-->

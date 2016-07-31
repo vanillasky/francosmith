@@ -1,0 +1,245 @@
+{*** 회원가입 본인확인 | member/join.php ***}
+<script language="javascript">
+function checkSubmit() {
+	var oForm = document.getElementById("form");
+
+	var rdo_jumin		= document.getElementById("RnCheckType_jumin");
+	var rdo_ipin		= document.getElementById("RnCheckType_ipin");
+	var rdo_hpauthDream = document.getElementById("RnCheckType_hpauthDream");
+	
+	if (rdo_ipin && rdo_ipin.checked)  {
+		goIDCheckIpin();
+	} else if (rdo_hpauthDream && rdo_hpauthDream.checked) {
+		gohpauthDream();
+	} else if (rdo_jumin && rdo_jumin.checked) {
+		if(chkagreement(oForm)) {
+			if (chkForm2(oForm)) {
+				oForm.submit();
+			}
+		}
+	}else {
+		if (chkagreement(oForm)) oForm.submit();
+
+	}
+}
+</script>
+
+<!-- 상단이미지 || 현재위치 -->
+<TABLE width=100% cellpadding=0 cellspacing=0 border=0>
+<tr>
+	<td><img src="../img/common/title_join.gif" border=0></td>
+</tr>
+<TR>
+	<td class="path">HOME > 회원가입 > <B>이용약관</B></td>
+</TR>
+</TABLE>
+
+
+<div class="indiv"><!-- Start indiv -->
+
+<form id=form name=frmAgree method=post action="indb.php" target="ifrmHidden" onSubmit="return chkForm2(this)">
+<input type=hidden name=mode value="chkRealName">
+<input type=hidden name=rncheck value="none">
+<input type=hidden name=nice_nm value="">
+<input type=hidden name=pakey value="">
+<input type=hidden name=birthday value="">
+<input type=hidden name=mobile value="">
+<input type=hidden name=sex value="">
+<input type=hidden name=dupeinfo value="">
+<input type=hidden name=foreigner value="">
+<input type=hidden name=phone value="">
+<input type=hidden name=type>
+
+<!-- 네이버체크아웃(회원연동) -->
+<!--{=naverCheckout_oneclickStep}-->
+
+<!-- 이용약관 -->
+<div style="margin-bottom:10px;"><strong>이용약관</strong></div>
+<table width="100%" height="160" cellpadding="0" cellspacing="0" border="0" style="border:1px solid #ccc; margin-bottom:25px;">
+<tr>
+	<td><div style="height:160px; padding:20px; overflow-y:scroll;">{=nl2br(termsAgreement)}</div></td>
+	<td width="130" style="padding:17px; background:#f1f1f1; border-left:1px solid #ccc;">
+		<input type="radio" name="agree" value="y" style="border:0; background:;"> 동의합니다<br />
+		<input type="radio" name="agree" value="n" style="border:0; background:;"> 동의하지 않습니다
+	</td>
+</tr>
+</table>
+
+<!-- 개인정보취급방침 -->
+<div style="margin-bottom:10px;"><strong><span style="color:#ff0000;">[필수]</span> 개인정보취급방침</strong> <span style="font-size:.9em; color:#858585;">(자세한 내용은 “<a href="../service/private.php" style="color:#858585;">개인정보취급방침</a>”을 확인하시기 바랍니다)</span></div>
+<table width="100%" height="160" cellpadding="0" cellspacing="0" border="0" style="border:1px solid #ccc; margin-bottom:25px;">
+<tr>
+	<td><div style="height:160px; padding:20px; overflow-y:scroll;">{termsPolicyCollection2}</div></td>
+	<td width="130" style="padding:17px; background:#f1f1f1; border-left:1px solid #ccc;">
+		<input type="radio" name="private1" value="y" style="border:0; background:;"> 동의합니다<br />
+		<input type="radio" name="private1" value="n" style="border:0; background:;"> 동의하지 않습니다
+	</td>
+</tr>
+</table>
+
+<!--{ ? _cfg['private2YN'] == 'Y' // 개인정보 제3자 제공 관련 사용여부 }-->
+<div style="margin-bottom:10px;"><strong><span style="color:#ff0000;">[선택]</span> 개인정보 제3자 제공 관련</strong></div>
+<table width="100%" height="160" cellpadding="0" cellspacing="0" border="0" style="border:1px solid #ccc; margin-bottom:25px;">
+<tr>
+	<td><div style="height:160px; padding:20px; overflow-y:scroll;">{termsThirdPerson}</div></td>
+	<td width="130" style="padding:17px; background:#f1f1f1; border-left:1px solid #ccc;">
+		<input type="radio" name="private2" value="y" style="border:0; background:;" label="개인정보 제3자 제공 관련" msgR="동의 여부를 체크해주세요."> 동의합니다<br />
+		<input type="radio" name="private2" value="n" style="border:0; background:;" label="개인정보 제3자 제공 관련" msgR="동의 여부를 체크해주세요."> 동의하지 않습니다
+	</td>
+</tr>
+</table>
+<!--{ / }-->
+<!--{ ? _cfg['private3YN'] == 'Y' // 개인정보취급 위탁 관련 사용여부 }-->
+<div style="margin-bottom:10px;"><strong><span style="color:#ff0000;">[선택]</span> 개인정보취급 위탁 관련</strong></div>
+<table width="100%" height="160" cellpadding="0" cellspacing="0" border="0" style="border:1px solid #ccc; margin-bottom:25px;">
+<tr>
+	<td><div style="height:160px; padding:20px; overflow-y:scroll;">{termsEntrust}</div></td>
+	<td width="130" style="padding:17px; background:#f1f1f1; border-left:1px solid #ccc;">
+		<input type="radio" name="private3" value="y" style="border:0; background:;" label="개인정보취급 위탁 관련" msgR="동의 여부를 체크해주세요."> 동의합니다<br />
+		<input type="radio" name="private3" value="n" style="border:0; background:;" label="개인정보취급 위탁 관련" msgR="동의 여부를 체크해주세요."> 동의하지 않습니다
+	</td>
+</tr>
+</table>
+<!--{ / }-->
+<!--{ @ consentData // 추가동의항목 }-->
+<div style="margin-bottom:10px;"><strong><span style="color:#ff0000;">[{=.requiredyn_text}]</span> {=.title}</strong></div>
+<table width="100%" height="160" cellpadding="0" cellspacing="0" border="0" style="border:1px solid #ccc; margin-bottom:25px;">
+<tr>
+	<td><div style="height:160px; padding:20px; overflow-y:scroll;">{=nl2br(.termsContent)}</div></td>
+	<td width="130" style="padding:17px; background:#f1f1f1; border-left:1px solid #ccc;">
+		<input type="radio" name="consent[{=.sno}]" value="y" style="border:0; background:;" label="{=.title}" msgR="동의 여부를 체크해주세요."> 동의합니다<br />
+		<input type="radio" name="consent[{=.sno}]" value="n" style="border:0; background:;" label="{=.title}" msgR="동의 여부를 체크해주세요."> 동의하지 않습니다
+	</td>
+</tr>
+</table>
+<!--{ / }-->
+
+<!-- 본인확인 인증수단 -->
+<!--{ ? realnameyn == 'y' ||  ipinyn == 'y' || niceipinyn == 'y' || hpauthDreamyn == 'y' }-->
+<div style="padding-left:7"><font color=f7443f><b>본인확인 인증 수단</b></font></div>
+<table height="35">
+	<tr>
+	<!--{ ? realnameyn == 'y' }-->	
+		<td class="noline">
+			<label for="RnCheckType_jumin" style="width:130px;height:20px;display:inline-block;background:url('../img/ipin/Regist_realName_title_1.gif') no-repeat 17px 3px;">
+			<input type="radio" name="RnCheckType" value="jumin" id="RnCheckType_jumin" onclick="selectRnCheckType()">
+			</label>
+		</td>
+		<td width="5">&nbsp;</td>				
+	<!--{ / }-->
+	<!--{ ? ipinyn == 'y' || niceipinyn == 'y' }-->
+		<td class="noline">
+			<label for="RnCheckType_ipin" style="width:150px;height:20px;display:inline-block;background:url('../img/ipin/Regist_realName_title_2.gif') no-repeat 17px 3px;">
+			<input type="radio" name="RnCheckType" value="ipin" id="RnCheckType_ipin" onclick="selectRnCheckType()">
+			</label>
+		</td>
+		<td width="5">&nbsp;</td>
+	<!--{ / }-->
+	<!--{ ? hpauthDreamyn == 'y' }-->
+		<td class="noline">
+			<label for="RnCheckType_hpauthDream" style="width:150px;height:20px;display:inline-block;background:url('../img/auth/hpauth_title_3.gif') no-repeat 17px 3px;">
+			<input type="radio" name="RnCheckType" value="hpauthDream" id="RnCheckType_hpauthDream" onclick="selectRnCheckType()">
+			</label>
+		</td>
+		<td width="5">&nbsp;</td>
+	<!--{ / }-->		
+</tr>
+</table>
+<!--{ / }-->
+
+
+<!--{ ? realnameyn == 'y' // 실명인증여부 }-->	
+<!--{ = include_file( "member/NiceCheck.htm" ) }-->
+<!--{ / }-->
+
+<!--{ ? ipinyn == 'y' // 아이핀인증여부 }-->
+<!--{ = include_file( "member/NiceIpin.htm" ) }-->
+<!--{ :  //새로운 아이핀인증여부 }-->
+<!--{ = include_file( "member/NewNiceIpin.htm" ) }-->
+<!--{ / }-->
+
+<!--{ ? hpauthDreamyn == 'y' //휴대폰인증여부 }-->
+<!--{ = include_file( "member/hpauthDream.htm" ) }-->
+<!--{ / }-->
+
+<!-- 하단버튼 -->
+<div align=center style="padding:50px 0 20px 0" class=noline>
+<a href="javascript:checkSubmit();"><img src="../img/common/btn_join.gif"></a>
+<a href="javascript:history.back()"><img src="../img/common/btn_back.gif" border=0></a>
+</div>
+
+</form>
+
+</div><!-- End indiv -->
+
+<script>
+function defaultRnCheckType() {
+	var authtype = document.getElementsByName("RnCheckType");
+
+	if (authtype.item(0) != null) {
+		var div_jumin		= document.getElementById("div_RnCheck_jumin");
+		var div_ipin		= document.getElementById("div_RnCheck_ipin");
+		var div_hpauthDream = document.getElementById("div_RnCheck_hpauthDream");
+
+		if (authtype.item(0).value == 'jumin')
+		{
+			div_jumin.style.display='';
+		} else if(authtype.item(0).value == 'ipin') {
+			div_ipin.style.display='';
+		} else if(authtype.item(0).value == 'hpauthDream') {
+			div_hpauthDream.style.display='';
+		}
+		authtype.item(0).checked = true;
+	}	
+}
+
+function selectRnCheckType(){
+
+	var div_jumin		= document.getElementById("div_RnCheck_jumin");
+	var div_ipin		= document.getElementById("div_RnCheck_ipin");
+	var div_hpauthDream = document.getElementById("div_RnCheck_hpauthDream");
+
+	var rdo_jumin		= document.getElementById("RnCheckType_jumin");
+	var rdo_ipin		= document.getElementById("RnCheckType_ipin");
+	var rdo_hpauthDream = document.getElementById("RnCheckType_hpauthDream");
+
+	if(rdo_jumin && rdo_jumin.checked == true){
+		if (div_jumin != null) { div_jumin.style.display=''; }
+		if (div_ipin != null) { div_ipin.style.display='none'; }
+		if (div_hpauthDream != null) { div_hpauthDream.style.display='none'; }
+	}
+	if(rdo_ipin && rdo_ipin.checked == true){
+		if (div_jumin != null)	{ div_jumin.style.display='none'; }
+		if (div_ipin != null)	{ div_ipin.style.display=''; }
+		if (div_hpauthDream != null) { div_hpauthDream.style.display='none'; }
+	}
+	if(rdo_hpauthDream && rdo_hpauthDream.checked == true){
+		if (div_jumin != null)	{ div_jumin.style.display='none'; }
+		if (div_ipin != null)	{ div_ipin.style.display='none'; }
+		if (div_hpauthDream != null) { div_hpauthDream.style.display=''; }
+	}
+}
+
+function chkForm2(fm)
+{
+	if (typeof(goIDCheck) != "undefined"){
+		if (goIDCheck(fm) === false) return false;
+	}
+
+	return chkForm(fm);
+}
+
+function chkagreement(fm){
+	if (chkRadioSelect(fm,'agree','y','[회원가입 이용약관]에 동의를 하셔야 회원가입이 가능합니다.') === false) return false;
+	if (chkRadioSelect(fm,'private1','y','[개인정보취급방침]에 동의를 하셔야 회원가입이 가능합니다.') === false) return false;
+
+	<!--{ @ consentData }-->
+	<!--{ ? .requiredyn == 'y' }-->
+	if (chkRadioSelect(fm,'consent[{=.sno}]','y','[{=.title}]에 동의를 하셔야 회원가입이 가능합니다.') === false) return false;
+	<!--{ / }-->
+	<!--{ / }-->
+
+	return true;
+}
+</script>
+<script>defaultRnCheckType();</script>

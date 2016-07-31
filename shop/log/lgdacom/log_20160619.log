@@ -1,0 +1,65 @@
+2016-06-19 21:22:09 [INFO ] [] XPayClient initialize [/www/francotr3287_godo_co_kr/shop/conf/lgdacom] [service]
+2016-06-19 21:22:09 [DEBUG] [] Config [server_id] = [01]
+2016-06-19 21:22:09 [DEBUG] [] Config [timeout] = [60]
+2016-06-19 21:22:09 [DEBUG] [] Config [log_level] = [4]
+2016-06-19 21:22:09 [DEBUG] [] Config [verify_cert] = [1]
+2016-06-19 21:22:09 [DEBUG] [] Config [verify_host] = [1]
+2016-06-19 21:22:09 [DEBUG] [] Config [report_error] = [1]
+2016-06-19 21:22:09 [DEBUG] [] Config [output_utf8] = [0]
+2016-06-19 21:22:09 [DEBUG] [] Config [auto_rollback] = [1]
+2016-06-19 21:22:09 [DEBUG] [] Config [log_dir] = [/log/lgdacom]
+2016-06-19 21:22:09 [DEBUG] [] Config [go_francosmith] = [fdfb4a2f34d255d2537461c422912f49]
+2016-06-19 21:22:09 [DEBUG] [] Config [tgo_francosmith] = [fdfb4a2f34d255d2537461c422912f49]
+2016-06-19 21:22:09 [DEBUG] [] Config [url] = [https://xpayclient.lgdacom.net/xpay/Gateway.do]
+2016-06-19 21:22:09 [DEBUG] [] Config [test_url] = [https://xpayclient.lgdacom.net:7443/xpay/Gateway.do]
+2016-06-19 21:22:09 [DEBUG] [] Config [aux_url] = [http://xpay.lgdacom.net:7080/xpay/Gateway.do]
+2016-06-19 21:22:16 [INFO ] [] XPayClient initialize [/www/francotr3287_godo_co_kr/shop/conf/lgdacom] [service]
+2016-06-19 21:22:16 [DEBUG] [] Config [server_id] = [01]
+2016-06-19 21:22:16 [DEBUG] [] Config [timeout] = [60]
+2016-06-19 21:22:16 [DEBUG] [] Config [log_level] = [4]
+2016-06-19 21:22:16 [DEBUG] [] Config [verify_cert] = [1]
+2016-06-19 21:22:16 [DEBUG] [] Config [verify_host] = [1]
+2016-06-19 21:22:16 [DEBUG] [] Config [report_error] = [1]
+2016-06-19 21:22:16 [DEBUG] [] Config [output_utf8] = [0]
+2016-06-19 21:22:16 [DEBUG] [] Config [auto_rollback] = [1]
+2016-06-19 21:22:16 [DEBUG] [] Config [log_dir] = [/log/lgdacom]
+2016-06-19 21:22:16 [DEBUG] [] Config [go_francosmith] = [fdfb4a2f34d255d2537461c422912f49]
+2016-06-19 21:22:16 [DEBUG] [] Config [tgo_francosmith] = [fdfb4a2f34d255d2537461c422912f49]
+2016-06-19 21:22:16 [DEBUG] [] Config [url] = [https://xpayclient.lgdacom.net/xpay/Gateway.do]
+2016-06-19 21:22:16 [DEBUG] [] Config [test_url] = [https://xpayclient.lgdacom.net:7443/xpay/Gateway.do]
+2016-06-19 21:22:16 [DEBUG] [] Config [aux_url] = [http://xpay.lgdacom.net:7080/xpay/Gateway.do]
+2016-06-19 21:24:46 [INFO ] [] XPayClient initialize [/www/francotr3287_godo_co_kr/shop/conf/lgdacom] [service]
+2016-06-19 21:24:46 [DEBUG] [] Config [server_id] = [01]
+2016-06-19 21:24:46 [DEBUG] [] Config [timeout] = [60]
+2016-06-19 21:24:46 [DEBUG] [] Config [log_level] = [4]
+2016-06-19 21:24:46 [DEBUG] [] Config [verify_cert] = [1]
+2016-06-19 21:24:46 [DEBUG] [] Config [verify_host] = [1]
+2016-06-19 21:24:46 [DEBUG] [] Config [report_error] = [1]
+2016-06-19 21:24:46 [DEBUG] [] Config [output_utf8] = [0]
+2016-06-19 21:24:46 [DEBUG] [] Config [auto_rollback] = [1]
+2016-06-19 21:24:46 [DEBUG] [] Config [log_dir] = [/log/lgdacom]
+2016-06-19 21:24:46 [DEBUG] [] Config [go_francosmith] = [fdfb4a2f34d255d2537461c422912f49]
+2016-06-19 21:24:46 [DEBUG] [] Config [tgo_francosmith] = [fdfb4a2f34d255d2537461c422912f49]
+2016-06-19 21:24:46 [DEBUG] [] Config [url] = [https://xpayclient.lgdacom.net/xpay/Gateway.do]
+2016-06-19 21:24:46 [DEBUG] [] Config [test_url] = [https://xpayclient.lgdacom.net:7443/xpay/Gateway.do]
+2016-06-19 21:24:46 [DEBUG] [] Config [aux_url] = [http://xpay.lgdacom.net:7080/xpay/Gateway.do]
+2016-06-19 21:24:46 [DEBUG] [go_francosmith-0120160619212446c315e3b373bc390201dc559b30fde54c587ec09b] Post [LGD_TXID] = [go_francosmith-0120160619212446c315e3b373bc390201dc559b30fde54c587ec09b]
+2016-06-19 21:24:46 [DEBUG] [go_francosmith-0120160619212446c315e3b373bc390201dc559b30fde54c587ec09b] Post [LGD_AUTHCODE] = [fd72260ef8e6734f554b6fb3a1447614aa1460c2]
+2016-06-19 21:24:46 [DEBUG] [go_francosmith-0120160619212446c315e3b373bc390201dc559b30fde54c587ec09b] Post [LGD_MID] = [go_francosmith]
+2016-06-19 21:24:46 [DEBUG] [go_francosmith-0120160619212446c315e3b373bc390201dc559b30fde54c587ec09b] Post [LGD_TXNAME] = [PaymentByKey]
+2016-06-19 21:24:46 [DEBUG] [go_francosmith-0120160619212446c315e3b373bc390201dc559b30fde54c587ec09b] Post [LGD_PAYKEY] = [20160619212446D893B8210486DB4E140805712EEB7EE4AE3D48C5]
+2016-06-19 21:24:46 [DEBUG] [go_francosmith-0120160619212446c315e3b373bc390201dc559b30fde54c587ec09b] Post [LGD_CUSTOM_PROCESSTIMEOUT] = [600]
+2016-06-19 21:24:46 [DEBUG] [go_francosmith-0120160619212446c315e3b373bc390201dc559b30fde54c587ec09b] post_string = LGD_TXID=go_francosmith-0120160619212446c315e3b373bc390201dc559b30fde54c587ec09b&LGD_AUTHCODE=fd72260ef8e6734f554b6fb3a1447614aa1460c2&LGD_MID=go_francosmith&LGD_TXNAME=PaymentByKey&LGD_PAYKEY=20160619212446D893B8210486DB4E140805712EEB7EE4AE3D48C5&LGD_CUSTOM_PROCESSTIMEOUT=600
+2016-06-19 21:24:47 [DEBUG] [go_francosmith-0120160619212446c315e3b373bc390201dc559b30fde54c587ec09b] Result = [
+
+
+
+
+
+
+
+
+
+{"LGD_RESPCODE":"0004","LGD_RESPMSG":"카드유효기간만료","LGD_RESPONSE":[{"LGD_CARDACQUIRER":"31","LGD_CARDNOINTEREST_YN":"0","LGD_IFOS":"376I7C","LGD_MID":"go_francosmith","LGD_FINANCENAME":"비씨MASTER","LGD_PCANCELFLAG":"0","LGD_FINANCEAUTHNUM":"        ","LGD_DELIVERYINFO":"","LGD_BUYER":"이재진","LGD_AFFILIATECODE":"202536","LGD_TRANSAMOUNT":"14600","LGD_BUYERID":"jaejean@naver.com","LGD_OID":"1466338818808","LGD_CARDNUM":"****************","LGD_RECEIVERPHONE":"010-9918-4880","LGD_2TR_FLAG":"Y","LGD_DEVICE":"","LGD_TID":"go_fr2016061921244642704","LGD_TIMESTAMP":"20160619212447","LGD_FINANCECODE":"31200","LGD_CARDNOINTYN":"0","LGD_PCANCELSTR":"부분취소 불가 카드입니다.","LGD_DISCOUNTUSEYN":"0","LGD_ISPKEY":"","LGD_BUYERPHONE":"010-9918-4880","LGD_ESCROWYN":"N","LGD_PAYTYPE":"SC0010","LGD_AMOUNT":"14600","LGD_VANCODE":"van0011","LGD_EXCHANGERATE":"1.0","LGD_BUYERSSN":"","LGD_CARDINSTALLMONTH":"00","LGD_RESPMSG":"카드유효기간만료","LGD_PAYDATE":"20160619212447","LGD_PRODUCTINFO":"pfeil 호닝 오일-Honing Oil","LGD_PRODUCTCODE":"","LGD_HASHDATA":"17c22bd3b7b5f864232c60e99522fc5f","LGD_CARDGUBUN1":"9","LGD_CARDGUBUN2":"9","LGD_BUYERADDRESS":"서울특별시 도봉구 창동 380 주공4단지아파트 401동 1310호","LGD_RECEIVER":"이재진","LGD_RESPCODE":"0004","LGD_BUYEREMAIL":"jaejean@naver.com","LGD_DISCOUNTUSEAMOUNT":"0"}]}
+]
+2016-06-19 21:24:47 [INFO ] [go_francosmith-0120160619212446c315e3b373bc390201dc559b30fde54c587ec09b] Response Code=[0004], Msg=[ī����ȿ�Ⱓ����], Count=1

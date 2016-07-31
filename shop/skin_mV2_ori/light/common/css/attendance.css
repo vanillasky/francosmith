@@ -1,0 +1,155 @@
+/* 
+    Created on : 2014. 3. 11, ¿ÀÈÄ 4:27:40
+    Author     : workingparksee <parksee@godo.co.kr>
+*/
+
+#attendance-popup {
+	position: absolute;
+	top: 40px;
+	left: 50%;
+	margin-left: -150px;
+	width: 300px;
+	height: 477px;
+	z-index: 101;
+	background-image: url("../img/attendance/bg_event.png");
+	background-size: 100% 100%;
+	background-repeat: no-repeat;
+	color: #555555;
+}
+
+#attendance-close {
+	position: absolute;
+	right: 0;
+	top: 10px;
+	width: 43px;
+	height: 43px;
+	background-image: url("../img/attendance/btn_event_close.png");
+	background-size: 100% 100%;
+	z-index: 11;
+	font-size: 0;
+}
+
+#attendance-mask {
+	background-color: #000000;
+	opacity: 0.7;
+	position: absolute;
+	left: 0;
+	right: 0;
+	top: 0;
+	z-index: 100;
+}
+
+#attendance-popup h1 {
+	background-image: url("../img/attendance/icon_event_title.png");
+	background-size: 30px 30px;
+	background-repeat: no-repeat;
+	font-size: 18px;
+	line-height: 30px;
+	color: #ffffff;
+	margin-left: 15px;
+	margin-top: 47px;
+	padding-left: 40px;
+	height: 30px;
+}
+
+#attendance-popup .condition-type {
+	display: none;
+	margin-top: 20px;
+	margin-left: 10px;
+}
+#attendance-popup .condition-type.active {
+	display: block;
+}
+#attendance-popup .attendance-description {
+	font-weight: bold;
+}
+
+#attendance-popup h2 {
+	margin-top: 17px;
+	text-align: center;
+}
+
+#attendance-calendar-month, #attendance-calendar-year {
+	font-size: 18px;
+	vertical-align: middle;
+}
+#attendance-calendar-month * {
+	display: none;
+}
+#attendance-calendar-month .current {
+	display: initial;
+}
+#attendance-calendar-year {
+	margin-left: 5px;
+}
+#attendance-calendar-previous-month {
+	float: left;
+	font-size: 0;
+	width: 25px;
+	height: 30px;
+	background-color: transparent;
+	background-image: url("../img/attendance/btn_event_left.png");
+	background-size: 10px 17px;
+	background-position: center;
+	background-repeat: no-repeat;
+	border: none;
+	margin-left: 50px;
+	margin-top: -5px;
+}
+#attendance-calendar-next-month {
+	float: right;
+	font-size: 0;
+	width: 25px;
+	height: 30px;
+	background-color: transparent;
+	background-image: url("../img/attendance/btn_event_right.png");
+	background-size: 10px 17px;
+	background-position: center;
+	background-repeat: no-repeat;
+	border: none;
+	margin-right: 50px;
+	margin-top: -5px;
+}
+
+#attendance-date-list {
+	width: 290px;
+	height: 277px;
+	margin-top: 30px;
+	margin-left: 5px;
+}
+#attendance-date-list .attendance-calendar-date-space {
+	padding: 7px;
+	width: 14.285%;
+	text-align: left;
+	background-size: 97% 97%;
+	background-position: center;
+	background-repeat: no-repeat;
+	position: relative;
+	color: #555555;
+}
+#attendance-date-list .attendance-calendar-date-space.normal {
+	background-image: url("../img/attendance/bg_event_daynum.png");
+}
+#attendance-date-list .attendance-calendar-date-space.void {
+	background-image: url("../img/attendance/bg_event_day0.png");
+}
+#attendance-date-list .attendance-calendar-date-space .attendance-calendar-date {
+	position: absolute;
+	top: 5px;
+	left: 7px;
+	right: 7px;
+	bottom: 3px;
+}
+#attendance-date-list .attendance-calendar-date-space.stamp .attendance-calendar-date {
+	background-image: url("../img/attendance/icon_event_seal.png");
+	background-repeat: no-repeat;
+	background-size: 27px 27px;
+	background-position: bottom;
+}
+#attendance-date-list .attendance-calendar-date-space.today .attendance-calendar-date {
+	font-weight: bold;
+	font-size: 14px;
+	margin-top: -1px;
+	margin-left: -1px;
+	color: #cb3535;
+}

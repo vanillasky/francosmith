@@ -1,0 +1,76 @@
+{*** 게시판 리스트 | board/list.php ***}
+{ # header }
+{#sub_header}
+<script type="text/javascript">
+$(document).ready(function(){
+
+	var item_cnt = $("#board-table .title").length;
+
+	<!--{ ? _board_cnt}-->
+	board_cnt = {_board_cnt};
+	if(board_cnt <= 10 ) {
+		$(".more-btn").hide();
+	}
+	<!--{/}-->
+	if(item_cnt < 10 ) {
+		$(".more-btn").hide();
+	}
+});
+
+var ici_admin = '{ici_admin}';
+var sess_no = '{_sess.m_no}';
+</script>
+<script src="/m2/lib/js/board.js"></script>
+<section id="page_title">
+	<button class="btn_index" onclick="location.href='/'+getMobileHomepath()+'/board/index.php';"></button>
+	<div class="top_title">{=_bdName}</div>
+	<button class="btn_write" onclick="location.href='/'+getMobileHomepath()+'/board/write.php?id={_GET.id}';">글쓰기</button>
+</section>
+
+
+<section id="boardlist" class="content">
+	<form name="search-form" action="{=_SERVER.PHP_SELF}" method="get">
+		<div class="search" style="width:95%;height:40px;vertical-align:middle;padding:10px 0 0 10px">
+			<input type="hidden" name="id" value="{_GET.id}" />
+			<input type="hidden" name="search[all]" value="on"  />
+			<input type="search" name="search[word]" style="width:75%;height:35px"  placeholder="검색 단어를 입력해 주세요." />
+			<div style="float:right;"><button type="submit" class="search-button" >검 색</button></div>
+		</div>
+	</form>
+	<table id="board-table" >
+	<!--{ @ list }-->
+	<tr class="data-row" onclick="viewContent('{.viewUrl}','{.secret}','{.m_no}','{._member}')">
+		<td <!--{ ? !.notice }--> class="title"<!--{/}-->>
+			<div class="data-box" >
+				<div class="bullet"></div>
+				<div class="subject">
+					<!--{ ? .sub }-->{.gapReply}<div class="icon-reply"></div><!--{ / }-->
+					<!--{ ? .notice }--><div class="icon-notice"></div><!--{ / }-->
+					<!--{ ? .secret }--><div class="icon-secret"></div><!--{ / }-->
+					<div class="subject-text screen-width"><b>
+					<!--{ ? _bdUseSubSpeech }-->
+					<!--{ ? .category }-->[{.category}]<!--{ / }-->
+					<!--{/}-->
+					{.subject}</b>
+					<!--{ ? _bdUseComment && .comment }-->[{.comment}]<!--{ / }-->
+					</div>
+
+					<!--{ ? .new }--><div class="icon-new"></div><!--{ / }-->
+					<!--{ ? .hot }--><div class="icon-hot"></div><!--{ / }-->
+					<div style="clear:both"></div>
+				</div>
+				<div class="etc">{=.name} | {=str_replace('-', '.', substr(.regdt, 0, 10))}</div>
+			</div>
+
+			<!-- <div class="bullet"></div> -->
+		</td>
+	</tr>
+	<!--{ : }-->
+	<tr >
+		<td class="first" align="center"> 게시글 없습니다.</td>
+	</tr>
+	<!--{ / }-->
+	</table>
+	<div class="more-btn" onclick="javascript:getBoardData('default', '{_GET.id}' , '{_GET.search.word}' , '{_bdUseComment}','{_bdUseSubSpeech}');">더보기</div>
+</section>
+{ # footer }

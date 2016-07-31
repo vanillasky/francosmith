@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="EUC-KR"?>
+<codes>
+<list>
+	<code>{.idx}</code>
+	<desc>번호</desc>
+	<exam>1</exam>
+</list>
+<list>
+	<code power="">{.sno}</code>
+	<desc>게시물번호</desc>
+	<exam>2</exam>
+</list>
+<list>
+	<code power="">{.goodsno}</code>
+	<desc>상품번호</desc>
+	<exam>37</exam>
+</list>
+<list>
+	<code>{.goodsnm}</code>
+	<desc>상품명</desc>
+	<exam>런닝 운동화</exam>
+</list>
+<list>
+	<code>{.price}</code>
+	<desc>판매가</desc>
+	<exam>4800</exam>
+</list>
+<list>
+	<code>{.img_s}</code>
+	<desc>리스트이미지</desc>
+	<exam>1164783000_s_0.jpg</exam>
+</list>
+<list>
+	<code>{.m_no}</code>
+	<desc>회원번호</desc>
+	<exam>1</exam>
+</list>
+<list>
+	<code>{.m_id}</code>
+	<desc>회원아이디 - admin.gif:관리자, 회원아이디:회원, 비회원명:비회원</desc>
+	<exam>testid</exam>
+</list>
+<list>
+	<code>{.m_name}</code>
+	<desc>회원이름</desc>
+	<exam>홍길동</exam>
+</list>
+<list>
+	<code>{.name}</code>
+	<desc>비회원명 - admin.gif:관리자, '':회원, 비회원명:비회원</desc>
+	<exam>게스트</exam>
+</list>
+<list>
+	<code power="">{.subject}</code>
+	<desc>제목</desc>
+	<exam>언제쯤 배송이 될까요?</exam>
+</list>
+<list>
+	<code>{.regdt}</code>
+	<desc>작성일</desc>
+	<exam>2007-01-01 12:30:30</exam>
+</list>
+<list>
+	<code>{.replecnt}</code>
+	<desc>답글수</desc>
+	<exam>0</exam>
+</list>
+</codes>

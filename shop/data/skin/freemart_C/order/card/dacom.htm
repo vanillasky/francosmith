@@ -1,0 +1,91 @@
+<script language = 'javascript'>
+<!--
+function openWindow()
+{
+<!--{ ? settlekind == "c" }--><!--신용카드-->
+document.mainForm.action="http://pg.dacom.net/card/cardAuthAppInfo.jsp";
+<!--{ : settlekind == "o" }--><!--계좌이체-->
+if ( document.mainForm.pid.value == '' ){ alert('주민등록번호를 입력하셔야 합니다.'); document.mainForm.pid.focus(); return; }
+document.mainForm.action="http://pg.dacom.net/transfer/transferSelectBank.jsp";
+<!--{ : settlekind == "v" }--><!--무통장입금(가상계좌)-->
+document.mainForm.action="http://pg.dacom.net/cas/casRequestSA.jsp";
+<!--{ : settlekind == "h" }--><!--휴대폰-->
+document.mainForm.action="http://pg.dacom.net/wireless/wirelessAuthAppInfo1.jsp";
+<!--{ / }-->
+
+window.open("","Window","width=330, height=430, status=yes, scrollbars=no,resizable=yes, menubar=no");
+
+/*
+========
+신용카드
+========
+테스트용 결제창 URL				http://pg.dacom.net:7080/card/cardAuthAppInfo.jsp;
+서비스용 결제창 URL				http://pg.dacom.net/card/cardAuthAppInfo.jsp;
+
+========
+계좌이체
+========
+테스트용 결제창 URL				http://pg.dacom.net:7080/transfer/transferSelectBank.jsp
+서비스용 결제창 URL				http://pg.dacom.net/transfer/transferSelectBank.jsp
+
+========
+휴대폰
+========
+테스트용 결제창 URL				http://pg.dacom.net:7080/wireless/wirelessAuthAppInfo1.jsp
+서비스용 결제창 URL				http://pg.dacom.net/wireless/wirelessAuthAppInfo1.jsp
+
+========
+무통장입금
+========
+테스트용 결제창 URL				http://pg.dacom.net:7080/cas/casRequestSA.jsp
+서비스용 결제창 URL				http://pg.dacom.net/cas/casRequestSA.jsp
+
+
+Test ID로 테스트시 테스트용 URL로 테스트 하셔야 합니다.
+
+*/
+document.mainForm.target = "Window";
+document.mainForm.submit();
+}
+//-->
+</script>
+
+<form name="mainForm" method="POST" action="">
+<!-- 결제를 위한 필수 hidden정보 -->
+<input type="hidden" name="hashdata" value="{_hashdata}">											<!-- ☞ 결제요청 검증(무결성) 필드-->
+<input type="hidden" name="mid" value="{pg.id}">													<!-- ☞ 상점ID -->
+<input type="hidden" name="oid" value="{ordno}">													<!-- ☞ 주문번호 -->
+<input type="hidden" name="amount" value="{settleprice}">											<!-- ☞ 결제금액 -->
+<input type="hidden" name="ret_url" value="http://{_SERVER['SERVER_NAME']}{_cfg.rootDir}/order/card/dacom/card_return.php"><!-- ☞ 팝업창 사용: 리턴URL -->
+<input type="hidden" name="fail_url" value="http://{_SERVER['SERVER_NAME']}{_cfg.rootDir}/order/card/dacom/card_return.php"><!-- ☞ 팝업창 사용: 리턴URL -->
+<input type="hidden" name="buyer" value="{nameOrder}">												<!-- ☞ 구매자 -->
+<input type="hidden" name="productinfo" value="{_ordnm}">			<!-- ☞ 상품명 -->
+<input type="hidden" name="note_url" value="http://{_SERVER['SERVER_NAME']}{_cfg.rootDir}/order/card/dacom/note_url.php?{_note_query}"><!-- ☞ 결제결과 데이타처리URL(웹전송연동방식) -->
+<!-- 통계서비스를 위한 선택적인 hidden정보 -->
+<input type="hidden" name="producttype" value="">													<!-- 상품타입 -->
+<input type="hidden" name="productcode" value="">													<!-- 상품코드 -->
+<input type="hidden" name="buyerid" value="{?_sess.m_id}{_sess.m_id}{:email}{email}{:}guest{/}">	<!-- 구매자 ID -->
+<input type="hidden" name="buyeremail" value="{email}">												<!-- 구매자 메일 -->
+<input type="hidden" name="buyerphone" value="{=implode('-',mobileOrder)}">							<!-- 구매자 전화 -->
+<input type="hidden" name="deliveryinfo" value="{address} {address_sub}">							<!-- 배송처 -->
+<input type="hidden" name="receiver" value="{nameReceiver}">										<!-- 수취인 -->
+<input type="hidden" name="receiverphone" value="{=implode('-',mobileReceiver)}">					<!-- 수취인 전화번호 -->
+
+<!--{ ? settlekind == "c" }--><!--신용카드-->
+<!-- 할부개월 선택창 제어를 위한 선택적인 hidden정보 -->
+<input type="hidden" name="install_range" value="{pg.quota}">										<!-- 할부개월 범위-->
+<input type="hidden" name="install_fr" value="">													<!-- 할부개월범위 시작-->
+<input type="hidden" name="install_to" value="">													<!-- 할부개월범위 끝-->
+<!-- 무이자 할부(수수료 상점부담) 여부를 선택하는 hidden정보 -->
+<input type="hidden" name="noint_inf" value="{?pg.zerofee == "1"}{pg.zerofee_period}{/}">			<!-- 선택무이자(1:무이자,2:일반) -->
+<input type="hidden" name="nointerest" value="{pg.zerofee}">										<!-- 무이자 기간 -->
+<!--{ : settlekind == "o" }--><!--계좌이체-->
+<input type="hidden" name="pid" value="1111111111111">
+<!--{ / }-->
+
+<!--{ ? settlekind == "o" || settlekind == "v" }--><!--계좌이체|무통장입금(가상계좌)-->
+<input type="hidden" name="taxUseYN" value="{?pg.receipt == "Y"}N{:}Y{/}">							<!-- 현금영수증 미사용여부(Y:미사용,N:사용) -->
+<!--{ / }-->
+
+<input type=hidden name=escrowflag value='{_POST.escrow}'>											<!-- 에스크로 여부 : 적용(Y),미적용(N)-->
+</form>

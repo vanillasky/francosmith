@@ -1,0 +1,225 @@
+{*** 상품토크 | todayshop/today_talk.php ***}
+<html>
+<head>
+<style>
+.input { font-size: 12px; color: #847f74; font-family: "돋움", "굴림", verdana; border-right: #d9d9d9 1px solid; border-top: #d9d9d9 1px solid; padding-left: 2px; border-left: #d9d9d9 1px solid; border-bottom: #d9d9d9 1px solid; background-color: #ffffff }
+
+a {cursor:pointer;}
+img { border:0px; }
+.talkbox {width:871px; background-color:#FFFFFF; margin:0px; padding:0px;}
+.talkbox .titleimg {text-align:left;}
+.talkbox .newitembox {margin:0px 0px 10px 0px;}
+.talkbox .newitembox .inner {background-image:url(../img/bg_box02.gif); width:100%; display:inline-block;}
+.talkbox .newitembox .inner .comment {float:left; margin-left:10px;}
+.talkbox .newitembox .inner .comment textarea {width:670px; height:74px; background-color:#FFFFFF;}
+.talkbox .newitembox .inner .enter {float:right; margin-right:10px;}
+.talkbox .warning {border-top:dashed 1px; border-bottom:dashed 1px; background-color:#F6F6F6; text-align:left; height:30px; padding-top:9px;}
+.talkbox .itembox {border-bottom:solid 1px #E3E3E3;}
+.talkbox .itembox a {cursor:pointer;}
+.talkbox .itembox .item {display:inline-block; width:100%; padding:10px 0px 10px 0px;}
+.talkbox .itembox .item .writer {float:left; text-align:left; width:150px; margin-left:25px; font-weight:bold; font-size:11px;}
+.talkbox .itembox .item .comment {float:left; text-align:left; font-size:11px;}
+.talkbox .itembox .item .comment .edit {display:none; vertical-align:bottom; margin-top:10px;}
+.talkbox .itembox .item .comment .edit .text {float:left;}
+.talkbox .itembox .item .comment .edit .text textarea {width:600px; height:47px;}
+.talkbox .itembox .item .comment .edit .btn {float:left; margin-left:5px;}
+.talkbox .itembox .item .remove {text-align:left; margin-left:25px; font-size:11px; text-decoration:line-through;}
+.talkbox .itembox .reply {display:none; width:100%; padding:10px 0px 10px 0px; background-color:#F5F5F5;}
+.talkbox .itembox .reply .writer {float:left; text-align:left; width:150px; margin-left:25px; font-weight:bold; font-size:11px;}
+.talkbox .itembox .reply .comment {float:left; text-align:left; vertical-align:bottom;}
+.talkbox .itembox .reply .comment .text {float:left;}
+.talkbox .itembox .reply .comment .text textarea {width:600px; height:47px;}
+.talkbox .itembox .reply .comment .btn {float:left; margin-left:5px;}
+.talkbox .talkpager {text-align:center; font-size:11px; margin-top:10px; margin-bottom:10px;}
+</style>
+<script type="text/javascript">
+Ttalk = {
+	curReply: null,
+	curEdit: null,
+	setReply: function(ttsno) {
+		<!--{? !member}-->
+		if (confirm("로그인 후 사용이 가능합니다. 로그인 페이지로 이동하시겠습니까?")) {
+			parent.location.href = "../member/login.php";
+		}
+		<!--{:}-->
+		if (Ttalk.curReply) document.getElementById("reply"+Ttalk.curReply).style.display = "none";
+		if (Ttalk.curReply != ttsno) {
+			Ttalk.curReply = ttsno;
+			document.getElementById("reply"+Ttalk.curReply).style.display = "inline-block";
+		}
+		else Ttalk.curReply = null;
+		resizeFrame();
+		<!--{/}-->
+	},
+	setEdit: function(ttsno) {
+		<!--{? !member}-->
+		if (confirm("로그인 후 사용이 가능합니다. 로그인 페이지로 이동하시겠습니까?")) {
+			parent.location.href = "../member/login.php";
+		}
+		<!--{:}-->
+		if (Ttalk.curEdit) {
+			document.getElementById("edit"+Ttalk.curEdit).style.display = "none";
+			//document.getElementById("view"+Ttalk.curEdit).style.display = "block";
+		}
+		if (Ttalk.curEdit != ttsno) {
+			Ttalk.curEdit = ttsno;
+			document.getElementById("edit"+Ttalk.curEdit).style.display = "block";
+			//document.getElementById("view"+Ttalk.curEdit).style.display = "none";
+		}
+		else Ttalk.curEdit = null;
+		resizeFrame();
+		<!--{/}-->
+	},
+	write: function(mode, tgsno, ttsno) {
+		<!--{? !member}-->
+		if (confirm("로그인 후 사용이 가능합니다. 로그인 페이지로 이동하시겠습니까?")) {
+			parent.location.href = "../member/login.php";
+		}
+		<!--{:}-->
+		var frm = document.getElementById("frmTalk");
+		frm.target = "hiddenIfrm";
+		frm.mode.value = mode;
+		frm.tgsno.value = tgsno;
+		if (ttsno) {
+			frm.ttsno.value = ttsno;
+			switch(mode) {
+				case "edit": {
+					var cmt = document.getElementById("comment_e"+ttsno);
+					if (!cmt.value.replace(/\s/g, "")) {
+						alert("내용을 입력하세요.");
+						cmt.focus();
+						return;
+					}
+					if (!confirm("수정하시겠습니까?")) return;
+					frm.comment.value = cmt.value;
+					break;
+				}
+				case "reply": {
+					var cmt = document.getElementById("comment_r"+ttsno);
+					if (!cmt.value.replace(/\s/g, "")) {
+						alert("내용을 입력하세요.");
+						cmt.focus();
+						return;
+					}
+					frm.comment.value = cmt.value;
+					break;
+				}
+			}
+		}
+		else {
+			var cmt = document.getElementById("newcomment");
+			if (!cmt.value.replace(/\s/g, "")) {
+				alert("내용을 입력하세요.");
+				cmt.focus();
+				return;
+			}
+			frm.comment.value = document.getElementById("newcomment").value;
+		}
+		frm.submit();
+		<!--{/}-->
+	},
+	remove : function(ttsno) {
+		<!--{? !member}-->
+		if (confirm("로그인 후 사용이 가능합니다. 로그인 페이지로 이동하시겠습니까?")) {
+			parent.location.href = "../member/login.php";
+		}
+		<!--{:}-->
+		if (!confirm("삭제하시겠습니까?")) return;
+		var frm = document.getElementById("frmTalk");
+		frm.target = "hiddenIfrm";
+		frm.mode.value = "remove";
+		frm.ttsno.value = ttsno;
+		frm.submit();
+		<!--{/}-->
+	},
+	goPage : function(tgsno, pagenum) {
+		location.href = "../todayshop/today_talk.php?tgsno="+tgsno+"&page="+pagenum;
+	}
+}
+
+function resizeFrame() { 
+    var oBody = document.body;
+    var oFrame = parent.document.getElementById("intalk");
+    var i_height = oBody.scrollHeight + (oFrame.offsetHeight-oFrame.clientHeight);
+    oFrame.style.height = i_height;
+}
+
+</script>
+
+<body style="margin:0px;" onLoad="resizeFrame()">
+<form name="frmTalk" method="post" action="../todayshop/indb.today_talk.php">
+<input type="hidden" name="mode" />
+<input type="hidden" name="tgsno" />
+<input type="hidden" name="ttsno" />
+<input type="hidden" name="comment" />
+</form>
+<div class="talkbox">
+	<div class="titleimg"><img src="../img/title_talk01.gif" /></div>
+	<div class="newitembox">
+		<div><img src="../img/bg_box01.gif" /></div>
+		<div class="inner">
+			<div class="comment">
+			<!--{? member}-->
+			<textarea name="newcomment" class="input"></textarea>
+			<!--{:}-->
+			<textarea name="newcomment" class="input" disabled="disabled">로그인 후 사용이 가능합니다.</textarea>
+			<!--{/}-->
+			</div>
+			<div class="enter"><a href="javascript:Ttalk.write('regist', {=tgsno})"><img src="../img/btn_enter01.gif" /></a></div>
+		</div>
+		<div><img src="../img/bg_box03.gif" /></div>
+	</div>
+	<div class="warning"><img src="../img/bn_warning.gif" /></div>
+	<div id="talk">
+	<!--{@ talk}-->
+		<div class="itembox">
+		<!--{? .remove=='n'}-->
+			<div class="item" id="view{=ttsno}">
+				<div class="writer" <!--{? .step>0 //댓글들여쓰기설정시작}-->style="padding-left:{=(.step-1)*10}px"<!--{/ //댓글들여쓰기설정끝}-->><!--{? .step>0 //댓글아이콘설정시작}--><img src="../img/icon_reply_arrow.gif" /> <!--{/ //댓글아이콘설정끝}--><!--{? .notice>0}--><img src="../img/icon_notice.gif" /><!--{:}-->{=.writer}<!--{/}--></div>
+				<div id="view{=.ttsno}" class="comment">
+					<div <!--{? .step>0 //댓글들여쓰기설정시작}-->style="padding-left:{=.step*10}px"<!--{/ //댓글들여쓰기설정끝}-->>
+						<div>{=nl2br(.comment)}<br/><br/>{=.regdt}</div>
+						<div>
+							<!--{? .notice==0}--><a href="javascript:Ttalk.setReply({=.ttsno})"><img src="../img/btn_talk_reply.gif" /></a><!--{/}-->
+							<!--{? .auth=='y'}-->
+								<a href="javascript:Ttalk.setEdit({=.ttsno})"><img src='../img/btn_talk_edit.gif' /></a>
+								<a href="javascript:Ttalk.remove({=.ttsno})"><img src="../img/btn_talk_del.gif" /></a>
+							<!--{/}-->
+						</div>
+					</div>
+					<div id="edit{=.ttsno}" class="edit">
+						<div class="text"><textarea name="comment_e{=.ttsno}" class="input">{=.comment}</textarea></div>
+						<div class="btn"><a href="javascript:Ttalk.write('edit', {=.tgsno}, {=.ttsno})"><img src="../img/btn_regist2.gif" /></a></div>
+					</div>
+				</div>
+			</div>
+			<!--{? .notice == 0 && member}-->
+				<div id="reply{=.ttsno}" class="reply">
+					<div class="writer" style="padding-left:{=.step*10}px">
+						<img src="../img/icon_reply_arrow.gif" /> {=member.name}
+					</div>
+					<div class="comment">
+						<div class="text"><textarea name="comment_r{=.ttsno}" class="input" /></textarea></div>
+						<div class="btn"><a href="javascript:Ttalk.write('reply', {=.tgsno}, {=.ttsno})"><img src="../img/btn_regist.gif" /></a></div>
+					</div>
+				</div>
+			<!--{/}-->
+		<!--{:}-->
+			<div class="item">
+				<div class="remove" <!--{? .step>0}-->style="padding-left:{=(.step-1)*10}px"<!--{/}-->><!--{? .step>0}--><img src="../img/icon_reply_arrow.gif" /> <!--{/}-->삭제된 글입니다.</div>
+			</div>
+		<!--{/}-->
+		</div>
+	<!--{/}-->
+	</div>
+	<div class="talkpager">
+	<!--{? talkpager.prevpage}--><a href="javascript:Ttalk.goPage({=tgsno}, {=talkpager.prevpage})"><</a><!--{/}-->
+	<!--{@ talkpager.page}-->
+	<span><!--{? .curpage=='y'}--><b>{=.pagenum}</b><!--{:}--><a href="javascript:Ttalk.goPage({=tgsno}, {=.pagenum})">{=.pagenum}</a><!--{/}--></span>
+	<!--{/}-->
+	<!--{? talkpager.nextpage}--><a href="javascript:Ttalk.goPage({=tgsno}, {=talkpager.nextpage})" style="cursor:pointer">></a><!--{/}-->
+	</div>
+</div>
+<iframe name="hiddenIfrm" style="display:none"></iframe>
+</body>
+</html>

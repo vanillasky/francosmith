@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="EUC-KR"?>
+<codes>
+<list>
+	<code power="">{_mode}</code>
+	<desc>모드 - del_qna:삭제</desc>
+	<exam>del_qna</exam>
+</list>
+<list>
+	<code power="">{_sno}</code>
+	<desc>게시물번호</desc>
+	<exam>2</exam>
+</list>
+<list>
+	<code>{_data['m_no']}</code>
+	<desc>회원번호</desc>
+	<exam>1</exam>
+</list>
+<list>
+	<code>{_data.subject}</code>
+	<desc>제목</desc>
+	<exam>언제쯤 배송이 될까요?</exam>
+</list>
+</codes>

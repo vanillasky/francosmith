@@ -1,0 +1,24 @@
+#godo_context_menu {z-index:9999999;position:absolute;top:0px; left: 0px;display:none;background:#F0F0F0;width:200px;border:1px solid #A0A0A0;padding:1px;}
+#godo_context_menu ul {margin:0;padding:0;list-style:none;}
+#godo_context_menu ul li {background:#F0F0F0; cursor:pointer;height:23px;padding-left:25px;line-height:23px;}
+
+#godo_context_menu ul li.seprator {padding:2px;cursor:normal;height:5px;line-height:5px;margin:0;}
+
+#godo_context_menu ul li.seprator:hover {background:#F0F0F0;}
+#godo_context_menu ul li.seprator hr {margin:3px 0 3px 0;padding:0;font-size:1px;_margin:0;}
+
+#godo_context_menu ul li:hover {background:#3399FF;color:#FFFFFF;}
+#godo_context_menu ul li:hover a {color:#ffffff;_color:#3399FF;}
+#godo_context_menu ul li a {text-decoration:none;color:#000000;}
+#godo_context_menu ul li a:hover {color:#ffffff;_color:#3399FF;}
+
+table.context_menu_form {table-layout:fixed;}
+table.context_menu_form th,
+table.context_menu_form td {font-size:12px;text-align:left;}
+
+table.context_menu_form th {background:#F6F6F6;font-weight:bold;width:80px;padding-left:3px;}
+table.context_menu_form td {background:#ffffff;padding:3px;}
+table.context_menu_form input {border:1px solid #CCCCCC}
+
+div.context_menu_form_button-wrap {text-align:center;margin:5px;}
+div.context_menu_form_button-wrap img {margin:5px;cursor:pointer;}

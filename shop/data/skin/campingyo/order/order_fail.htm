@@ -1,0 +1,98 @@
+{*** 주문실패 | order/order_fail.php ***}
+{ # header }
+
+<!-- 상단이미지 || 현재위치 -->
+<table width=100% cellpadding=0 cellspacing=0 border=0>
+<tr>
+	<td><img src="../img/common/title_order_finish.gif" border=0></td>
+</tr>
+<tr>
+	<td class="path">home > <b>주문실패</b></td>
+</tr>
+<!--
+<tr>
+	<td align=center style="padding:10 0 10 0"><img src="../img/common/order_complete.gif" border=0></td>
+</tr>
+-->
+</table><p>
+
+
+<div class="indiv"><!-- Start indiv -->
+
+<table width=100% style="border:1px solid #DEDEDE" cellpadding=0 cellspacing=0>
+<tr>
+	<td width=150 valign=top align=right bgcolor="#F3F3F3" style="padding-top:5px"><img src="../img/common/order_step_end.gif"></td>
+	<td style="border:5px solid #F3F3F3; padding:5px 10px;">
+
+	<table width=100% cellpadding=2>
+	<col width=100>
+	<!--{ ? settlekind=="o" }-->
+	<tr>
+		<td>결제방법</td>
+		<td>계좌이체</td>
+	</tr>
+	<tr>
+		<td>결과</td>
+		<td>주문이 실패되었습니다</td>
+	</tr>
+	<!--{ : settlekind=="c" }-->
+	<tr>
+		<td>결제방법</td>
+		<td>신용카드</td>
+	</tr>
+	<tr>
+		<td>결과</td>
+		<td>주문이 실패되었습니다</td>
+	</tr>
+	<!--{ : settlekind=="y" }-->
+	<tr>
+		<td>결제방법</td>
+		<td>옐로페이</td>
+	</tr>
+	<tr>
+		<td>결과</td>
+		<td>주문이 실패되었습니다</td>
+	</tr>
+	<!--{ / }-->
+	<!--{ ? step==0 && step2 > 50 && in_array(settlekind,array('c','o','v','y')) && pgfailreason }--><!-- 결제실패사유 -->
+	<tr>
+		<td>결제실패사유</td>
+		<td>{=pgfailreason}</td>
+	</tr>
+	<!--{ / }-->
+	<!--{ ? eggyn == 'f' }-->
+	<tr>
+		<td>전자보증보험</td>
+		<td>보증서 발급 실패로 주문이 실패되었습니다.</td>
+	</tr>
+	<!--{ / }-->
+	<tr><td height=3></td></tr>
+	<tr><td height=1 bgcolor=#efefef colspan=2 style="font-size:0px;"></td></tr>
+	<tr><td height=3></td></tr>
+	<tr>
+		<td>주문번호</td>
+		<td>{ordno}</td>
+	</tr>
+	<tr>
+		<td>주문자명</td>
+		<td>{nameOrder}</td>
+	</tr>
+	<tr>
+		<td>주문일자</td>
+		<td>{orddt}</td>
+	</tr>
+	<tr>
+		<td>주문금액</td>
+		<td>{=number_format(settleprice)}원</td>
+	</tr>
+	</table>
+
+	</td>
+</tr>
+</table><p>
+
+<div style="width:100%; text-align:center; padding:10"><A HREF="../index.php"><img src="../img/common/btn_confirm.gif" border=0></A></div>
+
+</div><!-- End indiv -->
+
+{ # footer }

@@ -1,0 +1,70 @@
+{*** 주문내역/배송조회 | mypage/mypage_orderlist.php ***}
+{ # header }
+
+<!-- 상단이미지 || 현재위치 -->
+<div class="page_title_div">
+	<div class="page_title">Order List</div>
+	<div class="page_path"><a href="/shop/">HOME</a> &gt; <a href="/shop/mypage/mypage.php?&">마이페이지</a> &gt; <span class='bold'>주문내역/배송조회</span></div>
+</div>
+<div class="page_title_line"></div>
+
+<div style="width:100%; padding-top:20px;"></div>
+
+<div class="indiv"><!-- Start indiv -->
+
+<script>
+function order_confirm(ordno)
+{
+	var fm = document.frmOrderList;
+	fm.mode.value = "confirm";
+	fm.ordno.value = ordno;
+	fm.action = "indb.php";
+	if (confirm('주문하신 상품을 수령하셨습니까?')) fm.submit();
+}
+</script>
+
+<form name=frmOrderList method=post>
+<input type=hidden name=mode>
+<input type=hidden name=ordno>
+
+	<table class="mypage-board-table">
+	<tr class="mypage-board-title">
+		<th>번호</th>
+		<th>구분</th>
+		<th>주문일시</th>
+		<th>주문번호</th>
+		<th>결제방법</th>
+		<th>주문금액</th>
+		<th>취소금액</th>
+		<th>주문상태</th>
+		<th>수령확인</th>
+		<th>상세보기</th>
+	</tr>
+	<!--{ @ loop }-->
+	<tr height=25 onmouseover=this.style.background="#F7F7F7" onmouseout=this.style.background="" style="border-bottom:1px solid #ededed">
+		<td height=30 align=center>{pg->idx-.index_}</td>
+		<td align=center>{.ordertypestr}</td>
+		<td align=center>{.orddt}</td>
+		<td align=center><a href="mypage_orderview.php?ordno={.ordno}">{.ordno}</a></td>
+		<td align=center>{.str_settlekind}</td>
+		<td align=right style="padding-right:20">{=number_format(.settleprice)}</td>
+		<td align=right style="padding-right:20">{=number_format(.canceled_price)}</td>
+		<td align=center><FONT COLOR="#007FC8">{.str_step}</FONT></td>
+		<td align=center>
+		<!--{ ? .step==3 && !.step2 }-->
+		<a href="javascript:order_confirm({.ordno})"><img src="../img/common/btn_receive.gif"></a>
+		<!--{ : .escrowconfirm==2 }-->수령
+		<!--{ / }-->
+		</td>
+		<td align=center><a href="mypage_orderview.php?ordno={.ordno}"><img src="../img/common/btn_detailview.gif"></a></td>
+	</tr>
+	<!--{ / }-->
+	</table>
+
+<div class="pagediv">{pg->page['navi']}</div>
+
+</form>
+
+</div><!-- End indiv -->
+
+{ # footer }

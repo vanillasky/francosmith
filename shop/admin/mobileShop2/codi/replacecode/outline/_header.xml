@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="EUC-KR"?>
+<codes>
+<list>
+	<code>{_cfg['outbg_color']}</code>
+	<desc>전체 배경색상</desc>
+	<exam></exam>
+</list>
+<list>
+	<code>{_cfg['outbg_img']}</code>
+	<desc>전체 배경이미지</desc>
+	<exam></exam>
+</list>
+<list>
+	<code>{_meta_title}</code>
+	<desc>메타태그 > 쇼핑몰타이틀</desc>
+	<exam>:: XXX 쇼핑몰입니다 ::</exam>
+</list>
+<list>
+	<code>{_meta_keywords}</code>
+	<desc>메타태그 > 검색엔진 키워드</desc>
+	<exam>신발 운동화 런닝화</exam>
+</list>
+</codes>

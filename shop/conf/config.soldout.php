@@ -1,0 +1,25 @@
+<? 
+$cfg_soldout = array( 
+'exclude_main' => '0', 
+'back_main' => '0', 
+'exclude_category' => '0', 
+'back_category' => '0', 
+'exclude_search' => '0', 
+'back_search' => '0', 
+'exclude_brand' => '0', 
+'back_brand' => '0', 
+'exclude_event' => '0', 
+'back_event' => '0', 
+'display' => 'overlay', 
+'display_overlay' => 'custom', 
+'display_icon' => '1', 
+'mobile_display' => 'overlay', 
+'mobile_display_overlay' => '1', 
+'goodsnm' => '1', 
+'price' => 'price', 
+'price_string' => '', 
+'shortdesc' => '1', 
+'coupon' => '1', 
+'icon' => '1', 
+) 
+;?>

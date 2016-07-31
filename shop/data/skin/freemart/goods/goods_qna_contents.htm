@@ -1,0 +1,29 @@
+{*** 상품문의 상세 | goods/goods_qna_contents.php ***}
+<!--{ ? authview == 'Y' }-->
+<table id=contents width=100% cellpadding=0 cellspacing=0 style="border-top-style:solid;border-top-color:#303030;border-top-width:2;" onmouseover=this.style.background="#F7F7F7" onmouseout=this.style.background="">
+<tr>
+	<td style="border-top-style:solid;border-top-color:#E6E6E6;border-top-width:1;padding:5 5 5 0;">
+	<div>{contents}</div>
+	<div style="float:right;">
+	<!--{ ? parent == sno && !notice }-->
+	<a href="javascript:;" onclick="popup_register( 'reply_qna', '{goodsno}', '{sno}' );"><img src="../img/common/btn_reply.gif" border="0" align="absmiddle"></a>
+	<!--{ / }-->
+	<!--{ ? authmodify == 'Y' }-->
+	<a href="javascript:;" onclick="popup_register( 'mod_qna', '{goodsno}', '{sno}' );"><img src="../img/common/btn_modify2.gif" border="0" align="absmiddle"></a>
+	<!--{ / }-->
+	<!--{ ? authdelete == 'Y' }-->
+	<a href="javascript:;" onclick="popup_register( 'del_qna', '{goodsno}', '{sno}' );"><img src="../img/common/btn_delete.gif" border="0" align="absmiddle"></a>
+	<!--{ / }-->
+	</div>
+	</td>
+</tr>
+<tr><td height=1 bgcolor="#E6E6E6" style="padding:0px;"></td></tr>
+</table>
+<!--{ : }-->
+<table width=100% cellpadding=0 cellspacing=0 style="border-top-style:solid;border-top-color:#303030;border-top-width:2;" onmouseover=this.style.background="#F7F7F7" onmouseout=this.style.background="">
+<tr height=30>
+	<td style="border-top-style:solid;border-top-color:#E6E6E6;border-top-width:1" align="center">비밀글 입니다.</td>
+</tr>
+<tr><td height="1" bgcolor="#E6E6E6" style="padding:0px;"></td></tr>
+</table>
+<!--{ / }-->

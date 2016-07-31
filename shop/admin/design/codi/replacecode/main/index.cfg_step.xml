@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="EUC-KR"?>
+<codes>
+<list>
+	<code power="">{.chk}</code>
+	<desc>사용유무 (=메인페이지 출력여부)</desc>
+	<exam>on</exam>
+</list>
+<list>
+	<code>{.title}</code>
+	<desc>설명</desc>
+	<exam>추천상품</exam>
+</list>
+<list>
+	<code power="">{.tpl}</code>
+	<desc>디스플레이유형</desc>
+	<exam>tpl_04</exam>
+</list>
+<list>
+	<code>{.img}</code>
+	<desc>이미지선택 - img_s:리스트이미지, img_i:메인이미지</desc>
+	<exam>img_s</exam>
+</list>
+<list>
+	<code power="">{.page_num}</code>
+	<desc>메인출력 상품수</desc>
+	<exam>10</exam>
+</list>
+<list>
+	<code power="">{.cols}</code>
+	<desc>라인당 상품수</desc>
+	<exam>5</exam>
+</list>
+</codes>

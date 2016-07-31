@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="EUC-KR"?>
+<codes>
+<list>
+	<code power="">{_form}</code>
+	<desc>폼이름</desc>
+	<exam>opener.document.frmMember</exam>
+</list>
+<list>
+	<code>{_dong}</code>
+	<desc>지역명</desc>
+	<exam>대치동</exam>
+</list>
+<list>
+	<code power="">{ @ _loop }</code>
+	<desc>우편번호</desc>
+	<exam more="proc/popup_zipcode.loop.xml"></exam>
+</list>
+<list>
+	<code>{pg->page['navi']}</code>
+	<desc>페이징 > 네비게이션</desc>
+	<exam>1 [2]</exam>
+</list>
+</codes>

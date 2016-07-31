@@ -1,0 +1,17 @@
+{*** 개인정보 제3자 제공관련 | service/private.php ***}
+
+<table cellspacing=0 cellpadding=6 width="100%" border=0>
+<tr>
+	<th>
+	<div class="content_title"><img src="../img/common/icon_arrow.gif" border=0 align=absmiddle>개인정보 제3자 제공관련</div>
+	</th>
+</tr>
+<tr>
+	<td style="text-align: justify">
+	① 개인정보를 제공받는 자 :  OOO<br>
+	② 개인정보를 제공받는 자의 개인정보 이용목적 : OOO 의 상품 소개를 위한 텔레마케팅에 활용<br>
+	③ 제공하는 개인정보의 항목 : 성명, 생년월일, 전화번호
+	④ 개인정보를 제공받는 자의 개인정보 보유 및 이용기간 : 제공일로부터 3개월간 보유 및 활용 후 파기
+	</td>
+</tr>
+</table>

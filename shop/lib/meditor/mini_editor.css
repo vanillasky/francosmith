@@ -1,0 +1,7 @@
+table.mini-editor-toolbar {padding:0;margin:0;}
+table.mini-editor-toolbar tbody td {border:1px solid #cccccc;background-color:#f7f7f7;padding:4px 5px 0 10px;background-color:#f7f7f7;}
+table.mini-editor-toolbar tbody td table {border:none;}
+table.mini-editor-toolbar tbody td table td {border:none;padding:0;}
+
+table.mini-editor-table-drawer {border-collapse:collapse;border:1px #cccccc !important;}
+table.mini-editor-table-drawer td {border:1px solid #cccccc !important;}

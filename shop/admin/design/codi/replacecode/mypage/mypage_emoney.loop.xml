@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="EUC-KR"?>
+<codes>
+<list>
+	<code>{.idx}</code>
+	<desc>일련번호</desc>
+	<exam>1</exam>
+</list>
+<list>
+	<code power="">{.memo}</code>
+	<desc>상세내역</desc>
+	<exam>신규회원 가입</exam>
+</list>
+<list>
+	<code power="">{.regdts}</code>
+	<desc>발생일시</desc>
+	<exam>2007.05.17</exam>
+</list>
+<list>
+	<code>{.emoney}</code>
+	<desc>금액</desc>
+	<exam>10000</exam>
+</list>
+<list>
+	<code power="">{ ? .emoney &gt; 0 }{=number_format(.emoney)}{ : }―{ / }</code>
+	<desc>적립금액</desc>
+	<exam>10,000</exam>
+</list>
+<list>
+	<code power="">{ ? .emoney &lt; 0 }{=number_format(.emoney)}{ : }―{ / }</code>
+	<desc>사용금액</desc>
+	<exam>―</exam>
+</list>
+</codes>

@@ -1,0 +1,41 @@
+{*** 메인용 상단파일 | main/index.php ***}
+<a name="top"></a>
+<div id="header_main">
+	<div id="top_1" style="width:{_cfg['shopSize']}px; position:relative;">
+		<div id="top_logo"><!-- 배너관리에서 수정가능 --><!--{ @ dataBanner( 90 ) }-->{.tag}<!--{ / }--></div>
+		<div id="top_menu_layer">
+			<ul id="top_menu">
+				<!--{ ? !_sess }-->
+				<li><a href="../member/login.php" class="top_ul_font">로그인</a></li>
+				<li class="top_ul_line">|</li>
+				<li><a href="../member/join.php" class="top_ul_font">회원가입</a></li>
+				<li class="top_ul_line">|</li>
+				<!--{ : }-->
+				<li><a href="../member/logout.php" class="top_ul_font">로그아웃</a></li>
+				<li class="top_ul_line">|</li>
+				<!--{ / }-->
+				<li><a href="../member/myinfo.php?&" { ? useMypageLayerBox == 'y' }onClick="return fnMypageLayerBox({ ? _sess }true{ / });"{ / } class="top_ul_font">마이페이지</a></li>
+				<li class="top_ul_line">|</li>
+				<li><a href="../mypage/mypage_orderlist.php" class="top_ul_font">주문/배송</a></li>
+				<li class="top_ul_line">|</li>
+				<li><a href="../service/customer.php" class="top_ul_font">고객센터</a></li>
+				<li class="top_ul_line">|</li>
+				<li><img src="/shop/data/images/web/icon/moneybag.jpg" width="11" height="10">
+					<a href="/shop/goods/goods_list.php?&category=022p" class="top_ul_font">개인결제</a>
+				</li>
+				<li class="top_ul_line">|</li>
+				<li><img src="/shop/data/images/web/icon/shopping-cart-24.png" width="11" height="10"> <a href="../goods/goods_cart.php" class="top_ul_font">장바구니</a></li>
+			</ul>
+		</div>
+	</div>
+	<div id="top_cate" style="width:{_cfg['shopSize']}px;">
+		<!-- 카테고리 메뉴 시작 -->
+		<!-- 관련 세부소스는 '기타/추가페이지(proc) > 카테고리메뉴- menuCategory.htm' 안에 있습니다 -->
+		{ # menuCategory }
+		<!-- 카테고리 메뉴 끝 -->
+		<div id="top_navi">
+			<p class="brand"><a href="#" class="catenavi">BRAND</a></p>
+			<p class="event"><a href="#" class="catenavi">EVENT</a></p>
+		</div>
+	</div>
+</div>

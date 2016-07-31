@@ -1,0 +1,1 @@
+<div id="admin-widget-area"></div>

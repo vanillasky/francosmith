@@ -1,0 +1,120 @@
+{*** 카테고리메뉴 | proc/menuCategory.php ***}
+<div id="t_cate">
+	<!--{ ? _cfg.subCategory != 2 // 1단 또는 서브레이어 출력 유형 }-->
+	<div id="r_cate">
+		<table cellpadding=0 cellspacing=0 id=menuLayer align=center border="0" width="100%">
+			<tr class="catebar_tr" >
+			<!--{ @ dataCategory( _cfg.subCategory, 1 ) }-->
+				<td id='level1' class="catebar"  >
+					<a href="../goods/goods_list.php?category={.category}">{.catnm}</a>
+				<!--{ ? .sub }-->
+				<div id="subMenuWrapper">
+					<div class="subLayer">
+						<table width="100%" cellspacing=0 cellpadding="0" border="0" id="table_arrow" style="background-color:#376e88">
+						<tr>
+							<td><img src="/shop/data/images/web/icon/icon_arrow.gif"></td>
+						</tr>
+						</table>
+						<div id="subcategory">
+						<table width="100%" cellspacing=0 cellpadding="0" border="0" id="table_cate">
+							
+							<!--{ @ .sub }-->
+							<tr>
+								<td align="left" nowrap class="cate" onclick="javascript:location.href='../goods/goods_list.php?category={..category}'"><a href="../goods/goods_list.php?category={..category}">{..catnm}</a></td>
+							</tr>
+							<!--{ / }-->
+						</table>
+						</div>
+					</div>
+				</div>
+				<!--{ / }-->
+			</td>
+				<td style="text-align:center;color:#ccc;width:2px;">|</td>	
+			<!--{ / }-->
+			
+		</tr>
+		</table>
+		<!--{ ? _cfg.subCategory }-->
+		<script>_execSubLayerTop();</script>
+		<!--{ / }-->
+		
+	</div>
+	
+	<div id="sale_menu">
+		<div id="sale_icon"><img src="/shop/data/images/web/icon/1412717979_label_sale.png"></div>
+		
+	</div>
+	
+	<div id="brands" class="main_navi" style="display:none;">
+		<ul>
+			
+			<li><img src="http://francosmith.godohosting.com/brands/aplus.jpg"/></li>
+			<li><img src="http://francosmith.godohosting.com/brands/bondex.jpg"/></li>
+			<li><a href="/shop/goods/goods_brand.php?brand=2"><img src="/shop/data/images/brands/microjig.png"></a></li>
+			<li><img src="/shop/data/images/brands/leight.png"></li>
+			<li><img src="/shop/data/images/brands/bessey.png"></li>
+			<li><img src="/shop/data/images/brands/irwin.png"></li>
+			<li><img src="/shop/data/images/brands/rockwell.png"></li>
+			<li><img src="/shop/data/images/brands/gorilla.png"></li>
+			
+			<li><img src="/shop/data/images/brands/narex.png"></li>
+			<li><img src="/shop/data/images/brands/fiskars.png"></li>
+			<li><img src="/shop/data/images/brands/chhanson.png"></li>
+			<li><img src="/shop/data/images/brands/lie-nielsen.png"></li>
+			<li><img src="/shop/data/images/brands/pfeil.png"></li>
+			<li><img src="/shop/data/images/brands/two-cherries.png"></li>
+			
+			<li><img src="/shop/data/images/brands/gyokucho.png"></li>			
+			<li><img src="/shop/data/images/brands/kakuri.png"></li>
+			<li><img src="/shop/data/images/brands/stabila.png"></li>
+			<li><img src="/shop/data/images/brands/starm.png"></li>
+			<li><img src="/shop/data/images/brands/cmt.png"></li>
+			<li><img src="/shop/data/images/brands/dmt.png"></li>
+			
+			<li><img src="/shop/data/images/brands/tormek.png"></li>
+			<li><img src="/shop/data/images/brands/sorby.png"></li>
+			<li><img src="/shop/data/images/brands/festool.png"></li>
+			<li><img src="/shop/data/images/brands/jet.png"></li>
+			<li><img src="/shop/data/images/brands/portercable.png"></li>
+			<li><img src="/shop/data/images/brands/powermatic.png"></li>
+			
+			<li><img src="/shop/data/images/brands/sawstop.png"></li>
+			<li><img src="/shop/data/images/brands/sthil.png"></li>
+			<li><img src="/shop/data/images/brands/zinsser.png"></li>
+			<li><img src="/shop/data/images/brands/osmo.png"></li>
+		</ul>
+	</div>
+	
+	<div id="all_menu" class="main_navi" style="display:none;">
+		
+	</div>
+	
+	<!--{ : // 1,2단 동시 메뉴 출력 유형 }-->
+	<table cellpadding=0 cellspacing=0 border=0 class="cateUnfold" align=center>
+	<tr>
+		<!--{ @ dataCategory( _cfg.subCategory, 1 ) }-->
+		<td style="{?strpos(.catnm, 'img')===false}padding:5px 19px 0 19px{/}" class="catebar"><a href="../goods/goods_list.php?category={.category}">{.catnm}</a>
+			<!--{ ? .sub }-->
+			<div class="catesub">
+				<table>
+				<!--{ @ .sub }-->
+				<tr>
+					<td class="cate"><a href="../goods/goods_list.php?category={..category}">- {..catnm}</a></td>
+				</tr>
+				<!--{ / }-->
+				</table>
+			</div>
+			<!--{ / }-->
+		</td>
+		<!--{ / }-->
+	</tr>
+	</table>
+	<!--{ / }-->
+	
+	
+
+
+	
+</div>
+
+

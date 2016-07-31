@@ -1,0 +1,84 @@
+{*** 목록 | board/list.php ***}
+<!--{ ? !_pageView }-->
+{ # header } {_bdHeader}
+<!--{ / }-->
+
+<table width={_bdWidth} align={_bdAlign} cellpadding=0 cellspacing=0><tr><td>
+
+<form name=frmList action="list.php" onsubmit="return chkFormList(this)">
+<input type=hidden name=id value="{id}">
+
+<table width=100%>
+<tr>
+	<!--{ @ list }-->
+
+	<!--{ ? .notice }--><? {cnt_notice}++; ?>
+	</tr><tr>
+		<td height=25 colspan=10 bgcolor=#f7f7f7 style="border-bottom:1 solid #efefef">
+		<img src="img/board_notice.gif" align=absmiddle> <!--{ ? _bdUseSubSpeech && .category }-->[{.category}]<!--{ / }--> {.link.view}{.subject}{link.end}
+		</td>
+	</tr><tr>
+	<!--{ : }-->
+
+	<td valign=top>
+
+	<table>
+	<col align=center>
+	<tr>
+		<td>
+
+		<table>
+		<tr>
+			<td width="{ = (_bdListImgSizeW + 13) }" height="{ = (_bdListImgSizeH + 13) }" style="border:3 solid #efefef;padding:1px" align="center">
+			<!--{ ? _bdListImg == 2 }-->{.link.view}<!--{ : .imgnm }--><a href="javascript:popupImg('../data/board/{id}/{.imgnm}')"><!--{ / }--><img src="../data/board/{id}/t/{.imgnm}" width="{ = .imgSizeW }" height="{ = .imgSizeH }" onerror=this.src="img/noimg.gif"></a>
+			</td>
+		</tr>
+		</table>
+
+		</td>
+	</tr>
+	<tr><td><!--{ ? _bdUseSubSpeech && .category }-->[{.category}]<!--{ / }-->{.link.view}{.subject}{link.end}</td></tr>
+	</table>
+
+	</td>
+	<!--{ ? (.index_+1-cnt_notice) % _bdListImgCntW ==0 }--></tr><tr><!--{ / }-->
+	<!--{ / }-->
+	<!--{ / }-->
+</tr>
+</table>
+
+<table width=100%>
+<tr>
+	<td class=eng>
+	{page.navi}
+	<!--{ ? link.prev }-->{link.prev}이전{link.end} <!--{ / }-->
+	<!--{ ? link.next }-->{link.next}다음{link.end}<!--{ / }-->
+	</td>
+	<td align=right>
+		<table cellpadding=0 cellspacing=0>
+		<tr>
+			<!--{ ? _bdUseSubSpeech }--><td align=center>{speechBox}</td><!--{ / }-->
+			<td class=stxt>
+			<!--{ ? !(_bdField&8) }-->
+			<input type=checkbox name="search[name]" {checked['search']['name']}>이름
+			<!--{ / }-->
+			<input type=checkbox name="search[subject]" {checked['search']['subject']}>제목
+			<input type=checkbox name="search[contents]" {checked['search']['contents']}>내용&nbsp;
+			</td>
+			<td><input name="search[word]" value="{search.word}" style="background-color:#FFFFFF;border:1px solid #DFDFDF;width:140" required></td>
+			<td><a href="javascript:document.frmList.submit()"><img src="img/board_btn_search.gif"></a></td>
+			<td><a href="list.php?id={id}"><img src="img/board_btn_cancel.gif"></a></td>
+		</tr>
+		</table>
+	</td>
+</tr>
+</table>
+
+{link.list}<img src="img/board_btn_list.gif">{link.end}
+<!--{ ? link.write }-->{link.write}<img src="img/board_btn_write.gif">{link.end}<!--{ / }-->
+
+</form>
+
+</td></tr></table>
+
+<!--{ ? !_pageView }-->{_bdFooter} { # footer }<!--{ / }-->

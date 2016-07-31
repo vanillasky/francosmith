@@ -1,0 +1,193 @@
+{#header}
+<?php {page_title} = "회원가입 (약관동의)";?>
+{#sub_header}
+<script type="text/javascript">
+	$(document).ready(function(){
+		$("#auth-type-ipin").bind("click", function(){
+			$("#ipin-description").css("display", "block");
+			$("#hpauth-description").css("display", "none");
+			$("#next-btn").unbind("click").bind("click", function(){
+				nextStep();
+				return false;
+			});
+		});
+		$("#auth-type-hpauth").bind("click", function(){
+			$("#hpauth-description").css("display", "block");
+			$("#ipin-description").css("display", "none");
+			$("#next-btn").unbind("click").bind("click", function(){
+				goHpauth();
+				return false;
+			});
+		});
+		if ($("#auth-type-ipin").length > 0) $("#auth-type-ipin").trigger("click");
+		else if ($("#auth-type-hpauth").length > 0) $("#auth-type-hpauth").trigger("click");
+		else ;
+	});
+	function goHpauth()
+	{
+		if($("[name=chk_agree]").is(":checked") == false) {
+			alert("이용약관에 동의하셔야 회원가입이 가능합니다");
+			return false;
+		}
+
+		if($("[name=chk_private]").is(":checked") == false) {
+			alert("개인정보 취급방침에 동의하셔야 회원가입이 가능합니다");
+			return false;
+		}
+
+		var protocol = location.protocol;
+		var callbackUrl = "{=ProtocolPortDomain()}{_cfg.rootDir}/member/hpauthDream/hpauthDream_Result.php";
+		var DRMOK_window = window.open(protocol + "//hpauthdream.godo.co.kr/module/Mobile_hpauthDream_Main.php?callType=joinmembermobile&shopUrl=" + callbackUrl + "&cpid={=hpauthCPID}");
+	}
+	function chgAgreement(no) {
+		$(".agreement1").removeClass('now_agreement');
+		$(".agreement2").removeClass('now_agreement');
+		$(".agreement" + no).addClass('now_agreement');
+
+		$(".agreement_content1").css("height", "180px");
+		$(".agreement_content1 .content-text").css("height", "97%");
+		$(".agreement_content2").css("height", "180px");
+		$(".agreement_content2 .content-text").css("height", "97%");
+
+		$(".agreement_content1").addClass('hidden');
+		$(".agreement_content2").addClass('hidden');
+		$(".agreement_content" + no).removeClass('hidden');
+
+		$(".content_view").removeClass('hidden');
+	}
+
+	function contentView() {
+
+		if($(".agreement_content1").is(':hidden') == false) {
+			$(".agreement_content1").css("height", "7500px");
+			$(".agreement_content1 .content-text").css("height", "99%");
+		}
+		else {
+			$(".agreement_content2").css("height", "1750px");
+			$(".agreement_content2 .content-text").css("height", "98%");
+		}
+
+		$(".content_view").addClass('hidden');
+	}
+
+	var ipinStatus = '{ipinStatus}'; // 아이핀 인증
+
+	function nextStep()
+	{
+		if (ipinStatus == 'y') { // 아이핀 인증
+			goIDCheckIpin();
+			return;
+		}
+		else {
+			chkForm2();
+		}
+	}
+
+	function chkForm2()
+	{
+		if($("[name=chk_agree]").is(":checked") == false) {
+			alert("이용약관에 동의하셔야 회원가입이 가능합니다");
+			return;
+		}
+
+		if($("[name=chk_private]").is(":checked") == false) {
+			alert("개인정보 취급방침에 동의하셔야 회원가입이 가능합니다");
+			return;
+		}
+
+		$("#form").submit();
+
+	}
+</script>
+<section class="content" id="memberjoin">
+<form id=form name=frmAgree method=post action="indb.php" target="ifrmHidden" onSubmit="return chkForm2()">
+	<input type="hidden" name="mode" value="chkRealName" />
+	<input type="hidden" name="rncheck" value="none" />
+	<input type="hidden" name="nice_nm" value="" />
+	<input type="hidden" name="pakey" value="" />
+	<input type="hidden" name="birthday" value="" />
+	<input type="hidden" name="sex" value="" />
+	<input type="hidden" name="dupeinfo" value="" />
+	<input type="hidden" name="foreigner" value="" />
+	<input type="hidden" name="type" />
+	<input type="hidden" name="mobile" value="" />
+	<div class="join_step">
+		<div class="join_step1 now_step">약관동의</div>
+		<div class="join_arrow"></div>
+		<div class="join_step2">계정생성</div>
+		<div class="join_arrow"></div>
+		<div class="join_step4">가입완료</div>
+	</div>
+	<div class="content_border"></div>
+	<div class="agreement">
+		<div class="agreement_title">
+			<div class="agreement1 now_agreement" onclick="javascript:chgAgreement('1');">이용약관</div>
+			<div class="agreement_bar"></div>
+			<div class="agreement2" onclick="javascript:chgAgreement('2');">개인정보 취급방침</div>
+		</div>
+		<div class="agreement_content1" id="agreement-content1">
+			<textarea class="content-text" readonly><!--{ = include_file( "proc/_agreement.txt" ) }--></textarea>
+		</div>
+		<div class="agreement_content2 hidden" id="agreement-content2">
+			<textarea class="content-text" readonly><!--{ = include_file( "service/_private1.txt" ) }--></textarea>
+		</div>
+		<div class="content_view"><div class="view_btn"  onclick="javascript:contentView();">▼ 펼쳐보기</div></div>
+	</div>
+	<div class="content_border"></div>
+	<div class="agreement_chk">
+		<div class="agreement_chk1">
+			<label><input type="checkbox" name="chk_agree" value="y" /> 위의 "이용약관"에 동의 합니다.</label>
+		</div>
+		<div class="agreement_chk2">
+			<label><input type="checkbox" name="chk_private" value="y" /> 위의 "개인정보취급방침"에 동의 합니다.</label>
+		</div>
+	</div>
+	<div class="certify">
+		<!--{? ipinyn == 'y' || niceipinyn == 'y' }-->
+		<span style="margin: 10px; display: inline-block;">
+			<input id="auth-type-ipin" name="auth_type" type="radio" value="ipin" required="required"/>
+			<label for="auth-type-ipin">
+				<img src="../common/img/ipin/Regist_realName_title_2.gif" style="width: 124px; height: 16px; vertical-align: middle;" alt="아이핀(i-pin)으로 인증" />
+			</label>
+		</span>
+		<!--{/ }-->
+
+		<!--{? hpauthyn == 'y' }-->
+		<span style="margin: 10px; display: inline-block;">
+			<input id="auth-type-hpauth" name="auth_type" type="radio" value="hpauth" required="required"/>
+			<label for="auth-type-hpauth">
+				<img src="../img/auth/hpauth_title_3.gif" style="width: 111px; height: 16px; vertical-align: middle;" alt="휴대폰으로 본인인증" />
+			</label>
+		</span>
+		<!--{/ }-->
+
+		<div id="ipin-description">
+			<!--{ ? ipinyn == 'y' // 아이핀인증여부 }-->
+			<!--{ = include_file( "mem/NiceIpin.htm" ) }-->
+			<!--{ / }-->
+
+			<!--{ ? niceipinyn == 'y' // 새로운 아이핀인증여부 }-->
+			<!--{ = include_file( "mem/NewNiceIpin.htm" ) }-->
+			<!--{ / }-->
+		</div>
+		
+		<div id="hpauth-description">
+			<!--{ ? hpauthyn == 'y' }-->
+			<div id="div_RnCheck_hpauth" class="div_RnCheck_hpauth">
+			<ul class="info">
+				<li>본인 소유의 휴대폰번호가 아닌 경우 본인확인 인증 및 회원가입에 제한되니, 유의하시기 바랍니다.</li>
+				<li>본인확인 인증시 입력한 정보는 본인확인 용도 외에는 사용되거나, 보관하지 않습니다.</li>
+				<li>본인확인 인증시 발생하는 비용은 에서 부담됩니다.</li>
+			</ul>
+			</div>
+			<!--{ / }-->
+		</div>
+	</div>
+	<div class="step_btn">
+		<div class="next_btn"><button id="next-btn" tabindex="5">다음단계</button></div>
+		<div class="cancel_btn"><button id="cancel-btn" tabindex="5" onclick="javascript:location.href='/'+mobile_root+'/index.php';return false;">가입취소</button></div>
+	</div>
+</form>
+</section>
+
+{ # footer }

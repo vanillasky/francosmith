@@ -1,0 +1,151 @@
+{*** 실명인증 | member/join.php ***}
+
+<script type="text/javascript">
+/*	==========================================================
+	한국신용정보주식회사 처리 모듈 (수정 및 변경하지 마십시오)
+	==========================================================	*/
+(function() {
+	var _nuguya_scripts = [
+	'secure.nuguya.com/nuguya/nice.nuguya.oivs.crypto.js',
+	'secure.nuguya.com/nuguya/nice.nuguya.oivs.msg.js',
+	'secure.nuguya.com/nuguya/nice.nuguya.oivs.util.js'
+	];
+
+	var _script = document.getElementsByTagName('script')[0];
+
+	for (var i in _nuguya_scripts) {
+		if (_nuguya_scripts.hasOwnProperty(i)) {
+			var _sc = document.createElement('script');
+				_sc.type = 'text/javascript';
+				_sc.src = ('https:' == document.location.protocol ? 'https://' : 'http://') +  _nuguya_scripts[i];
+
+			_script.parentNode.insertBefore(_sc, _script);
+		}
+	}
+})();
+
+// 내/외국인 구분을 설정하십시오. ( '1'-내국인, '2'-외국인 )
+var strForeigner = '1';
+// 조회사유를 설정하십시오. ( '10'-회원가입, '20'-기존회원 확인, '30'-성인인증, '40'-비회원 확인, '90'-기타 사유 )
+var strRsn = '10';
+
+function validate(fm)
+{
+	var userNm = fm['name'];
+	var userNo1 = fm['resno[]'][0];
+	var userNo2 = fm['resno[]'][1];
+	var userNo = userNo1.value + userNo2.value;
+
+	if ( userNm.value == "" )
+	{
+		alert( getCheckMessage( "S23" ) );
+		userNm.focus();
+		return false;
+	}
+
+	if ( userNo1.value == "" )
+	{
+		if ( strForeigner == "2" )
+			alert( getCheckMessage( "S27" ) );
+		else
+			alert( getCheckMessage( "S21" ) );
+		userNo1.value = "";
+		userNo1.focus();
+		return false;
+	}
+
+	if ( userNo2.value == "" )
+	{
+		if ( strForeigner == "2" )
+			alert( getCheckMessage( "S27" ) );
+		else
+			alert( getCheckMessage( "S21" ) );
+		userNo2.value = "";
+		userNo2.focus();
+		return false;
+	}
+
+	if ( strForeigner == "2" )
+	{
+		if ( checkForeignNm( userNm.value ) == false )
+		{
+			alert( getCheckMessage( "S28" ) );
+			document.all.userNm.focus();
+			return false;
+		}
+
+		if ( checkForeignNo( userNo ) == false )
+		{
+			alert( getCheckMessage( "S26" ) );
+			document.all.userNo2.focus();
+			return false;
+		}
+	}
+	else
+	{
+		if ( checkString( userNm.value ) == false )
+		{
+			alert( getCheckMessage( "S24" ) );
+			userNm.focus();
+			return false;
+		}
+
+		if ( checkNumeric( userNo ) == false )
+		{
+			alert( getCheckMessage( "S25" ) );
+			userNo1.focus();
+			return false;
+		}
+	}
+
+	return true;
+}
+
+function goIDCheck(fm)
+{	
+	if ( validate(fm) == true )
+	{
+		var strNm = fm['name'].value;
+		var strNo = fm['resno[]'][0].value + fm['resno[]'][1].value;
+		fm.SendInfo.value = makeSendInfo( strNm, strNo, strRsn, strForeigner );				
+		return true;
+	}
+
+	return false;
+}
+
+</script>
+<input type="hidden" id="SendInfo" name="SendInfo"></input>
+
+
+
+<div style="height:10; font-size:0"></div>
+
+<!-- 실명확인 -->
+<div id="div_RnCheck_jumin" style="width:100%;display:none;" cellpadding=0 cellspacing=0 border=0>
+<div style="border:1px solid #DEDEDE;" class="hundred">
+<table width=100% cellpadding=0 cellspacing=0 border=0>
+<tr>
+	<td style="border:5px solid #F3F3F3;padding:10">
+
+	<table align=center>
+	<col width=50%>
+	<tr>
+		<td align=right rowspan=2 style="padding-right:20px"><img src="../img/common/join_txt_03.gif" border=0></td>
+		<td align=right style="padding-right:10" class="input_txt">이름</td>
+		<td><input type=text name=name required label="이름" style="width:183px"></td>
+	</tr>
+	<tr>
+		<td align=right style="padding-right:10" class="input_txt">주민등록번호</td>
+		<td>
+		<input type=text name=resno[] maxlength=6 required label="주민등록번호" onkeyup="if (this.value.length==6) this.nextSibling.nextSibling.focus()" onkeydown="onlynumber()" style="width:80px"> -
+		<input type=password name=resno[] maxlength=7 required label="주민등록번호" onkeydown="onlynumber()" style="width:90px">
+		</td>
+	</tr>
+	</table>
+
+	</td>
+</tr>
+</table>
+</div>
+</div>

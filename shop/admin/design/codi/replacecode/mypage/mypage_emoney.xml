@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="EUC-KR"?>
+<codes>
+<list>
+	<code>{_name}</code>
+	<desc>회원이름</desc>
+	<exam>홍길동</exam>
+</list>
+<list>
+	<code power="">{=number_format(_emoney)}</code>
+	<desc>회원적립금</desc>
+	<exam>12,300</exam>
+</list>
+<list>
+	<code power="">{ @ _loop}</code>
+	<desc></desc>
+	<exam more="mypage/mypage_emoney.loop.xml"></exam>
+</list>
+<list>
+	<code>{pg->page['navi']}</code>
+	<desc>페이징 > 네비게이션</desc>
+	<exam>1 [2]</exam>
+</list>
+<list>
+	<code>{ # header }</code>
+	<desc>상단과 측면을 크게 감싸는 외곽파일 인클루드, 소스 맨위에 삽입</desc>
+	<exam></exam>
+</list>
+<list>
+	<code>{ # footer }</code>
+	<desc>하단을 크게 감싸는 외곽파일 인클루드, 소스 맨아래에 삽입</desc>
+	<exam></exam>
+</list>
+</codes>

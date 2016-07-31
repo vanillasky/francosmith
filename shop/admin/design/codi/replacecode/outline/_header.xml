@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="EUC-KR"?>
+<codes>
+<list>
+	<code power="">{_cfg['shopAlign']}</code>
+	<desc>정렬방식 - left:왼쪽정렬, center:가운데정렬</desc>
+	<exam>center</exam>
+</list>
+<list>
+	<code power="">{_cfg['shopSize']}</code>
+	<desc>전체사이즈</desc>
+	<exam>903</exam>
+</list>
+<list>
+	<code power="">{_cfg['shopSideSize']}</code>
+	<desc>측면사이즈</desc>
+	<exam>200</exam>
+</list>
+<list>
+	<code power="">{_cfg['outline_sidefloat']}</code>
+	<desc>측면위치 - left:왼쪽, right:오른쪽</desc>
+	<exam>left</exam>
+</list>
+<list>
+	<code>{_cfg['shopLineWidthL']}</code>
+	<desc>좌측라인크기</desc>
+	<exam>1</exam>
+</list>
+<list>
+	<code>{_cfg['shopLineWidthC']}</code>
+	<desc>중앙라인크기</desc>
+	<exam>1</exam>
+</list>
+<list>
+	<code>{_cfg['shopLineWidthR']}</code>
+	<desc>우측라인크기</desc>
+	<exam>1</exam>
+</list>
+<list>
+	<code>{_cfg['shopLineColorL']}</code>
+	<desc>좌측라인색상</desc>
+	<exam>#efefef</exam>
+</list>
+<list>
+	<code>{_cfg['shopLineColorC']}</code>
+	<desc>중앙라인색상</desc>
+	<exam>#efefef</exam>
+</list>
+<list>
+	<code>{_cfg['shopLineColorR']}</code>
+	<desc>우측라인색상</desc>
+	<exam>#efefef</exam>
+</list>
+<list>
+	<code>{this->tpl_['header_inc']}</code>
+	<desc>상단디자인 템플릿(tpl) 파일명</desc>
+	<exam>array('tpl', 'outline/header/standard.htm');</exam>
+</list>
+<list>
+	<code power="">{ # header_inc }</code>
+	<desc>상단디자인 파일 인클루드</desc>
+	<exam></exam>
+</list>
+<list>
+	<code>{this->tpl_['side_inc']}</code>
+	<desc>측면디자인 템플릿(tpl) 파일명</desc>
+	<exam>array('tpl', 'outline/side/standard.htm');</exam>
+</list>
+<list>
+	<code power="">{ # side_inc }</code>
+	<desc>측면디자인 파일 인클루드</desc>
+	<exam></exam>
+</list>
+<list>
+	<code>{_cfg['outbg_color']}</code>
+	<desc>전체 배경색상</desc>
+	<exam></exam>
+</list>
+<list>
+	<code>{_cfg['outbg_img']}</code>
+	<desc>전체 배경이미지</desc>
+	<exam></exam>
+</list>
+<list>
+	<code>{_cfg['inbg_color']}</code>
+	<desc>본문 배경색상</desc>
+	<exam></exam>
+</list>
+<list>
+	<code>{_cfg['inbg_img']}</code>
+	<desc>본문 배경이미지</desc>
+	<exam></exam>
+</list>
+<list>
+	<code>{_cfg['topbg_img']}</code>
+	<desc>상단 배경이미지</desc>
+	<exam></exam>
+</list>
+<list>
+	<code new="">{_COOKIE['cc_inflow']}</code>
+	<desc>외부 유입의 경우 쿠키값</desc>
+	<exam>yahoo_fss</exam>
+</list>
+<list>
+	<code new="">{_GET['ref']}</code>
+	<desc>야후패션소호 ref 변수</desc>
+	<exam>yahoo_fss</exam>
+</list>
+<list>
+	<code>{_meta_title}</code>
+	<desc>메타태그 > 쇼핑몰타이틀</desc>
+	<exam>:: XXX 쇼핑몰입니다 ::</exam>
+</list>
+<list>
+	<code>{_meta_keywords}</code>
+	<desc>메타태그 > 검색엔진 키워드</desc>
+	<exam>신발 운동화 런닝화</exam>
+</list>
+</codes>

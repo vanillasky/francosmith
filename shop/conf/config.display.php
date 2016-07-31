@@ -1,0 +1,5 @@
+<? 
+$displayCfg = array( 
+'displayType' => 'discount', 
+) 
+;?>

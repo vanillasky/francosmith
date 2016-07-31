@@ -1,0 +1,106 @@
+<meta http-equiv="Content-Type" content="text/html; charset=euc-kr">
+<meta http-equiv="Cache-Control" content="no-cache"/> 
+<meta http-equiv="Expires" content="0"/> 
+<meta http-equiv="Pragma" content="no-cache"/>
+
+<form id="SETTLE_PAYINFO" name="SETTLE_PAYINFO" method="POST" action="">
+	<!-- 결과처리를 위한 파라미터 -->
+	<input type="hidden" name="PHash" value="">
+	<input type="hidden" name="PData" value="">
+	<input type="hidden" name="PStateCd" value="">
+	<input type="hidden" name="POrderId" value="">
+	<!-- 결과처리를 위한 파라미터 -->
+
+	<input type="hidden" name="PNoteUrl" value="http://{_SERVER['SERVER_NAME']}{_cfg.rootDir}/order/card/settlebank/card_return.php"> <!--db처리 url 예)http://www.***.com/rnoti.php -->
+	<input type="hidden" name="PNextPUrl" value="http://{_SERVER['SERVER_NAME']}{_cfg.rootDir}/order/card/settlebank/pay_rcv.php"> <!--성공,실패 화면처리 예)http://www.***.com/pay_result.php -->
+	<input type="hidden" name="PCancPUrl" value=""> <!-- 결제창을 닫은 경우 화면처리 예)http://www.***.com/pay_result.php -->
+
+	<input type="hidden" name="PMid" value="{STT.MID}"><!-- 세틀뱅크 MID -->
+	<input type="hidden" name="POid" value="{STT.OID}"> <!-- P_OID를 회원사에서 직접넘겨주는 경우에 함수 on_load()에서 주문번호 넣는 부분을 주석처리하시기 바랍니다 -->
+	<input type="hidden" name="PAmt" value="{STT.AMOUNT}"><!-- 결제금액 -->
+	<input type="hidden" name="t_PMname" value="{_cfg['compName']}"> <!-- 회원사 한글명 -->
+	<input type="hidden" name="t_PUname" value="{nameOrder}"> <!-- 결제자 이름-->
+	<input type="hidden" name="PEname" value="{?_cfg['shopEng']}{_cfg['shopEng']}{:}SETTLEBANK{/}"> <!-- 신용카드 결제시 영문가맹점명 -->
+	<input type="hidden" name="PEmail" value="{email}"> <!-- 결제자 e-mail -->
+	<input type="hidden" name="PPhone" value="{?implode('-',mobileOrder)}{=implode('-',mobileOrder)}{:}{=implode('-',phoneOrder)}{/}"> <!-- 결제자 연락처 -->
+	<input type="hidden" name="t_PGoods" value="{STT.PRODUCTINFO}"> <!-- 상품명 -->
+	<input type="hidden" name="rpay_yn" value="{STT.RPAY_YN}"> <!-- ringtopay 설정 -->
+
+
+<!--{ ? STT.SETTLEKIND == "v" || STT.SETTLEKIND == "o" }-->
+	<input type="hidden" name="t_PBname" value="{?_cfg['compName']}{_cfg['compName']}{:}SETTLEBANK{/}"> <!-- 계좌이체/가상계좌입금시 고객통장에 찍힐 통장인자명 -->
+<!--{ / }-->
+
+<!--{ ? STT.SETTLEKIND == "v" }-->
+	<input type="hidden" name="PVtransDt" value="{=date('Ymd', strtotime('+5 day'))}235959"> <!-- 가상계좌입금마감일 : 가상계좌에서만 사용합니다 없으면 10일 뒤로 자동세팅 예)20120101235959  -->
+<!--{ / }-->
+
+	<input type="hidden" name="t_PNoti" value=""> <!-- 회원사에서 이용할 수 있는 여유필드 -->
+	<input type="hidden" name="PTarget"><!-- 여기작업 -->
+	<input type="hidden" name="PCloseYn" value="N"> 
+	
+	<!-- 한글처리위해 비워둡니다. -->
+	<input type="hidden" name="PGoods"> 
+	<input type="hidden" name="PNoti"> 
+	<input type="hidden" name="PMname">
+	<input type="hidden" name="PUname">
+	<input type="hidden" name="PBname">
+</form>
+
+<script>
+function submitSettleFormPopup()
+{	
+	var width = 350;
+	var height = <!--{ ? STT.SETTLEKIND == "c" }-->475<!--{ : }-->525<!--{ / }-->;
+	var xpos = (screen.width - width) / 2;
+	var ypos = (screen.width - height) / 6;
+	var position = "top=" + ypos + ",left=" + xpos;
+	var features = position + ", width="+width+", height="+height+",toolbar=no, location=no"; 
+	var webbrowser=navigator.appVersion;
+
+	var settle_payinfo = document.SETTLE_PAYINFO;
+	window.name = "STPG_CLIENT";
+	
+	var wallet = window.open("", "STPG_WALLET", features);
+	
+	if ( wallet != null) {
+		settle_payinfo.target = "STPG_WALLET";
+		
+	<!--{ ? STT.SETTLEKIND == "c" }--> //카드결제
+		settle_payinfo.action = "https://pg.settlebank.co.kr/card/CardAction.do";
+	<!--{ : STT.SETTLEKIND == "o" }--> //계좌이체
+		settle_payinfo.action = "https://pg.settlebank.co.kr/bank/BankAction.do";
+	<!--{ : STT.SETTLEKIND == "h" }--> //핸드폰
+		settle_payinfo.action = "https://pg.settlebank.co.kr/mobile/MobileAction.do";
+	<!--{ : STT.SETTLEKIND == "v" }--> //가상계좌
+		settle_payinfo.action = "https://pg.settlebank.co.kr/vbank/VBankAction.do";
+	<!--{ : }-->
+		alert("결제 수단이 선택되지 않았습니다.");
+	<!--{ / }-->
+
+		strEncode();//한글인코딩
+
+		settle_payinfo.submit();  
+	} else {
+
+		if ((webbrowser.indexOf("Windows NT 5.1")!=-1) && (webbrowser.indexOf("SV1")!=-1)) {	// Windows XP Service Pack 2
+			alert("팝업이 차단되었습니다. 브라우저의 상단 노란색 [알림 표시줄]을 클릭하신 후 팝업창 허용을 선택하여 주세요.");
+		} else {
+			alert("팝업이 차단되었습니다.");
+		}
+	}
+}
+
+//파라미터 값이 한글인 경우 여기서 인코딩을 해준다.
+function strEncode(){
+	var settle_payinfo = document.SETTLE_PAYINFO;
+	settle_payinfo.PGoods.value = encodeURI(settle_payinfo.t_PGoods.value);
+	settle_payinfo.PNoti.value = encodeURI(settle_payinfo.t_PNoti.value);
+	settle_payinfo.PMname.value = encodeURI(settle_payinfo.t_PMname.value);
+	settle_payinfo.PUname.value = encodeURI(settle_payinfo.t_PUname.value);
+
+	<!--{ ? STT.SETTLEKIND == "v" || STT.SETTLEKIND == "o" }-->
+		settle_payinfo.PBname.value = encodeURI(settle_payinfo.t_PBname.value);
+	<!--{ / }-->
+}
+</script>

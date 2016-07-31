@@ -1,0 +1,46 @@
+{*** 갤러리형 | goods/goods_list.php ***}
+<!--{ ? !id }--><? {id} = "es_".md5(crypt('')); ?><!--{ / }-->
+<!-- 상품 리스트 -->
+<table width=100% border=0 cellpadding=0 cellspacing="0">
+<tr>
+	<!--{ @ loop }-->
+	<!--{ ? .index_ && .index_%cols==0 }--></tr><tr><!--{ / }-->
+	<td align=center valign=top width="{100/cols - 1}%" style="border:1px solid #cccccc; margin:0 5px 0 5px;">
+	{? strpos(.icon, 'icon_new.gif') }
+	<div style="position: relative; left: 0; top: 0;"><a href="{.goods_view_url}">{=goodsimg(.img_s,size,'class="'+ .css_selector +'" goods_new_ribon')}<img src="/shop/img/sale-tag-160.png" style="position:absolute; top:0; left:0" > </a></div>
+	{:}
+	<div><a href="{.goods_view_url}">{=goodsimg(.img_s,size,'class="'+ .css_selector +'"')}</a></div>
+	{/}	
+	<div style="padding:15px 15px;">
+	<!--{ ? .soldout_icon }--><div style="padding:3px 0;">{? .soldout_icon == 'custom'}<img src="../data/goods/icon/custom/soldout_icon">{:}<img src="../../img/icon/good_icon_soldout.gif">{/}</div><!--{ / }-->
+	<!--{ ? .goodsnm }--><div><a href="{.goods_view_url}" style="font-size:11px; color:#666;">{.goodsnm}</a></div><!--{ / }-->
+	<!--{ ? .shortdesc }--><div><a href="{.goods_view_url}" style="font-size:11px; color:#666;">{.shortdesc}</a></div><!--{ / }-->
+	<!--{ ? !.strprice }-->
+		
+		<!--{ ? .goodsDiscountPrice}-->
+		<!--{ ? .oriPrice }--><a href="{.goods_view_url}" class="pname"><strike style="font-size:11px;">{=number_format(.oriPrice)}</strike>↓</a><!--{ / }-->
+		<div style="padding-bottom:3px;"><a href="{.goods_view_url}" class="pprice"><b>{=number_format(.goodsDiscountPrice)}</b></a> {? .special_discount_amount}<img src="../../img/icon/goods_special_discount.gif">{/}</div>
+		<!--{ : }-->
+			<!--{ ? .price}-->
+			<!--{ ? .consumer }--><a href="{.goods_view_url}" class="pname"><strike style="font-size:11px;">{=number_format(.consumer)}</strike>↓</a><!--{ / }-->
+			<div style="padding-bottom:3px;"><a href="{.goods_view_url}" class="pprice"><b>{=number_format(.price)}</b></a> {? .special_discount_amount}<img src="../../img/icon/goods_special_discount.gif">{/}</div>
+			<!--{ / }-->
+
+		<!--{ / }-->
+		<!--{? .soldout_price_string}-->{.soldout_price_string}<!--{/}-->
+		<!--{? .soldout_price_image}-->{.soldout_price_image}<!--{/}-->
+	<!--{ : }-->{.strprice}
+	<!--{ / }-->
+	<!--{ ? .icon }--><div>{.icon}</div><!--{ / }-->
+	<!--{ ? .coupon }--><div class=eng><b style="color:red">{.coupon}<font class=small>원</font></b> <img src="../../img/icon/good_icon_coupon.gif" align=absmiddle></div><!--{ / }-->
+	</div>
+	</td>
+	<!--{ / }-->
+</tr>
+</table>
+
+<!-- 품절상품 마스크 -->
+<div id="el-goods-soldout-image-mask" style="display:none;position:absolute;top:0;left:0;background:url({ ? _cfg_soldout.display_overlay == 'custom'}../data/goods/icon/custom/soldout_overlay{:}../data/goods/icon/icon_soldout{_cfg_soldout.display_overlay}{/}) no-repeat center center;"></div>
+<script>
+addOnloadEvent(function(){ setGoodsImageSoldoutMask() });
+</script>

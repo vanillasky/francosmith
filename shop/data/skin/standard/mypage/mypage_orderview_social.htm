@@ -1,0 +1,698 @@
+{*** 주문내역상세페이지(투데이샵 쿠폰상품) | mypage/mypage_orderview.php ***}
+{ # header }
+
+<style>
+#orderbox {border:5px solid #F3F3F3; padding:5px 10px;}
+#orderbox table th {width:100;}
+</style>
+<script id="delivery"></script>
+
+<!-- 상단이미지 || 현재위치 -->
+<table width=100% cellpadding=0 cellspacing=0 border=0>
+<tr><td><img src="../img/common/title_orderdetail.gif" border=0></td></tr>
+<tr><td class="path">home > 마이페이지 > <b>주문내역상세보기</b></td></tr>
+</table><p>
+
+<div class="indiv"><!-- Start indiv -->
+
+<table width=100% cellpadding=0 cellspacing=0 border=0>
+<tr><td height=2 bgcolor="#303030" colspan=10></td></tr>
+<tr bgcolor=#F0F0F0 height=23>
+	<th colspan=2 class="input_txt">상품정보</th>
+	<th class="input_txt">판매가</th>
+	<th class="input_txt">수량</th>
+	<th class="input_txt">구매상태</th>
+	<th class="input_txt">배송추적</th>
+</tr>
+<tr><td height=1 bgcolor="#D6D6D6" colspan=10></td></tr>
+<!--{ @ item }-->
+<tr>
+	<td align=center width=60 height=60>{=goodsimg(.img_s,50)}</td>
+	<td>
+	{.goodsnm}
+	<!--{ ? .opt1 }-->[{.opt1}<!--{ ? .opt2 }-->/{.opt2}<!--{ / }-->]<!--{ / }-->
+	<!--{ ? .addopt }--><div>[{=str_replace("^","] [",.addopt)}]</div><!--{ / }-->
+	</td>
+	<td align=center>{=number_format(.price)}원</td>
+	<td align=center>{=number_format(.ea)}개</td>
+	<td align=center class=stxt><FONT COLOR="#007FC8">{=_r_istep[.istep]}</FONT></td>
+	<td align=center>
+	<!--{ ? _set.delivery.basis && .dvcode }-->
+	<a href="javascript:popup('mypage_delivery.php?item_sno={.sno}',600,600)"><img src="../img/common/btn_chase.gif"></a>
+	<!--{ : !_set.delivery.basis && deliverycode }-->
+	<a href="javascript:popup('mypage_delivery.php?ordno={ordno}',600,600)"><img src="../img/common/btn_chase.gif"></a>
+	<!--{ / }-->
+	</td>
+</tr>
+<tr><td colspan=10 height=1 bgcolor=#DEDEDE></td></tr>
+<!--{ / }-->
+</table><p>
+
+<img src="../img/common/order_txt_01.gif" border=0>
+<!-- 01 주문자정보 -->
+<table width=100% style="border:1px solid #DEDEDE" cellpadding=0 cellspacing=0>
+<tr>
+	<td width=150 valign=top align=right bgcolor="#F3F3F3"><img src="../img/common/order_step_01.gif"></td>
+	<td id="orderbox">
+
+	<table>
+	<col width=100>
+	<tr>
+		<td>주문자명</td>
+		<td>{nameOrder}</td>
+	</tr>
+	<tr>
+		<td>주문자 전화</td>
+		<td>{phoneOrder}</td>
+	</tr>
+	<tr>
+		<td>주문자 핸드폰</td>
+		<td>{mobileOrder}</td>
+	</tr>
+	<tr>
+		<td>이메일</td>
+		<td>{email}</td>
+	</tr>
+	</table>
+
+	</td>
+</tr>
+</table><div style="font-size:0;height:5px"></div>
+
+<!-- 02 배송정보 -->
+<!--{ ? step <= 1}-->
+
+	<form name="frmOrder" method="post" action="indb.php" onsubmit="return chkForm(this)">
+	<input type="hidden" name="mode" value="modReceiver">
+	<input type="hidden" name="ordno" value="{ordno}">
+
+<!--{ / }-->
+<table width=100% style="border:1px solid #DEDEDE" cellpadding=0 cellspacing=0>
+<tr>
+	<td width=150 valign=top align=right bgcolor="#F3F3F3"><img src="../img/common/order_step_02.gif"></td>
+	<td id="orderbox">
+
+	<table>
+	<col width=100>
+	<tr>
+		<td>받는자명</td>
+		<td>{nameReceiver}</td>
+	</tr>
+	<!--{? goodstype=='goods'}-->
+	<tr>
+		<td>받는자 전화</td>
+		<td>{phoneReceiver}</td>
+	</tr>
+	<!--{/}-->
+	<tr>
+		<td>받는자 핸드폰</td>
+		<td>{mobileReceiver}</td>
+	</tr>
+	<!--{? goodstype=='goods'}-->
+	<tr>
+		<td>우편번호</td>
+		<td>{zipcode}</td>
+	</tr>
+	<tr>
+		<td>주소</td>
+		<td>{address} {address_sub}</td>
+	</tr>
+	<!--{ ? memo }-->
+	<tr>
+		<td>배송메세지</td>
+		<td>{memo}</td>
+	</tr>
+	<!--{ / }-->
+	<!--{ ? deliverycode }-->
+	<tr>
+		<td>송장번호</td>
+		<td>{deliverycomp} {deliverycode}</td>
+	</tr>
+	<!--{ / }-->
+	<!--{/}-->
+	</table>
+
+	</td>
+</tr>
+</table>
+
+<div style="font-size:0;height:5px"></div>
+
+<!-- 03 결제금액 -->
+<table width=100% style="border:1px solid #DEDEDE" cellpadding=0 cellspacing=0>
+<tr>
+	<td width=150 valign=top align=right bgcolor="#F3F3F3"><img src="../img/common/order_step_03.gif"></td>
+	<td id="orderbox">
+
+	<table>
+	<col width=100><col align="right">
+	<tr>
+		<td>총주문금액</td>
+		<td><span id="paper_goodsprice">{=number_format(goodsprice)}</span>원</td>
+	</tr>
+	<!--{ ? eggFee }-->
+	<tr>
+		<td>보증보험 수수료</td>
+		<td><span id="paper_eggfee">{=number_format(eggFee)}</span>원</td>
+	</tr>
+	<!--{ / }-->
+	<tr>
+		<td>결제금액</td>
+		<td><b><span id="paper_settlement">{=number_format(settleprice)}</span>원</b></td>
+	</tr>
+	</table>
+
+	</td>
+</tr>
+</table><div style="font-size:0;height:5px"></div>
+<!--{ ? step2 == 50 || step2 == 54 }-->
+<input type="hidden" name="settlekind" value="{settlekind}">
+<input type="hidden" name="escrowyn" value="{escrowyn}">
+<!-- 구매안전표시 start -->{=displayEggBanner(1)}<!-- 구매안전표시 end -->
+<!--{ / }-->
+<!-- 04 결제수단 -->
+<table width=100% style="border:1px solid #DEDEDE" cellpadding=0 cellspacing=0>
+<tr>
+	<td width=150 valign=top align=right bgcolor="#F3F3F3"><img src="../img/common/order_step_04.gif"></td>
+	<td id="orderbox">
+
+	<table>
+	<col width=100>
+	<!--{ ? settlekind=="a" }-->
+	<tr>
+		<td>입금은행</td>
+		<td>{bank}</td>
+	</tr>
+	<tr>
+		<td>입금계좌</td>
+		<td>{account}</td>
+	</tr>
+	<tr>
+		<td>예금주명</td>
+		<td>{name}</td>
+	</tr>
+	<tr>
+		<td>입금자명</td>
+		<td>{bankSender}</td>
+	</tr>
+
+	<!--{ : settlekind=="c" }-->
+	<tr>
+		<td>결제방법</td>
+		<td>신용카드</td>
+	</tr>
+
+	<!--{ : settlekind=="o" }-->
+	<tr>
+		<td>결제방법</td>
+		<td>계좌이체</td>
+	</tr>
+
+	<!--{ : settlekind=="v" }-->
+	<tr>
+		<td>가상계좌</td>
+		<td>{vAccount}</td>
+	</tr>
+
+	<!--{ : settlekind=="p" }-->
+	<tr>
+		<td>결제방법</td>
+		<td>포인트결제</td>
+	</tr>
+
+	<!--{ : settlekind=="d" }-->
+	<tr>
+		<td>결제방법</td>
+		<td>전액할인 결제 (적립금 사용)</td>
+	</tr>
+
+	<!--{ ? memberdc }-->
+	<tr>
+		<td>회원할인</td>
+		<td id="memberdc">{=number_format(memberdc)}원</td>
+	</tr>
+	<!--{ / }-->
+	<!--{ ? coupon }-->
+	<tr>
+		<td>쿠폰할인</td>
+		<td>{=number_format(coupon)}원</td>
+	</tr>
+	<!--{ / }-->
+	<tr>
+		<td>적립금결제</td>
+		<td><b>{=number_format(emoney)}원</b></td>
+	</tr>
+	<!--{ / }-->
+	<!--{ ? step==0 && step2==54 && in_array(settlekind,array('c','o','v')) && pgfailreason }--><!-- 결제실패사유 -->
+	<tr>
+		<td>결제실패사유</td>
+		<td>{=pgfailreason}</td>
+	</tr>
+	<!--{ / }-->
+	<!--{ ? eggyn == 'y' }-->
+	<tr>
+		<td>전자보증보험</td>
+		<td><a href="javascript:popupEgg('{_egg.usafeid}', '{ordno}')"><font color=#0074BA><b><u>{eggno} <font class=small>(보증서출력)</a></td>
+	</tr>
+	<!--{ : _egg.use == 'N' && eggyn == 'f' }-->
+	<tr>
+		<td>전자보증보험</td>
+		<td>보증서 발급 실패.</td>
+	</tr>
+	<!--{ : _egg.use == 'Y' && eggyn == 'f' }-->
+	<tr>
+		<td>전자보증보험</td>
+		<td>보증서 발급 실패. 재발급 받으세요.</td>
+	</tr>
+	<!--{ / }-->
+	</table>
+
+	</td>
+</tr>
+</table><div style="font-size:0;height:5px"></div>
+
+
+<!-- 05 구매상태 -->
+
+<!--{ ? step > 0 }-->
+<table width=100% style="border:1px solid #DEDEDE" cellpadding=0 cellspacing=0>
+<tr>
+	<td width=150 valign=top align=right bgcolor="#F3F3F3"><img src="../img/common/order_step_05.gif"></td>
+	<td id="orderbox">
+	<!--{ ? socialStatus=="2" }-->
+	<table>
+	<tr>
+		<td><strong>구매중</strong></td>
+	</tr>
+	<tr>
+		<td>
+		<div class=stxt style="padding:5px 0"><font size=2 COLOR="#007FC8">※</font> <FONT COLOR="#007FC8">
+		현재 목표구매량에 도달 하지 못하였습니다. <br>
+		목표구매량에 성공하여, 판매 확정시 <!--{ ? goodstype=="coupon" }-->쿠폰을 사용하실 수 있습니다.<!--{ : }-->상품이 배송됩니다.<!--{ / }-->
+		</font></div>
+		</td>
+	</tr>
+	</table>
+	<!--{ : socialStatus=="3" }-->
+	<table>
+	<tr>
+		<td><strong>거래실패</strong></td>
+	</tr>
+	<tr>
+		<td>
+		<div class=stxt style="padding:5px 0"><font size=2 COLOR="#007FC8">※</font> <FONT COLOR="#007FC8">
+		최종적으로 목표구매량에 도달 하지 못하였습니다. <br>
+		목표구매량에 성공하지 못하여, 거래가 취소되었습니다
+		</font></div>
+		</td>
+	</tr>
+	</table>
+	<!--{ : socialStatus=="4" }-->
+
+	<!--{ ? goodstype=="coupon" }-->
+	<table width=100%>
+	<tr>
+		<td><strong>판매확정</strong></td>
+		<td align="right" rowspan="2">
+			<img src="../img/common/mypage_cuponphone.gif" onClick="nsTodayShop.smsSend({ordno});" class="hand">
+			<img src="../img/common/mypage_cuponprint.gif" onClick="nsTodayShop.print({ordno});" class="hand">
+		</td>
+	</tr>
+	<tr>
+		<td><strong>쿠폰번호</strong> : {=strtoupper(couponNumber)} ( {couponEA}장 )</td>
+	</tr>
+	<tr>
+		<td><strong>유효기간</strong> : {couponUseStartDate}~{couponUseEndDate}</td>
+	</tr>
+	<tr>
+		<td colspan="2">
+		<div class=stxt style="padding:5px 0"><font size=2 COLOR="#007FC8">※</font> <FONT COLOR="#007FC8">
+		쿠폰 재 전송은 최대 3번까지만 가능합니다
+		</font></div>
+		</td>
+	</tr>
+	</table>
+	<!--{ : }-->
+	<table width=100%>
+	<tr>
+		<td><strong>판매확정</strong></td>
+	</tr>
+	<tr>
+		<td>
+		<div class=stxt style="padding:5px 0"><font size=2 COLOR="#007FC8">※</font> <FONT COLOR="#007FC8">
+		목표구매량에 도달하여 상품이 배송됩니다.
+		</font></div>
+		</td>
+	</tr>
+	</table>
+	<!--{ / }-->
+
+	<!--{ / }-->
+
+	</td>
+</tr>
+</table><div style="font-size:0;height:5px"></div>
+<!--{ / }-->
+
+
+<!--{ ? step2 == 50 || step2 == 54 }-->
+<!--{ ? _egg.use=="Y" && (_egg.scope=="A" || (_egg.scope=="P" && settleprice >= _egg.min)) }-->
+<table id="egg" style="display:none; margin-top:10px;">
+<col width=100>
+<tr>
+	<td valign=top style="padding-top:4px">전자보증보험</td>
+	<td>
+	<!--{ ? _egg.scope == "P" }-->
+	<div>구매 시 안전거래(매매보호) 사용유무를 직접 선택하실 수 있습니다.</div>
+	<!--{ / }-->
+
+	<div style="color:#FF6C68; font-weight:bold; margin-bottom:5px;">아래의 주의사항을 꼭 확인하세요!</div>
+
+	<!--{ ? _egg.scope == "P" }-->
+	<div class=noline>&#149; 전자보증보험 발급여부 : <input type=radio name=eggIssue value="Y" onclick="egg_required()"> 발급 <input type=radio name=eggIssue value="N" onclick="egg_required()"> 미발급</div>
+	<!--{ / }-->
+
+	<div>&#149; <font color=444444>전자보증보험 안내 (100% 매매보호 안전결제)<br>
+	물품대금결제시 구매자의 피해보호를 위해 '(주)서울보증보험'의 보증보험증권이 발급됩니다. 증권이 발급되는 것의 의미는,
+	물품대금 결제시에 소비자에게 서울보증보험의 쇼핑몰보증보험 계약체결서를 인터넷상으로 자동 발급하여,
+	피해발생시 쇼핑몰보증보험으로써 완벽하게 보호받을 수 있습니다.<br>
+	또한, <span class='red'>입력하신 개인정보는 증권발급을 위한 정보로 사용되며 다른 용도로는 사용되지 않습니다.</span>
+	</font></div>
+
+	<!--{ ? _egg.feepayer != "B" }-->
+	<div>&#149; <font color=444444>보증보험 발행으로 구매시 별도의 수수료가 부과되지 않습니다.</font></div>
+	<!--{ : _egg.feepayer == "B" }-->
+	<div>&#149; <font color=444444>보증보험 발행으로 구매시 <span style="color:#FF6C68; font-weight:bold;">보증보험증권 발급수수료는 구매자께서 부담</span>하시게 됩니다.<br>
+	보증보험 발급수수료(총 결제금액의 0.5%) : <span id=infor_eggFee></span></font>
+	</div>
+	<input type=hidden name=eggFee>
+	<!--{ / }-->
+
+	<div style="padding-top:10px;">주민등록번호 :
+	<input type=text name=resno[] maxlength=6 onkeyup="if (this.value.length==6) this.nextSibling.nextSibling.focus()" onkeydown="onlynumber()" style="width:80px"> -
+	<input type=password name=resno[] maxlength=7 onkeydown="onlynumber()" style="width:90px">
+	</div>
+	<div style="text-align:center;" class=noline><input type=checkbox name=eggAgree value="Y"> 개인정보 이용에 동의합니다</div>
+	</td>
+</tr>
+</table>
+<!--{ / }-->
+</form>
+<!--{ : }-->
+</form>
+<!--{ ? step > 0 &&  _egg.use == 'Y' && eggyn == 'f' }-->
+<table width=100% style="border:1px solid #DEDEDE" cellpadding=0 cellspacing=0>
+<tr>
+	<td width=150 valign=top align=right bgcolor="#F3F3F3" style="padding-top:13px"><b>전자보증보험 재발급</b></td>
+	<td id="orderbox">
+		<form id=form name=frmTax method=post action="../mypage/indb.php" onsubmit="return chkForm(this)">
+		<input type=hidden name=mode value="eggcreate">
+		<input type=hidden name=ordno value="{ordno}">
+		<div>&#149; 전자보증보험 안내 (100% 매매보호 안전결제)<br>
+		물품대금결제시 구매자의 피해보호를 위해 '(주)서울보증보험'의 보증보험증권이 발급됩니다.<br>
+		증권이 발급되는 것의 의미는, 물품대금 결제시에 소비자에게 서울보증보험의 쇼핑몰보증보험 계약체결서를 인터넷상으로 자동 발급하여, 피해발생시 쇼핑몰보증보험으로써 완벽하게 보호받을 수 있습니다.<br>
+		또한, <span class='red'>입력하신 개인정보는 증권발급을 위해 필요한 정보이며 다른 용도로 사용되지 않습니다.</span><br>
+		(전자보증보험 발생시 별도의 수수료가 부과되지 않습니다.)
+		</div>
+		<div style="text-align:center; margin-top:10px;">주민등록번호 :
+		<input type=text name=resno[] maxlength=6 onkeyup="if (this.value.length==6) this.nextSibling.nextSibling.focus()" onkeydown="onlynumber()" style="width:80px" required label="주민등록번호" msgR="전자보증보험을 발급받으시려면, 주민번호를 입력하셔야 결제가 가능합니다."> -
+		<input type=password name=resno[] maxlength=7 onkeydown="onlynumber()" style="width:90px" required label="주민등록번호" msgR="전자보증보험을 발급받으시려면, 주민번호를 입력하셔야 결제가 가능합니다.">
+		</div>
+		<div style="text-align:center;" class=noline><input type=checkbox name=eggAgree value="Y" required label="개인정보 이용동의" msgR="전자보증보험을 발급받으시려면, 개인정보 이용동의가 필요합니다."> 개인정보 이용에 동의합니다</div>
+		<a href="javascript:order_print('{ordno}');"><strong><FONT COLOR="EA0095">[세금계산서 인쇄]</font></strong></a></div>
+		</form>
+	</td>
+</tr>
+</table><div style="font-size:0;height:5px"></div>
+<!--{ / }-->
+<!--{ ? taxmode!='' && !cashreceipt }-->
+<!-- 05 세금계산서 -->
+<table width=100% style="border:1px solid #DEDEDE" cellpadding=0 cellspacing=0>
+<tr>
+	<td width=150 valign=top align=right bgcolor="#F3F3F3" style="padding-top:13px"><b>세금계산서 발행신청</b></td>
+	<td id="orderbox">
+	<!--{ ? taxmode=='taxview' }-->
+		<!-- 세금계산서 발행정보 : start -->
+		<div style="margin-top:5px; margin-bottom:3px; line-height:14pt;">
+		<!--{ ? taxed['step']==0 }-->
+			<FONT COLOR="EA0095"><b>발행신청</b> (승인처리후 인쇄하실 수 있습니다)<br>
+			<font color=444444>(아래 수정사항이 있는 경우 1:1문의 또는 전화로 요청)</font></font><br>신청일 : {taxed['regdt']}<br>
+		<!--{ : taxed['step']==1 }-->
+			<FONT COLOR="EA0095"><b>발행승인</b> (인쇄발행이 가능합니다)</font><br>발행액 : <b>{=number_format(taxed['price'])}</b>원, 승인일 : <b>{taxed['agreedt']}</b><br>
+		<!--{ : taxed['step']==2 }-->
+			<FONT COLOR="EA0095"><b>발행완료</b> (인쇄발행이 완료되었습니다)</font><br>발행액 : <b>{=number_format(taxed['price'])}</b>원, 완료일 : <b>{taxed['printdt']}</b><br>
+		<!--{ : taxed['step']==3 }-->
+			<div id="taxstep3"><FONT COLOR="EA0095"><b>전자발행</b></font></div>발행액 : <b>{=number_format(taxed['price'])}</b>원, 요청일 : <b>{taxed['agreedt']}</b><br>
+		<!--{ / }-->
+
+		사업자번호 : {taxed['busino']}&nbsp;&nbsp;
+		회사명 : {taxed['company']}<br>
+		대표자명 : {taxed['name']}&nbsp;&nbsp;
+		업태 : {taxed['service']}&nbsp;&nbsp;
+		종목 : {taxed['item']}<br>
+		사업장주소 : {taxed['address']}
+		</div>
+
+		<!--{ ? taxed['step']==1 || taxed['step']==2 || taxed['step']==3 }-->
+		<div id="taxprint" style="margin-top:8px; text-align:center;">
+		<a href="javascript:order_print('{ordno}');"><strong><FONT COLOR="EA0095">[세금계산서 인쇄]</font></strong></a></div>
+		<div style="padding-top:5px"></div>
+		<!--{ / }-->
+		<!-- 세금계산서 발행정보 : end -->
+	<!--{ / }-->
+
+		<!-- 세금계산서 신청폼 : start -->
+		<div id="taxapply" style="display:none;">
+		<form id=form name=frmTax method=post action="../mypage/indb.php" onsubmit="return chkForm(this)">
+		<input type=hidden name=mode value="taxapp">
+		<input type=hidden name=ordno value="{ordno}">
+		<div>
+		사업자번호 : <input type=text name="busino" value="{taxed['busino']}" class=line required  option="regNum" label="사업자번호" size=10 maxlength=30> <font class=small1 color=444444>(숫자만기입)</font><br>
+		<font color=white>사업</font>회사명 : <input type=text name="company" value="{taxed['company']}" class=line required label="회사명" size=10>&nbsp;&nbsp;&nbsp;
+		대표자명 : <input type=text name="name" value="{taxed['name']}" class=line required label="대표자명" size=10><br>
+		<font color=white>사업자</font>업태 : <input type=text name="service" value="{taxed['service']}" class=line required label="업태" size=10>&nbsp;&nbsp;&nbsp;
+		<font color=white>사업</font>종목 : <input type=text name="item" value="{taxed['item']}" class=line required label="종목" size=10><br>
+		사업장주소 : <input type=text name="address" value="{taxed['address']}" class=line required label="사업장주소" size=40>
+		</div>
+		<div style="text-align:center; margin-top:8px;"><input type="submit" value="[세금계산서 신청하기]" style="border:0;background-color:#ffffff;color:#EA0095;font-weight:bold;"></div>
+		</form>
+		</div>
+		<script>
+		_ID('taxapply').style.display = "{ ? taxmode=='taxapp' }block{ : }none{ / }"; //
+		</script>
+		<!-- 세금계산서 신청폼 : end -->
+
+	<!--{ ? taxmode=='taxview' && taxed['step']==3 }-->
+		<script src="../../../lib/js/prototype.js"></script>
+		<script>getTaxbill("{taxed['doc_number']}", "{taxapp}");</script>
+	<!--{ / }-->
+	</td>
+</tr>
+</table><div style="font-size:0;height:5px"></div>
+<!-- 05 세금계산서 End -->
+<!--{ / }-->
+
+<!--{ ? _pg.receipt=="Y" && settlekind!="c" && settlekind!="h" && settleprice>=1 && taxmode != 'taxview'}--><!-- 현금영수증 발급 -->
+{ # cash_receipt }
+<!--{ / }-->
+
+<!--{ ? _ableCashbag }--><!-- OK캐쉬백 -->
+<table width=100% style="border:1px solid #DEDEDE" cellpadding=0 cellspacing=0>
+<tr>
+	<td width=150 valign=top align=right bgcolor="#F3F3F3"></td>
+	<td id="orderbox">
+	<div><a href="javascript:okcashbag();"><img src="../img/common/btn_okcash.gif"></a></div>
+	<div class="small">'OK캐쉬백적립받기'버튼을 클릭하여 캐쉬백 포인트를 적립받으실수 있습니다. 캐쉬백 카드번호를 입력하지 않았거나 잘못 입력 하신 고객님의 경우 포인트 적립이 불가하오며, 아울러 등록하신 카드번호가 미등록 카드이거나 해지된 경우에도 적립이 불가하오니 이점 양지하시기 바랍니다. 일부상품,배송비 및 각종 수수료(보증보험)등의 결제 금액은 포인트가 추가 적립되지 않습니다. 적립시점 및 포인트는 배송완료(구매결정) 기준입니다.</div>
+	</td>
+</tr>
+</table><div style="font-size:0;height:5px"></div>
+<!--{ / }-->
+
+<!--{ ? cbyn == 'Y' && step == '4' && oktno }--><!-- OK캐쉬백 적립 정보-->
+<table width=100% style="border:1px solid #DEDEDE" cellpadding=0 cellspacing=0>
+<tr>
+	<td width=150 valign=top align=right bgcolor="#F3F3F3"></td>
+	<td id="orderbox">
+		<div style="padding-left:5"><b>OK캐쉬백</b></div>
+		<div style="font:0;height:5"></div>
+		<table>
+		<col width=100>
+		<tr>
+			<td>거래번호</td>
+			<td>{oktno}</td>
+		</tr>
+		<tr>
+			<td>적립포인트</td>
+			<td>{=number_format(add_pnt)}</td>
+		</tr>
+		</table>
+	</td>
+</tr>
+</table><div style="font-size:0;height:5px"></div>
+<!--{ / }-->
+
+<!--{ ? step && !step2 && in_array(settlekind,array('c','o','v')) }--><!-- 거래 영수증 발급 -->
+<table width=100% style="border:1px solid #DEDEDE" cellpadding=0 cellspacing=0>
+<tr>
+	<td width=150 valign=top align=right bgcolor="#F3F3F3"></td>
+	<td id="orderbox">
+
+	<table>
+	<col width=100>
+	<tr>
+		<td>거래영수증</td>
+		<td>
+		<!--{ ? _cfg.settlePg=="allat" }-->
+		<a href="javascript:void(0)" onClick="window.open('http://www.allatpay.com/servlet/AllatBizPop/member/pop_card_receipt.jsp?shop_id={_pg.id}&order_no={ordno}','','width=410,height=650')">영수증출력</a>
+		<!--{ : _cfg.settlePg=="kcp" && settlekind=="c"  }-->
+		<a href="javascript:popup('http://admin.kcp.co.kr/Modules/Sale/Card/ADSA_CARD_BILL_Receipt.jsp?c_trade_no={tno}',428,741)">영수증출력</a>
+		<!--{ : _cfg.settlePg=="inicis" && escrowno }-->
+		<a href="javascript:popup('https://iniweb.inicis.com/mall/cr/cm/mCmReceipt_head.jsp?noTid={escrowno}&noMethod=1',428,741)">영수증출력</a>
+		<!--{ : _cfg.settlePg=="inipay" && escrowno }-->
+		<a href="javascript:popup('https://iniweb.inicis.com/mall/cr/cm/mCmReceipt_head.jsp?noTid={escrowno}&noMethod=1',428,741)">영수증출력</a>
+		<!--{ : _cfg.settlePg=="dacom" }-->
+  		<script type="text/javascript" src="http://pgweb.dacom.net/WEB_SERVER/js/receipt_link.js"></script>
+  		<a href="javascript:showReceiptByTID('{_pg.id}','{cardtno}','{authdata}')">영수증 출력</a>
+		<!--{ / }-->
+		</td>
+	</tr>
+	</table>
+
+	</td>
+</tr>
+</table>
+<!--{ / }-->
+<!--{ / }-->
+
+<!--{ ? _sess}-->
+<div align=right class=stxt style="padding:5px 0"><font size=2 COLOR="#007FC8">※</font> <FONT COLOR="#007FC8">주문취소/교환/반품을 원하시면 마이페이지의 <A HREF="mypage_qna.php"><U>1:1문의게시판</U></A>을 이용하세요</font></div>
+<!--{ / }-->
+
+<div style="padding:20px" align=center id="avoidDblPay">
+<a href="javascript:history.back();"><img src="../img/common/btn_back.gif" border=0></a>
+<!--{ ? step == 0 && step2 == 0 }--><a href="javascript:chkCancel();"><img src="../img/common/btn_order_cancel.gif" border=0></a><!--{ / }-->
+<!--{ ? _resettleAble }--><a href="javascript:chkReSettle();"><img src="../img/common/btn_again_order.gif" border=0></a></div><!--{ / }-->
+<div style="font-size:0;height:5px"></div>
+</div><!-- End indiv -->
+<script language="javascript">
+function chkCancel(){
+	var f = document.frmOrder;
+	if(confirm('주문취소처리 하시겠습니까?')){
+		f.mode.value='orderCancel';
+		f.submit();
+	}
+}
+function chkReSettle(){
+	var f = document.frmOrder;
+	if(chkForm(f)){
+		f.mode.value='reSettle';
+		f.action = 'settle.php';
+		f.submit();
+	}
+
+}
+
+function egg_required()
+{
+	egg_display();
+	calcu_settle();
+}
+function calcu_eggFee(settlement)
+{
+	egg_display(settlement);
+	var eggFee = 0;
+	if (typeof(document.getElementsByName('eggFee')[0]) != "undefined"){
+		if (document.getElementsByName('eggFee')[0].disabled == false) eggFee = parseInt(settlement * 0.005);
+		document.getElementsByName('eggFee')[0].value = eggFee;
+	}
+	if (_ID('paper_eggFee') != null) _ID('paper_eggFee').innerHTML = comma(eggFee);
+	if (_ID('infor_eggFee') != null){
+		_ID('infor_eggFee').innerHTML = '<b>' + comma(eggFee) + '</b> 원';
+		if (eggFee) _ID('infor_eggFee').innerHTML += ' (총 결제금액에 포함되었습니다.)';
+	}
+	return eggFee;
+}
+function egg_display(settlement)
+{
+	var min = parseInt('{_egg.min}');
+	var display = 'block';
+	if (_ID('egg') == null) return;
+	if (typeof(settlement) != "undefined"){
+		if (settlement < min && typeof(document.getElementsByName('eggIssue')[0]) != "undefined") display = 'none';
+		else if (settlement <= 0) display = 'none';
+		else if (_ID('egg').style.display != 'none') return;
+	}
+	if (display != 'none'){
+		var obj = document.getElementsByName('settlekind');
+		var settlekind =  obj.value;
+
+		if (settlekind == null) display = 'none';
+		else if (settlekind == 'h') display = 'none';
+		else if (document.getElementsByName('escrow')[0].value == 'Y') display = 'none';
+		else if (typeof(document.getElementsByName('eggIssue')[0]) != "undefined"){
+			if (settlekind != 'a') display = 'none';
+			else if(typeof(settlement) == "undefined"){
+				settlement = uncomma(_ID('paper_settlement').innerHTML);
+				if (typeof(document.getElementsByName('eggFee')) != "undefined") settlement -= document.getElementsByName('eggFee')[0].value;
+				if (settlement < min) display = 'none';
+			}
+		}
+	}
+	if (_ID('egg').style.display == display && display =='none') return;
+	_ID('egg').style.display = display;
+
+	items = new Array();
+	items.push( {name : "eggIssue", label : "전자보증보험 발급여부", msgR : ""} );
+	items.push( {name : "resno[]", label : "주민등록번호", msgR : "전자보증보험을 발급받으시려면, 주민번호를 입력하셔야 결제가 가능합니다."} );
+	items.push( {name : "eggAgree", label : "개인정보 이용동의", msgR : "전자보증보험을 발급받으시려면, 개인정보 이용동의가 필요합니다."} );
+	items.push( {name : "eggFee", label : "발급수수료", msgR : ""} );
+	for (var i = 0; i < items.length; i++){
+		var obj = document.getElementsByName(items[i].name);
+		if (display == 'block' && items[i].name != 'eggIssue' && typeof(document.getElementsByName('eggIssue')[0]) != "undefined")
+			state = (document.getElementsByName('eggIssue')[0].checked ? 'block' : 'none');
+		else state = display;
+		for (var j = 0; j < obj.length; j++){
+			if (state == 'block'){
+				obj[j].setAttribute('required', '');
+				obj[j].setAttribute('label', items[i].label);
+				obj[j].setAttribute('msgR', items[i].msgR);
+				obj[j].disabled = false;
+			}
+			else {
+				obj[j].removeAttribute('required');
+				obj[j].removeAttribute('label');
+				obj[j].removeAttribute('msgR');
+				obj[j].disabled = true;
+			}
+		}
+	}
+}
+function calcu_settle()
+{
+	var coupon = settleprice = 0;
+	var goodsprice	= uncomma(document.getElementById('paper_goodsprice').innerHTML);
+	var delivery	= uncomma(document.getElementById('paper_delivery').innerHTML);
+	var dc = uncomma(document.getElementById('paper_memberdc').innerHTML);
+	var emoney = (document.frmOrder.emoney) ? uncomma(document.frmOrder.emoney.value) : 0;
+	if (document.frmOrder.coupon){
+		coupon = uncomma(document.frmOrder.coupon.value);
+		if (goodsprice + delivery - dc - coupon - emoney < 0){
+			emoney = goodsprice + delivery - dc - coupon;
+			document.frmOrder.emoney.value = comma(cutting(emoney));
+		}
+		dc += coupon + emoney;
+	}
+	var settlement = (goodsprice + delivery - dc);
+
+	settlement += calcu_eggFee(settlement); // 전자보증보험 발급수수료 계산
+	document.getElementById('paper_settlement').innerHTML = comma(settlement);
+}
+
+function okcashbag(){
+	var f = document.frmOrder;
+	f.target = "ifrmHidden";
+	f.action = "cashbag.php";
+	f.submit();
+}
+</script>
+{ # footer }

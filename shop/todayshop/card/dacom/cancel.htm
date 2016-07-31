@@ -1,0 +1,26 @@
+<?
+/*
+서비스 http://pg.dacom.net/common/cancel.jsp
+테스트 http://pg.dacom.net:7080/common/cancel.jsp
+
+
+mid X 15 상점아이디 　O
+oid X 64 주문번호(한글 및 공백, 특수문자 사용불가)
+ 　O
+tid X 24 거래번호(원거래의 결제 결과로 받는 "transaction")
+ 　O
+ret_url X
+ 제한없음 결제취소 성공후 이동할 페이지
+ 　O
+note_url X 255 취소결과 DB연동할 페이지  　
+hashdata X   데이터 무결성 검증 필드
+ 　O
+*/
+?>
+<form name="mainForm" method="POST" action="http://pg.dacom.net/common/cancel.jsp">
+    <input type="hidden" name="mid" value="{mid}" />
+    <input type="hidden" name="oid" value="{oid}" />
+    <input type="hidden" name="tid" value="{tid}" />
+    <input type="hidden" name="ret_url" value="{ret_url}" />
+    <input type="hidden" name="hashdata" value="{hashdata}" />
+</form>

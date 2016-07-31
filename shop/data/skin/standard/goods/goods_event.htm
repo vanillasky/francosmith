@@ -1,0 +1,238 @@
+{*** 이벤트 | goods/goods_event.php ***}
+{ # header }
+
+<!-- 현재위치 -->
+<TABLE width=100% cellpadding=0 cellspacing=0 border=0>
+<TR>
+	<TD class="b_cate"><img src="../img/common/icon_goodalign.gif" border=0 align=absmiddle><a href="goods_event.php?sno={_GET.sno}">{subject}</a></TD>
+	<td class="path">HOME > <B>이벤트</B></td>
+</TR>
+<tr>
+	<td height=1 bgcolor="#E6E6E6" colspan=2></td>
+</tr>
+<tr>
+	<td height=10 colspan=2></td>
+</tr>
+</TABLE>
+
+
+{body // 이벤트내용(디자인 & HTML)}
+<div align="center">{qrcode}</div>
+
+<div class="indiv"><!-- Start indiv -->
+
+<!--{ ? _r_cate }-->
+<p />
+<!-- 이벤트 카테고리 시작 -->
+<table width=100% border=0 cellpadding=0 cellspacing=0>
+<tr>
+	<td background="../img/common/ed_top_back.gif">
+	<table width=100% border=0 cellpadding=0 cellspacing=0>
+	<tr>
+		<td width=50%><img src="../img/common/ed_left_top.gif" border=0></td>
+		<td width=50% align=right><img src="../img/common/ed_right_top.gif" border=0></td>
+	</tr>
+	</table>
+	</td>
+</tr>
+<tr>
+	<td bgcolor="#F5F5F5" style="padding:5px 10px; border-left:1px solid #E2E1E1; border-right:1px solid #E2E1E1"><img src="../img/common/icon_submenu.gif" border=0 align=absmiddle><b>상품분류</b></td>
+</tr>
+<tr>
+	<td bgcolor="#F5F5F5" style="padding:5px 10px; border-left:1px solid #E2E1E1; border-right:1px solid #E2E1E1"></td>
+</tr>
+<tr>
+	<td style="padding:5 10 5 10; line-height:20px; border-left:1px solid #E2E1E1; border-right:1px solid #E2E1E1">
+	<!--{ @ _r_cate }-->
+	<!--{ ? _category == .category }--><b><!--{ / }-->
+	<a href="goods_event.php?category={.category}&sno={_GET.sno}">{.catnm}</a>
+	<!--{ ? _category == .category }--></b><!--{ / }-->
+	<!--{ ? .index_!=.size_-1 }--> <font color=#cccccc>|</font> <!--{ / }-->
+	<!--{ / }-->
+	</td>
+</tr>
+<tr>
+	<td background="../img/common/ed_bot_back.gif">
+	<table width=100% border=0 cellpadding=0 cellspacing=0>
+	<tr>
+		<td width=50%><img src="../img/common/ed_left_bot.gif" border=0></td>
+		<td width=50% align=right><img src="../img/common/ed_right_bot.gif" border=0></td>
+	</tr>
+	</table>
+	</td>
+</tr>
+</table>
+<!-- 이벤트 카테고리 끝 -->
+<!--{ / }-->
+
+<!--{ ? _r_brand }-->
+<p />
+<!-- 이벤트 브랜드 시작 -->
+<table width=100% border=0 cellpadding=0 cellspacing=0>
+<tr>
+	<td background="../img/common/ed_top_back.gif">
+	<table width=100% border=0 cellpadding=0 cellspacing=0>
+	<tr>
+		<td width=50%><img src="../img/common/ed_left_top.gif" border=0></td>
+		<td width=50% align=right><img src="../img/common/ed_right_top.gif" border=0></td>
+	</tr>
+	</table>
+	</td>
+</tr>
+<tr>
+	<td bgcolor="#F5F5F5" style="padding:5px 10px; border-left:1px solid #E2E1E1; border-right:1px solid #E2E1E1"><img src="../img/common/icon_submenu.gif" border=0 align=absmiddle><b>브랜드</b></td>
+</tr>
+<tr>
+	<td bgcolor="#F5F5F5" style="padding:5px 10px; border-left:1px solid #E2E1E1; border-right:1px solid #E2E1E1"></td>
+</tr>
+<tr>
+	<td style="padding:5 10 5 10; line-height:20px; border-left:1px solid #E2E1E1; border-right:1px solid #E2E1E1">
+	<!--{ @ _r_brand }-->
+	<!--{ ? _brandno == .brandno }--><b><!--{ / }-->
+	<a href="goods_event.php?brandno={.brandno}&sno={_GET.sno}">{.brandnm}</a>
+	<!--{ ? _brandno == .brandno }--></b><!--{ / }-->
+	<!--{ ? .index_!=.size_-1 }--> <font color=#cccccc>|</font> <!--{ / }-->
+	<!--{ / }-->
+	</td>
+</tr>
+<tr>
+	<td background="../img/common/ed_bot_back.gif">
+	<table width=100% border=0 cellpadding=0 cellspacing=0>
+	<tr>
+		<td width=50%><img src="../img/common/ed_left_bot.gif" border=0></td>
+		<td width=50% align=right><img src="../img/common/ed_right_bot.gif" border=0></td>
+	</tr>
+	</table>
+	</td>
+</tr>
+</table>
+<!-- 이벤트 브랜드 끝 -->
+<!--{ / }-->
+
+<form name=frmList>
+<input type=hidden name=sno value="{sno}">
+<input type=hidden name=sort value="{_GET['sort']}">
+<input type=hidden name=page_num value="{_GET['page_num']}">
+
+<table width=100% border=0 cellpadding=0 cellspacing=0>
+<tr><td height=20></td></tr>
+<tr>
+	<td bgcolor=9e9e9e class=small height=27 style="padding:0 0 0 5">
+	<table width=100% border=0 cellpadding=0 cellspacing=0>
+	<tr>
+		<td id="b_white"><img src="../img/common/icon_goodalign2.gif" align=absmiddle>
+		<FONT COLOR="#FFFFFF">총 <b>{pg->recode['total']}</b>개의 상품이 있습니다.</FONT>
+		</td>
+	</tr>
+	</table>
+	</td>
+</tr>
+<tr>
+<td>
+<!-- capture_start("list_top") -->
+<table width=100% cellpadding=0 cellspacing=0>
+<tr>
+	<td><img src="../img/common/goodlist_txt_01.gif"><a href="javascript:sort('maker desc')"><img name=sort_maker_desc src="../img/common/list_up_off.gif"></a><a href="javascript:sort('maker')"><img name=sort_maker src="../img/common/list_down_off.gif"></a><img src="../img/common/goodlist_txt_03.gif"><a href="javascript:sort('goodsnm desc')"><img name=sort_goodsnm_desc src="../img/common/list_up_off.gif"></a><a href="javascript:sort('goodsnm')"><img name=sort_goodsnm src="../img/common/list_down_off.gif"></a><img src="../img/common/goodlist_txt_04.gif"><a href="javascript:sort('price desc')"><img name=sort_price_desc src="../img/common/list_up_off.gif"></a><a href="javascript:sort('price')"><img name=sort_price src="../img/common/list_down_off.gif"></a><img src="../img/common/goodlist_txt_05.gif"><a href="javascript:sort('reserve desc')"><img name=sort_reserve_desc src="../img/common/list_up_off.gif"></a><a href="javascript:sort('reserve')"><img name=sort_reserve src="../img/common/list_down_off.gif"></a></td>
+	<td align=right><img src="../img/common/goodlist_txt_06.gif" align=absmiddle><select onchange="this.form.page_num.value=this.value;this.form.submit()" style="font:8pt 돋움"><!--{ @ page_num }--><option value="{.value_}" {_selected.page_num[.value_]}>{.value_}개씩 정렬<!--{ / }--></select></td>
+</tr>
+</table>
+<!-- capture_end ("list_top") -->
+</td>
+</tr>
+<tr><td height=1 bgcolor=#DDDDDD></td></tr>
+<tr>
+	<td style="padding:15 0">
+	<!--{ = this->assign( 'loop', loop ) // 데이타 호출 }-->
+	<!--{ = this->assign( 'cols', cols ) // 행당 컬럼수 }-->
+	<!--{ = this->assign( 'size', size ) // 이미지 크기 }-->
+	<!--{ = include_file( "goods/list/" + tpl + ".htm" ) }-->
+	</td>
+</tr>
+<tr><td height=1 bgcolor=#DDDDDD></td></tr>
+<tr>
+	<td>
+	<!-- capture_print("list_top") -->
+	</td>
+</tr>
+<tr><td height=2 bgcolor=#DDDDDD></td></tr>
+<tr><td align=center height=50>{pg->page['navi']}</td></tr>
+</table>
+
+</form>
+<form name=frmCharge method=post>
+<input type=hidden name=mode value="">
+<input type=hidden name=goodsno value="">
+<input type=hidden name=ea value="1">
+<input type=hidden name=opt[] id=opt value="">
+</form>
+</div><!-- End indiv -->
+
+<div style="display:none;position:absolute;z-index:10;cursor:hand;" id="qrExplain" onclick="qrExplain_close();">
+<table cellpadding="0" cellspacing="0" border="0">
+  <tr>
+	<td width="4" height="271" valign="top" background="../img/common/page02_detail_blt.gif" style="background-repeat:no-repeat"></td>
+	<td  width="285" height="271" valign="top" background="../img/common/page02_detail.gif"></td>
+  </tr>
+  </table>
+  <div style='width:289' onclick="qrExplain_close();" style="cursor:hand;text-align:center">[닫기]</div>
+</div>
+
+<script>
+
+function qr_explain()
+{
+	var qrExplainObj = document.getElementById("qrExplain");
+
+	qrExplainObj.style.top = event.clientY + document.body.scrollTop - 15;
+	qrExplainObj.style.left = event.clientX + document.body.scrollLeft + 40;
+	qrExplainObj.style.display = "block";
+}
+
+function qrExplain_close()
+{
+	var qrExplainObj = document.getElementById("qrExplain");
+	qrExplainObj.style.display = "none";
+}
+
+function act(target,goodsno,opt1,opt2)
+{
+	var form = document.frmCharge;
+
+	form.mode.value = "addItem";
+	form.goodsno.value = goodsno;
+
+	if(opt2) opt1 += opt2;
+	document.getElementById("opt").value=opt1;
+
+	form.action = target + ".php";
+	form.submit();
+}
+function sort(sort)
+{
+	var fm = document.frmList;
+	fm.sort.value = sort;
+	fm.submit();
+}
+function sort_chk(sort)
+{
+	if (!sort) return;
+	sort = sort.replace(" ","_");
+	var obj = document.getElementsByName('sort_'+sort);
+	if (obj.length){
+		div = obj[0].src.split('list_');
+		for (i=0;i<obj.length;i++){
+			chg = (div[1]=="\up_off.gif") ? "\up_on.gif" : "\down_on.gif";
+			obj[i].src = div[0] + "list_" + chg;
+		}
+	}
+}
+</script>
+
+
+<script>
+<!--{ ? _GET['sort'] }-->
+sort_chk('{_GET['sort']}');
+<!--{ / }-->
+</script>
+
+{ # footer }

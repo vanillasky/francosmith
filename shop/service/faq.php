@@ -1,0 +1,82 @@
+<?
+
+include "../_header.php";
+include "../lib/page.class.php";
+
+$codeitem = codeitem('faq');
+
+# ¾ÐÃàÄÚµå Á¤ÀÇ
+$summary_search = array();
+$summary_search[] = "/__shopname__/is";			# ¼îÇÎ¸ôÀÌ¸§
+$summary_search[] = "/__shopdomain__/is";		# ¼îÇÎ¸ôÁÖ¼Ò
+$summary_search[] = "/__shopcpaddr__/is";		# »ç¾÷ÀåÁÖ¼Ò
+$summary_search[] = "/__shopcoprnum__/is";		# »ç¾÷ÀÚµî·Ï¹øÈ£
+$summary_search[] = "/__shopcpmallceo__/is";	# ¼îÇÎ¸ô ´ëÇ¥
+$summary_search[] = "/__shopcpmanager__/is";	# °³ÀÎÁ¤º¸°ü¸®ÀÚ
+$summary_search[] = "/__shoptel__/is";			# ¼îÇÎ¸ô ÀüÈ­
+$summary_search[] = "/__shopfax__/is";			# ¼îÇÎ¸ô ÆÑ½º
+$summary_search[] = "/__shopmail__/is";			# ¼îÇÎ¸ô ÀÌ¸ÞÀÏ
+
+$summary_replace = array();
+$summary_replace[] = $cfg["shopName"];			# ¼îÇÎ¸ôÀÌ¸§
+$summary_replace[] = $cfg["shopUrl"];			# ¼îÇÎ¸ôÁÖ¼Ò
+$summary_replace[] = $cfg["address"];			# »ç¾÷ÀåÁÖ¼Ò
+$summary_replace[] = $cfg["compSerial"];		# »ç¾÷ÀÚµî·Ï¹øÈ£
+$summary_replace[] = $cfg["ceoName"];			# ¼îÇÎ¸ô ´ëÇ¥
+$summary_replace[] = $cfg["adminName"];			# °³ÀÎÁ¤º¸°ü¸®ÀÚ
+$summary_replace[] = $cfg["compPhone"];			# ¼îÇÎ¸ô ÀüÈ­
+$summary_replace[] = $cfg["compFax"];			# ¼îÇÎ¸ô ÆÑ½º
+$summary_replace[] = $cfg["adminEmail"];		# ¼îÇÎ¸ô ÀÌ¸ÞÀÏ
+
+if ( isset( $_GET[ssno] ) == false && isset( $_GET[sitemcd] ) == false && isset( $_GET[faq_sword] ) == false ){
+	$_GET['sitemcd'] = array_shift( array_keys( $codeitem ) ); // ºÐ·ù ±âº»°ª
+}
+
+### FAQ
+$pg = new Page($_GET[page],1000);
+$pg->field = "sno, itemcd, question, descant, answer";
+$db_table = "".GD_FAQ."";
+
+if ($_GET[ssno]){
+	$where[] = "sno='$_GET[ssno]'";
+}
+
+if ($_GET[sitemcd]){
+	$where[] = "itemcd='$_GET[sitemcd]'";
+}
+
+if ($_GET[faq_sword]){
+	$where[] = "concat(question, descant, answer) like '%$_GET[faq_sword]%'";
+}
+
+$pg->setQuery($db_table,$where,$sort='sort');
+$pg->exec();
+
+$res = $db->query($pg->query);
+while ($data=$db->fetch($res)){
+
+	$data['idx'] = $pg->idx--;
+
+	$data['itemcd'] = $codeitem[ $data['itemcd'] ];
+
+	if ( blocktag_exists( $data[descant] ) == false ){
+		$data[descant] = nl2br($data[descant]);
+	}
+
+	$data[descant] = preg_replace( $summary_search, $summary_replace, $data[descant] );
+
+	if ( blocktag_exists( $data[answer] ) == false ){
+		$data[answer] = nl2br($data[answer]);
+	}
+
+	$data[answer] = preg_replace( $summary_search, $summary_replace, $data[answer] );
+
+	$loop[] = $data;
+}
+
+$tpl->assign( 'pg', $pg );
+
+### ÅÛÇÃ¸´ Ãâ·Â
+$tpl->print_('tpl');
+
+?>

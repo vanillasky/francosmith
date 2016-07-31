@@ -1,0 +1,90 @@
+{*** 회사소개 이용약관 사용가이드 | shopTouch_disp/company_info.php ***}
+{ # header }
+<style type="text/css">
+.tab {width:681px; padding:20px 20px 10px 20px; position:fixed; top:0px; left:0px; height:40px; background-color:#FFFFFF;}
+.tab-img {background: url("../common/img/tab_info_off.png");background-repeat: no-repeat;float:left;margin:1px; width:225px; height:38px;}
+.info { width:681px;  }
+.info table {width:100%; border-top:2px solid #434343; border-bottom:1px solid #ccc; margin-bottom:20px; margin-top:20px;}
+.info table th {padding:5px 10px 5px 10px; border-bottom:1px solid #bdbdbd; vertical-align:middle; background-color:#F4F4F4; text-align:left; width:20%; min-width:65px;}
+.info table td {padding:5px 10px 5px 10px; border-bottom:1px solid #bdbdbd; vertical-align:middle;}
+#div_info1 { width:681px; padding:60px 21px 20px 21px; }
+#div_info2 { width:681px; padding:60px 21px 20px 21px;}
+#div_info3 { width:681px; padding:60px 0px 0px 0px; }
+</style>
+<script type="text/javascript">
+function tabClick(str_no) {
+	document.getElementById('tab_img1').style.background = 'url("../common/img/tab_info_off.png")';
+	document.getElementById('tab_img2').style.background = 'url("../common/img/tab_info_off.png")';
+	document.getElementById('tab_img3').style.background = 'url("../common/img/tab_info_off.png")';
+	
+	var tab_back = document.getElementById('tab_img' + str_no);
+	tab_back.style.background = 'url("../common/img/tab_info_on.png")';
+
+	document.getElementById('div_info1').style.display = 'none';
+	document.getElementById('div_info2').style.display = 'none';
+	document.getElementById('div_info3').style.display = 'none';
+
+	var info_disp = document.getElementById('div_info' + str_no);
+	info_disp.style.display = 'block';
+}
+</script>
+<div class="indiv" style="height:100%;"><!-- Start indiv -->
+<section id="tab" class="tab">
+	<div class="tab-img" id="tab_img1"><a href="javascript:tabClick('1');"><img src="../common/img/tab_info_t1.png" /></a></div>
+	<div class="tab-img" id="tab_img2"><a href="javascript:tabClick('2');"><img src="../common/img/tab_info_t2.png" /></a></div>
+	<div class="tab-img" id="tab_img3"><a href="javascript:tabClick('3');"><img src="../common/img/tab_info_t3.png" /></a></div>
+</section>
+<section id="info" class="info">
+	<div id="div_info1">
+		<table>
+		<tr>
+			<th>상호명 </th>
+			<td>{=comp_info.comp_name}</td>	
+		</tr>
+		<tr>
+			<th>사업장주소 </th>
+			<td>{=comp_info.comp_addr}</td>	
+		</tr>
+		<tr>
+			<th>사업자번호 </th>
+			<td>{=comp_info.comp_serial}</td>	
+		</tr>
+		<tr>
+			<th>통신판매신고번호 </th>
+			<td>{=comp_info.comp_orderserial}</td>	
+		</tr>
+		<tr>
+			<th>대표자명 </th>
+			<td>{=comp_info.comp_ceo}</td>	
+		</tr>
+		<tr>
+			<th>개인정보관리자 </th>
+			<td>{=comp_info.comp_admin}</td>	
+		</tr>
+		<tr>
+			<th>전화번호 </th>
+			<td>{=comp_info.comp_tel}</td>	
+		</tr>
+		<tr>
+			<th>팩스번호 </th>
+			<td>{=comp_info.comp_fax}</td>	
+		</tr>
+		</table>
+	</div>
+	<div id="div_info2">
+		<table>
+		<tr>
+			<td>{=agreement}</td>	
+		</tr>
+		</table>
+	</div>
+	<div id="div_info3">
+		<img src="http://pad.godo.co.kr/images/common/guide_img.png">
+	</div>
+</section>
+</div><!-- End indiv -->
+<script type="text/javascript">
+	tabClick('1');
+</script>
+{ # footer }
+

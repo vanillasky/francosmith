@@ -1,0 +1,68 @@
+{ # header }
+<script type="text/javascript">
+
+</script>
+
+
+{? design_head_type=='html'}
+	{design_head_html}
+{: design_head_type=='image'}
+	<img src="{design_head_image}">
+{: design_head_type=='upload'}
+	<img src="{design_head_upload}">
+{/}
+<br>
+<img src="../img/attendance/sub_title.gif"><br>
+
+<div style="color:#999999;padding:5px 0px 15px 10px">
+{? condition_type=='straight'}
+	<b><span style="color:#333333">{_member.name}</span></b>회원님께서는 
+	<b><span style="color:#333333">총 <span style="color:#ff6801">{check_period}</span>회</span></b> 매일 출석하셨습니다.
+{:}
+	<b><span style="color:#333333">{_member.name}</span></b>회원님께서는 
+	<b><span style="color:#333333">총 <span style="color:#ff6801">{check_period}</span>회</span></b> 출석하셨습니다.
+{/}
+</div>
+
+<table width="688" cellpadding="0" cellspacing="0" background="../img/attendance/caldr_1_center_bg.gif">
+<tr><td width="688" height="96" align="center" background="../img/attendance/caldr_1_top.gif" valign="top">
+	<div style="height:20px"></div>
+	
+	<a href="{prev_month}"><img src="../img/attendance/1_b_btn.gif"></a>
+	&nbsp;
+	<span style="color:#cc0033;font-weight:bold;font-size:16px;font-family:'Verdana';">{year}.{month}</span>
+	&nbsp;
+	<a href="{next_month}"><img src="../img/attendance/1_n_btn.gif"></a>
+</td></tr>
+<tr><td align="center">
+
+	<table cellpadding="5" cellspacing="0" border="1" style="border-collapse:collapse" bordercolor="#cccccc">
+	{@ calendar}
+	    {? .key_%7==0}<tr>{/}
+	    <td width="85" height="85" valign="top">
+	    	{? .key_%7==0 || .key_%7==6}
+	        	<div style="background-color:#eeeeee;width:20px;text-align:center;padding:3px 0px;font-size:11px;font-family:Verdana;letter-spacing:-1px;color:#cc0033;font-weight:bold;">{.day}</div>
+			{:}
+				<div style="background-color:#eeeeee;width:20px;text-align:center;padding:3px 0px;font-size:11px;font-family:Verdana;letter-spacing:-1px;color:#666666;font-weight:bold;">{.day}</div>
+			{/}
+	        {? .stamp}
+	        <div align="center"><img src="{stamp_img_path}"></div>
+	        {/}
+	    </td>
+	{/}
+	</table>
+
+</td></tr>
+<tr><td width="688" height="14" style="font-size:1px" background="../img/attendance/caldr_1_bottom.gif">
+	&nbsp;
+</td></tr>
+</table> 
+
+<br><br>
+
+<div style="text-align:center">
+<a href="../member/indb.attendance.php?attendance_no={attendance_no}&mode=check" target="ifrmHidden"><img src="../img/attendance/checked_btn.gif"></a>
+</div>
+
+
+{ # footer }

@@ -1,0 +1,79 @@
+{*** 상품문의 | shopTouch_myp/qna_goods.php ***}
+{ # header }
+
+<?php {page_title} = "상품문의";?>
+{#sub_header}
+<? if($_GET['goodsno']){ ?>
+<style type="text/css">
+section#qnagoodslist {padding:0px 0px 0px 0px;}
+</style>
+<? } ?>
+
+<div class="indiv"><!-- Start indiv -->
+
+<section id="qnagoodslist">
+	<table>
+	<tr>
+		<th>번호</th>
+		<th>이미지</th>
+		<th>상품명</th>
+		<th>제목</th>
+		<th>작성자</th>
+		<th>작성일</th>
+	</tr>
+	<!--{ @ _loop }-->
+	<!--{ ? .sno == .parent // 질문 }-->
+	<tr onclick="view_content(this);">
+		<td class="qgl_no">{.idx}</td>
+		<td class="qgl_qna_goods_img">{=goodsimg(.img_s,50)}</td>
+		<td class="qgl_qna_goods">{.goodsnm}</div></td>
+		<td class="qgl_qna_subject">{.subject}</td>
+		<td class="qgl_qna_name">{.m_id}</td>
+		<td class="qgl_qna_dt">{=substr(.regdt,0,10)}</td>
+	</tr>
+	<tr style="display:none;">
+		<td align="center"></td>
+		<td colspan="5">{.contents}</td>
+	</tr>
+	<!--{ : .sno != .parent // 답글 }-->
+	<tr class="reply" onclick="view_content(this);">
+		<td class="qgl_no">{.idx}</td>
+		<td class="qgl_qna_goods_img"></td>
+		<td class="qgl_qna_goods"></td>
+		<td class="qgl_qna_subject">Re:{.subject}</td>
+		<td class="qgl_qna_name">{.m_id}</td>
+		<td class="qgl_qna_dt">{=substr(.regdt,0,10)}</td>
+	</tr>
+	<tr style="display:none;" class="reply">
+		<td align="center">></td>
+		<td colspan="5">{.contents}</td>
+	</tr>
+	<!--{ / }-->
+	
+	<!--{ / }-->
+	</table>
+	
+	<div class="pagediv">{pg->page['navi']}</div>
+
+</section>
+
+
+<script language="javascript">
+function view_content(obj) {
+	var row = obj;
+
+	var next = row.parentNode.rows[ row.rowIndex + 1];
+
+	if(next.style.display == "none") {
+		next.style.display="";
+	}
+	else {
+		next.style.display="none";
+	}
+}
+
+</script>
+
+</div><!-- End indiv -->
+
+{ # footer }

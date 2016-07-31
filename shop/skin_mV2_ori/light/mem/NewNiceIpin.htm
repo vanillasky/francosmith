@@ -1,0 +1,42 @@
+{*** 아이핀인증 | member/join.php ***}
+
+<script language="javascript">
+	function validate()
+	{
+		if($("[name=chk_agree]").is(":checked") == false) {
+			alert("이용약관 및 개인정보취급방침에 동의하셔야 회원가입이 가능합니다");
+			return false;
+		}
+
+		<!--{ @ consentData }-->
+		<!--{ ? .requiredyn == 'y' }-->
+		if ($("[name='consent[{.sno}]']").is(":checked") === false){
+			alert("{.title}에 동의하셔야 회원가입이 가능합니다");
+			return false;
+		}
+		<!--{ / }-->
+		<!--{ / }-->
+
+		return true;
+	}
+
+	function goIDCheckIpin()
+	{
+		if (!validate()) {
+			return;
+		} else {
+			frmMake('','popupCertKey','아이핀인증',true);
+			$("meta[name='viewport']").attr({"content":"user-scalable=yes, width=480"});
+			document.getElementById("ifrmRnCheck").contentWindow.location.href="../../shop/member/ipin/IPINMain.php?callType=joinmember&joinGubun=mobile";
+		}
+		return;
+	}
+</script>
+
+<div id="div_RnCheck_ipin" class="div_RnCheck_ipin">
+<ul class="info">
+	<li>아이핀(i-PIN)은 방송통신위원회에서 주관하는 주민등록번호 대체수단으로 회원님의 주민등록번호 대신 아이핀 ID를 NICE신용평가정보(주)로부터 발급받아 본인확인을 하는 서비스입니다.</li>
+	<li>i-PIN 인증으로 가입시 i-PIN 인증기관을 통해 실명인증을 받게 되므로 {shopName}에는 회원님의 주민등록번호가 저장되지 않습니다.</li>
+</ul>
+<iframe id="ifrmRnCheck" name="ifrmRnCheck" style="width:500px;height:500px;display:none;"></iframe>
+</div>

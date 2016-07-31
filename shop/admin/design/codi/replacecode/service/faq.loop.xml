@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="EUC-KR"?>
+<codes>
+<list>
+	<code>{.sno}</code>
+	<desc>코드번호</desc>
+	<exam>1</exam>
+</list>
+<list>
+	<code>{.idx}</code>
+	<desc>일련번호</desc>
+	<exam>1</exam>
+</list>
+<list>
+	<code>{.itemcd}</code>
+	<desc>질문유형</desc>
+	<exam>회원가입/정보</exam>
+</list>
+<list>
+	<code>{.question}</code>
+	<desc>제목 (단문)</desc>
+	<exam>회원가입은 어떻게 하나요?</exam>
+</list>
+<list>
+	<code>{.descant}</code>
+	<desc>질문 (장문)</desc>
+	<exam></exam>
+</list>
+<list>
+	<code>{.answer}</code>
+	<desc>답변</desc>
+	<exam>회원가입은 무료이며 ...</exam>
+</list>
+</codes>

@@ -1,0 +1,115 @@
+{*** 나의 상품문의 | mypage/mypage_qna_goods.php ***}
+{ # header }
+
+<!-- 상단이미지 || 현재위치 -->
+<TABLE width=100% cellpadding=0 cellspacing=0 border=0>
+<tr>
+	<td><img src="../img/common/title_myqna.gif" border=0></td>
+</tr>
+<TR>
+	<td class="path">HOME > 마이페이지 > <B>나의상품문의</B></td>
+</TR>
+</TABLE>
+
+
+<div class="indiv"><!-- Start indiv -->
+
+<table width="100%" border="0" cellspacing="0" cellpadding="5" style="border-top-style:solid;border-top-color:#303030;border-top-width:2;border-bottom-style:solid;border-bottom-color:#D6D6D6;border-bottom-width:1;">
+<tr height="23" bgcolor="#F0F0F0" class=input_txt>
+	<th width=50>번호</th>
+	<th width=60>이미지</th>
+	<th>상품명/제목</th>
+	<th width=80>작성자</th>
+	<th width=80>작성일</th>
+</tr>
+</table>
+
+<!--{ @ _loop }-->
+<div>
+<!--{ ? .sno == .parent // 질문 }-->
+<table width=100% cellpadding=3 cellspacing=0 style="border-bottom-style:solid;border-bottom-color:#E6E6E6;border-bottom-width:1;cursor:pointer;" onclick="view_content(this, event)">
+<tr height=25 onmouseover=this.style.background="#F7F7F7" onmouseout=this.style.background="">
+	<td width=50 align="center">{.idx}</td>
+	<td width=60 align="center"><a href="../goods/goods_view.php?goodsno={.goodsno}">{=goodsimg(.img_s,50)}</a></td>
+	<td>
+	<TABLE cellpadding=0 cellspacing=0 border=0>
+	<TR>
+		<TD style="padding-top:5"><span style="font-weight:bold;">{.goodsnm}</span> <a href="../goods/goods_view.php?goodsno={.goodsno}"><img src="../img/common/btn_goodview2.gif" align=absmiddle></a></TD>
+	</TR>
+	<tr>
+		<td style="padding-top:5; padding-bottom:5" class=stxt>{.subject} <span style="color:#007FC8;">[{.replecnt}]</span></td>
+	</tr>
+	</TABLE>
+	</td>
+	<td width=80 align="center">{.m_id}</td>
+	<td width=80 align="center">{=substr(.regdt,0,10)}</td>
+</tr>
+</table>
+<!--{ : .sno != .parent // 답글 }-->
+<table width=100% cellpadding=3 cellspacing=0 style="border-bottom-style:solid;border-bottom-color:#E6E6E6;border-bottom-width:1;cursor:pointer;" onclick="view_content(this, event)">
+<tr height=25 onmouseover=this.style.background="#F7F7F7" onmouseout=this.style.background="">
+	<td width=50 align="center">{.idx}</td>
+	<td width=60 align="center"><img src="../img/common/myqna_answer.gif"></td>
+	<td style="padding-top:5; padding-bottom:5" class=stxt>{.subject}</td>
+	<td width=80 align="center">{.m_id}</td>
+	<td width=80 align="center">{=substr(.regdt,0,10)}</td>
+</tr>
+</table>
+<!--{ / }-->
+<div style="display:none;padding:10;border-bottom-style:solid;border-bottom-color:#E6E6E6;border-bottom-width:1;">
+	<div width="100%" style="padding-left:55">{.contents}</div>
+	<div style="text-align:right;">
+	<!--{ ? .authreply == 'Y' }-->
+	<a href="javascript:;" onclick="popup_register( 'reply_qna', '{.goodsno}', '{.sno}' );"><img src="../img/common/btn_reply.gif" border="0" align="absmiddle"></a>
+    <!--{ / }-->
+	<!--{ ? .authmodify == 'Y' }-->
+	<a href="javascript:;" onclick="popup_register( 'mod_qna', '{.goodsno}', '{.sno}' );"><img src="../img/common/btn_modify2.gif" border="0" align="absmiddle"></a>
+    <!--{ / }-->
+	<!--{ ? .authdelete == 'Y' }-->
+    <a href="javascript:;" onclick="popup_register( 'del_qna', '{.goodsno}', '{.sno}' );"><img src="../img/common/btn_delete.gif" border="0" align="absmiddle"></a>
+    <!--{ / }-->
+    </div>
+</div>
+</div>
+<!--{ / }-->
+
+<div class="pagediv">{pg->page['navi']}</div>
+
+
+<script language="javascript">
+
+function popup_register( mode, goodsno, sno )
+{
+	if ( mode == 'del_qna' ) var win = window.open("../goods/goods_qna_del.php?mode=" + mode + "&sno=" + sno,"qna_register","width=400,height=200");
+	else var win = window.open("../goods/goods_qna_register.php?mode=" + mode + "&goodsno=" + goodsno + "&sno=" + sno,"qna_register","width=600,height=500");
+	win.focus();
+}
+
+var preContent;
+
+function view_content(obj)
+{
+	var div = obj.parentNode;
+
+	for (var i=1, m=div.childNodes.length;i<m;i++) {
+		if (div.childNodes[i].nodeType != 1) continue;	// text node.
+		else if (obj == div.childNodes[ i ]) continue;
+
+		obj = div.childNodes[ i ];
+		break;
+	}
+
+	if (preContent && obj!=preContent){
+		obj.style.display = "block";
+		preContent.style.display = "none";
+	}
+	else if (preContent && obj==preContent) preContent.style.display = ( preContent.style.display == "none" ? "block" : "none" );
+	else if (preContent == null ) obj.style.display = "block";
+
+	preContent = obj;
+}
+</script>
+
+</div><!-- End indiv -->
+
+{ # footer }

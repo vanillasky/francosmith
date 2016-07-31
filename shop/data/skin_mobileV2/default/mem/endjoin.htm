@@ -1,0 +1,28 @@
+{#header}
+<?php {page_title} = "회원가입 (가입완료)";?>
+{#sub_header}
+
+<section class="content" id="memberjoin">
+
+	<div class="join_step">
+		<div class="join_step1">약관동의</div>
+		<div class="join_arrow"></div>
+		<div class="join_step2">계정생성</div>
+		<div class="join_arrow"></div>
+		<div class="join_step4 now_step">가입완료</div>
+	</div>
+	<div class="content_border"></div>
+	<div class="account">
+		<div class="join_text">
+			<div class="account_title"><div class="bullet"></div><div class="title">{_sess.m_id} 님 가입 축하드립니다</div></div>
+		</div>
+	</div>
+	<div class="content_border"></div>
+	<div class="step_btn">
+		<div class="cancel_btn"><button id="cancel-btn" tabindex="5" onclick="javascript:location.href='/'+mobile_root+'/index.php';return false;">홈으로</button></div>
+	</div>
+	<div class="none_content_border2"></div>
+
+</section>
+
+{#footer}

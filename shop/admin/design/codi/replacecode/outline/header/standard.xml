@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="EUC-KR"?>
+<codes>
+<list>
+	<code power="">{_cfg['shopAlign']}</code>
+	<desc>정렬방식 - left:왼쪽정렬, center:가운데정렬</desc>
+	<exam>center</exam>
+</list>
+<list>
+	<code power="">{_cfg['shopSize']}</code>
+	<desc>전체사이즈</desc>
+	<exam>903</exam>
+</list>
+<list>
+	<code power="">{_cfg['shopSideSize']}</code>
+	<desc>측면사이즈</desc>
+	<exam>200</exam>
+</list>
+<list>
+	<code>{_cfg['shopLineWidthL']}</code>
+	<desc>좌측라인크기</desc>
+	<exam>1</exam>
+</list>
+<list>
+	<code>{_cfg['shopLineWidthC']}</code>
+	<desc>중앙라인크기</desc>
+	<exam>1</exam>
+</list>
+<list>
+	<code>{_cfg['shopLineWidthR']}</code>
+	<desc>우측라인크기</desc>
+	<exam>1</exam>
+</list>
+<list>
+	<code>{_sess}</code>
+	<desc>회원</desc>
+	<exam></exam>
+</list>
+<list>
+	<code>{_member.name}</code>
+	<desc>회원이름</desc>
+	<exam>홍길동</exam>
+</list>
+<list>
+	<code>{_GET['sword']}</code>
+	<desc>상품검색의 검색어</desc>
+	<exam></exam>
+</list>
+<list>
+	<code>{_cfg.subCategory}</code>
+	<desc>메뉴레이어사용 - 0:레이어 사용안함, 1:레이어 사용함, 2:서브메뉴 하단출력</desc>
+	<exam>1</exam>
+</list>
+<list>
+	<code>{ @ dataCategory( _cfg.subCategory ) }</code>
+	<desc>분류, subCategory=0 이면 1단계만 출력하고 subCategory!=0 이면 서브 분류(sub)도 출력</desc>
+	<exam more="func/dataCategory.xml"></exam>
+</list>
+<list>
+	<code>{ @ dataBanner( 1, 1, 'Y' ) }</code>
+	<desc>배너코드1 위치의 배너를 1개만 랜덤으로 호출 (※ 위치는 1 ~ 60 제공)</desc>
+	<exam more="func/dataBanner.xml"></exam>
+</list>
+<list>
+	<code>{ @ dataBanner( 2 ) }</code>
+	<desc>배너코드2 위치의 배너를 호출</desc>
+	<exam more="func/dataBanner.xml"></exam>
+</list>
+</codes>

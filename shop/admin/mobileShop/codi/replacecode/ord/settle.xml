@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="EUC-KR"?>
+<codes>
+<list>
+	<code>{nameOrder}</code>
+	<desc>주문자명</desc>
+	<exam>홍길동</exam>
+</list>
+<list>
+	<code>{=number_format(settleprice)}</code>
+	<desc>결제금액</desc>
+	<exam>5,200</exam>
+</list>
+<list>
+	<code power="">{settlekind}</code>
+	<desc>결제수단 - a:무통장입금, c:신용카드, o:계좌이체, v:가상계좌, h:핸드폰</desc>
+	<exam>a</exam>
+</list>
+<list>
+	<code power="">{@ _bank}</code>
+	<desc>입금계좌</desc>
+	<exam more="ord/settle._bank.xml"></exam>
+</list>
+<list>
+	<code power="">{card_gate}</code>
+	<desc>PG 인클루드</desc>
+	<exam></exam>
+</list>
+<list>
+	<code>{ # header }</code>
+	<desc>상단과 측면을 크게 감싸는 외곽파일 인클루드, 소스 맨위에 삽입</desc>
+	<exam></exam>
+</list>
+<list>
+	<code>{ # footer }</code>
+	<desc>하단을 크게 감싸는 외곽파일 인클루드, 소스 맨아래에 삽입</desc>
+	<exam></exam>
+</list>
+<list>
+	<code>{ # sub_header }</code>
+	<desc>페이지 안의 작은 상단(구분) 라인</desc>
+	<exam></exam>
+</list>
+</codes>

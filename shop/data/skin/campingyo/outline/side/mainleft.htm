@@ -1,0 +1,64 @@
+{*** 메인용 측면파일 | main/index.php ***}
+
+<!-- 카테고리 메뉴 시작 -->
+<!-- 관련 세부소스는 '기타/추가페이지(proc) > 카테고리메뉴- menuCategory.htm' 안에 있습니다 -->
+{ # menuCategory }
+<!-- 카테고리 메뉴 끝 -->
+
+<!-- 쇼핑가이드 : Start -->
+<table cellpadding='0' cellspacing='0'>
+<tr>
+  <td><a href='/shop/mypage/mypage_qna.php?&&'><img src="/shop/data/images/bn_guid01.gif"></a></td>
+  <td><a href='/shop/goods/goods_qna.php?&&'><img src="/shop/data/images/bn_guid02.gif"></a></td>
+  <td><a href='/shop/service/faq.php?&&'><img src="/shop/data/images/bn_guid03.gif"></a></td>
+ </tr>
+<tr>
+	<td><a href='/shop/mypage/mypage_orderlist.php?&&'><img src="/shop/data/images/bn_guid04.gif"></a></td>
+  <td><a href='/shop/goods/goods_review.php?&&'><img src="/shop/data/images/bn_guid05.gif"></a></td>
+  <td><a href='/shop/mypage/mypage_wishlist.php?&&'><img src="/shop/data/images/bn_guid06.gif"></a></td>
+ </tr>
+</table>
+
+<!-- 메인왼쪽 고객센터 01 : Start -->
+<div style="width:190px; height:95px; background:url(../../img/main/bn_cs.jpg) no-repeat;">
+	<div style="padding:19px 0px 2px 66px;"><img src="../../img/main/txt_cs.gif"></div>
+	<div style="padding-left:66px; font-size:14px; font-weight:bold; line-height:23px; color:#333; font-family:Tahoma, Geneva, sans-serif">{_cfg['compPhone']}</div>
+	<dl style="margin:0px; padding-left:66px; color:#888; font-size:11px;">
+		<dd style="margin:0px; line-height:12px;font-family:formatta,Tahoma">MON - FRI</dd>
+		<dd style="margin:0px; line-height:12px;font-family:formatta,Tahoma"">10:00 - 18:00</dd>
+	</dl>
+</div>
+<!-- 메인왼쪽 고객센터 01 : End -->
+<!-- 무통장입금 : Start -->
+<div style="width:190px; background:url(../../img/main/bn_bankinfo.jpg) no-repeat 0px 25px;">
+	<div style="padding:19px 0px 7px 66px;"><img src="../../img/main/txt_bankinfo.gif"></div>
+	<div style="padding:0 0 15px 66px; font-size:11px; color:#666;">
+	<!--{ @ dataBank() }-->
+	<p style="margin:0px; padding:0px;">{.bank}</p>
+	<p style="margin:0px; padding:0px; font-weight:bold;">{.account}</p>
+	<p style="margin:0px; padding:0px;">{.name}</p>
+	<!--{ ? .index_!=.size_-1 }-->
+	<p style="margin:0px; padding:0px; border-top:solid 1px #EBEBEB;height:1px;font-size:0px; margin:7px 0 6px"></p>
+	<!--{ / }-->
+	<!--{ / }-->
+	</div>
+</div>
+<!-- 무통장입금 : End -->
+
+																											   
+<!-- 메인왼쪽배너 : Start -->
+<table cellpadding="0" cellspacing="0" border="0" width=100%>
+<tr><td align="left"><!-- (배너관리에서 수정가능) --><!--{ @ dataBanner( 5 ) }-->{.tag}<!--{ / }--></td></tr>
+<tr><td align="left"><!-- (배너관리에서 수정가능) --><!--{ @ dataBanner(11) }-->{.tag}<!--{ / }--></td></tr>
+<tr><td align="left"><!-- (배너관리에서 수정가능) --><!--{ @ dataBanner(12) }-->{.tag}<!--{ / }--></td></tr>
+<tr><td align="left"><!-- (배너관리에서 수정가능) --><!--{ @ dataBanner(13) }-->{.tag}<!--{ / }--></td></tr>
+<tr><td align="left"><!-- (배너관리에서 수정가능) --><!--{ @ dataBanner(14) }-->{.tag}<!--{ / }--></td></tr>
+<tr><td align="left"><!-- (배너관리에서 수정가능) --><!--{ @ dataBanner(15) }-->{.tag}<!--{ / }--></td></tr>
+<tr><td align="left"><!-- (배너관리에서 수정가능) --><!--{ @ dataBanner(16) }-->{.tag}<!--{ / }--></td></tr>
+<tr><td align="left"><!-- (배너관리에서 수정가능) --><!--{ @ dataBanner(19) }-->{.tag}<!--{ / }--></td></tr>
+<tr><td align="left"><!-- (배너관리에서 수정가능) --><!--{ @ dataBanner(20) }-->{.tag}<!--{ / }--></td></tr>
+<tr><td align="left"><!-- (배너관리에서 수정가능) --><!--{ @ dataBanner(21) }-->{.tag}<!--{ / }--></td></tr>
+<tr><td align="left"><!-- (배너관리에서 수정가능) --><!--{ @ dataBanner(24) }-->{.tag}<!--{ / }--></td></tr>
+<tr><td align="left"><!-- (배너관리에서 수정가능) --><!--{ @ dataBanner(30) }-->{.tag}<!--{ / }--></td></tr>
+</table>
+<!-- 메인왼쪽배너 : End -->

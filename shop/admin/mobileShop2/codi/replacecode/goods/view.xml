@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="EUC-KR"?>
+<codes>
+<list>
+	<code>{=currPosition(category)}</code>
+	<desc>해당분류의 단계별 분류명</desc>
+	<exam>여성패션 > 여성샌들</exam>
+</list>
+<list>
+	<code power="">{goodsno}</code>
+	<desc>상품번호</desc>
+	<exam>37</exam>
+</list>
+<list>
+	<code power="">{goodsnm}</code>
+	<desc>상품명</desc>
+	<exam>런닝 운동화</exam>
+</list>
+<list>
+	<code>{goodscd}</code>
+	<desc>상품코드</desc>
+	<exam>PSH-0102</exam>
+</list>
+<list>
+	<code>{origin}</code>
+	<desc>원산지</desc>
+	<exam>대한민국</exam>
+</list>
+<list>
+	<code>{maker}</code>
+	<desc>제조사</desc>
+	<exam>나이키</exam>
+</list>
+<list>
+	<code>{brandno}</code>
+	<desc>브랜드번호</desc>
+	<exam>1</exam>
+</list>
+<list>
+	<code>{brand}</code>
+	<desc>브랜드명</desc>
+	<exam>나이키</exam>
+</list>
+<list>
+	<code>{delivery_type}</code>
+	<desc>배송비 - 0:기본배송비 적용, 1:무료배송</desc>
+	<exam>0</exam>
+</list>
+<list>
+	<code>{strprice}</code>
+	<desc>가격대체문구</desc>
+	<exam>가격 미정</exam>
+</list>
+<list>
+	<code power="">{price}</code>
+	<desc>판매가</desc>
+	<exam>4800</exam>
+</list>
+<list>
+	<code power="">{reserve}</code>
+	<desc>적립금</desc>
+	<exam>450</exam>
+</list>
+<list>
+	<code power="">{consumer}</code>
+	<desc>정가</desc>
+	<exam>5000</exam>
+</list>
+<list>
+	<code>{stock}</code>
+	<desc>재고량</desc>
+	<exam>300</exam>
+</list>
+<list>
+	<code>{usestock}</code>
+	<desc>재고량연동 - '':무한정판매, o:주문시 재고량빠짐</desc>
+	<exam></exam>
+</list>
+<list>
+	<code power="">{runout}</code>
+	<desc>품절상품 - 1:품절</desc>
+	<exam>1</exam>
+</list>
+<list>
+	<code>{_member.dc}</code>
+	<desc>회원할인율(%)</desc>
+	<exam>15</exam>
+</list>
+<list>
+	<code>{realprice}</code>
+	<desc>회원할인가</desc>
+	<exam>4100</exam>
+</list>
+<list>
+	<code>{chk_point}</code>
+	<desc>고객선호도 - 1점 ~ 5점</desc>
+	<exam>5</exam>
+</list>
+<list>
+	<code>{_typeOption}</code>
+	<desc>옵션출력방식 - single:일체형, double:분리형</desc>
+	<exam>single</exam>
+</list>
+<list>
+	<code>{optnm}</code>
+	<desc>일체형 옵션명 - 옵션출력방식이 일체형인 경우 사용 (옵션명1+옵션명2)</desc>
+	<exam>색상/사이즈</exam>
+</list>
+<list>
+	<code>{@ _optnm}</code>
+	<desc>분리형 옵션명 - 옵션출력방식이 분리형인 경우 사용</desc>
+	<exam more="goods/goods_view._optnm.xml"></exam>
+</list>
+<list>
+	<code power="">{@ _opt}</code>
+	<desc>옵션</desc>
+	<exam more="goods/goods_view.opt.xml"></exam>
+</list>
+<list>
+	<code>{@ _addopt}</code>
+	<desc>추가상품 (=추가옵션)</desc>
+	<exam more="goods/goods_view._addopt.xml"></exam>
+</list>
+<list>
+	<code>{@ _addoptreq}</code>
+	<desc>추가상품 구매시 필수선택 여부</desc>
+	<exam more="goods/goods_view._addoptreq.xml"></exam>
+</list>
+<list>
+	<code>{shortdesc}</code>
+	<desc>짧은설명</desc>
+	<exam>전사이즈 재입고!!</exam>
+</list>
+<list>
+	<code>{longdesc}</code>
+	<desc>상품설명</desc>
+	<exam>제품구성: 스템프+키링+메시지카드 5매 ...</exam>
+</list>
+<list>
+	<code>{@ r_img}</code>
+	<desc>상세이미지</desc>
+	<exam more="goods/goods_view.r_img.xml"></exam>
+</list>
+<list>
+	<code>{@ t_img}</code>
+	<desc>상세이미지 섬네일</desc>
+	<exam more="goods/goods_view.t_img.xml"></exam>
+</list>
+<list>
+	<code>{=goodsimg(r_img[0],0,'id=objImg')}</code>
+	<desc>상세이미지 태그</desc>
+	<exam>&lt;img src="이미지경로" id="objImg" onerror="this.src='/~/noimg_100.gif'"&gt;</exam>
+</list>
+<list>
+	<code>{@ ex}</code>
+	<desc>상품추가정보</desc>
+	<exam more="goods/goods_view.ex.xml"></exam>
+</list>
+<list>
+	<code>{@ dataGoodsRelation( goodsno, 5 )}</code>
+	<desc>관련상품 - 상품번호(goodsno)와 관련된 상품 5개 요청</desc>
+	<exam more="func/dataGoodsRelation.xml"></exam>
+</list>
+<list>
+	<code>{coupon}</code>
+	<desc>쿠폰금액/할인율</desc>
+	<exam>10%</exam>
+</list>
+<list>
+	<code>{coupon_ea}</code>
+	<desc>쿠폰수량</desc>
+	<exam>20</exam>
+</list>
+<list>
+	<code>{coupon_usecnt}</code>
+	<desc>쿠폰수량제한 - '':없음, o:있음 </desc>
+	<exam>o</exam>
+</list>
+<list>
+	<code>{coupon_date}</code>
+	<desc>쿠폰종료일</desc>
+	<exam>20070831</exam>
+</list>
+<list>
+	<code>{_set.delivery.default}</code>
+	<desc>기본배송료</desc>
+	<exam>2500</exam>
+</list>
+<list>
+	<code>{_set.delivery.free}</code>
+	<desc>무료배송 가능한 총 구매액</desc>
+	<exam>50000</exam>
+</list>
+<list>
+	<code>{ # header }</code>
+	<desc>상단과 측면을 크게 감싸는 외곽파일 인클루드, 소스 맨위에 삽입</desc>
+	<exam></exam>
+</list>
+<list>
+	<code>{ # footer }</code>
+	<desc>하단을 크게 감싸는 외곽파일 인클루드, 소스 맨아래에 삽입</desc>
+	<exam></exam>
+</list>
+</codes>

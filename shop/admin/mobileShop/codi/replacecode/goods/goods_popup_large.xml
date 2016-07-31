@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="EUC-KR"?>
+<codes>
+<list>
+	<code>{_meta_title}</code>
+	<desc>메타태그 > 쇼핑몰타이틀</desc>
+	<exam>:: XXX 쇼핑몰입니다 ::</exam>
+</list>
+<list>
+	<code>{_meta_keywords}</code>
+	<desc>메타태그 > 검색엔진 키워드</desc>
+	<exam>신발 운동화 런닝화</exam>
+</list>
+<list>
+	<code power="">{goodsnm}</code>
+	<desc>상품명</desc>
+	<exam>런닝 운동화</exam>
+</list>
+
+<list>
+	<code power="">{price}</code>
+	<desc>판매가</desc>
+	<exam>4800</exam>
+</list>
+<list>
+	<code>{reserve}</code>
+	<desc>적립금</desc>
+	<exam>450</exam>
+</list>
+<list>
+	<code>{shortdesc}</code>
+	<desc>짧은설명</desc>
+	<exam>전사이즈 재입고!!</exam>
+</list>
+<list>
+	<code>{_cfg.img_l+0}</code>
+	<desc>확대이미지 사이즈 (pixel)</desc>
+	<exam>500</exam>
+</list>
+<list>
+	<code>{@ r_img}</code>
+	<desc>확대이미지</desc>
+	<exam more="goods/goods_popup_large.r_img.xml"></exam>
+</list>
+<list>
+	<code power="">{@ t_img}</code>
+	<desc>확대이미지 섬네일</desc>
+	<exam more="goods/goods_popup_large.t_img.xml"></exam>
+</list>
+<list>
+	<code power="">{=goodsimg(r_img[0],_cfg.img_l+0,'id=objImg')}</code>
+	<desc>확대이미지 태그</desc>
+	<exam>&lt;img src="이미지경로" id="objImg" onerror="this.src='/~/noimg_100.gif'"&gt;</exam>
+</list>
+</codes>

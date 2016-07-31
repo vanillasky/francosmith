@@ -1,0 +1,95 @@
+{*** 메인용 하단파일 | main/index.php ***}
+<div id="footer_top" align="{_cfg['shopAlign']}">
+<table width="{_cfg['shopSize']}px" id="cs_contents" border="0" cellpadding="0" cellspacing="0">
+	<tr>
+		<td valign="top" width="210" style="padding:10px 0 0 50px;"> 
+		<!-- 고객센터 01 : Start -->
+		<div id="cscenter">
+			
+			<div class="cstel"><span class="fotter_info_tel">Tel:</span> {_cfg['compPhone']}</div>
+			<div class="cstel"><span class="fotter_info">Fax:</span> {_cfg['compFax']}</div>
+			<dl>
+				<dd>MON - FRI <span class="txt">am 10:00 - pm 17:00</span> </dd>
+			</dl>
+		</div>
+		<!-- 고객센터 01 : End --> 
+		</td>
+		<td valign="top" width="160" style="padding:10px 0 0 0;" >
+			<!-- 메인 무통장입금 : Start -->
+			<table id="bankinfo" border="0" cellpadding="0" cellspacing="0">
+				<tr>
+					<td><span class="footer_h2">Bank Info</span></td>
+				</tr>
+				<!--{ @ dataBank() }-->
+				<tr>
+					<td style="padding-top:5px;"><span class="footer_h3">{.bank}</span></td>
+				</tr>
+				<tr>
+					<td style="padding-top:5px;"><span class="footer_h4">{.account}</span><span class="footer_h3"> {.name}</span></td>
+				</tr>
+				
+				<!--{ / }--> 
+			</table>
+			<!-- 메인 무통장입금 : End --> 
+		</td>
+		<td><img src="/shop/data/skin/freemart/img/banner/top-logo3_01.jpg"></td>
+		<td valign="top" style="padding:5px 0 0 0;">
+			<table id="about" width="100%" border="0" cellpadding="0" cellspacing="0">
+				<tr>
+					<td class="bold" align="right">
+						<a href="../service/guide.php">이용안내</a> &nbsp;<span style="color:#e0e0e0;">|</span>&nbsp; 
+						<a href="../service/cooperation.php">제휴안내</a>&nbsp;<span style="color:#e0e0e0;">|</span>&nbsp; 
+						<a href="../service/sitemap.php">SITE MAP</a>
+					</td>
+					<td width="10px;"></td>
+				</tr>
+				<tr>
+					<td class="bold" align="right">
+					<a href="../service/private.php">개인정보처리방침</a>
+					</td>
+					<td width="10px;"></td>
+				</tr>
+				<tr>
+					<td align="right" class="footer_h4">
+						<small>Copyright &copy; <script type="text/javascript">
+var d = new Date();
+document.write(d.getFullYear())
+							</script>&nbsp;Francosmith</small>
+
+					</td>
+					<td width="10px;"></td>
+					
+				</tr>
+			</table>
+		</td>
+	</tr>
+	
+		
+</table>
+<table>
+<tr>
+	<td>
+		<div id="footer_bottom">
+		<div id="footer_company">
+			<p class="line_h20">
+				<span class="txt">회사:</span> {_cfg['compName']}<span class="bar">|</span>
+				<span class="txt">주소:</span> {_cfg['address']} <span class="bar">|</span>
+				<span class="txt">대표:</span> {_cfg['ceoName']} <span class="bar">|</span> 
+				<span class="txt">사업자등록번호:</span> {_cfg['compSerial']} <a href="http://www.ftc.go.kr/info/bizinfo/communicationList.jsp" target="_blank"><img src="../../img/common/btn_business.gif" style="vertical-align:top;"></a>
+			</p>
+			<p>
+				<span class="txt">통신판매업신고번호</span> {_cfg['orderSerial']} 
+				<span class="bar"> <span style="color:#e0e0e0;">|</span>  </span>
+				<span class="txt">개인정보관리자</span> {_cfg['adminName']} 
+			</p>
+			<p class="line_h20">
+				<span class="txt">팩스번호</span> {_cfg['compFax']} 
+				<span class="bar"> <span style="color:#e0e0e0;">|</span>  </span>
+				<span class="txt">메일</span> <a href="javascript:popup('../proc/popup_email.php?to={_cfg['adminEmail']}&hidden=1',650,600)">{_cfg['adminEmail']}</a>
+			</p>
+			
+			</div>
+	</div></td>
+</tr>	
+</table>
+</div>

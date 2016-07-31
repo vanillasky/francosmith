@@ -1,0 +1,212 @@
+{#header}
+
+<?php {page_title} = "주문내역 상세";?>
+{#sub_header}
+
+<section id="orderview">
+
+	<div class="item_list">
+		<h4 class="hidden">주문상품</h4>
+		<ul>
+			<!--{ @ item }-->
+			<li>
+				<dl>
+					<dt class="hidden">상품이미지</dt>
+					<dd class="oil_img">{=goodsimgMobile(array(.img_mobile,.img_i,.img_s,.img_m),60)}</dd>
+					<dt class="hidden">상품명</dt>
+					<dd class="oil_name">{=strcut(.goodsnm,100)}</dd>
+					<dt class="hidden">옵션</dt>
+					<dd class="oil_option">
+						<!--{ ? .opt1 }--><div>[{.opt1}<!--{ ? .opt2 }-->/{.opt2}<!--{ / }-->]</div><!--{ / }-->
+						<!--{ @ .addopt }--><div>[{=str_replace("^","] [",.addopt)}]</div><!--{ / }-->
+					</dd>
+					<dt class="oil_price_title blt">판매가 : </dt>
+					<dd class="oil_price">{=number_format(.price)}원</dd>
+					<dt class="oil_ea_title blt">수량 : </dt>
+					<dd class="oil_ea">{.ea}개</dd>
+					<dt class="oil_dstep_title blt">배송상태 : </dt>
+					<dd class="oil_dstep">{=_r_istep[.istep]}</dd>
+				</dl>
+			</li>
+			<!--{ / }-->
+		</ul>
+	</div>
+
+	<div class="info">
+		<!-- 01 주문자정보 -->
+		<h4>주문자정보</h4>
+		<table>
+		<tr>
+			<th>주문자명</th>		<td>{nameOrder}</td>
+		</tr>
+		<tr>
+			<th>주문자 전화</th>	<td>{phoneOrder}</td>
+		</tr>
+		<tr>
+			<th>주문자 핸드폰</th>	<td>{mobileOrder}</td>
+		</tr>
+		<tr>
+			<th>이메일</th>			<td>{email}</td>
+		</tr>
+		</table>
+
+		<!-- 02 배송정보 -->
+		<h4>배송정보</h4>
+		<table>
+		<tr>
+			<th>받는자명</th>		<td>{nameReceiver}</td>
+		</tr>
+		<tr>
+			<th>받는자 전화</th>	<td>{phoneReceiver}</td>
+		</tr>
+		<tr>
+			<th>받는자 핸드폰</th>	<td>{mobileReceiver}</td>
+		</tr>
+		<tr>
+			<th>우편번호</th>		<td>{zipcode}</td>
+		</tr>
+		<tr>
+			<th>주소</th>			<td>{address} {address_sub}</td>
+		</tr>
+		<!--{ ? memo }-->
+		<tr>
+			<th>배송메세지</th>		<td>{memo}</td>
+		</tr>
+		<!--{ / }-->
+		<!--{ ? deliverycode }-->
+		<tr>
+			<th>송장번호</th>		<td>{deliverycomp} {deliverycode}</td>
+		</tr>
+		<!--{ / }-->
+		</table>
+
+		<!-- 03 결제금액 -->
+		<h4>결제금액</h4>
+		<table>
+		<tr>
+			<th>총주문금액</th>
+			<td><span id="paper_goodsprice">{=number_format(goodsprice)}</span>원</td>
+		</tr>
+		<tr>
+			<th>배송비</th>
+			<td>
+				<div id="paper_delivery_msg1" {? deli_msg }style="display:none"{/}><span id="paper_delivery">{=number_format(delivery)}</span>원</div>
+				<div id="paper_delivery_msg2" style="float:left;margin:0;" {? !deli_msg }style="display:none"{/}>{ deli_msg }</div>
+			</td>
+		</tr>
+		<tr>
+			<th>회원할인</th>
+				<td>- <span id="paper_memberdc">{=number_format(memberdc)}</span>원</td>
+				
+		</tr>
+		<tr>
+			<th>쿠폰할인</th>
+				<td>- <span id="paper_coupon">{=number_format(coupon)}</span>원</td>
+		</tr>
+		<tr>
+			<th>적립금 사용</th>
+				<td>- <span id="paper_emoney">{=number_format(_data.emoney)}</span>원</td>
+		</tr>
+		<!--{ ? eggFee }-->
+		<tr>
+			<th>보증보험 수수료</th>
+			<td><span id="paper_eggfee">{=number_format(eggFee)}</span>원</td>
+		</tr>
+		<!--{ / }-->
+		<tr>
+			<th>결제금액</th>
+			<td><b><span id="paper_settlement">{=number_format(settleprice)}</span>원</b></td>
+		</tr>
+		</table>
+
+		<!-- 04 결제수단 -->
+		<h4>결제수단</h4>
+		<table>
+		<!--{ ? settlekind=="a" }-->
+		<tr>
+			<th>입금은행</th>
+			<td>{bank}</td>
+		</tr>
+		<tr>
+			<th>입금계좌</th>
+			<td>{account}</td>
+		</tr>
+		<tr>
+			<th>예금주명</th>
+			<td>{name}</td>
+		</tr>
+		<tr>
+			<th>입금자명</th>
+			<td>{bankSender}</td>
+		</tr>
+		<!--{ : settlekind=="c" }-->
+		<tr>
+			<th>결제방법</th>
+			<td>신용카드</td>
+		</tr>
+		<!--{ : settlekind=="o" }-->
+		<tr>
+			<th>결제방법</th>
+			<td>계좌이체</td>
+		</tr>
+		<!--{ : settlekind=="v" }-->
+		<tr>
+			<th>가상계좌</th>
+			<td>{vAccount}</td>
+		</tr>
+		<!--{ : settlekind=="p" }-->
+		<tr>
+			<th>결제방법</th>
+			<td>포인트결제</td>
+		</tr>
+		<!--{ : settlekind=="d" }-->
+		<tr>
+			<th>결제방법</th>
+			<td>전액할인 결제 (적립금 사용)</td>
+		</tr>
+		<!--{ ? memberdc }-->
+		<tr>
+			<th>회원할인</th>
+			<td id="memberdc">{=number_format(memberdc)}원</td>
+		</tr>
+		<!--{ / }-->
+		<!--{ ? coupon }-->
+		<tr>
+			<th>쿠폰할인</th>
+			<td>{=number_format(coupon)}원</td>
+		</tr>
+		<!--{ / }-->
+		<tr>
+			<th>적립금결제</th>
+			<td><b>{=number_format(emoney)}원</b></td>
+		</tr>
+		<!--{ / }-->
+		<!--{ ? step==0 && step2==54 && in_array(settlekind,array('c','o','v')) && pgfailreason }--><!-- 결제실패사유 -->
+		<tr>
+			<th>결제실패사유</th>
+			<td>{=pgfailreason}</td>
+		</tr>
+		<!--{ / }-->
+		<!--{ ? eggyn == 'y' }-->
+		<tr>
+			<th>전자보증보험</th>
+			<td><font color=#0074BA><b><u>{eggno}</u></td>
+		</tr>
+		<!--{ : _egg.use == 'N' && eggyn == 'f' }-->
+		<tr>
+			<th>전자보증보험</th>
+			<td>보증서 발급 실패.</td>
+		</tr>
+		<!--{ : _egg.use == 'Y' && eggyn == 'f' }-->
+		<tr>
+			<th>전자보증보험</th>
+			<td>보증서 발급 실패. 재발급 받으세요.</td>
+		</tr>
+		<!--{ / }-->
+		</table>
+
+	</div>
+
+</section>
+
+{#footer}

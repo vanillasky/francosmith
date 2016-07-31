@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="EUC-KR"?>
+<codes>
+<list>
+	<code power="">{_pg.id}</code>
+	<desc>상점아이디</desc>
+	<exam></exam>
+</list>
+<list>
+	<code power="">{_pg.zerofee}</code>
+	<desc>무이자여부 - yes:무이자, no:일반</desc>
+	<exam>1</exam>
+</list>
+<list>
+	<code power="">{_pg.quota}</code>
+	<desc>일반할부기간</desc>
+	<exam>선택:일시불:3개월:4개월:5개월:6개월:7개월:8개월:9개월:10개월:11개월:12개월</exam>
+</list>
+<list>
+	<code power="">{_pg.zerofee_period}</code>
+	<desc>무이자 기간</desc>
+	<exam>11-3:6,12-3</exam>
+</list>
+<list>
+	<code power="">{settlekind}</code>
+	<desc>결제수단 - c:신용카드, o:계좌이체, v:가상계좌, h:핸드폰</desc>
+	<exam>c</exam>
+</list>
+<list>
+	<code>{_POST.escrow}</code>
+	<desc>에스크로 여부 - Y:적용, N:미적용</desc>
+	<exam>N</exam>
+</list>
+<list>
+	<code power="">{ordno}</code>
+	<desc>주문번호</desc>
+	<exam>1187054690353</exam>
+</list>
+<list>
+	<code power="">{settleprice}</code>
+	<desc>가격</desc>
+	<exam>5200</exam>
+</list>
+<list>
+	<code>{@cart->item}{=strip_tags(.goodsnm)} {/}</code>
+	<desc>상품명</desc>
+	<exam></exam>
+</list>
+<list>
+	<code>{email}</code>
+	<desc>전자우편</desc>
+	<exam>xxx@godo.co.kr</exam>
+</list>
+<list>
+	<code>{nameOrder}</code>
+	<desc>성명</desc>
+	<exam>홍길동</exam>
+</list>
+<list>
+	<code>{=implode('-',mobileOrder)}</code>
+	<desc>이동전화</desc>
+	<exam>010-1234-5678</exam>
+</list>
+</codes>

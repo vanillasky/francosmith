@@ -1,0 +1,54 @@
+{*** 카테고리메뉴 | proc/menuCategory.php ***}
+<div style="width:190px;">
+	<table width="100%" cellpadding=0 cellspacing=0 border=0>
+	<tr>
+		<td><img src="/shop/data/images/category.png"></td>	
+	</tr>
+		
+	</table>
+	<!--{ ? _cfg.subCategory != 2 // 1단 또는 서브레이어 출력 유형 }-->
+	<table width="100%" cellpadding=0 cellspacing=0 border=0 id="menuLayer">
+	<!--{ @ dataCategory( _cfg.subCategory, 1 ) }-->
+	<tr>
+		<td class="catebar"><a href="../goods/goods_list.php?category={.category}">{.catnm}</a></td>
+		<td style="z-index:100">
+		<!--{ ? .sub }-->
+		<div style="position:relative"><div class=subLayer><table width=100% cellspacing=1>
+		<!--{ @ .sub }-->
+		<tr><td nowrap class="cate"><a href="../goods/goods_list.php?category={..category}">{..catnm}</a></td></tr>
+		<!--{ ? ..index_!=..size_-1 }--><tr><td height=1 bgcolor=#F3F2F0></td></tr><!--{ / }-->
+		<!--{ / }-->
+		</table>
+		</div>
+		</div>
+		<!--{ / }-->
+		</td>
+	</tr>
+	<!--{ / }-->
+	</table>
+	<!--{ ? _cfg.subCategory }-->
+	<script>execSubLayer();</script>
+	<!--{ / }-->
+
+	<!--{ : // 1,2단 동시 메뉴 출력 유형 }-->
+	<table width=100% cellpadding=0 cellspacing=0 class="cateUnfold">
+	<!--{ @ dataCategory( _cfg.subCategory, 1 ) }-->
+	<tr>
+		<td class="catebar"><a href="../goods/goods_list.php?category={.category}">{.catnm}</a></td>
+	</tr>
+	<!--{ ? .sub }-->
+	<tr>
+		<td class="catesub">
+		<table>
+		<!--{ @ .sub }-->
+		<tr><td class="cate"><a href="../goods/goods_list.php?category={..category}">{..catnm}</a></td></tr>
+		<!--{ / }-->
+		</table>
+		</td>
+	</tr>
+	<!--{ / }-->
+	<!--{ / }-->
+	</table>
+	<!--{ / }-->
+
+</div>

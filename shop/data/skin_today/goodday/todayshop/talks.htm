@@ -1,0 +1,322 @@
+{*** 상품리스트 | todayshop/list.php ***}
+<!--header start-->
+<!--삭제하지마세요.-->
+{ # header }
+<!--header end-->
+
+
+<style>
+a { cursor:pointer; }
+
+
+img { border:0px; }
+
+.today_title { display:inline-block; }
+.today_title div { float:left; font:bold 16px 'dotum','굴림'; }
+.today_title .title { color:#000000; font:bold 16px 'dotum','굴림'; padding-left:20px; }
+.today_title .space { width:20px; }
+.today_title .leftbtn { width:20px; text-align:right; }
+.today_title .date { width:150px; text-align:center; }
+.today_title .rightbtn { width:20px; text-align:left }
+.today_title_underbar { margin-bottom:20px; border-bottom:solid 2px #363636; width:100%; }
+
+.item { width:100%;table-layout:fixed; }
+.item .image { width:165px; height:150px; overflow:hidden; margin:10px; border:solid 1px #363636; }
+.item .info1 { margin-top:15px; }
+.item .info1 .name { color:#db0511; font:bold 14px 'dotum','굴림'; margin-top:5px; }
+.item .info1 .date { color:#373737; font:12px 'dotum','굴림'; height:20px; margin-top:5px; }
+.item .info1 .label { color:#373737; font:12px 'dotum','굴림'; }
+.item .info1 .label .won { font-family: "돋움", "굴림"; font-size: 12px; color: #898989; }
+.item .info1 .label .consumer { font-family: "Arial", "굴림"; font-size: 16px; font-weight: bold; color: #a09f9f; text-decoration:line-through; }
+.item .info1 .label .price { font-family: "Arial", "Vernada"; font-size: 24px; font-weight: bold; color: #ee151d; }
+.item .info1 .timer { display:none; margin-top:5px; }
+.item .info1 .timer div { float:left; }
+.item .info1 .timer .contents { float:left; background:url(../img/t0day_list01_count01.gif); height:44px; padding-top:7px; }
+ item .info1 .timer .contents div {padding-right:7px;}
+.item .info2 { width:100%; border:solid 3px #E3E3E3; }
+.item .snsBox { margin:10px; }
+.item .statusBox { font:12px 'dotum','굴림'; }
+.item .statusBox .bar { float:left; }
+.item .statusBox span { font:bold 14px 'dotum','굴림'; color:#e00715; }
+.item .btnBox { padding:10px 0px; text-align:center; }
+.item_underbar { margin-top:10px; margin-bottom:10px; border-bottom:solid 1px #E3E3E3; width:100%; }
+
+.input { font-size: 12px; color: #847f74; font-family: "돋움", "굴림", verdana; border-right: #d9d9d9 1px solid; border-top: #d9d9d9 1px solid; padding-left: 2px; border-left: #d9d9d9 1px solid; border-bottom: #d9d9d9 1px solid; background-color: #ffffff }
+
+.talkbox {width:871px; background-color:#FFFFFF; margin:0px; padding:0px;}
+.talkbox .titleimg {text-align:left;}
+.talkbox .newitembox {margin:0px 0px 10px 0px;}
+.talkbox .newitembox .inner {background-image:url(../img/bg_box02.gif); width:100%; display:inline-block;}
+.talkbox .newitembox .inner .comment {float:left; margin-left:10px;}
+.talkbox .newitembox .inner .comment textarea {width:670px; height:74px; background-color:#FFFFFF;}
+.talkbox .newitembox .inner .enter {float:right; margin-right:10px;}
+.talkbox .warning {border-top:dashed 1px; border-bottom:dashed 1px; background-color:#F6F6F6; text-align:left; height:30px; padding-top:9px;}
+.talkbox .itembox {border-bottom:solid 1px #E3E3E3;}
+.talkbox .itembox a {cursor:pointer;}
+.talkbox .itembox .item {display:inline-block; width:100%; padding:10px 0px 10px 0px;}
+.talkbox .itembox .item .writer {float:left; text-align:left; width:150px; margin-left:25px; font-weight:bold; font-size:11px;}
+.talkbox .itembox .item .comment {float:left; text-align:left; font-size:11px;}
+.talkbox .itembox .item .comment .edit {display:none; vertical-align:bottom; margin-top:10px;}
+.talkbox .itembox .item .comment .edit .text {float:left;}
+.talkbox .itembox .item .comment .edit .text textarea {width:600px; height:47px;}
+.talkbox .itembox .item .comment .edit .btn {float:left; margin-left:5px;}
+.talkbox .itembox .item .remove {text-align:left; margin-left:25px; font-size:11px; text-decoration:line-through;}
+.talkbox .itembox .reply {display:none; width:100%; padding:10px 0px 10px 0px; background-color:#F5F5F5;}
+.talkbox .itembox .reply .writer {float:left; text-align:left; width:150px; margin-left:25px; font-weight:bold; font-size:11px;}
+.talkbox .itembox .reply .comment {float:left; text-align:left; vertical-align:bottom;}
+.talkbox .itembox .reply .comment .text {float:left;}
+.talkbox .itembox .reply .comment .text textarea {width:600px; height:47px;}
+.talkbox .itembox .reply .comment .btn {float:left; margin-left:5px;}
+.talkbox .talkpager {text-align:center; font-size:11px; margin-top:10px; margin-bottom:10px;}
+</style>
+<script type="text/javascript" src="../../../lib/js/prototype.js"></script>
+<script type="text/javascript" src="../../../lib/js/todayshop.js"></script>
+<script type="text/javascript">
+var imgs = new Array();
+imgs[0] = "../img/today_count0.gif";
+imgs[1] = "../img/today_count1.gif";
+imgs[2] = "../img/today_count2.gif";
+imgs[3] = "../img/today_count3.gif";
+imgs[4] = "../img/today_count4.gif";
+imgs[5] = "../img/today_count5.gif";
+imgs[6] = "../img/today_count6.gif";
+imgs[7] = "../img/today_count7.gif";
+imgs[8] = "../img/today_count8.gif";
+imgs[9] = "../img/today_count9.gif";
+
+Timer.initImg(imgs);
+
+var member = null;
+var runout = new Array();
+var goodsStatus = new Array();
+
+function initList() {
+	TodayShop.getListData("{=_GET['category']}", "{=date.year}", "{=date.mon}", "{=date.mday}", setListData);
+}
+
+function initGoods(tgsno, startdt, enddt) {
+	var arrSdt = new Array();
+	if (startdt) arrSdt = startdt.split(" ");
+	var arrEdt = new Array();
+	if (enddt) arrEdt = enddt.split(" ");
+	if (arrSdt.length == 2 && arrSdt.length == 2) {
+		Timer.getTimer(tgsno, arrSdt[0], arrSdt[1], arrEdt[0], arrEdt[1], timerCallback);
+	}
+	else {
+		timerCallback(tgsno, 'noperiod');
+	}
+}
+
+function timerCallback(tgsno, status) {
+	goodsStatus[tgsno] = status;
+	setGoodsStatus(tgsno);
+}
+
+function setListData(res) {
+	try
+	{
+		if (res.member == "y") member=true;
+		else throw null;
+	}
+	catch (e) {
+		member=false;
+	}
+
+	try
+	{
+		if (res.data.length == 0) return;
+	}
+	catch (e) {
+		return;
+	}
+
+	// 현재 구매인원 표시(text)
+	for(var i = 0; i < res.data.length; i++) {
+		try
+		{
+			var buyerobj = document.getElementById("buyercnt"+res.data[i].tgsno);
+			if (buyerobj) buyerobj.innerHTML = parseInt(res.data[i].fakestock)+parseInt(res.data[i].buyercnt);
+
+			var smsobj = document.getElementById("smsBlock"+res.data[i].tgsno);
+			var smscntobj = document.getElementById("smsCnt"+res.data[i].tgsno);
+			if (smsobj && smscntobj && res.useSMS == "y" && smscntobj.value <= parseInt(res.smsCnt)) smsobj.style.display = "";
+
+			// 품절여부
+			try
+			{
+				runout[res.data[i].tgsno] = (res.data[i].runout == "1")? "y" : "n";
+			}
+			catch (e) {
+				runout[res.data[i].tgsno] = "n";
+			}
+
+			setGoodsStatus(res.data[i].tgsno);
+		}
+		catch (e)
+		{
+			if (smsobj) smsobj.style.display = "none";
+		}
+	}
+}
+
+function setGoodsStatus(tgsno) {
+	if (typeof(goodsStatus[tgsno]) == "undefined" || typeof(runout[tgsno]) == "undefined") return;
+
+	var tobj = document.getElementById("timerBlock"+tgsno);
+	var bobj = document.getElementById("btnBlock"+tgsno);
+	if (runout[tgsno] == "y") goodsStatus[tgsno] = "closed";
+	switch(goodsStatus[tgsno]) {
+		case 'ing' : {
+			var tbobj = document.getElementById("timerBox"+tgsno);
+			if (tbobj) tbobj.style.display = "inline-block";
+			if (tobj) tobj.innerHTML = "<div><span id='rTime_d"+tgsno+"'><img src='../img/today_count.gif' /></span><img src='../img/bn_day.gif' border='0'><span id='rTime_h"+tgsno+"'><img src='../img/today_count.gif' /><img src='../img/today_count.gif' /></span><img src='../img/bn_sp.gif' border='0'><span id='rTime_m"+tgsno+"'><img src='../img/today_count.gif' /><img src='../img/today_count.gif' /></span><img src='../img/bn_sp.gif' border='0'><span id='rTime_s"+tgsno+"'><img src='../img/today_count.gif' /><img src='../img/today_count.gif' /></span></div>";
+			if (bobj) bobj.innerHTML = "<a href=\"../todayshop/today_goods.php?tgsno="+tgsno+"&category={=ts_curcate.category}\"><img src='../img/t0day_list01_btndetail.gif' border='0'></a>";
+			break;
+		}
+		case 'closed': {
+			Timer.stopTimer(tgsno);
+			if (bobj) bobj.innerHTML = "<a href=\"../todayshop/today_goods.php?tgsno="+tgsno+"&category={=ts_curcate.category}\"><img src='../img/t0day_list01_btnend.gif' border='0'></a>";
+			break;
+		}
+		case 'noperiod': {
+			if (bobj) bobj.innerHTML = "<a href=\"../todayshop/today_goods.php?tgsno="+tgsno+"&category={=ts_curcate.category}\"><img src='../img/t0day_list01_btndetail.gif' border='0'></a>";
+		}
+		default :
+			if (bobj) bobj.innerHTML = "머지";
+
+
+
+	}
+
+}
+</script>
+<script type="text/javascript">
+function navi(year, month, day) {
+	location.href = "today_list.php?year="+year+"&month="+month+"&day="+day+"&category={=_GET['category']}";
+}
+
+function sendSms(tgsno) {
+	if (member === null) {
+		alert("잠시만 기다리세요.");
+		return;
+	}
+	if (member === true) window.open('../todayshop/today_sms.php?tgsno='+tgsno, 'todaysms', 'width=490, height=360');
+	else if(confirm("로그인후에 사용이 가능합니다. 로그인페이지로 이동하시겠습니까?")) location.href = "../member/login.php";
+}
+</script>
+
+<!-- 카테고리 노출 시작 (헤더에 카테고리가 노출되지 않을때에만 노출)-->
+<style>
+#page_cate { display:none; margin-bottom:20px; }
+#page_cate .topbg img { width:100%; height:13px; }
+
+#page_cate #ccg_closed #curCCateOuter { background-color:#49494A; }
+#page_cate #ccg_closed #curCCateOuter div { padding-left:23px; }
+#page_cate #ccg_closed #curCCateOuter div #curCCateBlock { color:#FFFFFF; }
+#page_cate #ccg_closed .togglebtn { background:url(../img/today_footbg.gif) top repeat-x; text-align:center; cursor:pointer; }
+
+#page_cate #ccg_opened .list { background-color:#49494A; }
+#page_cate #ccg_opened .catenm { width:195px; height:25px; }
+#page_cate #ccg_opened .catenm span { padding-left:30px; }
+#page_cate #ccg_opened .catenm span a { color:#FFFFFF; }
+#page_cate #ccg_opened .split { text-align:center; }
+#page_cate #ccg_opened .hei1 { height:1px; }
+#page_cate #ccg_opened .togglebtn { background:url(../img/today_footbg.gif) top repeat-x; text-align:center; padding-top:8px; cursor:pointer; }
+</style>
+<div id="page_cate">
+	<div class="topbg"><img src="../img/today_topbgsh.gif" /></div>
+	<div id="ccg_closed" style="display:none;">
+		<div id="curCCateOuter" style="<!--{? !ts_curcate}-->display:none;<!--{/}-->">
+			<div><img src="../img/bullet_category.gif" /> <span id="curCCateBlock"></span></div>
+		</div>
+		<div onclick="showCCate()">
+			<div class="togglebtn"><img src="../img/today_btnopen.gif" /></div>
+		</div>
+	</div>
+	<div id="ccg_opened">
+		<div class="list">
+			<table width="100%" cellpadding=0 cellspacing=0 border=0>
+			<tr><td class="catenm hei1"></td><td class="split hei1"></td><td class="catenm hei1"></td><td class="split hei1"></td><td class="catenm hei1"></td><td class="split hei1"></td><td class="catenm hei1"></td></tr>
+			<tr>
+			<!--{@ ts_category}-->
+				<td class="catenm" id="tsCCate{=.category}" <!--{? .category==ts_curcate['category']}-->style="background:url(../img/today_pointbox.gif) no-repeat"<!--{/}-->><span><a href="../todayshop/today_list.php?category={=.category}" onmouseover="this.style.color='#F9B000'" onmouseout="this.style.color='#FFFFFF'">{=.catnm}</a></span></td>
+				<!--{? .index_ != 0 && (.index_+1) % 4 == 0}--></tr><tr><!--{:}--><td class="split"><img src="../img/today_split.gif" /></td><!--{/}-->
+			<!--{/}-->
+			</tr>
+			</table>
+		</div>
+		<div onclick="showCCate()">
+			<div class="togglebtn"><img src="../img/today_btnclose.gif" /></div>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+function showCCate() {
+	var objc = document.getElementById("ccg_closed");
+	var objo = document.getElementById("ccg_opened");
+	if (objc.style.display == "none") {
+		objc.style.display = "block";
+		objo.style.display = "none";
+	}
+	else {
+		objc.style.display = "none";
+		objo.style.display = "block";
+	}
+}
+
+</script>
+<!-- 카테고리 노출 끝(헤더에 카테고리가 노출되지 않을때에만 노출)-->
+
+
+<div class="talkbox">
+	<div class="titleimg"><img src="../img/title_talk01.gif" /></div>
+
+	<div class="warning">
+	번호
+
+	내용
+
+	작성자
+
+	작성일
+	</div>
+
+	<div id="talk">
+
+	<table border="1">
+	<!--{@ data}-->
+	<tr>
+		<td width=50 align="center">{.idx}</td>
+		<td width=60 align="center"><a href="./today_goods.phptgsno={.tgsno}">{=goodsimg(.img_s, _cfg.img_s)}</a></td>
+		<td>
+			{.goodsnm}
+
+			<div {? .step>0 //댓글들여쓰기설정시작} style="padding-left:{=.step*10}px"{/ //댓글들여쓰기설정끝}>
+			{.comment}
+			</div>
+		</td>
+		<td width=80 align="center">{=.writer}</td>
+		<td width=80 align="center">{=substr(.regdt,0,10)}</td>
+
+	</tr>
+	<!--{/}-->
+	</table>
+
+
+
+
+	</div>
+
+	<div class="paging">
+	{pg->page['navi']}
+	</div>
+
+</div>
+
+
+
+
+<!--footer start-->
+<!--삭제하지마세요.-->
+{ # footer }
+<!--footer end-->

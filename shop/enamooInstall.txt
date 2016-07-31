@@ -1,0 +1,22 @@
+ -- 설치방법 --
+1. enamoo_s2_self.tar.gz 파일은 압축을 풉니다.
+ tar zxvf enamoo_s2_self.tar.gz -> 이 압축파일을 풀면 shop, session_tmp, w3c 폴더와 index.php가 생성 됩니다.
+ 
+2. 생성한 디비에 테이블을 생성해 줍니다.
+ mysql -u 디비유저 -p 디비명 < enamoo_s2.sql
+ mysql -u 디비유저 -p 디비명 < zipcode.sql
+ 
+3. 홈 디렉토리 디렉토리 안의 퍼미션을 조정해 줍니다.
+ 
+ chmoe -Rf 707 ./session_tmp
+
+4. shop디렉토리 안의 퍼미션을 조정해 줍니다.
+ chmod -Rf 707 ./conf
+ chmod -Rf 707 ./log
+ chmod -Rf 707 ./skin
+ chmod -Rf 707 ./data
+ chmod -Rf 707 ./Template_/_compiles/
+
+5. vi shop/conf/db.conf.php 에 DB정보 입력 
+
+6. 고도몰측에 연락하여 시리얼을 받습니다.

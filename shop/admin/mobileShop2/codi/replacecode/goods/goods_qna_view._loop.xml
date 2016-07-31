@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="EUC-KR"?>
+<codes>
+<list>
+	<code power="">{.sno}</code>
+	<desc>게시물번호</desc>
+	<exam>3</exam>
+</list>
+<list>
+	<code power="">{.goodsno}</code>
+	<desc>상품번호</desc>
+	<exam>37</exam>
+</list>
+<list>
+	<code>{.m_no}</code>
+	<desc>회원번호</desc>
+	<exam>2</exam>
+</list>
+<list>
+	<code>{.m_id}</code>
+	<desc>회원아이디 - admin.gif:관리자, 회원아이디:회원, 비회원명:비회원</desc>
+	<exam>testid2</exam>
+</list>
+<list>
+	<code>{.m_name}</code>
+	<desc>회원이름</desc>
+	<exam>손오공</exam>
+</list>
+<list>
+	<code>{.name}</code>
+	<desc>비회원명 - admin.gif:관리자, '':회원, 비회원명:비회원</desc>
+	<exam></exam>
+</list>
+<list>
+	<code power="">{.subject}</code>
+	<desc>제목</desc>
+	<exam>내일 도착합니다.</exam>
+</list>
+<list>
+	<code power="">{.contents}</code>
+	<desc>내용</desc>
+	<exam>내일 오전쯤에 도착할 예정입니다.</exam>
+</list>
+<list>
+	<code>{.regdt}</code>
+	<desc>작성일</desc>
+	<exam>2007-01-01 13:30:30</exam>
+</list>
+<list>
+	<code>{.authdelete}</code>
+	<desc>삭제여부 - Y, N</desc>
+	<exam>Y</exam>
+</list>
+<list>
+	<code>{.authmodify}</code>
+	<desc>수정여부 - Y, N</desc>
+	<exam>Y</exam>
+</list>
+</codes>

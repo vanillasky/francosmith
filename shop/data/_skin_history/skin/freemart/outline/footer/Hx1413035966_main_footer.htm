@@ -1,0 +1,120 @@
+{*** 메인용 하단파일 | main/index.php ***}
+<div id="footer_top" align="{_cfg['shopAlign']}">
+<table width="{_cfg['shopSize']}px" id="cs_contents" border="1" cellpadding="0" cellspacing="0">
+	<tr>
+		<td valign="top" width="210" style="padding:10px 0 0 50px;"> 
+		<!-- 고객센터 01 : Start -->
+		<div id="cscenter">
+			<div style="padding:0 0 10px 0"><img src="/shop/data/images/web/icon/txt_cs.gif"></div>
+			<div class="cstel"><span class="fotter_info">Tel:</span> {_cfg['compPhone']}</div>
+			<div class="cstel"><span class="fotter_info">Fax:</span> {_cfg['compFax']}</div>
+			<dl>
+				<dd>MON - FRI <span class="txt">am 10:00 - pm 17:00</span> </dd>
+				<dd>LUNCH <span class="txt">am 12:00 - pm 13:00</span> </dd>
+				<dd>SAT, SUN, HOLIDAY <span class="txt">off</span></dd>
+			</dl>
+		</div>
+		<!-- 고객센터 01 : End --> 
+		</td>
+		<td valign="top" width="189" style="padding:10px 0 0 0;">
+			<!-- 메인 무통장입금 : Start -->
+			<table id="bankinfo" border="0" cellpadding="0" cellspacing="0">
+				<tr>
+					<td style="padding-bottom:10px;"><img src="/shop/data/images/web/icon/txt_bankinfo.gif"></td>
+				</tr>
+				<!--{ @ dataBank() }-->
+				<tr>
+					<td style="padding-top:5px;">{.bank}</td>
+				</tr>
+				<tr>
+					<td><span class="bold">{.account}</span> {.name}</td>
+				</tr>
+				<tr>
+					<td><!-- KB에스크로 이체 인증마크 적용 시작 -->
+					<script type="text/javascript">
+					function onPopKBAuthMark()
+					{
+						window.open('','KB_AUTHMARK','height=604, width=648, status=yes, toolbar=no, menubar=no,location=no');
+					document.KB_AUTHMARK_FORM.action='http://escrow1.kbstar.com/quics';
+					document.KB_AUTHMARK_FORM.target='KB_AUTHMARK';
+					document.KB_AUTHMARK_FORM.submit();
+					}
+					</script>
+					<form name="KB_AUTHMARK_FORM" method="get">
+					<input type="hidden" name="page" value="B009111"/>
+					<input type="hidden" name="cc" value="b010807:b008491"/>
+					<input type="hidden" name="mHValue" value='6dd1f98de45d450a592f0aa96b9c7784201403211310930'/>
+					</form>
+					<a href="#" onclick="javascript:onPopKBAuthMark();return false;">
+					<img src="http://img1.kbstar.com/img/escrow/escrowcmark.gif" border="0"/>
+					</a>
+					<!-- KB에스크로이체 인증마크 적용 종료 -->
+					</td>
+				</tr>
+				<!--{ / }--> 
+			</table>
+			<!-- 메인 무통장입금 : End --> 
+		</td>
+		<td valign="top" width="173" class="border_line" style="padding-top:38px">  
+			<table id="about" border="0" cellpadding="0" cellspacing="0">
+				<tr>
+					<td align="left" style="padding-bottom:28px;"><img src="../../img/main/about.gif"></td>
+				</tr>
+				<tr>
+					<td align="left" style="padding-bottom:12px;">
+						<span><!--{ @ dataBanner( 41 ) }-->{.tag}<!--{ / }--></span>
+						<span><!--{ @ dataBanner( 42 ) }-->{.tag}<!--{ / }--></span>
+						<span><!--{ @ dataBanner( 43 ) }-->{.tag}<!--{ / }--></span>
+					</td>
+				</tr>
+				<tr>
+					<td align="left" class="bold"><a href="../service/private.php"><strong>개인정보처리방침</strong></a></td>
+				</tr>
+				<tr>
+					<td align="left"><a href="../service/company.php">회사소개</a> &nbsp;<span style="color:#e0e0e0;">|</span>&nbsp; <a href="../service/agreement.php">이용약관</a></td>
+				</tr>
+				<tr>
+					<td align="left"><a href="../service/guide.php">이용안내</a> &nbsp;<span style="color:#e0e0e0;">|</span>&nbsp; <a href="../service/cooperation.php">제휴안내</a></td>
+				</tr>
+				<tr>
+					<td align="left"><a href="../service/sitemap.php">SITE MAP</a></td>
+				</tr>
+			</table>
+		</td>
+		<td valign="top" width="290" style="padding:38px 37px;">
+			<table id="info" border="0" cellpadding="0" cellspacing="0">
+				<tr>
+					<td align="left" style="padding-bottom:28px;"><img src="../../img/main/info.gif"></td>
+				</tr>
+				<tr>
+					<td>
+						<div id="footer_company">
+							<p class="line_h20"><span class="txt">회사</span> {_cfg['compName']} </p>
+							<p><span class="txt">주소</span> {_cfg['address']} </p>
+							<p class="line_h20">
+								<span class="txt">대표</span> {_cfg['ceoName']} 
+								<span class="bar"> <span style="color:#e0e0e0;">|</span>  </span>
+								<span class="txt">사업자등록번호</span> {_cfg['compSerial']} <a href="http://www.ftc.go.kr/info/bizinfo/communicationList.jsp" target="_blank"><img src="../../img/common/btn_business.gif" style="vertical-align:top;"></a>
+							</p>
+							<p>
+								<span class="txt">통신판매업신고번호</span> {_cfg['orderSerial']} 
+								<span class="bar"> <span style="color:#e0e0e0;">|</span>  </span>
+								<span class="txt">개인정보관리자</span> {_cfg['adminName']} 
+							</p>
+							<p class="line_h20">
+								<span class="txt">팩스번호</span> {_cfg['compFax']} 
+								<span class="bar"> <span style="color:#e0e0e0;">|</span>  </span>
+								<span class="txt">메일</span> <a href="javascript:popup('../proc/popup_email.php?to={_cfg['adminEmail']}&hidden=1',650,600)">{_cfg['adminEmail']}</a>
+							</p>
+							<p><span class="txt">호스팅제공</span> (주)고도소프트 <img src="../../img/common/footer_godomall.png" style="vertical-align:middle;"></p>
+							<p class="line_h20">
+								Copyright ⓒ <strong>{_cfg['shopUrl']}</strong> All right reserved
+							</p>
+						</div>
+					</td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+</table>
+</div>

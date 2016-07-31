@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="EUC-KR"?>
+<codes date="20070827">
+<list>
+	<code>{ # header }</code>
+	<desc>상단과 측면을 크게 감싸는 외곽파일 인클루드, 소스 맨위에 삽입</desc>
+	<exam></exam>
+</list>
+<list>
+	<code>{ # footer }</code>
+	<desc>하단을 크게 감싸는 외곽파일 인클루드, 소스 맨아래에 삽입</desc>
+	<exam></exam>
+</list>
+<list>
+	<code>{@ dataBank()}</code>
+	<desc>입금계좌</desc>
+	<exam more="func/dataBank.xml"></exam>
+</list>
+<list>
+	<code>{@ dataBanner( 1, 1, 'Y' )}</code>
+	<desc>배너코드1 위치의 배너를 1개만 랜덤으로 호출 (※ 위치는 1 ~ 60 제공)</desc>
+	<exam more="func/dataBanner.xml"></exam>
+</list>
+<list>
+	<code>{@ dataBoard(5)}</code>
+	<desc>게시판 5개 출력</desc>
+	<exam more="func/dataBoard.xml"></exam>
+</list>
+<list>
+	<code>{@ dataBoardArticle( 'notice', 7 )}</code>
+	<desc>아이디가 'notice' 인 게시판의 게시물을 7개 호출</desc>
+	<exam more="func/dataBoardArticle.xml"></exam>
+</list>
+<list>
+	<code>{@ dataBrand()}</code>
+	<desc>브랜드</desc>
+	<exam more="func/dataBrand.xml"></exam>
+</list>
+<list>
+	<code>{@ dataDisplayGoods( mode, img, limit )}</code>
+	<desc>진열상품 (mode - 0~4:메인페이지 상품진열1~5, 분류코드:분류별 추천상품 [, img - 이미지 필드명 [, limit - 개수]])</desc>
+	<exam more="func/dataDisplayGoods.xml"></exam>
+</list>
+<list>
+	<code>{@ dataFaqBest( 5, 35 )}</code>
+	<desc>FAQ Best 게시물 5개 호출. 제목 길이는 35로 제한.</desc>
+	<exam more="func/dataFaqBest.xml"></exam>
+</list>
+<list>
+	<code>{@ dataGoods( category, spc, limit )}</code>
+	<desc>분류/아이콘별 상품 ([category - 분류코드 [, spc - 아이콘:1 신상품/2 추천/4 기획/8 인기/16 이벤트/32 예약/64 베스트/128 세일 [, limit - 개수]]])</desc>
+	<exam more="func/dataGoods.xml"></exam>
+</list>
+<list>
+	<code>{@ dataGoodsRelation( goodsno, 5 )}</code>
+	<desc>관련상품 - 상품번호(goodsno)와 관련된 상품 5개 요청</desc>
+	<exam more="func/dataGoodsRelation.xml"></exam>
+</list>
+<list>
+	<code>{=this->assign('m_info', dataMember())}</code>
+	<desc>로그인중인 회원정보</desc>
+	<exam more="func/dataMember.xml"></exam>
+</list>
+<list>
+	<code>{@ dataQna( 5 )}</code>
+	<desc>상품문의 게시물 5개 요청</desc>
+	<exam more="func/dataQna.xml"></exam>
+</list>
+<list>
+	<code>{@ dataReview( 5 )}</code>
+	<desc>이용후기 게시물 5개 요청</desc>
+	<exam more="func/dataReview.xml"></exam>
+</list>
+<list>
+	<code new="">{=getLiveAct()}</code>
+	<desc>실시간 채팅 (상담원 채팅요청)</desc>
+	<exam></exam>
+</list>
+<list>
+	<code new="">{=getLiveAct(1)}</code>
+	<desc>실시간 채팅 (상담원/고객 채팅요청)</desc>
+	<exam></exam>
+</list>
+<list>
+	<code new="">{pfile}</code>
+	<desc>현재 실행중인 스크립트의 파일명</desc>
+	<exam>index.php</exam>
+</list>
+<list>
+	<code new="">{pdir}</code>
+	<desc>현재 실행중인 스크립트의 디렉토리명</desc>
+	<exam>main</exam>
+</list>
+<list>
+	<code>{_sess}</code>
+	<desc>회원</desc>
+	<exam></exam>
+</list>
+<list>
+	<code>{_sess.m_id}</code>
+	<desc>회원아이디</desc>
+	<exam>testid</exam>
+</list>
+<list>
+	<code>{_member.name}</code>
+	<desc>회원이름</desc>
+	<exam>홍길동</exam>
+</list>
+<list>
+	<code>{_member.email}</code>
+	<desc>회원이메일</desc>
+	<exam>test@test.co.kr</exam>
+</list>
+<list>
+	<code>{_cfg['shopUrl']}</code>
+	<desc>쇼핑몰 URL</desc>
+	<exam>xxx.co.kr</exam>
+</list>
+<list>
+	<code>{_cfg['compName']}</code>
+	<desc>상호명</desc>
+	<exam></exam>
+</list>
+<list>
+	<code>{_cfg['address']}</code>
+	<desc>사업장주소</desc>
+	<exam>서울 ....</exam>
+</list>
+<list>
+	<code>{_cfg['compPhone']}</code>
+	<desc>회사 전화번호</desc>
+	<exam>02-1234-5678</exam>
+</list>
+<list>
+	<code>{_cfg['compFax']}</code>
+	<desc>회사 팩스번호</desc>
+	<exam>02-8765-4321</exam>
+</list>
+<list>
+	<code>{_cfg['adminEmail']}</code>
+	<desc>관리자 Email</desc>
+	<exam>webmaster@xxx.co.kr</exam>
+</list>
+</codes>

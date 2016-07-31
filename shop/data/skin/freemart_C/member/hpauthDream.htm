@@ -1,0 +1,49 @@
+{*** 휴대폰인증 | member/join.php ***}
+
+<script language="javascript">
+	function validate(fm)
+	{
+		if (chkRadioSelect(fm,'agree','y','[회원가입 이용약관]에 동의를 하셔야 회원가입이 가능합니다.') === false) return false;
+		if (chkRadioSelect(fm,'private1','y','[개인정보보호를 위한 이용자 동의사항]에 동의를 하셔야 회원가입이 가능합니다.') === false) return false;
+		return true;
+	}
+
+	function gohpauthDream(){ //휴대폰본인인증
+		var fm ;
+		var protocol = location.protocol;
+		var callbackUrl = "{=ProtocolPortDomain()}{_cfg.rootDir}/member/hpauthDream/hpauthDream_Result.php";
+
+		fm = document.getElementById("form");
+		if (!validate(fm)) {
+		return;
+		} else {   
+		ifrmHpauth.location.href=protocol+"//hpauthdream.godo.co.kr/module/NEW_hpauthDream_Main.php?callType=joinmember&shopUrl="+callbackUrl+"&cpid={=hpauthDreamcpid}";
+		}
+		return;
+	}
+</script>
+
+<div id="div_RnCheck_hpauthDream" style="width:100%;display:none;">
+<div style="border:1px solid #DEDEDE;" class="hundred">
+<table width=100% cellpadding=0 cellspacing=0 border=0>
+<tr>
+	<td style="border:5px solid #F3F3F3;padding:10">
+
+	<table align=center>
+	<col width=80%>
+	<tr>
+		<td align=left style="padding-right:20px"><font color='5d5d5d'>
+			<img src="../img/ipin/Regist_box_icon.gif"/> 본인 소유의 휴대폰번호가 아닌 경우 본인확인 인증 및 회원가입에 제한되니, 유의하시기 바랍니다.<br>
+			<img src="../img/ipin/Regist_box_icon.gif"/> 본인확인 인증시 입력한 정보는 본인확인 용도 외에는 사용되거나, 보관하지 않습니다.<br>
+			<img src="../img/ipin/Regist_box_icon.gif"/> 본인확인 인증시 발생하는 비용은 {=_cfg.shopName}에서 부담됩니다.<br>
+			</font>
+		</td>
+	</tr>
+	</table>
+	</td>
+</tr>
+</table>
+<iframe id="ifrmHpauth" name="ifrmHpauth" style="width:300px;height:200px;display:none;"></iframe>
+</div>
+
+</div>

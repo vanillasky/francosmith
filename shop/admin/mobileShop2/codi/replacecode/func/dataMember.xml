@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="EUC-KR"?>
+<codes>
+<list>
+	<code>{m_info.m_no}</code>
+	<desc>회원번호</desc>
+	<exam>1</exam>
+</list>
+<list>
+	<code>{m_info.m_id}</code>
+	<desc>아이디</desc>
+	<exam>testid</exam>
+</list>
+<list>
+	<code>{m_info.name}</code>
+	<desc>이름</desc>
+	<exam>홍길동</exam>
+</list>
+<list>
+	<code>{m_info.email}</code>
+	<desc>이메일</desc>
+	<exam>test@test.co.kr</exam>
+</list>
+<list>
+	<code>{m_info.zipcode}</code>
+	<desc>우편번호</desc>
+	<exam>123-456</exam>
+</list>
+<list>
+	<code>{m_info.address}</code>
+	<desc>주소</desc>
+	<exam>서울시 강남구 대치동</exam>
+</list>
+<list>
+	<code>{m_info.address_sub}</code>
+	<desc>세부주소</desc>
+	<exam>1234 번지</exam>
+</list>
+<list>
+	<code>{m_info.mobile}</code>
+	<desc>핸드폰</desc>
+	<exam>010-0000-0000</exam>
+</list>
+<list>
+	<code>{m_info.phone}</code>
+	<desc>전화번호</desc>
+	<exam>02-0000-0000</exam>
+</list>
+</codes>

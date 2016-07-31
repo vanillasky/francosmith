@@ -1,0 +1,30 @@
+{*** 투데이스킨 푸터 | main/index.php ***}
+
+<table border="0" cellpadding="0" cellspacing="0" width='100%'>
+<tr>
+	<td align='center' style="height:37px;background:url('../../img/bg_allfoot.gif') top left repeat-x;padding-top:5px;"><a href='../service/company.php'><img src='../../img/foot01.gif' border="0"></a><img src='../../img/foot_sp.gif' border="0"><a href='../service/private.php'><img src='../../img/foot02.gif' border="0"></a><img src='../../img/foot_sp.gif' border="0"><a href='../service/agreement.php'><img src='../../img/foot03.gif' border="0"></a><img src='../../img/foot_sp.gif' border="0"><a href='../service/customer.php'><img src='../../img/foot04.gif' border="0"></a><img src='../../img/foot_sp.gif' border="0"><a href='../service/cooperation.php'><img src='../../img/foot05.gif' border="0"></a><img src='../../img/foot_sp.gif' border="0"><a href='../member/find_id.php'><img src='../../img/foot06.gif' border="0"></a><img src='../../img/foot_sp.gif' border="0"><a href='../service/guide.php'><img src='../../img/foot07.gif' border="0"></a><img src='../../img/foot_sp.gif' border="0"><a href='../service/sitemap.php'><img src='../../img/foot08.gif' border="0"></a></td>
+</tr>
+</table> 
+ 
+<table border="0" cellpadding="0" cellspacing="0" width='100%'>
+<tr>
+	<td align='center' style='padding-top:15px;padding-bottom:10px;'>
+		<table border="0" cellpadding="0" cellspacing="0" width='900'>
+		<tr>
+			<td style="padding-left:30px; padding-right:7px;width:1px;"><a href="/"><img src="../../img/foot_logo.gif" /></a></td>
+			<td style="padding-left:5px;">
+				<div style="font:8pt 돋움; color:#676767; text-align:left;line-height:150%;">
+				주소 : {_cfg['address']} <font color=#CECECE>|</font> 사업자등록번호 : {_cfg['compSerial']} <a href="http://www.ftc.go.kr/info/bizinfo/communicationList.jsp" target="_blank"><img src="../../img/common/btn_c_view.gif" align="absmiddle"></a> <font color=#CECECE>|</font> 통신판매업신고번호 : {_cfg['orderSerial']} <br>
+				개인정보관리자 : {_cfg['adminName']} <font color=#CECECE>|</font> 대표 : {_cfg['ceoName']} <font color=#CECECE>|</font> 상호명 : {_cfg['compName']}<br>
+				전화번호 : {_cfg['compPhone']} <font color=#CECECE>|</font> 팩스번호 : {_cfg['compFax']} <font color=#CECECE>|</font> 메일 : <a href="javascript:popup('../proc/popup_email.php?to={_cfg['adminEmail']}&hidden=1',650,600)">{_cfg['adminEmail']}</a><br>
+				Copyright ⓒ <b>{_cfg['shopUrl']}</b> All right reserved
+				</div>
+			</td>
+			<!------------------ 구매안전서비스 표시 시작 ------------------->
+			<td>{=displayEggBanner()}</td>
+			<!------------------ 구매안전서비스 표시 끝 ------------------->
+		</tr>
+		</table>
+	</td>
+</tr>
+</table>

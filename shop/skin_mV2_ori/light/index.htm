@@ -1,0 +1,112 @@
+{*** 모바일 메인페이지 | index.php ***}
+{#header}
+<style type="text/css">
+#background {
+	position : fixed;
+	left : 0;
+	top : 0;
+	bottom:0;
+	width : 100%;
+	height : 100%;
+	background : rgba(0, 0, 0, 0.2);
+	display:block;
+	z-index:98;
+}
+
+#popup {position:fixed; bottom:0px; width:100%;z-index:99;}
+#popup .popup_wrap{width:308px; margin:6px auto;}
+#popup .popup_wrap .popup_content{width:306px; text-align:center; border:solid 1px #dadada; background:#FFFFFF; min-height:150px;}
+#popup .popup_wrap .popup_content img{max-width:100%; }
+#popup .popup_wrap .popup_btn {height:26px;}
+#popup .popup_wrap .popup_btn .btn-today-close{height:26px; width:176px; background:url('./common/img/main/btn_p_today.png') no-repeat; float:left; line-height:26px; color:#FFFFFF; text-align:center;}
+#popup .popup_wrap .popup_btn .btn-close{height:26px; width:132px; background:url('./common/img/main/btn_p_close.png') no-repeat;float:left; line-height:26px; color:#FFFFFF; text-align:center;}
+
+
+</style>
+<script type="text/javascript">
+function closePop() {
+	$("#popup").hide();
+	$("#background").hide();
+}
+
+function closeTodayPop(popupNo) {
+	setCookieMobile('popup_'+popupNo, 1, 1, '/');
+	$("#popup").hide();
+	$("#background").hide();
+
+}
+</script>
+<!--{ ? page_cache_enabled // MAIN_POPUP#PAGECACHE_PATCH_CHECKER : ☜ 삭제금지 }-->
+<div id="template-mobile-popup" style="display: none;">
+	<div class="popup_wrap">
+		<div class="popup_content"></div>
+		<div class="popup_btn">
+			<div class="btn-today-close">오늘하루 닫기</div>
+			<div class="btn-close">닫기</div>
+		</div>
+	</div>
+</div>
+<div id="background" style="display: none;"></div>
+<!--{ : }-->
+<!--{ ? popup_data }-->
+<!--{ ? isset(_COOKIE['popup_'+popup_data.mpopup_no]) === false }-->
+<div id="popup" >
+
+<div class="popup_wrap">
+<!--{ ? popup_data.link_url }-->
+<a href="http://{=popup_data.link_url}">
+<!--{ / }-->
+<div class="popup_content">
+	<!--{ ? popup_data.popup_type == '0' }-->
+	{=popup_data.popup_img}
+	<!--{ : }-->
+	{=popup_data.popup_body}
+	<!--{ / }-->
+</div>
+<!--{ ? popup_data.link_url }-->
+</a>
+<!--{ / }-->
+<div class="popup_btn">
+	<div class="btn-today-close" onClick="javascript:closeTodayPop('{popup_data.mpopup_no}');">오늘하루 닫기</div>
+	<div class="btn-close" onClick="javascript:closePop();">닫기</div>
+</div>
+</div>
+
+</div>
+<!--
+오늘 하루 보이지 않음 <input type="checkbox" style="cursor:pointer; background-color:#000000;" onClick="setCookieMobile('popup', 1, 1, '/'); $('div#popup').hide();">
+-->
+<div id="background"></div>
+<!--{ / }-->
+<!--{ / }-->
+<!--{ / }-->
+
+<!--{ ? _cfgMobileShop.mobileShopMainBanner }-->
+<div class="main_banner content" ><img src="{_cfg.rootDir}/data/skin_mobileV2/{_cfgMobileShop.tplSkinMobile}/{_cfgMobileShop.mobileShopMainBanner}" alt="메인배너이미지" /></div>
+<hr class="hidden" />
+<!--{ / }-->
+
+<!--{=mobileAnimationBanner()}-->
+
+<section id="main" class="content" >
+	<audio id="speach-description-player"></audio>
+	<!-- 아래 상품리스트에 쓰이는 세부소스는 '디자인관리 > 상품(goods) > 상품목록 > 상품스크롤형,이미지스크롤형,탭형,매거진스크롤형,이벤트롤링형' 에 있습니다  -->
+	<!--{ @ _cfg_step }-->
+	<!--{ ? .chk  }-->
+	<!--{ ? .page_type == 'cate'  }--><!--{ ? .text_temp1  }--><div><!--{ / }--><!--{ / }-->
+	<!--{ = this->assign( 'id', "main_list_01" ) // 고유 ID }-->
+	<!--{ = this->assign( 'dpCfg', .value_ ) // 설정 }-->
+	<!--{ = include_file( "goods/list/" + .tpl + ".htm" ) }-->
+	<!--{ ? .page_type == 'cate'  }--><!--{ ? .text_temp1  }--></div><!--{ / }--><!--{ / }-->
+	<div style="padding-top:15px"></div>
+	<!--{ / }-->
+	<!--{ / }-->
+</section>
+
+<!-- 품절상품 마스크 -->
+<div id="el-goods-soldout-image-mask" style="display:none;position:absolute;top:0;left:3px;background:url({ ? _cfg_soldout.mobile_display_overlay == 'custom'}{_cfg.rootDir}/data/goods/icon/mobile_custom_soldout{:}{_cfg.rootDir}/data/goods/icon/mobile_icon_soldout{_cfg_soldout.mobile_display_overlay}{/}) no-repeat center center; background-size:cover;"></div>
+<script>
+addOnloadEvent(function(){ setGoodsImageSoldoutMask() });
+</script>
+
+{#footer}

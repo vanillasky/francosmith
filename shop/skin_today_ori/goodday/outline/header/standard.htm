@@ -1,0 +1,282 @@
+{*** 투데이스킨 헤더 | main/index.php ***}
+
+<script type="text/javascript">
+	// 즐겨 찾기 추가
+	function addFavorite(){
+		window.external.AddFavorite('http://<?=$_SERVER['HTTP_HOST']?>{=_cfg['rootDir']}/', '{=_cfg['shopName']}');
+	}
+
+
+
+
+	function setCategory(category, catnm) {
+		return;
+		var cbobj = document.getElementById("curHCateBlock");
+		if (cbobj.innerHTML == "") {
+			if (cbobj) cbobj.innerHTML = catnm;
+			var coobj = document.getElementById("curHCateOuter");
+			if (coobj) coobj.style.display = "block";
+			var cateobj = document.getElementById("tsCate"+category);
+			if (cateobj) cateobj.style.background = "url(../../img/today_pointbox.gif)";
+		}
+	}
+
+
+
+	function fnCheckFrmInterest(f) {
+		if (f.interest_category.value == '')
+		{
+			alert('관심 분류를 선택해 주세요.');
+			return false;
+		}
+
+		return true;
+	}
+
+	var gdUI_block = function() {
+
+		return {
+			_div : null,
+			_bg : null,
+			_doc_size : {},
+			_win_size : {},
+			/*
+				id  : 블록id
+				opt : 옵션 (object) , init 메서드내 def 변수 참조
+				show: 초기화 후 바로 레이어를 보여줄지.
+			 */
+			init : function(id,opt,show) {
+
+				var self = this;
+
+				var def = {
+					width : 500,
+					height: 300,
+					zIndex: 99999
+				}
+
+				// 여기부터 수정 금지
+				var option = opt || def;
+				var px = 'px';
+
+				self._doc_size = {
+					width : document.body.scrollWidth || document.documentElement.scrollWidth,
+					height: document.body.scrollHeight || document.documentElement.scrollHeight
+				}
+
+				self._win_size = {
+					width : window.innerWidth	|| (window.document.documentElement.clientWidth	|| window.document.body.clientWidth),
+					height: window.innerHeight	|| (window.document.documentElement.clientHeight|| window.document.body.clientHeight)
+				}
+
+				// 내용
+				self._div = document.getElementById(id);
+
+				if (!self._div) return;
+
+				with (self._div.style) {
+					position = "absolute";
+					width = option.width + px;
+					height = option.height + px;
+					zIndex = option.zIndex || 99999;
+					left = (self._doc_size.width + option.width) / 2 - option.width + px;
+					top = (self._win_size.height + option.height + document.body.scrollTop) / 2 - option.height + px;
+					display = "none";
+				};
+
+				if (self._bg == null) {
+					self._bg = document.createElement("div");
+
+					with (self._bg){
+						id = id + '_bg';
+						style.position = "absolute";
+						style.left = 0;
+						style.top = 0;
+						style.zIndex = self._div.style.zIndex - 10;
+						style.width = self._doc_size.width;
+						style.height = self._doc_size.height;
+						style.backgroundColor = "#000000";
+						style.filter = "alpha(opacity=40)";
+						style.opacity = "0.4";
+						style.display = "none";
+					}
+
+					document.body.appendChild(self._bg);
+				}
+
+
+				if (show) self.show();
+
+			}
+			,
+			show : function() {
+
+				if (this._div != null && this._bg != null) {
+
+					this._div.style.display = 'block';
+					this._bg.style.display = 'block';
+
+				}
+
+			}
+			,
+			hide : function() {
+
+				if (this._div != null && this._bg != null) {
+
+					this._div.style.display = 'none';
+					this._bg.style.display = 'none';
+				}
+
+			}
+			,
+			toggle : function() {
+
+				if (this._div != null && this._bg != null) {
+
+					if (this._div.style.display != 'none') {
+						this._div.style.display = 'none';
+						this._bg.style.display = 'none';
+					}
+					else {
+						this._div.style.display = 'block';
+						this._bg.style.display = 'block';
+					}
+				}
+
+			}
+		}
+
+	}();
+
+	// 카테고리 열기/닫기
+	function showHCate() {
+
+		var expires = 0;
+		var el = document.getElementById("el-category-table");
+		var btn = document.getElementById("el-todayshop-category-toggle-button");
+
+		if (el.style.display != 'none') {
+			el.style.display = 'none';
+			btn.src = '../../img/area_view.gif';
+			setCookie( '_TOGGLE_TSCATE_', 0, expires, '/');
+		}
+		else {
+			el.style.display = 'block';
+			btn.src = '../../img/area_hidden.gif';
+			setCookie( '_TOGGLE_TSCATE_', 1, expires, '/');
+		}
+
+	}
+
+	window.onload = function() {
+		gdUI_block.init('el-interest-form',{width:340, height:230},true);
+	}
+
+</script>
+<style>
+div.margin {border:none;font-size:1px;}
+
+table.category_table {}
+table.category_table td {height:25px;color:#cccccc;padding:3px 0 0 33px;}
+table.category_table td.on {color:#ffffff;background:#444444 url(../../img/area_bu.gif) no-repeat top 20px;font-weight:bold;}
+
+table.category_table td.on a, table.category_table td.on a:hover {color:#ffffff}
+table.category_table a, table.category_table a:hover {color:#cccccc}
+
+p.agree {font-size:11px; letter-spacing:-1px;;text-align:left;margin-left:37px;line-height:150%;}
+p.agree label {display:block;margin-left:-24px;}
+</style>
+
+<a name="top"></a>
+<table width="100%" border="0" cellpadding="0" cellspacing="0" style="">
+<tr>
+	<td style="background:url(../../img/top_bg.gif) top left repeat-x;"><a name="top"></a>
+	<table width="100%" border="0" cellpadding="0" cellspacing="0">
+	<tr>
+	<td align="{_cfg['shopAlign']}" valign="top">
+
+	<!-- s:gnb & logo-->
+		<table width="{_cfg['shopSize']}" border="0" cellpadding="0" cellspacing="0">
+		<tr>
+			<td align="left">
+			<table border="0" cellpadding="0" cellspacing="0">
+			<tr>
+				<td><a href="/"><img src="../../img/top_logo.gif"></a></td>
+				<td><a href="javascript:void(0);" onClick="addFavorite();"><img src="../../img/top_bookmark.gif"></a></td>
+			</tr>
+			</table>
+			</td>
+			<td align="right">
+			<table border="0" cellpadding="0" cellspacing="0">
+			<tr>
+				<td><!--{ ? _sess }--><a href="../member/logout.php"><img src="../../img/top_m_logout.gif"></a><!--{:}--><a href="../member/login.php"><img src="../../img/top_m_login.gif"></a><!--{/}--></td>
+				<td></td>
+				<td><a href="../service/customer.php"><img src="../../img/top_m_center.gif"></a></td>
+				<td><!--{ ? _sess }--><a href="../member/myinfo.php"><img src="../../img/top_m_mypage.gif"></a><!--{:}--><a href="../member/join.php"><img src="../../img/top_m_join.gif"></a><!--{/}--></td>
+				<td><a href="../todayshop/today_cart.php"><img src="../../img/top_m_shopping.gif"></a></td>
+			</tr>
+			</table>
+			</td>
+		</tr>
+		</table>
+	<!-- e:gnb & logo-->
+
+
+	<!-- s:category-->
+		<table width="100%" border="0" cellpadding="0" cellspacing="0" style="width:100%">
+		<tr>
+			<td style="background:#646464" align="{_cfg['shopAlign']}">
+			<table width="{_cfg['shopSize']}" border="0" cellpadding="0" cellspacing="0">
+			<tr>
+				<td>
+				<!-- s:4 x n 카테고리 테이블 -->
+
+				<table width="100%" border="0" cellpadding="0" cellspacing="10" class="category_table" id="el-category-table">
+				<col width="25%">
+				<col width="25%">
+				<col width="25%">
+				<col width="25%">
+				<tr>
+				<!--{@ ts_category}-->
+					<td class="{? .category==ts_curcate['category']}on{/}" id="tsHCate{=.category}" ><a href="../todayshop/today_list.php?category={=.category}">{=.catnm}</a></td>
+					<!--{? .index_ != 0 && (.index_+1) % 4 == 0}--></tr><tr><!--{/}-->
+				<!--{/}-->
+				</tr>
+				</table>
+
+				<!-- e:4 x n 카테고리 테이블 -->
+				</td>
+			</tr>
+			</table>
+			</td>
+		</tr>
+		</table>
+		<table width="100%" border="0" cellpadding="0" cellspacing="0">
+		<tr>
+			<td style="height:25px;background:url(../../img/area_bg.gif) top left repeat-x;" align="{_cfg['shopAlign']}">
+			<table width="{_cfg['shopSize']}" border="0" cellpadding="0" cellspacing="0">
+			<tr>
+				<td align="right"><a href="javascript:void(0);" onClick="showHCate();"><img src="../../img/area_hidden.gif" id="el-todayshop-category-toggle-button"></a></td><!-- area_hidden -->
+			</tr>
+			</table>
+
+			</td>
+		</tr>
+		</table>
+
+		<script type="text/javascript">
+		if (getCookie('_TOGGLE_TSCATE_') != 1) {
+			showHCate();
+		}
+		</script>
+	<!-- e:category-->
+
+	<!-- 30px --><div class="margin" style="height:30px;"></div>
+
+	</td>
+	</tr>
+</table>
+</td>
+</tr>
+</table>

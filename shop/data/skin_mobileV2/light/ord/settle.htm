@@ -1,0 +1,117 @@
+{*** 결제하기(무통장) | ord/settle.php ***}
+{ # header }
+
+<?php {page_title} = "결제하기";?>
+{#sub_header}
+<style type="text/css">
+section#settle {background:#FFFFFF; padding:none; margin:none;}
+section#nsettle {background:#FFFFFF; padding:12px;font-family:dotum;font-size:12px;}
+section#nsettle .sub_title{height:22px; line-height:22px; color:#436693; font-weight:bold; font-size:12px;}
+section#nsettle .sub_title .point {width:4px; height:22px; background:url('../common/img/bottom/icon_guide.png') no-repeat center left; float:left; margin-right:7px;}
+section#nsettle table{border:none; border-top:solid 1px #dbdbdb;width:100%; margin-bottom:20px;}
+section#nsettle table td{padding:8px 0px 8px 10px; vertical-align:middle; border-bottom:solid 1px #dbdbdb;}
+section#nsettle table th{text-align:center; background:#f5f5f5; width:100px; vertical-align:middle; border-bottom:solid 1px #dbdbdb; color:#353535; font-size:12px;}
+
+section#nsettle table td input[type=text], input[type=password], input[type=email], input[type=number], select{height:21px;}
+section#nsettle table td textarea{width:95%;height:116px;}
+section#nsettle .btn_center {margin:auto; width:198px; height:34px; margin-top:20px; margin-bottom:20px;}
+section#nsettle .btn_center .submit{border:none; background:url('../common/img/layer/btn_red01_off.png') no-repeat; color:#FFFFFF; font-size:14px; width:94px; height:34px; float:left; font-family:dotum; line-height:34px;}
+section#nsettle .btn_center .cancel{border:none; background:url('../common/img/layer/btn_black01_off.png') no-repeat; color:#FFFFFF; font-size:14px; width:94px; height:34px; float:right; font-family:dotum; line-height:34px;}
+
+.max_width{width:95%;}
+
+
+</style>
+<section id="nsettle" class="content">
+
+<form name="frmSettle" method=post action="indb.php" target="ifrmHidden">
+<!--{ @ _POST }-->
+<!--{ ? is_array(.value_) }-->
+	<!--{ @ .value_ }-->
+	<input type=hidden name="{.key_}[]" value="{..value_}">
+	<!--{ / }-->
+<!--{ : }-->
+	<input type=hidden name="{.key_}" value="{.value_}">
+<!--{ / }-->
+<!--{ / }-->
+
+<!-- 무통장입금 -->
+<!--{ ? settlekind=="a" }-->
+
+<table>
+	<tr>
+		<th>입금계좌선택</th>
+		<td>
+			<select name="bankAccount" required label="입금계좌" class="max_width">
+				<option value="">== 입금계좌를 선택해주세요 ==
+				<!--{ @ _bank }-->
+				<option value="{.sno}">{.bank} {.account} {.name}
+				<!--{ / }-->
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<th>입금자명</th>
+		<td>
+			<input type=text name="bankSender" value="{nameOrder}" required  label="입금자명" class="max_width">
+		</td>
+	</tr>
+	<tr>
+		<th>입금금액</th>
+		<td>
+			{=number_format(settleprice)}원
+		</td>
+	</tr>
+</table>
+<div id="avoidDblPay" class="btn_center">
+	<button type="button" class="submit" onclick="submitSettleForm()">결제하기</button>
+	<button class="cancel" onclick="history.back();">취소하기</button>
+</div>
+
+
+<!--{ : settlekind=="h" && MobiliansEnabled == true }-->
+<?php {page_title} = "결제하기";?>
+{#sub_header}
+<div>모빌리언스 결제를 진행중입니다.</div>
+<script type="text/javascript">
+window.onload = function()
+{
+	frmSettle.submit();
+};
+</script>
+<!--{ / }-->
+</form>
+</section>
+
+<!--{ ? settlekind!="a" && (settlekind!="h" || MobiliansEnabled != true) }-->
+{card_gate}
+
+<script>
+	$(document).ready(function(){
+		var fm = document.frmSettle; fm.submit();
+	});
+</script>
+<!--{ / }-->
+
+<script>
+function swapSettleButton(){
+	if (document.getElementById('avoidDblPay')) document.getElementById('avoidDblPay').innerHTML = '<button type="button" class="submit" onclick="submitSettleForm()">결제하기</button></li>\
+		<button class="cancel" onclick="history.back();">취소하기</button>';
+}
+function submitSettleForm()
+{
+	var fm = document.frmSettle;
+
+	if (!chkForm(fm)) return;
+
+	/*** 주문필수정보 체크 ***/
+	if (!fm.nameOrder.value) return;
+	if (!fm.ordno.value) return;
+
+	if (document.getElementById('avoidDblPay')) document.getElementById('avoidDblPay').innerHTML = "--- 현재 결제처리중입니다. 잠시만 기다려주세요. ---<br><a href='javascript:swapSettleButton();'><img src='../../shop/data/skin_mobileV2/default/common/img/btn_cancel.gif'></a>";
+
+	fm.submit();
+}
+</script>
+
+{ # footer }

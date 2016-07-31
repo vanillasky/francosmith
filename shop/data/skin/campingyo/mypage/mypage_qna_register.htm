@@ -1,0 +1,148 @@
+{*** 1:1문의 등록 | mypage/mypage_qna_register.php ***}
+<html>
+<head>
+<title>1:1 문의작성</title>
+<meta http-equiv="Content-Type" content="text/html; charset=euc-kr">
+<script src="../common.js"></script>
+<link rel="styleSheet" href="../style.css">
+</head>
+<body>
+
+<form name=fm method=post action="{myqnaActionUrl}" onSubmit="return chkForm(this)">
+<input type=hidden name=mode value="{_mode}">
+<input type=hidden name=itemcd value="{_itemcd}">
+<input type=hidden name=sno value="{_sno}">
+
+
+<table width=100% cellpadding=0 cellspacing=0 border=0>
+<tr>
+	<td height=500 style="border:10px solid #000000" valign=top>
+
+	<div style="width:100%; background:#000000; border-bottom:2px solid #DDDDDD"><img src="../img/common/popup_title_mantoman.gif"></div>
+	<div><img src="../img/common/space.gif" width=5 height=10></div>
+
+
+	<CENTER>
+	<div><img src="../img/common/space.gif" width=5 height=5></div>
+
+
+	<div style="width:540; border:1px solid #DEDEDE;">
+	<table width=100% cellpadding=0 cellspacing=0 border=0>
+	<tr>
+		<td style="border:3px solid #F3F3F3; padding:5 5 5 5" align=center>
+
+		<table width=500 id=form cellpadding=5 cellspacing=0 border=0>
+		<col width=14% align=right>
+		<tr>
+			<td class="input_txt">아이디</td>
+			<td>{_data.m_id}</td>
+		</tr>
+		<tr><td colspan=2 height=1 bgcolor="#DEDEDE" style="padding:0px;"></td></tr>
+
+<!--{ ? _formtype != 'reply' // 답변이 아닌 경우에만 출력 }-->
+		<tr>
+			<td class="input_txt">질문유형</td>
+			<td><select name="itemcd" required fld_esssential label="질문유형" class=select>
+			<option value="">↓상담내용을 선택하세요.</option>
+	<!--{ @ codeitem( 'question' ) }-->
+			<option value="{.key_}" { ? _data.itemcd == .key_}selected{ / }>{.value_}</option>
+	<!--{ / }-->
+			</select></td>
+		</tr>
+		<tr><td colspan=2 height=1 bgcolor="#DEDEDE" style="padding:0px;"></td></tr>
+		<tr>
+			<td class="input_txt">주문번호</td>
+			<td>
+			<input type=text name=ordno style="width:25%" value="{_data.ordno}"> <a href="javascript:order_open();"><img src="../img/common/btn_inquiry_order.gif" align=absmiddle></a>
+
+			</td>
+		</tr>
+		<tr><td colspan=2 height=1 bgcolor="#DEDEDE" style="padding:0px;"></td></tr>
+		<tr>
+			<td class="input_txt">이메일</td>
+			<td><input type=text name=email value="{_data.email}" size=26>
+			<span class=noline style="padding-left:10px"><input type=checkbox name=mailling { ? _data.mailling == 'y'}checked{ / }><span style="font:8pt 돋움;color:#007FC8" >받습니다</span></span>
+			</td>
+		</tr>
+		<tr><td colspan=2 height=1 bgcolor="#DEDEDE" style="padding:0px;"></td></tr>
+		<tr>
+			<td class="input_txt">문자메시지</td>
+			<td>
+			<input type=text name=mobile[] value="{_data.mobile[0]}" size=4 maxlength=4> -
+			<input type=text name=mobile[] value="{_data.mobile[1]}" size=4 maxlength=4> -
+			<input type=text name=mobile[] value="{_data.mobile[2]}" size=4 maxlength=4>
+			<span class=noline style="padding-left:10px"><input type=checkbox name=sms { ? _data.sms == 'y'}checked{ / }><span style="font:8pt 돋움;color:#007FC8" >받습니다</span></span>
+			</td>
+		</tr>
+		<tr><td colspan=2 height=1 bgcolor="#DEDEDE" style="padding:0px;"></td></tr>
+<!--{ / }-->
+
+		<tr>
+			<td class="input_txt">제목</td>
+			<td><input type=text name=subject style="width:100%" required fld_esssential label="제목" value="{_data.subject}"></td>
+		</tr>
+		<tr><td colspan=2 height=1 bgcolor="#DEDEDE" style="padding:0px;"></td></tr>
+		<tr>
+			<td class="input_txt">내용</td>
+			<td>
+
+<!--{ ? _formtype != 'reply' // 답변이 아닌 경우에만 출력 }-->
+			<textarea name=contents style="width:100%;height:140" required fld_esssential label="내용">{_data.contents}</textarea>
+<!--{ : }-->
+			<textarea name=contents style="width:100%;height:260" required fld_esssential label="내용">{_data.contents}</textarea>
+<!--{ / }-->
+
+			</td>
+		</tr>
+		</table>
+		</td>
+	</tr>
+	</table>
+	</div>
+
+	<TABLE width=100%>
+	<tr>
+		<td align=center style="padding-top:5"><input type="image" src="../img/common/btn_upload.gif"></td>
+	</tr>
+	</TABLE>
+	<TABLE width=100% cellpadding=0 cellspacing=0 border=0>
+	<TR>
+		<TD align=right><A HREF="javascript:this.close()" onFocus="blur()"><img src="../img/common/popup_close.gif"></A></TD>
+	</TR>
+	</TABLE>
+
+
+	</td>
+</tr>
+</table>
+
+</form>
+
+
+<iframe id=ifm_order frameborder=0 scrolling=no style="display:none; background-color:#ffffff; border-style:solid; border-width:1; border-color:#000000;"></iframe>
+<script language="javascript">
+function order_open(){
+	var divEl = document.getElementById('ifm_order');
+	divEl.style.display = "block";
+	divEl.style.left = 20;
+	divEl.style.top = 165;
+	divEl.style.width = 560;
+	divEl.style.height = 280;
+	divEl.style.position = "absolute";
+	if( divEl.src == '' ) divEl.src = "mypage_qna_order.php";
+}
+
+function order_close(){
+	var divEl = document.getElementById('ifm_order');
+	divEl.style.display = "none";
+}
+
+function order_put( ordno ){
+	document.fm.ordno.value = ordno;
+	order_close();
+}
+</script>
+
+
+</body>
+</html>

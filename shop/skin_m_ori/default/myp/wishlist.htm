@@ -1,0 +1,72 @@
+{#header}
+
+<?php {page_title} = "찜목록";?>
+{#sub_header}
+
+<script>
+function act(mode)
+{
+	var fm = document.frmWish;
+	if (isChked('sno[]')){
+		fm.mode.value = mode;
+		fm.submit();
+	}
+}
+</script>
+
+<section id="wishlist">
+	<form name=frmWish method=post>
+	<input type=hidden name=mode>
+	<ul class="list">
+		<!--{ @ loop }-->
+		<li>
+			<input type=hidden name=goodsno[{.sno}] value="{.goodsno}" />
+			<input type=hidden name=opt[{.sno}][] value="{=implode('|',.opt)}" />
+			<!--{ @ .r_addopt }--><input type=hidden name=addopt[{.sno}][] value="{..value_}"><!--{ / }-->
+			<!--{ @ .r_addopt_inputable }--><input type=hidden name=addopt_inputable[{.sno}][] value="{..value_}"><!--{ / }-->
+			<dl>
+				<dt class="hidden">선택</dt>
+				<dd class="wl_chk"><input type=checkbox name=sno[] value="{.sno}" /></dd>
+				<dt class="hidden">상품이미지</dt>
+				<dd class="wl_img"><a href="../goods/view.php?goodsno={.goodsno}">{=goodsimgMobile(.img_s,60)}</a></dd>
+				<dt class="hidden">상품명</dt>
+				<dd class="wl_name"><a href="../goods/view.php?goodsno={.goodsno}">{=strcut(.goodsnm,100)}</a></dd>
+				<dt class="hidden">상품옵션</dt>
+				<dd class="wl_option">
+					<!--{ ? .opt }--><div>[{=implode("/",.opt)}]</div><!--{ / }-->
+					<!--{ ? .addopt}-->
+					<div>추가옵션 : <!--{ @ .addopt }-->[{..optnm}:{..opt}]<!--{ / }--></div>
+					<!--{ / }-->
+					<!--{ ? .addopt_inputable}-->
+					<div>입력옵션 : <!--{ @ .addopt_inputable }-->[{..optnm}:{..opt}]<!--{ / }--></div>
+					<!--{ / }-->
+				</dd>
+				<dt class="wl_price_title blt">상품가격 : </dt>
+				<dd class="wl_price">{=number_format(.price + .addprice)}원</dd>
+				<dt class="wl_reserve_title blt">적립금 : </dt>
+				<dd class="wl_reserve">{=number_format(.reserve)}원</dd>
+				<!--
+				<dt>보관날짜</dt>
+				<dd>{=substr(.regdt,0,10)}</dd>
+				-->
+			</dl>
+		</li>
+		<!--{ / }-->
+	</ul>
+	</form>
+
+	<ul class="button">
+		<li><a href="javascript:chkBox('sno[]','rev')" class="chkall"><span>전체선택</span></a></li>
+		<li><a href="javascript:act('delItem')" class="chkdel"><span>선택삭제</span></a></li>
+		<li><a href="javascript:act('cart')" class="cartin"><span>장바구니담기</span></a></li>
+	</ul>
+
+	<div class="pagediv">{pg->page['navi']}</div>
+
+	<div class="desc">
+		모바일이 아닌 웹사이트에서는 [상품보관함] 메뉴에서 찜리스트 상품을 확인할 수 있습니다.
+	</div>
+
+</section>
+
+{#footer}

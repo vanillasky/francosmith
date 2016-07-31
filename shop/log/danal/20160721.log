@@ -1,0 +1,8 @@
+[2016-07-21 21:47:54] Paygate open start
+File : /www/francotr3287_godo_co_kr/shop/order/card/danal/card_gate.php
+Transaction ID : 1469105257963
+Send data : Command=ITEMSEND2&SERVICE=TELEDIT&ItemType=Amount&ItemCount=1&OUTPUTOPTION=DEFAULT&ID=9010S23312&PWD=1FLOF1im&ItemInfo=2%7C57000%7C1%7C22S0rQ0001%7CPfeil+%C6%F2%B2%F8+Bench+Chisels+4%7E40mm%5B20mm%5D+%BF%DC+1%B0%C7&SUBCP=SGD0004644&USERID=dc019608&ORDERID=1469105257963&IsPreOtbill=N&IsSubscript=N
+[2016-07-21 21:49:28] Paygate open start
+File : /www/francotr3287_godo_co_kr/shop/order/card/danal/card_gate.php
+Transaction ID : 1469105257963
+Send data : Command=ITEMSEND2&SERVICE=TELEDIT&ItemType=Amount&ItemCount=1&OUTPUTOPTION=DEFAULT&ID=9010S23312&PWD=1FLOF1im&ItemInfo=2%7C57000%7C1%7C22S0rQ0001%7CPfeil+%C6%F2%B2%F8+Bench+Chisels+4%7E40mm%5B20mm%5D+%BF%DC+1%B0%C7&SUBCP=SGD0004644&USERID=dc019608&ORDERID=1469105257963&IsPreOtbill=N&IsSubscript=N

@@ -1,0 +1,36 @@
+{*** 리스트형 | goods/goods_list.php ***}
+<!-- 상품 리스트 -->
+<ul id="{id}" class="gl_type_02">
+	<!--{ @ loop }--><li>
+		<dl>
+			<dt class="hidden">상품이미지</dt>
+			<dd class="gl_img">
+			<!--{? .coupon_discount }-->
+			<span class="gl_coupon"></span>
+			<!--{ / }-->
+			<a href="{_cfgMobileShop.mobileShopRootDir}/goods/view.php?goodsno={.goodsno}&amp;category={_GET.category}">{=goodsimgMobile(array(.img_mobile,.img_i,.img_s,.img_m),74)}</a></dd>
+			<dt class="hidden">상품명</dt>
+			<dd class="gl_name"><a href="{_cfgMobileShop.mobileShopRootDir}/goods/view.php?goodsno={.goodsno}&amp;category={_GET.category}">{=strcut(.goodsnm,80)}</a></dd>
+			<dt class="hidden">짧은설명</dt>
+			<dd class="gl_shordesc">{=strcut(.shortdesc,80)}</dd>
+			<!--{? .strprice }-->
+				<dt class="gl_price_title blt">상품가격 : </dt>
+				<dd class="gl_price">{.strprice}</dd>
+			<!--{: .price }-->
+				<dt class="gl_price_title blt">상품가격 : </dt>
+				<dd class="gl_price">{=number_format(.price)}원 <!--{? .special_discount }-->({.special_discount} 할인)<!--{ / }--></dd>
+				<!--{ ? .reserve }-->
+				<dt class="gl_reserve_title blt">적립금 : </dt>
+				<dd class="gl_reserve">{=number_format(.reserve)}원</dd>
+				<!--{ / }-->
+			<!--{ / }-->
+			<dt class="hidden">상세페이지</dt>
+			<dd class="gl_detail"><a href="{_cfgMobileShop.mobileShopRootDir}/goods/view.php?goodsno={.goodsno}&amp;category={_GET.category}"><span class="hidden">상품 상세페이지로 가기</span></a></dd>
+		</dl>
+	</li><!--{ / }-->
+	<!--{ ? count(loop)==0 }-->
+	<li class="noGoods">
+		상품이 존재하지 않습니다.
+	</li>
+	<!--{ / }-->
+</ul>

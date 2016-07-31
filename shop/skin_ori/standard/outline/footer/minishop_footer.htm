@@ -1,0 +1,43 @@
+<div style="padding-top:5px;padding-bottom:5px;" align="center"><img src="../../img/main/m_footer_line.gif" style="width:{_cfg['shopSize']}"></div>
+
+<table width="{_cfg['shopSize']}" align="{_cfg['shopAlign']}" cellpadding=0 cellspacing=0>
+<tr>
+	<td colspan="2" align="right"><img src="../../img/main/m_btn_footer01.gif">&nbsp;<a href="http://nampacc.com/navercheckout/popup_clause.html?cn=%BE%C7%BC%BC%BB%E7%B8%AE%B4%EB%C0%E5&sn=%B3%B2%C6%C4%BE%C7+ACC+secret
+" target="_blank"><img src="../../img/main/m_btn_footer02.gif"></a></td>
+</td>
+<tr>
+	<td width="10%"><img src="../../img/main/m_footer_logo.gif"></td>
+	<td style="padding-left:10px;">
+		<div style="padding-bottom:5px">
+			주소 : {_cfg['address']} <span class="div_road_address">({_cfg['road_address']})</span>
+			<font color=#CECECE>|</font>
+		</div>
+		<div style="padding-bottom:5px">
+			사업자등록번호 : {_cfg['compSerial']} <a href="http://www.ftc.go.kr/info/bizinfo/communicationList.jsp" target="_blank"><img src="../../img/common/btn_c_view.gif" align="absmiddle"></a>
+			<font color=#CECECE>|</font>
+			통신판매업신고번호 : {_cfg['orderSerial']} <font color=#CECECE>|</font> 
+		<div style="padding-bottom:5px">
+			개인정보관리자 : {_cfg['adminName']} <font color=#CECECE>|</font> 대표 : {_cfg['ceoName']} <font color=#CECECE>|</font> 상호명 : {_cfg['compName']}
+		</div>
+		<div style="padding-bottom:5px">
+			전화번호 : {_cfg['compPhone']} <font color=#CECECE>|</font> 
+			팩스번호 : {_cfg['compFax']} <font color=#CECECE>|</font> 
+			메일 : <a href="javascript:popup('../proc/popup_email.php?to={_cfg['adminEmail']}&hidden=1',650,600)">{_cfg['adminEmail']}</a>
+			<font color=#CECECE>|</font> 
+			호스팅제공 : <a href="http://godo.co.kr" target="_blank">(주)고도소프트</a>
+		</div>
+
+		<table cellpadding='0' cellspacing='0' class='float'>
+		<tr>
+		<td><img src="../../img/main/bottom_add_left.gif"></td>
+		<td background="../../img/main/bottom_add_bg.gif" class=eng>Copyright ⓒ <b>{_cfg['shopUrl']}</b> All right reserved</td>
+		<td><img src="../../img/main/bottom_add_right.gif"></td>
+		</tr>
+		</table>
+
+	</td>
+	<!------------------ SSL seal 시작 ------------------->
+	<td>{=displaySSLSeal()}</td>
+	<!------------------ SSL seal 끝 ------------------->
+</tr>
+</table>

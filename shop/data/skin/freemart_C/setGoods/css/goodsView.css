@@ -1,0 +1,20 @@
+ body{margin:0}
+ img{border:none;vertical-align:middle}
+
+#wrap{width:100%;}
+.titleBar{height:52px;background:url(../img/front/bg_poptitle.gif);}
+.titleBar-txt{float:left;padding-top:15px;padding-left:23px;font:16px dotum;color:#ffffff;font-weight:bold;width:200px}
+.close{width:620px;text-align:right;float:left;padding-top:13px}
+#content{width:98%;height:100%;padding:20px 0 0 0;}
+#left{width:300px;float:left;text-align:center;padding:0 15px;}
+.photo{width:300px;}
+
+#right{height:inherit;float:left;padding-left:15px;}
+.name{font:16px dotum;color:#333333;font-weight:bold;width:456px;margin-bottom:5px}
+.infoBOx{width:456px;font:12px dotum;color:#333333}
+.info1{width:100%;border-top:1px solid #dddddd;border-bottom:1px solid #dddddd;background-color:#f7f7f7;}
+.info2{margin-top:10px;,min-height:65px;}
+.btnList{margin-top:10px;}
+.btnList img{padding-right:4px}
+
+.clear{clear:both;}

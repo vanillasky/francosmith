@@ -1,0 +1,24 @@
+
+* { font-family:Arial, dotum, µ¸¿ò; }
+body {margin:0; padding:0; border:none; background-color:#f4f2e6}
+body,table,input,textarea,select {
+font:12px Arial, dotum, µ¸¿ò;
+color:#333333;
+}
+img	{border:0}
+form	{margin:0}
+
+a	{text-decoration:none;color:#000000;font-family:Arial, dotum, µ¸¿ò;}
+a:hover {text-decoration:none;color:#000000;font-family:Arial, dotum, µ¸¿ò;}
+
+.eng	{font:8pt tahoma}
+.engs	{font:7pt tahoma}
+.engb	{font:bold 8pt tahoma}
+.stxt	{font:8pt µ¸¿ò; color:#4C4C4C; letter-spacing:-1; line-height:16px}
+.b_cate	{font:bold 11pt µ¸¿ò; color:#464646; letter-spacing:-1}
+.path	{font:8pt µ¸¿ò; color:#464646; text-align:right; padding-right:17; height:25} /** ÇöÀç°æ·Î **/
+.input_txt	{font:bold 8pt µ¸¿ò; color:#5D5D5D; letter-spacing:-1;padding-top:4px;}
+#b_white a {font:bold 11pt µ¸¿ò; color:#FFFFFF; letter-spacing:-1}
+.pagediv	{text-align:center;padding:15px} /** ÆäÀÌÂ¡ DIV **/
+
+.indiv {margin:0px 18px 0px 17px;%

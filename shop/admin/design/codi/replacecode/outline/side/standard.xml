@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="EUC-KR"?>
+<codes>
+<list>
+	<code>{ # menuCategory }</code>
+	<desc>카테고리 메뉴파일 인클루드</desc>
+	<exam></exam>
+</list>
+<list>
+	<code>{_sess}</code>
+	<desc>회원</desc>
+	<exam></exam>
+</list>
+<list>
+	<code>{_sess.m_id}</code>
+	<desc>회원아이디</desc>
+	<exam>testid</exam>
+</list>
+<list>
+	<code>{_member.name}</code>
+	<desc>회원이름</desc>
+	<exam>홍길동</exam>
+</list>
+<list>
+	<code>{_member.email}</code>
+	<desc>회원이메일</desc>
+	<exam>test@test.co.kr</exam>
+</list>
+<list>
+	<code>{ @ dataBoard(5) }</code>
+	<desc>게시판 5개 출력</desc>
+	<exam more="func/dataBoard.xml"></exam>
+</list>
+<list>
+	<code>{ @ dataBrand() }</code>
+	<desc>브랜드</desc>
+	<exam more="func/dataBrand.xml"></exam>
+</list>
+<list>
+	<code>{_cfg['compPhone']}</code>
+	<desc>회사 전화번호</desc>
+	<exam>02-1234-5678</exam>
+</list>
+<list>
+	<code>{_cfg['adminEmail']}</code>
+	<desc>관리자 Email</desc>
+	<exam>webmaster@xxx.co.kr</exam>
+</list>
+<list>
+	<code>{ @ dataBank() }</code>
+	<desc>입금계좌</desc>
+	<exam more="func/dataBank.xml"></exam>
+</list>
+<list>
+	<code>{ @ dataBanner( 1, 1, 'Y' ) }</code>
+	<desc>배너코드1 위치의 배너를 1개만 랜덤으로 호출 (※ 위치는 1 ~ 60 제공)</desc>
+	<exam more="func/dataBanner.xml"></exam>
+</list>
+<list>
+	<code>{ @ dataBanner( 2 ) }</code>
+	<desc>배너코드2 위치의 배너를 호출</desc>
+	<exam more="func/dataBanner.xml"></exam>
+</list>
+</codes>

@@ -1,0 +1,178 @@
+{*** 1:1문의 작성 | myp/qna_register.php ***}
+{ # header }
+<?php {page_title} = "1:1 문의하기";?>
+{#sub_header}
+<style type="text/css">
+section#nreviewregister {background:#FFFFFF; padding:12px;}
+section#nreviewregister table{border:none; border-top:solid 1px #dbdbdb;width:100%;}
+section#nreviewregister table td{padding:8px 0px 8px 10px; vertical-align:middle; border-bottom:solid 1px #dbdbdb;}
+section#nreviewregister table th{padding:8px 0px 8px 0px; text-align:center; background:#f5f5f5; width:70px; vertical-align:middle; border-bottom:solid 1px #dbdbdb; color:#353535; font-size:12px;}
+section#nreviewregister table .img{padding:5px; width:60px;}
+section#nreviewregister table .img img{border:solid 1px #d9d9d9;}
+section#nreviewregister table td input[type=text], input[type=password], select{width:95%;height:21px;}
+section#nreviewregister table td textarea{width:95%;height:116px;}
+section#nreviewregister .btn_center {margin:auto; width:198px; height:34px; margin-top:20px; margin-bottom:20px;}
+section#nreviewregister .btn_center .btn_save{border:none; background:url('../common/img/layer/btn_red01_off.png') no-repeat; color:#FFFFFF; font-size:14px; width:94px; height:34px; float:left; font-family:dotum;}
+section#nreviewregister .btn_center .btn_prev{border:none; background:url('../common/img/layer/btn_black01_off.png') no-repeat; color:#FFFFFF; font-size:14px; width:94px; height:34px; float:right; font-family:dotum;}
+.goods-nm{color:#353535; font-weight:bold; fonst-size:14px; margin-bottom:5px; overflow:hidden;text-overflow:ellipsis;white-space:nowrap; }
+.goods-price{color:#f03c3c; font-size:12px;}
+.btn_order_search {background:url('../common/img/nmyp/btn_view_off.png') no-repeat; width:73px; height:25px; border:none; color:#FFFFFF; text-align:center; line-height:25px; float:right;}
+.btn_order_search:active {background:url('../common/img/nmyp/btn_view_on.png') no-repeat;}
+.orderlist-area {bottom:0px; position:fixed; width:100%; background:#FFFFFF; z-index:99;display:none;}
+.orderlist-title {background:url("../common/img/detailp/bg_coupon_tit.png") repeat-x; height:48px;}
+.orderlist-title .title{height:48px; line-height:48px; margin-left:15px; font-size:16px; color:#FFFFFF; font-family:dotum;font-weight:bold;float:left;}
+.orderlist-title .close-btn{background:url("../common/img/detailp/btn_close01_off.png") no-repeat; width:31px; height:32px; margin-top:8px;float:right;margin-right:10px;}
+.orderlist-title .close-btn:active{background:url("../common/img/detailp/btn_close01_on.png") no-repeat; }
+.orderlist-item{height:43px; border-bottom:solid 1px #dbdbdb;}
+.orderlist-item .orderlist-item-name{height:43px; font-size:12px; color:#353535; margin-left:15px;  float:left; max-width:60%; overflow:hidden;}
+.orderlist-item .orderlist-item-name .mobile_coupon{color:#f03c3c;}
+.orderlist-item .download-btn{background:url("../common/img/info/icon_radio01.png") no-repeat; width:22px; height:22px; margin-top:8px;  float:right; margin-right:12px;text-align:center;}
+.orderlist-item .active-btn{background:url("../common/img/info/icon_radio02.png") no-repeat;}
+.orderlist-title .close-btn{background:url("../common/img/detailp/btn_close01_off.png") no-repeat; width:31px; height:32px; margin-top:8px;float:right;margin-right:10px;}
+
+.orderlist-area .orderlist-item-area {position:relative; max-height:220px; width:100%; overflow:hidden;}
+
+
+#background {
+	position : fixed;
+	left : 0;
+	top : 0;
+	bottom:0px;
+	width : 100%;
+	height : 100%;
+	background : rgba(0, 0, 0, 0.2);
+	display:none;
+	z-index:98;
+}
+
+
+</style>
+<script type="text/javascript">
+var orderlist_scroll;
+function showOrderList() {
+	$("#background").show();
+
+	$(".orderlist-area").css("bottom", "-"+$(".orderlist-area").height()+"px");
+	$(".orderlist-area").show();
+	
+	$(".orderlist-area").animate({bottom:0}, 300, function(){
+		orderlist_scroll.refresh();
+	});	
+}
+
+function closeOrderList() {
+	
+	$(".orderlist-area").animate({bottom:$(".orderlist-area").height()-($(".orderlist-area").height()*2)}, 300, function(){
+		$(".orderlist-area").hide();
+		$("#background").hide();
+	});	
+	
+}
+
+function setQnaOrdno(ordno) {
+	$(".download-btn").removeClass('active-btn');
+	$("#download-btn-"+ordno).addClass('active-btn');
+	$("[name=ordno]").val(ordno);
+	closeOrderList();
+}
+$(document).ready(function(){
+	orderlist_scroll = new iScroll('scroll-area');
+	
+});
+</script>
+
+
+<form method=post action="indb.php" enctype="multipart/form-data" onSubmit="return chkForm(this)">
+<input type=hidden name=mode value="add_member_qna">
+<input type=hidden name=referer value="{_referer}">
+
+<section id="nreviewregister"  class="content">	
+	<table>
+	<tr>
+		<th>아이디</th>
+		<td>
+			{_data.m_id}
+		</td>
+	</tr>
+	<tr>
+		<th>질문유형</th>
+		<td><select name="itemcd" required label="질문유형" class=select>
+		<option value="">상담내용을 선택하세요</option>
+		<!--{ @ codeitem( 'question' ) }-->
+		<option value="{.key_}" { ? _data.itemcd == .key_}selected{ / }>{.value_}</option>
+		<!--{ / }-->
+		</select></td>
+	</tr>
+	<tr>
+		<th>주문번호</th>
+		<td>
+			<input type="number" name="ordno"  label="주문번호" value="{_data.email}" style="width:110px"/><div class="btn_order_search" onClick="javascript:showOrderList();">주문조회</div>
+		</td>
+	</tr>
+	<tr>
+		<th>이메일</th>
+		<td>
+			<input type="email" name="email"  label="이메일" value="{_data.email}" />
+		</td>
+	</tr>
+	<tr>
+		<th>휴대폰</th>
+		<td>
+			<input type="number" name="phone"  label="휴대폰번호" value="{_data.phone}" />
+		</td>
+	</tr>
+	<tr>
+		<th>제목</th>
+		<td>
+			<input type="text" name="subject" required label="제목" value="{_data.subject}" />
+		</td>
+	</tr>
+	<tr>
+		<th>내용</th>
+		<td>
+			<textarea name="contents" required label="내용"  >{_data.contents}</textarea>
+		</td>
+	</tr>
+	</table>
+	
+	<div class="m_review">
+		<div class="btn_center">
+			<button type="submit" id="save-btn" class="btn_save">확 인</button>
+			<button type="button" id="prev-btn" class="btn_prev"  onclick="history.back();">취 소</button>
+		</div>
+	</div>
+
+
+</section>
+
+
+<div class="orderlist-area" class="content">
+	<div class="orderlist-title">
+		<div class="title">주문 List <!--{ ? order_cnt > 0 }-->({=order_cnt})<!--{/}--></div>
+		<div class="close-btn" onClick="javascript:closeOrderList();"></div>
+	</div>
+	<div class="orderlist-item-area">
+		<div id="scroll-area">
+		<ul>
+		<!--{ @ order_list }-->
+		<li>
+		<div class="orderlist-item" onClick="javascript:setQnaOrdno({.ordno});">
+			<div class="orderlist-item-name"><span class="goods-price">{.ordno}</span> ({.orddt})<br /><span class="goods-nm">{.goodsnm}</span></div>
+			<div class="download-btn" id="download-btn-{.ordno}" onClick="javascript:setQnaOrdno({.ordno});"></div>
+		</div>
+		</li>
+		<!--{ : }-->
+		<li>
+		<div class="orderlist-item">
+			<div class="orderlist-item-name">주문내역이 없습니다</div>
+		</div>
+		</li>
+		<!--{ / }-->
+		</ul>
+		</div>
+	</div>
+</div>
+<div id="background"></div>
+</form>
+
+{ # footer }

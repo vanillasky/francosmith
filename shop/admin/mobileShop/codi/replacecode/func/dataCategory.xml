@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="EUC-KR"?>
+<codes>
+<list>
+	<code>{.category}</code>
+	<desc>분류코드</desc>
+	<exam>001</exam>
+</list>
+<list>
+	<code>{.catnm}</code>
+	<desc>분류명</desc>
+	<exam>여성패션</exam>
+</list>
+<list>
+	<code>{@ .sub}</code>
+	<desc>서브 분류</desc>
+	<exam more="func/dataCategory.sub.xml"></exam>
+</list>
+</codes>

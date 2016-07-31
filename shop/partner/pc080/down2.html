@@ -1,0 +1,128 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+ <HEAD>
+  <TITLE> New Document </TITLE>
+
+<STYLE TYPE="text/css">
+.txt {
+	FONT-SIZE: 9pt; COLOR: #333333; LINE-HEIGHT: 16pt; FONT-FAMILY: "굴림","Verdana", "Arial", "sans-serif", "helvetica"
+}
+</STYLE>
+
+<SCRIPT LANGUAGE="JavaScript">
+ <!--
+	
+		  document.write('<OBJECT ID="MyPC080BIZ"' + 
+		  'CLASSID="CLSID:D7B800A6-CEE6-4EBA-B41F-8212AFDD43AC"' +
+		  'width="0" height="0"></OBJECT>');
+
+		
+		function ActX_CheckValid() {
+		
+			if ( MyPC080BIZ.object == null ) {
+
+			sp2 = window.navigator.userAgent.indexOf("SV1") != -1;
+			ie7 = navigator.appVersion.indexOf("MSIE 7") != -1;
+			
+				if(ie7 || sp2) {
+				
+				instruction1.style.display = "block";				
+				instruction2.style.display = "none";
+				instruction3.style.display = "none";
+				
+				} else {
+				instruction1.style.display = "none";				
+				instruction2.style.display = "block";
+				instruction3.style.display = "none";
+				}
+			
+			}else if(!MyPC080BIZ.GetPC080InstallState()) {
+
+			    instruction1.style.display = "none";				
+				instruction2.style.display = "none";
+				instruction3.style.display = "block";
+			
+			
+			}
+			else {		
+			    alert('메신저 폰 설치가 완료되었습니다!   ');
+
+			    instruction1.style.display = "none";				
+			    instruction2.style.display = "none";
+			    instruction3.style.display = "block";
+
+			}
+
+		
+		
+	
+		
+		}
+
+
+		
+
+		
+ //-->
+</SCRIPT>
+</HEAD>
+
+<BODY>
+  
+
+<!-- sp2 및 ie7 이상인 경우 -->  
+<TABLE id="instruction1" style="display:none;" class="txt">
+<TD>설치방법<br>  
+ 1. 아래와 같이 화면상단의 노란색 알림 표시줄을 클릭하여 <B>[ActiveX 컨트롤 설치]</B> 선택해 주세요! <br>
+ <IMG SRC="activex_noti.gif" BORDER="0" ALT=""><br>
+ 2. 아래와 같이 프로그램 설치 확인창에서 <B>[설치]</B>를 클릭해 주세요!<br>
+ <IMG SRC="activexie7.gif"  BORDER="0" ALT=""><br>
+만약 설치 확인창이 나타나지 않으면 <A href="javascript:;" onClick="window.location.reload();">여기</A>를 클릭해 주세요!
+ </TD>
+</TR>
+</TABLE> 
+
+
+<!-- window2k인 경우 -->  
+<TABLE id="instruction2" style="display:none;" class="txt">
+<TR>
+<TD>설치방법<br>  
+ 1. 아래와 같이 프로그램 설치 확인창에서 <B>[확인]</B>을 클릭해 주세요!<br>
+<IMG SRC="activex2k.gif" BORDER="0" ALT=""><br>
+만약 설치 확인창이 나타나지 않으면 <A href="javascript:;" onClick="window.location.reload();">여기</A>를 클릭해 주세요!</TD>
+</TR>
+</TABLE>
+
+
+<!-- Activex는 이미 설치되어 있고, 메신저폰이 없거나 새로 설치하려는 경우로 
+메신저폰이 없는 경우 자동으로 설치되고 있는 경우는 수동으로 다운로드하여 설치하면 됨 --> 
+<TABLE id="instruction3" style="display:none;" class="txt">
+<tr><td>
+<table width = "400" cellpadding="1" cellspacing="1" bgcolor="#d4d4d4"  class="txt">
+<tr bgcolor="#FFFFFF">
+<td height="45" align="center" valign="middle"><font color="#B52301">메신저폰을 자동으로 설치 중입니다. 잠시만 기다려 주십시오!!</font><br>
+<img src="loading.gif" width="338" height="10"></td>
+</tr>
+</table>
+</td></tr>
+<tr>
+<td><br>만약, 메신저폰이 자동으로 설치되지 않으면  <A HREF="http://www.pc080.net/pc080sp/Korean/setup.exe">여기</A>를 클릭하여 수동으로 설치해 주세요!</td>
+</tr>
+
+</TABLE>
+
+
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+	ActX_CheckValid();
+//-->
+</SCRIPT>
+
+<OBJECT ID="MyPC080BIZ" CLASSID="CLSID:D7B800A6-CEE6-4EBA-B41F-8212AFDD43AC" CODEBASE="http://www.pc080.net/pc080sp/PC080Biz.cab#version=1,1,0,0" width="0" height="0">
+<PARAM NAME="BizRegistryUrl" VALUE="http://home.pc080.net/pc080sp/WebTestFiles/BizTest.reg">  제휴사 연동정보 테스트 시 사용하세요!
+<!--<PARAM NAME="BizRegistryUrl" VALUE="http://제휴사홈/pc080/pc080.txt">-->
+  <PARAM NAME="UserLoginId" value = "james088@pc080.net"><!-- 회원의 pc080 ID 입력, 프로그램 설치 후 자동로그인 시 사용됨  -->
+  <PARAM NAME="UserLoginPassword" value = "123456"><!-- 회원의 pc080 password 입력, 프로그램 설치 후 자동로그인 시 사용됨  -->
+</OBJECT> 
+</BODY>
+</HTML>

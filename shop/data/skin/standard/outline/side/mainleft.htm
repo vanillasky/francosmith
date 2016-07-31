@@ -1,0 +1,41 @@
+{*** 메인용 측면파일 | main/index.php ***}
+<!-- 카테고리 메뉴 시작 -->
+<div style="padding-top:10px;"></div>
+<!-- 관련 세부소스는 '기타/추가페이지(proc) > 카테고리메뉴- menuCategory.htm' 안에 있습니다 -->
+{ # menuCategory }
+<!-- 카테고리 메뉴 끝 -->
+
+<!-- 메인왼쪽 고객센터 01 : Start -->
+<div style="width:190px;">
+	<div style="margin-top:46px;"><img src="../../img/main/sid_tit_cscenter.gif"></div>
+	<div style="padding-top:10px; font-size:19px; font-weight:bold; line-height:23px; color:#626262; font-family:Tahoma, Geneva, sans-serif">070.6445.2648</div>
+	<dl style="margin:0px; padding:10px 0px; color:#666; font-size:11px; line-height:12px;">
+		<dd style="margin:0px;">MON - FRI <span style="color:#ed5d55;">am 10:00 - pm 18:00</span></dd>
+		<dd style="margin:0px;">LUNCH <span style="color:#ed5d55;">am 12:00 - pm 13:00</span></dd>
+		<dd style="margin:0px;">SAT, SUN, HOLIDAY <span style="color:#ed5d55;">off</span></dd>
+	</dl>
+</div>
+<!-- 메인왼쪽 고객센터 01 : End -->
+<div style="width:190px; height:1px; font-size:1px; border-top:solid 1px #e1e1e1;"></div>
+<!-- 무통장입금 : Start -->
+<div style="width:190px; padding-top:13px;">
+	<div><img src="../../img/main/sid_tit_bank.gif"></div>
+	<div style="padding-top:10px; font-size:11px; height:50px; color:#666;">
+	<!--{ @ dataBank() }-->
+	<p style="margin:0px; padding:0px;">{.bank}</p>
+	<p style="margin:0px; padding:0px; font-weight:bold;">{.account}</p>
+	<p style="margin:0px; padding:0px;">{.name}</p>
+	<!--{ ? .index_!=.size_-1 }-->
+	<p style="margin:0px; padding:0px; border-top:solid 1px #EBEBEB;height:1px;font-size:0px; margin:7px 0 6px"></p>
+	<!--{ / }-->
+	<!--{ / }-->
+	</div>
+</div>
+<!-- 무통장입금 : End -->
+
+<!-- 메인왼쪽배너 : Start -->
+<table cellpadding="0" cellspacing="0" border="0"width=100%>
+<tr><td align="left"><!-- (배너관리에서 수정가능) --><!--{ @ dataBanner( 4 ) }-->{.tag}<!--{ / }--></td></tr>
+<tr><td align="left"><!-- (배너관리에서 수정가능) --><!--{ @ dataBanner( 5 ) }-->{.tag}<!--{ / }--></td></tr>
+</table>
+<!-- 메인왼쪽배너 : End -->

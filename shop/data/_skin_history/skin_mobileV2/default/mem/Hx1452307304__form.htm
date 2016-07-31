@@ -1,0 +1,574 @@
+{*** 회원정보수정 | m2/html.php?htmid=mem/_form.htm ***}
+
+<style rel="stylesheet" type="text/css">
+	.top_subtitle { height:40px; border-bottom:solid 1px #dddde1; padding-left:10px; margin-bottom:15px; line-height:40px; font-weight:bold; font-size:14px; }
+	.top_subtitle_btm { height:40px; padding-left:10px; line-height:40px; font-weight:bold; font-size:14px; }
+	section#myInfo .input_wrap { clear:both; }
+	section#myInfo .newPwdDiv { display:none; }
+	section#myInfo .terms { padding-bottom:15px; line-height:25px; font-weight:bold; border-top:solid 1px #dddde1; border-bottom:solid 1px #dddde1; }
+	section#myInfo .terms a:hover { text-decoration:underline; }
+	section#myInfo input[type=text], input[type=number], input[type=email], input[type=password] { border-radius:3px; border:solid 1px #aeaeaf; height:24px; }
+	section#myInfo input[type=checkbox], input[type=radio] { height:15px; border:solid 1px #BBBBBB; }
+	section#myInfo select { border-radius:3px; border:solid 1px #aeaeaf; height:29px; }
+	section#myInfo .asterisk { width:1px; padding-left:10px; color:#f00; float:left; height:30px; line-height:30px; }
+	section#myInfo .input_title { width:29%; padding-left:10px; min-width:80px; color:#222222; float:left; height:30px; line-height:30px; }
+	section#myInfo .input_content { width:60%; float:left; line-height:30px; margin-bottom:11px; }
+	section#myInfo button { width:130px; display:block; margin-bottom:10px; text-align:center; height:30px; color:#FFFFFF; line-height:30px; font-size:11px; background:#808591; border-radius:4px; font-family:dotum; border:none; }
+	section#myInfo .description { font-size:11px; color:#9e9e9e; line-height:18px; }
+	section#myInfo .confirm_btn { clear:both; width:100%; text-align:center; }
+	section#myInfo .iblock { display:inline-block; }
+	section#myInfo button.white { width:130px; margin-bottom:10px; text-align:center; height:32px; color:#808591; line-height:30px; font-size:11px; background:#FFFFFF; border-radius:4px; font-family:dotum; border:1px solid #808591; }
+
+	section#myInfo .red { color:#f00; }
+	section#myInfo .w100 { width:100%; }
+	section#myInfo .w18 { width:18%; }
+	section#myInfo .w25 { width:25%; }
+	section#myInfo .w45 { width:45px; }
+	section#myInfo .w60 { width:60px; }
+	section#myInfo .w70 { width:70px; }
+	section#myInfo .btn_pad, section#myInfo .noline { padding-top:10px; }
+	section#myInfo .block { display:block; }
+	section#myInfo #div_road_address { padding:5px 5px 0 1px; font:12px dotum; color:#999; }
+	section#myInfo #div_road_address_sub { padding:5px 0 0 1px; font:12px dotum; color:#999; }
+
+	div.passwordStrenth { display:none; }
+	div.passwordStrenth dl { margin:0; padding:0 6px 0 0; color:#373737; font-weight:bold; font-size:11px; font-family:dotum; }
+	div.passwordStrenth dl dt, div.passwordStrenth dl dd { display:inline; font-size:11px; font-family:dotum; margin:0; height:15px; line-height:15px; }
+	div.passwordStrenth dl dt { color:#363636; font-weight:bold; width:95px; }
+	div.passwordStrenth dl dd.lv0 { color:#F52D00; }
+	div.passwordStrenth dl dd.lv1 { color:#028EFF; }
+	div.passwordStrenth dl dd.lv2 { color:#0213FF; }
+	div.passwordStrenth dl dd.lv3, div.passwordStrenth dl dd.lv4 { color:#46C32D; }
+</style>
+<script src="../godo.password_strength.js" type="text/javascript"></script>
+<script type="text/javascript">
+	$(function () {
+		$("#change-pwd-btn").toggle(function() {
+			$("input[name=pwd_chk]").val("n");
+			$(".newPwdDiv").show();
+		}, function () {
+			$("input[name=pwd_chk]").val("");
+			$(".pass_all").val("");
+			$(".newPwdDiv").hide();
+		});
+
+		$("input[name=newPassword]").focus(function () {
+			checkPassword(this);
+		}).keyup(function () {
+			checkPassword(this);
+		}).blur(function () {
+			emptyPwState();
+		});
+
+		$("input[name=confirmPassword]").keyup(function () {
+			pwdCheck(this);
+		});
+
+		$("input[type=number]").keypress(function (event) {
+			onlyNum(event);
+			if ($(this).val().length >= $(this).attr("maxlength")) return false;
+		}).blur(function () {
+			if ($(this).val().length >= $(this).attr("maxlength")) $(this).val($(this).val().substring(0, $(this).attr("maxlength")));
+		});
+
+		$("#zipcode-btn").click(function () {
+			frmMake("{_cfg.rootDir}/proc/popup_address.php?isMobile=true&gubun=mobile","searchZipcode","",false);
+			return false;
+		});
+
+		$("#next-btn").click(function () {
+			nextStep();
+		});
+
+		$("#cancel-btn").click(function () {
+			location.href = "../myp/menu_list.php";
+		});
+
+		$("#editNumber").click(function () {
+			var protocol = location.protocol;
+			var callbackUrl = "{=ProtocolPortDomain()}{_cfg.rootDir}/member/hpauthDream/hpauthDream_Result.php";
+			frmMake(protocol + "//hpauthdream.godo.co.kr/module/Mobile_hpauthDream_Main.php?callType=modifymembermobile&shopUrl=" + callbackUrl + "&cpid={=hpauthCPID}","hpauthFrame","휴대폰본인인증",false);
+			return false;
+		});
+
+		<!--{ ? hpauthyn == 'y' && moduseyn == 'y' }-->
+			$(".mobile_all").click(function () {
+				$("#editNumber").trigger("click");
+			});
+		<!--{ / }-->
+
+		$(".zipcode_all").click(function () {
+			$("#zipcode-btn").trigger("click");
+		});
+	});
+
+	function checkPassword(el) {
+		if(el.value) {
+			var result = nsGodo_PasswordStrength.check( el );
+			$("#el-password-strength-indicator-msg").html(result.msg);
+			$("#el-password-strength-indicator-level").addClass("lv" + result.level).html(result.levelText);
+			$("#el-password-strength-indicator").attr("style", "display:block");
+		}
+		else {
+			emptyPwState();
+		}
+	}
+
+	function emptyPwState() {
+		$("#el-password-strength-indicator").attr("style", "display:none");
+	}
+
+	function pwdCheck(obj) {
+		$c_pwd = $(obj).val();
+		if($("input[name=newPassword]").val() != $c_pwd) {
+			$("input[name=pwd_chk]").val("n");
+			$("#pwd_description").text("비밀번호가 일치하지 않습니다.");
+			$("#pwd_description").addClass("wrong");
+		} else {
+			$("input[name=pwd_chk]").val("y");
+			$("#pwd_description").text("비밀번호가 일치합니다.");
+			$("#pwd_description").removeClass("wrong");
+		}
+	}
+
+	function onlyNum(obj) {
+		var ie_11 = /Trident\/(?:[7-9]|\d{2,})\..*rv:(\d+)/.exec(navigator.userAgent);
+
+		if(ie_11 || !window.event) var _code=arguments[1].which;
+		else var _code=event.keyCode;
+
+		if ((_code<48) || (_code>57)) {
+			if(ie_11 || !window.event) arguments[1].preventDefault();
+			else event.returnValue=false;
+		}
+		else {
+			return true;
+		}
+	}
+
+	function nextStep() {
+		<!--{ @ consentData }-->
+		<!--{ ? .requiredyn == 'y' }-->
+		if ($("input[name=consent[{.sno}]]").is(":checked") === false){
+			alert("[{.title}]에 동의하셔야 회원정보 수정이 가능합니다.");
+			$("input[name=consent[{.sno}]]").focus();
+			return false;
+		}
+		<!--{ / }-->
+		if ($("input[name=consent[{.sno}]]").is(":checked") === false){
+			$("input[name=consents[{.sno}]]").val("n");
+		} else {
+			$("input[name=consents[{.sno}]]").val("y");
+		}
+		<!--{ / }-->
+		var check_required = 1;
+		var form = document.frmAgree;
+
+		if($("input[name=pwd_chk]").val() && !$("input[name=originalPassword]").val()) {
+			alert("비밀번호를 입력해주세요.");
+			$("input[name=originalPassword]").focus();
+			check_required = 0;
+			return false;
+		} else if(($("input[name=pwd_chk]").val() == "n" && !$("input[name=newPassword]").val()) || ($("input[name=newPassword]").val() != $("input[name=confirmPassword]").val())) {
+			alert("비밀번호가 일치하지 않습니다.");
+			$("input[name=newPassword]").focus();
+			check_required = 0;
+			return false;
+		}
+		<!--{ ? _checked_mobile.reqField.email }-->
+		if (!chkText(form.email,form.email.value,"이메일을 입력해주세요.")) return false;
+		if (!chkPatten(form.email,form.email.getAttribute("option"),"정상적인 이메일 주소를 입력해주세요.")) return false;
+		<!--{ / }-->
+
+		$("input[required='']").each(function(i, obj) {
+			if (obj.value == "") {
+				check_required = 0;
+				alert("필수값("+obj.getAttribute("label")+")을 입력해주세요.");
+				obj.focus();
+				return false;
+			}
+		});
+
+		if (check_required == 0) return false;
+		$("#frmAgree").attr("action", $("input[name=pAction]").val()).submit();
+	}
+</script>
+<section class="content" id="myInfo">
+<form id="frmAgree" name="frmAgree" method="post" action="" target="ifrmHidden">
+	<input type="hidden" name="pwd_chk" />
+	<input type="hidden" name="mode" value="{_mode}" />
+	<input type="hidden" name="dupeinfo" value="{dupeinfo}" />
+	<input type="hidden" name="rncheck" value="{rncheck}" />
+	<!--{ ? _sess }--><input type="hidden" name="m_id" value="{m_id}" /><!--{ / }-->
+	<input type="hidden" name="passwordSkin" value="Y"><!-- 비밀번호 작성 규칙 보완 스킨패치 여부 -->
+	<input type="hidden" name="pAction" value="{memActionUrl}" />
+	<input type="hidden" name="private1" value="{private1}">
+	<!--{ @ consentData }-->
+	<input type="hidden" name="consents[{=.sno}]" />
+	<!--{ / }-->
+	<!--{ ? _cfg['private2YN'] == 'Y' || _cfg['private3YN'] == 'Y' || count(consentData) > 0 }-->
+	<div class="top_subtitle_btm">약관 동의</div>
+	<div class="terms">
+		<!--{ ? _cfg['private2YN'] == 'Y' }-->
+		<div>
+			<input type="checkbox" name="private2YN" value="y" {_checked.private2YN} />
+			<a href="../service/termsPolicyCollection2.php"><span class="red">[선택]</span> 개인정보 제3자 제공 관련</a>
+		</div>
+		<!--{ / }-->
+		<!--{ ? _cfg['private3YN'] == 'Y' }-->
+		<div>
+			<input type="checkbox" name="private3YN" value="y" {_checked.private3YN} />
+			<a href="../service/termsEntrust.php"><span class="red">[선택]</span> 개인정보취급 위탁 관련</a>
+		</div>
+		<!--{ / }-->
+		<!--{ @ consentData // 추가동의항목 }-->
+		<div>
+			<input type="checkbox" name="consent[{=.sno}]" class="consents" requiredyn="{=.requiredyn}" value="y" {=.consentyn} />
+			<a href="../service/termsConsent.php?sno={.sno}"><span class="red">[{=.requiredyn_text}]</span> {=.title}</a>
+		</div>
+		<!--{ / }-->
+	</div>
+	<!--{ / }-->
+	<div class="info">
+		<div class="top_subtitle">개인 회원 정보</div>
+		<div class="input_wrap">
+			<div class="asterisk">*</div>
+			<div class="input_title">아이디</div>
+			<div class="input_content">{m_id}</div>
+		</div>
+		<div class="input_wrap">
+			<div class="asterisk">*</div>
+			<div class="input_title">비밀번호</div>
+			<div class="input_content"><button id="change-pwd-btn">비밀번호 변경</button></div>
+		</div>
+		<div class="newPwdDiv">
+			<div class="input_wrap">
+				<div class="asterisk">*</div>
+				<div class="input_title">현재 비밀번호</div>
+				<div class="input_content"><input type="password" name="originalPassword" id="originalPassword" class="w100 pass_all" /></div>
+			</div>
+			<div class="input_wrap">
+				<div class="asterisk">*</div>
+				<div class="input_title">새 비밀번호</div>
+				<div class="input_content">
+					<input type="password" name="newPassword" id="newPassword" onblur="emptyPwState()" label="새 비밀번호" option="regPass" maxlength="16" class="w100 pass_all" />
+					<div class="passwordStrenth" id="el-password-strength-indicator">
+						<dl>
+							<dt>비밀번호 안전도</dt>
+							<dd id="el-password-strength-indicator-level"></dd>
+						</dl>
+					</div>
+					<span class="description block" id="el-password-strength-indicator-msg">10 ~ 16자의 영문자, 숫자조합</span>
+				</div>
+			</div>
+			<div class="input_wrap">
+				<div class="asterisk">*</div>
+				<div class="input_title">새 비밀번호 확인</div>
+				<div class="input_content">
+					<input type="password" name="confirmPassword" id="confirmPassword" label="새 비밀번호 확인" option="regPass" maxlength="16" class="w100 pass_all" />
+					<span class="description block wrong" id="pwd_description">비밀번호가 일치하지 않습니다.</span>
+				</div>
+			</div>
+		</div>
+		<div class="input_wrap">
+			<div class="asterisk">*</div>
+			<div class="input_title">이름</div>
+			<div class="input_content"><input type="text" name="name" id="name" value="{name}" class="w100" /></div>
+		</div>
+		<!--{ ? _checked_mobile.useField.nickname }-->
+		<div class="input_wrap">
+			<div class="asterisk"><!--{ ? _checked_mobile.reqField.nickname }-->*<!--{ / }--></div>
+			<div class="input_title">닉네임</div>
+			<div class="input_content">
+				<input type="text" name="nickname" maxlength="12" class="w100" style="ime-mode:active" label="닉네임" value="{nickname}" <!--{ ? _checked_mobile.reqField.nickname }-->required<!--{ / }--> />
+			</div>
+		</div>
+		<!--{ / }-->
+		<!--{ ? _checked_mobile.useField.sex }-->
+		<div class="input_wrap">
+			<div class="asterisk"><!--{ ? _checked_mobile.reqField.sex }-->*<!--{ / }--></div>
+			<div class="input_title">성별</div>
+			<div class="input_content">
+				<label><input type="radio" name="sex" label="성별" value="m" {_checked.sex.m} label="성별" <!--{ ? _checked_mobile.reqField.sex }-->required<!--{ / }--> /> 남자</label>
+				<label><input type="radio" name="sex" label="성별" value="w" {_checked.sex.w} label="성별" <!--{ ? _checked_mobile.reqField.sex }-->required<!--{ / }--> /> 여자</label>
+			</div>
+		</div>
+		<!--{ / }-->
+		<!--{ ? _checked_mobile.useField.birth }-->
+		<div class="input_wrap">
+			<div class="asterisk"><!--{ ? _checked_mobile.reqField.birth }-->*<!--{ / }--></div>
+			<div class="input_title">생년월일</div>
+			<div class="input_content">
+				<select name="birth_year" class="w70" <!--{ ? _checked_mobile.reqField.birth }-->required<!--{ / }-->>
+					<!--{ @ range(date('Y'), 1900) }-->
+					<option value="{.value_}" {_selected.birth_year[.value_]}>{.value_}</option>
+					<!--{ / }-->
+				</select>
+				<select name="birth[]" class="w45" <!--{ ? _checked_mobile.reqField.birth }-->required<!--{ / }-->>
+					<!--{ @ range(1, 12) }-->
+					<option value="{=sprintf('%02d', .value_)}" {=_selected.birth0[sprintf('%02d', .value_)]}>{=sprintf('%02d', .value_)}</option>
+					<!--{ / }-->
+				</select>
+				<select name="birth[]" class="w45" <!--{ ? _checked_mobile.reqField.birth }-->required<!--{ / }-->>
+					<!--{ @ range(1, 31) }-->
+					<option value="{=sprintf('%02d', .value_)}" {=_selected.birth1[sprintf('%02d', .value_)]}>{=sprintf('%02d', .value_)}</option>
+					<!--{ / }-->
+				</select>
+				<!--{ ? _checked_mobile.useField.calendar }-->
+				<div class="noline">
+				<input type="radio" name="calendar" value="s" {_checked.calendar.s} label="일월간지" <!--{ ? _checked_mobile.reqField.calendar }-->required<!--{ / }--> > 양력
+				<input type="radio" name="calendar" value="l" {_checked.calendar.l} label="일월간지" <!--{ ? _checked_mobile.reqField.calendar }-->required<!--{ / }--> > 음력
+				<!--{ / }-->
+			</div>
+		</div>
+		<!--{ / }-->
+		<!--{ ? _checked_mobile.useField.marriyn }-->
+		<div class="input_wrap">
+			<div class="asterisk"><!--{ ? _checked_mobile.reqField.marriyn }-->*<!--{ / }--></div>
+			<div class="input_title">결혼여부</div>
+			<div class="input_content">
+				<label><input type="radio" name="marriyn" label="결혼여부" value="n" {_checked.marriyn.n} label="결혼여부" <!--{ ? _checked_mobile.reqField.marriyn }-->required<!--{ / }--> /> 미혼</label>
+				<label><input type="radio" name="marriyn" label="결혼여부" value="y" {_checked.marriyn.y} label="결혼여부" <!--{ ? _checked_mobile.reqField.marriyn }-->required<!--{ / }--> /> 기혼</label>
+			</div>
+		</div>
+		<!--{ / }-->
+		<!--{ ? _checked_mobile.useField.marridate }-->
+		<div class="input_wrap">
+			<div class="asterisk"><!--{ ? _checked_mobile.reqField.marridate }-->*<!--{ / }--></div>
+			<div class="input_title">결혼기념일</div>
+			<div class="input_content">
+				<select name="marridate[]" class="w70" <!--{ ? _checked_mobile.reqField.marridate }-->required<!--{ / }-->>
+					<!--{ @ range(date('Y'), 1900) }-->
+					<option value="{.value_}" {_selected.marridate0[.value_]}>{.value_}</option>
+					<!--{ / }-->
+				</select>
+				<select name="marridate[]" class="w45" <!--{ ? _checked_mobile.reqField.marridate }-->required<!--{ / }-->>
+					<!--{ @ range(1, 12) }-->
+					<option value="{=sprintf('%02d', .value_)}" {=_selected.marridate1[sprintf('%02d', .value_)]}>{=sprintf('%02d', .value_)}</option>
+					<!--{ / }-->
+				</select>
+				<select name="marridate[]" class="w45" <!--{ ? _checked_mobile.reqField.marridate }-->required<!--{ / }-->>
+					<!--{ @ range(1, 31) }-->
+					<option value="{=sprintf('%02d', .value_)}" {=_selected.marridate2[sprintf('%02d', .value_)]}>{=sprintf('%02d', .value_)}</option>
+					<!--{ / }-->
+				</select>
+			</div>
+		</div>
+		<!--{ / }-->
+		<!--{ ? _checked_mobile.useField.email }-->
+		<div class="input_wrap">
+			<div class="asterisk"><!--{ ? _checked_mobile.reqField.email }-->*<!--{ / }--></div>
+			<div class="input_title">이메일</div>
+			<div class="input_content">
+				<input type="email" name="email" value="{email}" option="regEmail" label="이메일" class="w100" <!--{ ? _checked_mobile.reqField.email }-->required<!--{ / }--> />
+				<!--{ ? _checked.useField.mailling }-->
+					<div class="description chk">
+						<label><input type="checkbox" name="mailling" {_checked.mailling} /> 광고성 정보,이벤트메일수신</label>
+					</div>
+					<span class="description block">※ 주문정보,공지사항 등 주요 안내사항은 동의 여부에 관계없이 자동 발송됩니다.</span>
+				<!--{ / }-->
+					<span class="description block">※ 아이디 / 비밀번호 찾기에 활용 되므로 정확하게 입력해 주세요.</span>
+			</div>
+		</div>
+		<!--{ / }-->
+		<!--{ ? _checked_mobile.useField.address }-->
+		<div class="input_wrap">
+			<div class="asterisk"><!--{ ? _checked_mobile.reqField.address }-->*<!--{ / }--></div>
+			<div class="input_title">주소</div>
+			<div class="input_content">
+				<button id="zipcode-btn" class="btn_zipcode">우편번호 검색</button>
+				<div>
+				<input type="number" name="zonecode" id="zonecode" value="{zonecode}" maxlength="5" min="00000" max="99999" class="w60 zipcode_all" style="ime-mode:disabled" readonly label="주소" />
+				( <input type="number" name="zipcode[]" id="zipcode0" value="{zipcode[0]}" maxlength="4" min="0000" max="9999" class="w45 zipcode_all" style="ime-mode:disabled" readonly label="우편번호" <!--{ ? _checked_mobile.reqField.address }-->required<!--{ / }--> /> -
+				<input type="number" name="zipcode[]" id="zipcode1" value="{zipcode[1]}" maxlength="4" min="0000" max="9999" class="w45 zipcode_all" style="ime-mode:disabled" readonly label="우편번호" <!--{ ? _checked_mobile.reqField.address }-->required<!--{ / }-->  /> )
+				</div>
+				<div>
+					<input type="text" name="address" id="address" value="{address}" class="w100 zipcode_all" style="ime-mode:active" label="주소" <!--{ ? _checked_mobile.reqField.address }-->required<!--{ / }--> />
+					<input type="text" name="address_sub" id="address_sub" value="{address_sub}" class="w100 zipcode_all" style="ime-mode:active" label="주소" />
+					<input type="hidden" name="road_address" id="road_address" value="{road_address}">
+					<span id="div_road_address">{road_address}</span>
+					<span id="div_road_address_sub"><!--{ ? road_address }-->{address_sub}<!--{ / }--></span>
+				</div>
+			</div>
+		</div>
+		<!--{ / }-->
+		<!--{ ? _checked_mobile.useField.mobile }-->
+		<div class="input_wrap">
+			<div class="asterisk"><!--{ ? _checked_mobile.reqField.mobile }-->*<!--{ / }--></div>
+			<div class="input_title">휴대폰</div>
+			<div class="input_content">
+				<input type="number" name="mobile[]" value="{mobile[0]}" placeholder="Enter Text" pattern="[0-9]*" min="000" max="999" maxlength="3" class="w25 mobile_all" style="ime-mode:disabled" label="휴대폰" <!--{ ? _checked_mobile.reqField.mobile }-->required<!--{ / }--> {=mobileReadonly} /> -
+				<input type="number" name="mobile[]" value="{mobile[1]}" placeholder="Enter Text" pattern="[0-9]*" min="0000" max="9999" maxlength="4" class="w25 mobile_all" style="ime-mode:disabled" label="휴대폰" <!--{ ? _checked_mobile.reqField.mobile }-->required<!--{ / }--> {=mobileReadonly} /> -
+				<input type="number" name="mobile[]" value="{mobile[2]}" placeholder="Enter Text" pattern="[0-9]*" min="0000" max="9999" maxlength="4" class="w25 mobile_all" style="ime-mode:disabled" label="휴대폰" <!--{ ? _checked_mobile.reqField.mobile }-->required<!--{ / }--> {=mobileReadonly} />
+				<div>
+					<!--{ ? hpauthyn == 'y' && moduseyn == 'y' }-->
+					<span class="block btn_pad"><button id="editNumber">번호 변경하기</button></span>
+					<!--{ / }-->
+					<!--{ ? _checked_mobile.useField.sms }-->
+					<span class="block description"><label><input type="checkbox" name="sms" {_checked.sms} /> 광고성 정보,이벤트SMS수신</label></span>
+					<span class="block description">※ 주문정보 등 주요 안내사항은 동의 여부에 관계없이 자동 발송됩니다.</span>
+					<!--{ / }-->
+				</div>
+			</div>
+		</div>
+		<!--{ / }-->
+		<!--{ ? _checked_mobile.useField.phone }-->
+		<div class="input_wrap">
+			<div class="asterisk"><!--{ ? _checked_mobile.reqField.phone }-->*<!--{ / }--></div>
+			<div class="input_title">전화번호</div>
+			<div class="input_content">
+				<input type="number" name="phone[]" value="{phone[0]}" placeholder="Enter Text" pattern="[0-9]*" maxlength="3" min="000" max="999" class="w25" style="ime-mode:disabled" label="전화번호" <!--{ ? _checked_mobile.reqField.phone }-->required<!--{ / }--> /> -
+				<input type="number" name="phone[]" value="{phone[1]}" placeholder="Enter Text" pattern="[0-9]*" maxlength="4" min="0000" max="9999" class="w25" style="ime-mode:disabled" label="전화번호" <!--{ ? _checked_mobile.reqField.phone }-->required<!--{ / }--> /> -
+				<input type="number" name="phone[]" value="{phone[2]}" placeholder="Enter Text" pattern="[0-9]*" maxlength="4" min="0000" max="9999" class="w25" style="ime-mode:disabled" label="전화번호" <!--{ ? _checked_mobile.reqField.phone }-->required<!--{ / }--> />
+			</div>
+		</div>
+		<!--{ / }-->
+		<!--{ ? _checked_mobile.useField.fax }-->
+		<div class="input_wrap">
+			<div class="asterisk"><!--{ ? _checked_mobile.reqField.fax }-->*<!--{ / }--></div>
+			<div class="input_title">팩스</div>
+			<div class="input_content">
+				<input type="number" value="{fax[0]}" placeholder="Enter Text" pattern="[0-9]*" name="fax[]" maxlength="3" min="000" max="999" class="w25" style="ime-mode:disabled" label="팩스" <!--{ ? _checked_mobile.reqField.fax }-->required<!--{ / }-->/> -
+				<input type="number" value="{fax[1]}" placeholder="Enter Text" pattern="[0-9]*" name="fax[]" maxlength="4" min="0000" max="9999" class="w25" style="ime-mode:disabled" label="팩스" <!--{ ? _checked_mobile.reqField.fax }-->required<!--{ / }-->/> -
+				<input type="number" value="{fax[2]}" placeholder="Enter Text" pattern="[0-9]*" name="fax[]" maxlength="4" min="0000" max="9999" class="w25" style="ime-mode:disabled" label="팩스" <!--{ ? _checked_mobile.reqField.fax }-->required<!--{ / }-->/>
+			</div>
+		</div>
+		<!--{ / }-->
+		<!--{ ? _checked_mobile.useField.company }-->
+		<div class="input_wrap">
+			<div class="asterisk"><!--{ ? _checked_mobile.reqField.company }-->*<!--{ / }--></div>
+			<div class="input_title">회사</div>
+			<div class="input_content">
+				<input type="text" name="company" value="{company}" maxlength="10" class="w100" style="ime-mode:active" label="회사" <!--{ ? _checked_mobile.reqField.company }-->required<!--{ / }--> />
+			</div>
+		</div>
+		<!--{ / }-->
+		<!--{ ? _checked_mobile.useField.service }-->
+		<div class="input_wrap">
+			<div class="asterisk"><!--{ ? _checked_mobile.reqField.service }-->*<!--{ / }--></div>
+			<div class="input_title">업태</div>
+			<div class="input_content">
+				<input type="text" name="service" value="{service}" maxlength="20" class="w100" style="ime-mode:active" label="업태"  <!--{ ? _checked_mobile.reqField.service }-->required<!--{ / }--> />
+			</div>
+		</div>
+		<!--{ / }-->
+		<!--{ ? _checked_mobile.useField.item }-->
+		<div class="input_wrap">
+			<div class="asterisk"><!--{ ? _checked_mobile.reqField.item }-->*<!--{ / }--></div>
+			<div class="input_title">종목</div>
+			<div class="input_content">
+				<input type="text" name="item" value="{item}" maxlength="20" class="w100" style="ime-mode:active" label="종목" <!--{ ? _checked_mobile.reqField.item }-->required<!--{ / }-->/>
+			</div>
+		</div>
+		<!--{ / }-->
+		<!--{ ? _checked_mobile.useField.busino }-->
+		<div class="input_wrap">
+			<div class="asterisk"><!--{ ? _checked_mobile.reqField.busino }-->*<!--{ / }--></div>
+			<div class="input_title">사업자번호</div>
+			<div class="input_content">
+				<input type="number" name="busino" value="{busino}" maxlength="11" min="00000000000" max="99999999999" class="w100" style="ime-mode:active" label="사업자번호" <!--{ ? _checked_mobile.reqField.busino }-->required<!--{ / }--> />
+			</div>
+		</div>
+		<!--{ / }-->
+		<!--{ ? _checked_mobile.useField.job }-->
+		<div class="input_wrap">
+			<div class="asterisk"><!--{ ? _checked_mobile.reqField.job }-->*<!--{ / }--></div>
+			<div class="input_title">직업</div>
+			<div class="input_content">
+				<select name="job" class="w100" label="직업" <!--{ ? _checked_mobile.reqField.job }-->required<!--{ / }-->>
+					<option value="">==선택하세요==</option>
+					<!--{ @ codeitem('job') }-->
+					<option value="{.key_}" {_selected.job[.key_]}>{.value_}</option>
+					<!--{ / }-->
+				</select>
+			</div>
+		</div>
+		<!--{ / }-->
+		<!--{ ? _checked_mobile.useField.interest }-->
+		<div class="input_wrap">
+			<div class="asterisk"><!--{ ? _checked_mobile.reqField.interest }-->*<!--{ / }--></div>
+			<div class="input_title">관심분야</div>
+			<div class="input_content">
+				<!--{ @ codeitem('like') }-->
+				<span class="block"><input type="checkbox" name="interest[]" value="{=pow(2,.key_+0)}" {?interest&pow(2,.key_+0)}checked{/}  label="관심분야" <!--{ ? _checked_mobile.reqField.interest }-->required<!--{ / }-->/> {.value_}</span>
+				<!--{ / }-->
+			</div>
+		</div>
+		<!--{ / }-->
+		<!--{ ? _checked_mobile.useField.ex1 }-->
+		<div class="input_wrap">
+			<div class="asterisk"><!--{ ? _checked_mobile.reqField.ex1 }-->*<!--{ / }--></div>
+			<div class="input_title">{_joinset.ex1}</div>
+			<div class="input_content">
+				<input type="text" name="ex1" value="{ex1}" maxlength="20" class="w100" style="ime-mode:active" label="{_joinset.ex1}" <!--{ ? _checked_mobile.reqField.ex1 }-->required<!--{ / }--> />
+			</div>
+		</div>
+		<!--{ / }-->
+		<!--{ ? _checked_mobile.useField.ex2 }-->
+		<div class="input_wrap">
+			<div class="asterisk"><!--{ ? _checked_mobile.reqField.ex2 }-->*<!--{ / }--></div>
+			<div class="input_title">{_joinset.ex2}</div>
+			<div class="input_content">
+				<input type="text" name="ex2" value="{ex2}" maxlength="20" class="w100" style="ime-mode:active" label="{_joinset.ex2}" <!--{ ? _checked_mobile.reqField.ex2 }-->required<!--{ / }--> />
+			</div>
+		</div>
+		<!--{ / }-->
+		<!--{ ? _checked_mobile.useField.ex3 }-->
+		<div class="input_wrap">
+			<div class="asterisk"><!--{ ? _checked_mobile.reqField.ex3 }-->*<!--{ / }--></div>
+			<div class="input_title">{_joinset.ex3}</div>
+			<div class="input_content">
+				<input type="text" name="ex3" value="{ex3}" maxlength="20" class="w100" style="ime-mode:active" label="{_joinset.ex3}" <!--{ ? _checked_mobile.reqField.ex3 }-->required<!--{ / }--> />
+			</div>
+		</div>
+		<!--{ / }-->
+		<!--{ ? _checked_mobile.useField.ex4 }-->
+		<div class="input_wrap">
+			<div class="asterisk"><!--{ ? _checked_mobile.reqField.ex4 }-->*<!--{ / }--></div>
+			<div class="input_title">{_joinset.ex4}</div>
+			<div class="input_content">
+				<input type="text" name="ex4" value="{ex4}" maxlength="20" class="w100" style="ime-mode:active" label="{_joinset.ex4}" <!--{ ? _checked_mobile.reqField.ex4 }-->required<!--{ / }--> />
+			</div>
+		</div>
+		<!--{ / }-->
+		<!--{ ? _checked_mobile.useField.ex5 }-->
+		<div class="input_wrap">
+			<div class="asterisk"><!--{ ? _checked_mobile.reqField.ex5 }-->*<!--{ / }--></div>
+			<div class="input_title">{_joinset.ex5}</div>
+			<div class="input_content">
+				<input type="text" name="ex5" value="{ex5}" maxlength="20" class="w100" style="ime-mode:active" label="{_joinset.ex5}" <!--{ ? _checked_mobile.reqField.ex5 }-->required<!--{ / }--> />
+			</div>
+		</div>
+		<!--{ / }-->
+		<!--{ ? _checked_mobile.useField.ex6 }-->
+		<div class="input_wrap">
+			<div class="asterisk"><!--{ ? _checked_mobile.reqField.ex6 }-->*<!--{ / }--></div>
+			<div class="input_title">{_joinset.ex6}</div>
+			<div class="input_content">
+				<input type="text" name="ex6" value="{ex6}" maxlength="20" class="w100" style="ime-mode:active" label="{_joinset.ex6}" <!--{ ? _checked_mobile.reqField.ex6 }-->required<!--{ / }--> />
+			</div>
+		</div>
+		<!--{ / }-->
+		<!--{ ? _checked_mobile.useField.memo }-->
+		<div class="input_wrap">
+			<div class="asterisk"><!--{ ? _checked_mobile.reqField.memo }-->*<!--{ / }--></div>
+			<div class="input_title">남기는 말씀</div>
+			<div class="input_content">
+				<input type="text" name="memo" value="{memo}" class="w100" style="ime-mode:active" label="남기는말씀" <!--{ ? _checked_mobile.reqField.memo }-->required<!--{ / }--> />
+			</div>
+		</div>
+		<!--{ / }-->
+		<!--{ ? _checked_mobile.useField.recommid }-->
+		<div class="input_wrap">
+			<div class="asterisk"><!--{ ? _checked_mobile.reqField.recommid }-->*<!--{ / }--></div>
+			<div class="input_title">추천인아이디</div>
+			<div class="input_content">{recommid}</div>
+		</div>
+		<!--{ / }-->
+	</div>
+	<div class="confirm_btn">
+		<button id="next-btn" class="iblock" />정보수정</button>
+		<button id="cancel-btn" class="iblock white" />취소</button>
+	</div>
+</form>
+</section>

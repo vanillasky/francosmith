@@ -1,0 +1,456 @@
+<style>
+.allat_cell_1 {width:100px;background:#f7f7f7;padding-right:10px;text-align:right;}
+.allat_cell_2 {padding:2px 0 2px 10px;}
+.card_sub {font:8pt dotum; letter-spacing:-1; padding:3px 0 0 24px; }
+.head { background-color:#EFF7FC; text-align:center;  }
+.body { background-color:#FFFFFF; padding: 0 10 0 10  }
+.nbody { background-color:#FFFFCC; padding: 0 10 0 10  }
+</style>
+
+<script language=JavaScript src="https://tx.allatpay.com/common/AllatPayRE.js"></script>
+<!--//----------------------초기화 함수 : Object 초기화------------------------------//-->
+<script language=Javascript>
+Allat_Object_Init("{pg.id}","{pg.zerofee}");   //allat_shop_id,allat_zerofee_yn
+</script>
+<script language=Javascript>
+function use_select_box(sId)
+{	///가상계좌 리스트 Select Box 구현
+	///가상계좌 은행 리스트 가져오기(반드시 초기화 후에 호출 할 것)
+	Allat_VBANK_Init("SHOPID","N"); //allat_shop_id,allat_zerofee_yn
+	var sel_id = document.getElementById(sId);
+	for(var i=0;i<_allat_vbank_cnt;i++){
+		var oOption = document.createElement("OPTION");
+		sel_id.options.add(oOption);
+		oOption.innerText = _allat_vbank_name[i];
+		oOption.value = _allat_vbank_code[i];
+	}
+}
+
+function use_select_card(sId){         ///안심클릭 카드 리스트 Select Box 구현
+    var sel_id = document.getElementById(sId);
+    for(var i=0;i<_allat_card_cnt;i++){
+        var oOption = document.createElement("OPTION");
+        sel_id.options.add(oOption);
+        oOption.innerText = _allat_card_name[i];
+        oOption.value = _allat_card_code[i];
+    }
+}
+
+function view_c3d_card(dId){ ///안심클릭 카드 종류 출력
+	var card_names = '';
+	for(var i=0;i<_allat_card_cnt;i++){
+		card_names += _allat_card_name[i] + ', ';
+	}
+	document.getElementById(dId).innerText = card_names.substr(0, card_names.length -2);
+}
+
+function ftn_app()
+{
+	var dfm = document.fm;
+	var ret;
+
+	<!--{ ? settlekind == "c" }-->// 일반 카드 결제시의 개인/법인 구분
+	if( dfm.business_no[0].checked == true ) dfm.allat_business_type.value = 0;
+	if( dfm.business_no[1].checked == true ) dfm.allat_business_type.value = 1;
+	<!--{ / }-->
+
+	if (dfm.escrow_apply && dfm.escrow_apply.checked == false){
+		alert("에스크로 서비스 이용약관에 동의하세요");
+		dfm.escrow_apply.focus();
+		return;
+	}
+
+	if (dfm.allat_escrow_no && !dfm.allat_escrow_no.value){
+		alert("에스크로 인증번호를 입력하세요");
+		dfm.allat_escrow_no.focus();
+		return;
+	}
+
+	var app_type="";
+	for( i=0; i< dfm.chkapp.length; i++ ){
+		if( dfm.chkapp[i].checked == true ){
+			app_type = dfm.chkapp[i].value;
+			break;
+		}
+	}
+
+	if(app_type == "ISP"){
+		dfm.allat_pay_type.value='ISP';
+	}else if(app_type == "C3D"){
+		if( dfm.allat_card_code_sel != null){   /// Hardcoding
+      var cIndex=dfm.allat_card_code_sel.selectedIndex;
+      if( cIndex == 0 ){
+        alert('결제하실 카드사를 선택하시기 바랍니다.');
+        dfm.allat_card_code_sel.focus();
+        return;
+      }
+      dfm.allat_card_code.value=dfm.allat_card_code_sel[cIndex].value;
+    }else{                                  /// Use Javascript
+      if( dfm.allat_card_code == null ||dfm.allat_card_code.value == "NS" || dfm.allat_card_code.value == "" ){
+         alert('결제하실 카드사를 선택하시기 바랍니다.');
+         dfm.allat_card_code.focus();
+         return;
+      }
+    }
+    dfm.allat_pay_type.value="3D";
+	}else if(app_type == "NOR"){
+		dfm.allat_pay_type.value='NOR';
+	}else if(app_type == "ABANK"){
+		dfm.allat_pay_type.value='ABANK';
+	}else if(app_type == "VBANK"){
+		dfm.allat_pay_type.value='VBANK';
+	}else if(app_type == "HP"){
+		dfm.allat_pay_type.value="HP";
+	}else{
+		alert("app_type Error"+app_type);
+		return;
+	}
+
+	ret=dopay_pro(dfm);               //Function 내부에서 submit을 하게 되어있음.
+
+	if( ret.substring(0,4)!="0000" && ret.substring(0,4)!="9999"){
+		// 오류 코드 : 0001~9998 의 오류에 대해서 적절한 처리를 해주시기 바랍니다.
+		alert(ret.substring(4,ret.length));     // Message 가져오기
+	}
+	if( ret.substring(0,4)=="9999" ){
+		// 오류 코드 : 9999 의 오류에 대해서 적절한 처리를 해주시기 바랍니다.
+		alert(ret.substring(8,ret.length));     // Message 가져오기
+	}
+}
+
+//-----결제창 선택 Script -------//
+function chk_app(what){
+	if(what == "ISP"){
+		//CARD_APP.style.display = "";
+		C3D.style.display = "none";
+		NOR_3D.style.display = "none";
+		ISP.style.display = "";
+		NOR.style.display = "none";
+		ISP_NOR.style.display = "none";	// 주민등록번호 임시로 히든 처리
+		//BANK_APP.style.display = "none";
+		//VBANK.style.display = "none";
+	}else if(what == "C3D"){
+		//CARD_APP.style.display = "";
+		C3D.style.display = "";
+		NOR_3D.style.display = "";
+		ISP.style.display = "none";
+		NOR.style.display = "none";
+		ISP_NOR.style.display = "none";
+		//BANK_APP.style.display = "none";
+		//VBANK.style.display = "none";
+	}else if(what == "NOR"){
+		//CARD_APP.style.display = "";
+		C3D.style.display = "none";
+		NOR_3D.style.display = "";
+		ISP.style.display = "none";
+		NOR.style.display = "";
+		ISP_NOR.style.display = "";
+		//BANK_APP.style.display = "none";
+		//VBANK.style.display = "none";
+	}else if(what == "ABANK"){
+		//CARD_APP.style.display = "none";
+		C3D.style.display = "none";
+		NOR_3D.style.display = "none";
+		ISP.style.display = "none";
+		NOR.style.display = "none";
+		ISP_NOR.style.display = "none";
+		//BANK_APP.style.display = "";
+		//VBANK.style.display = "none";
+	}else if(what == "VBANK"){
+		//CARD_APP.style.display = "none";
+		C3D.style.display = "none";
+		NOR_3D.style.display = "none";
+		ISP.style.display = "none";
+		NOR.style.display = "none";
+		ISP_NOR.style.display = "none";
+		//BANK_APP.style.display = "";
+		//VBANK.style.display = "";
+	}else if(what == "HP" ){
+        document.fm.allat_pay_type.value="HP"
+        //CARD_APP.style.display = "none";
+        C3D.style.display = "none";
+        NOR_3D.style.display = "none";
+        ISP.style.display = "none";
+        NOR.style.display = "none";
+        ISP_NOR.style.display = "none";
+        //BANK_APP.style.display = "none";
+        //BANK_OPT.style.display = "none";
+        //VBANK.style.display = "none";
+    }else{
+        return;
+    }
+}
+
+function vCardType(obj)
+{
+	var arr = new Array('ISP_NOR','obj_biz_no');
+	for (var i=0;i<arr.length;i++){
+		document.getElementById(arr[i]).style.display = (arr[i]==obj) ? "block" : "none";
+	}
+}
+
+// 플러그인 설치가 올바른지 확인
+function chkPgFlag(){
+	if (typeof(document.AllatPayRE.PayPlus) == 'undefined'){
+		alert ('삼성올앳 전자결제를 위한 플러그인 설치 후 다시 시도 하십시오.');
+		return false;
+	}
+	return true;
+}
+</script>
+
+<!------------- HTML : Form 설정 --------------//-->
+<form name="fm"  method=POST action="../order/card/allat/card_return.php"> <!--승인요청 및 결과수신페이지 지정 //-->
+<input type=hidden name=allat_shop_id value="{pg.id}">				<!-- 상점 ID -->
+<input type=hidden name=allat_order_no value="{ordno}">				<!-- 주문번호 -->
+<input type=hidden name=allat_amt value="{settleprice}">			<!-- 승인금액 -->
+<!-- 회원ID : 쇼핑몰의 회원ID (최대 20 bytes) -->
+<input type=hidden name=allat_pmember_id value="{?_sess.m_id}{_sess.m_id}{:email}{email}{:}guest{/}">
+<!-- 상품코드 : 여러상품의 경우 대표상품만 기록 (최대 50 bytes) -->
+<input type=hidden name=allat_product_cd value="{_ordgoodsno}">
+<!-- 상품명 : 여러상품의 경우 대표상품만 기록 (최대 100 bytes)-->
+<input type=hidden name=allat_product_nm value="{=_ordnm}">
+<input type=hidden name=allat_buyer_nm value="{nameOrder}">			<!-- 결제자성명 : (최대 20 bytes)-->
+<input type=hidden name=allat_pay_type value="">					<!-- 결제방법선택 -->
+<input type=hidden name=allat_enc_data value="">					<!-- 자동설정 (후에 암호화값 리턴받는 필드) -->
+<input type=hidden name=allat_recp_nm value="{nameReceiver}">		<!-- 수취인성명 -->
+<input type=hidden name=allat_recp_addr value="{address} {address_sub}">	<!-- 수취인주소 -->
+<input type=hidden name=allat_email_addr value="{email}">			<!-- 결제자 Email -->
+<input type=hidden name=allat_test_yn value="N">					<!-- 테스트 여부 : 테스트(Y),서비스(N) -->
+<input type=hidden name=allat_real_yn value="{pg.real}">			<!-- 상품 실물 여부 : 상품이 실물일 경우 (Y), 상품이 실물이 아닐경우 (N) -->
+<input type=hidden name=allat_escrow_yn value="{_POST.escrow}">		<!-- 상품 에스크로 여부 : 적용(Y),미적용(N)-->
+
+<!-- 암호화 필드 -->
+<input type=hidden name=allat_opt_pin value="NOVIEW">				<!-- 고정값 NOVIEW : 올앳참조필드 -->
+<input type=hidden name=allat_opt_mod value="WEB">					<!-- 고정값 WEB : 올앳참조필드 -->
+<!-- 카드 결제시 필수 필드, 계좌 이체시에는 사용하지 않음 -->
+<input type=hidden name=allat_zerofee_yn value="{pg.zerofee}">		<!-- 일반/무이자 할부 사용여부 : 일반(N), 무이자 할부(Y) -->
+<input type=hidden name=KVP_QUOTA value="">							<!-- 할부개월값 : 자동설정 -->
+<input type=hidden name=allat_bonus_yn value="{pg.bonus}">			<!-- 보너스포인트 사용 여부 : 사용(Y), 사용 않음(N) - Default : N -->
+<input type=hidden name=allat_cardcert_yn value="{pg.cert}">		<!-- 카드 인증 여부 :  : 인증(Y), 인증 사용않음(N), 인증만 사용(X) -->
+
+
+<!--{ ? settlekind == "c" }--><!--신용카드-->
+<table>
+<tr><td>
+	<input type=radio name="chkapp" value="ISP" onclick="javascript:chk_app('ISP')" checked> <b>ISP 결제</b>
+</td></tr>
+<tr><td>
+	<input type=radio name="chkapp" value="C3D" onclick="javascript:chk_app('C3D')"> <b>안심클릭</b>
+	<div class=card_sub id="c3d_card"></div>
+	<script language=Javascript>view_c3d_card("c3d_card")</script>
+</td></tr>
+</table>
+
+
+<div id="ISP" style="display:none">
+<input type=hidden name=KVP_OACERT_INF value='NONE'><!-- KVP 공인인증서 적용 최소 금액(30만원 이하 적용시 사용) -->
+</div>
+
+<table cellpadding=0 cellspacing=0>
+<tr>
+	<td id="C3D" style="padding-top:10px;display:none">
+
+	<table cellpadding=0 cellspacing=0>
+	<col class=allat_cell_1><col class=allat_cell_2>
+	<tr>
+		<td>카드선택</td>
+		<td>
+		<select name="allat_card_code" id="oSelectCard">
+    	<option value="NS">카드를 선택하세요</option>
+		</select>
+    <script language=Javascript>use_select_card("oSelectCard")</script>
+		</td>
+	</tr>
+	</table>
+
+	</td>
+</tr>
+<tr>
+	<td id="NOR" style="padding-top:10px;display:none">
+
+	<table cellpadding=0 cellspacing=0>
+	<col class=allat_cell_1><col class=allat_cell_2>
+	<tr>
+		<td>카드 번호</td>
+		<td><input type=text name="allat_card_no" value="" size=26 maxlength=20 class=line> <span class="card_sub" style="padding-left:5px">카드번호 16자리</span></td>
+	</tr>
+	<tr>
+		<td>카드 유효기간</td>
+		<td><input type=text name="allat_cardvalid_ym" value="" size=26 maxlength=6 class=line> <span class="card_sub" style="padding-left:5px">YYMM ( 예: 2007년 10월 ==> 0710 )</span></td>
+	</tr>
+	<tr>
+		<td>카드 비밀번호</td>
+		<td><input type=text name="allat_passwd_no" value="" size=26 maxlength=4 class=line> <span class="card_sub" style="padding-left:5px">Y2자리 ( 0815 ==> 08 )</span></td>
+	</tr>
+	<tr>
+		<td>결제자 카드종류</td>
+		<td>
+		<input type="radio" name="business_no" value="0" checked onclick="vCardType('ISP_NOR')"> 개인
+		<input type="radio" name="business_no" value="1" onclick="vCardType('obj_biz_no')"> 법인
+		<input type=hidden name=allat_business_type value="">
+		</td>
+	</tr>
+	<tr style="display:none" id=obj_biz_no>
+		<td>사업자번호</td>
+		<td><input type=text name="allat_biz_no" value="" size=26 maxlength=20 class=line></td>
+	</tr>
+	</table>
+
+	</td>
+</tr>
+<tr>
+	<td id="ISP_NOR" style="display:none">
+
+	<table cellpadding=0 cellspacing=0>
+	<col class=allat_cell_1><col class=allat_cell_2>
+	<tr>
+		<td>주민번호</td>
+		<td>
+		XXXXXX - <input type=text name="allat_registry_no" value="" size=10 maxlength=7 class=line>
+		<span class=card_sub style="padding-left:5px">(주민번호 뒷자리 7자리)</span>
+		</td>
+	</tr>
+	</table>
+
+	</td>
+</tr>
+<tr>
+	<td id="NOR_3D" style="display:none">
+
+	<table cellpadding=0 cellspacing=0>
+	<col class=allat_cell_1><col class=allat_cell_2>
+	<tr>
+		<td>할부개월값</td>
+		<td>
+		<select name="allat_sell_mm">
+		<!--{ @ explode(":",pg.quota) }-->
+		<option value="{.value_}"><!--{ ? .value_ }-->{.value_}개월<!--{ : }-->일시불<!--{ / }-->
+		<!--{ / }-->
+		</select> <span class=card_sub style="padding-left:5px">(할부는 5만원 이상 가능)</span>
+		</td>
+	</tr>
+	</table>
+
+	</td>
+</tr>
+</table>
+
+<!--{ : settlekind == "o" }--><!--계좌이체-->
+<input type=radio name=chkapp value="" style="display:none">
+<input type=radio name=chkapp value="ABANK" checked style="display:none">
+<input type=hidden name=allat_tax_yn value="Y"><!-- 과세여부 : Y(과세), N(비과세) -->
+<table width=100%>
+<tr><td height=2></td></tr>
+<tr>
+	<td style="background:#f7f7f7;border:1 solid #cccccc;padding:5px 10px;">
+
+	<div id="ABANK">
+	<input type=hidden name="chkapp" value="ABANK">
+	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr>
+		<td width="100" height="26">예금주명</td>
+		<td><input type="text" name="allat_account_nm" value="" maxlength="30" class="line"></td>
+	</tr>
+	<!--{ ? pg.receipt == "Y" }--><!--현금영수증 신청 여부-->
+	<tr>
+		<td height="26">현금영수증 등록</td>
+		<td>
+		<input type="radio" name="allat_cash" value="Y" onclick="javascript:document.fm.allat_cash_yn.value='Y';" checked> 등록
+		<input type="radio" name="allat_cash" value="N" onclick="javascript:document.fm.allat_cash_yn.value='N';"> 미등록
+		<input type=hidden name=allat_cash_yn value="Y">
+		</td>
+	</tr>
+	<!--{ : }-->
+	<input type=hidden name=allat_cash_yn value="N">
+	<!--{ / }-->
+	<tr>
+		<td height="26">인증정보</td>
+		<td>
+		<input type="text" name="allat_cert_no" value="" maxlength="13" class="line">
+		<div class=stxt style="padding-top:3px">핸드폰번호 OR 주민번호 OR 사업자번호 ("-"없이 숫자만 입력)</div>
+		</td>
+	</tr>
+	</table>
+	</div>
+
+	</td>
+</tr>
+</table>
+
+<!--{ : settlekind == "v" }--><!--가상계좌-->
+<input type=radio name=chkapp value="" style="display:none">
+<input type=radio name=chkapp value="VBANK" checked style="display:none">
+
+<input type=hidden name="allat_account_nm" value="{_cfg.shopName}" size=19 maxlength=30>
+<input type=hidden name="allat_cash_yn" value="{?settleprice>=5000}y{:}n{/}" size=19 maxlength=1>
+<input type=hidden name="allat_cert_no" value="{=implode('',mobileOrder)}" size=19 maxlength=20>
+<input type=hidden name="allat_reg_business_no" value="" size=19 maxlength=10>
+
+<table width=100%>
+<tr><td height=2></td></tr>
+<tr>
+	<td style="background:#f7f7f7;border:1 solid #cccccc;padding:5px 10px;">
+
+	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr>
+		<td width="100" height="26">은행선택</td>
+		<td>
+		<select name="allat_vbank_cd" id="oSelect">
+		<option value="NS">은행선택</option>
+		</select><script language=Javascript>use_select_box("oSelect")</script>
+		</td>
+	</tr>
+	<tr>
+		<td>입금예정일</td>
+		<td><input type=text name="allat_income_expect_ymd" value="" size=26 maxlength=8 class="line">
+		<div class=stxt style="padding-top:3px">2007년 5월 10일 경우 입력형식 <font class=small>ex) 20070510</div>
+		</td>
+	</tr>
+	<tr><td height=5 colspan=5></td></tr>
+	<tr>
+		<td>All@Pay<br>인증 Key</td>
+		<td><input type=text name="allat_account_key" value="" size=26 maxlength=20 class="line"> <font class=stxt>인증키입력하세요.</font>
+		<div style="padding-top:3px"><font class=stxt>- All@Pay의 가상계좌를 <font color=EA0095>처음 사용하는 경우</font>는 인증키 입력을 <font color=EA0095>안해도 됩니다.</font><br>
+- All@Pay의 가상계좌 <font color=EA0095>사용경험이 있으면</font> 메일로 받았던 <font color=EA0095>인증키를 입력</font>하세요. 이전의 가상계좌와 동일한 가상계좌를 이용하실 수 있습니다.<br>
+  </font>※<font class=stxt>인증키란? 가상계좌 결제시 동일한 가상계좌를 사용할 수 있도록 All@Pay에서 제공하는 편리한 기능입니다.</font></div></td>
+	</tr>
+	</table>
+
+	</td>
+</tr>
+</table>
+
+<!--{ : settlekind == "h" }--><!--핸드폰-->
+<input type=radio name=chkapp value="" style="display:none">
+<input type=radio name=chkapp value="HP" checked style="display:none">
+<!--{ / }-->
+
+<!--{ ? _POST.escrow == "Y" }-->
+<table width=100%>
+<tr>
+	<td style="background:#f7f7f7;border:1 solid #cccccc;padding:5px 10px;">
+
+	<table width="100%" cellspacing="0" cellpadding="0">
+	<tr>
+		<td colspan="2" height="30">
+			<span onclick="popup('./card/allat/allat_escrow_agreement.php',500,500)" style="text-decoration:underline; cursor:pointer; color:#F3774E;">에스크로 서비스 이용약관</span>
+			&nbsp; 동의 <input type="checkbox" name="escrow_apply" value="y">
+		</td>
+	</tr>
+	<tr>
+		<td width="100" height="26">에스크로<br>인증번호</td>
+		<td>
+		<input type="text" name="allat_escrow_no" value="" maxlength="10" class="line">
+		<div class=stxt style="padding-top:3px">에스크로 확인시에 사용함 (4~10자리 숫자,영문허용)</div>
+		</td>
+	</tr>
+	</table>
+
+	</td>
+</tr>
+</table>
+<!--{ / }-->
+
+</form>
+<script language=Javascript>initCheckOB();</script>

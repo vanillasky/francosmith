@@ -1,0 +1,144 @@
+{*** 상품문의 메인 | goods/goods_qna.php ***}
+{ # header }
+<script id="qna_chk"></script>
+<script type="text/javascript">
+function dynamicScript(url) {
+	var script = document.createElement("script");
+	script.type = "text/javascript";
+
+	script.onload = script.onreadystatechange = function() {
+		if(!script.readyState || script.readyState == "loaded" || script.readyState == "complete"){
+			script.onload = script.onreadystatechange = null;
+		}
+	}
+
+	script.src = url;
+	document.getElementsByTagName("head")[0].appendChild(script);
+}
+function popup_register( mode, goodsno, sno )
+{
+<!--{ ? empty(_cfg['qnaWriteAuth']) && !_sess // 회원전용 & 로그인전 }-->
+	alert( "회원전용입니다." );
+<!--{ : }-->
+	if ( mode == 'del_qna' ) var win = window.open("goods_qna_del.php?mode=" + mode + "&sno=" + sno,"qna_register","width=400,height=200");
+	else var win = window.open("goods_qna_register.php?mode=" + mode + "&goodsno=" + goodsno + "&sno=" + sno,"qna_register","width=650,height=752,scrollbars=yes");
+	win.focus();
+<!--{ / }-->
+}
+
+function popup_pass(sno){
+	var win = window.open("goods_qna_pass.php?sno=" + sno,"qna_register","width=400,height=200");
+}
+
+function view_content(sno)
+{
+	var obj = document.getElementById('content_id_'+sno);
+	if(obj.style.display == "none"){
+		dynamicScript("./goods_qna_chk.php?mode=view&sno="+sno);
+	}else{
+		obj.style.display = "none";
+	}
+}
+
+</script>
+<!-- 상단이미지 || 현재위치 -->
+<TABLE width=100% cellpadding=0 cellspacing=0 border=0>
+<tr>
+	<td><img src="../img/common/title_qna.gif" border=0></td>
+</tr>
+<TR>
+	<td class="path">HOME > <B>상품Q&A</B></td>
+</TR>
+</TABLE>
+
+
+<div class="indiv"><!-- Start indiv -->
+
+<form name=frmList>
+<input type=hidden name=page_num value="{_GET['page_num']}">
+
+<!-- 검색 : Start -->
+<div style="border:1px solid #DEDEDE;" class="hundred">
+<table width=100% cellpadding=10 cellspacing=0 border=0>
+<tr>
+	<td style="border:5px solid #F3F3F3;">
+	<table cellpadding="0" cellspacing="0" border="0">
+	<tr>
+		<td><img src="../img/common/search.gif" border=0></td>
+		<td style="padding-left:10">
+		<table cellpadding="2" cellspacing="0" border="0">
+		<tr>
+			<td class=input_txt>상품분류</td>
+			<td>
+			<div id=dynamic></div>
+			<script src="../../../../lib/js/categoryBox.js"></script>
+			<script>new categoryBox('cate[]',{=cateStep()},'{_category}','','frmList');</script>
+			</td>
+		</tr>
+		<tr>
+			<td class=input_txt>검색어</td>
+			<td><select name="skey" class=select>
+			<option value="all" {_selected.skey['all']}> 통합검색 </option>
+			<option value="subject" {_selected.skey['subject']}> 제목 </option>
+			<option value="contents" {_selected.skey['contents']}> 문의 </option>
+			<option value="m_id" {_selected.skey['m_id']}> 작성자 </option>
+			<option value="goodnm" {_selected.skey['goodnm']}> 상품명 </option>
+			</select><input type="text" NAME="sword" value="{_GET['sword']}" size=47 class="linebg"><input type="image" src="../img/common/btn_search.gif" align=absmiddle>
+			</td>
+		</tr>
+		</table>
+		</td>
+	</tr>
+	</table>
+	</td>
+</tr>
+</table>
+</div>
+<!-- 검색 : End -->
+
+<div style="float:right; padding-top:15">
+<select onchange="this.form.page_num.value=this.value;this.form.submit()" style="font:8pt 돋움"><!--{ @ lstcfg.page_num }--><option value="{.value_}" {_selected.page_num[.value_]}>{.value_}개씩 정렬<!--{ / }--></select>
+</div>
+
+<table width="100%" border="0" cellspacing="0" cellpadding="5" style="clear:both;margin-top:5px;border-top-style:solid;border-top-color:#303030;border-top-width:2;border-bottom-style:solid;border-bottom-color:#D6D6D6;border-bottom-width:1;">
+<tr height="23" bgcolor="#F0F0F0" class=input_txt>
+	<th width=50>번호</th>
+	<th width=60>이미지</th>
+	<th>상품명/제목</th>
+	<th width=80>작성자</th>
+	<th width=80>작성일</th>
+</tr>
+</table>
+
+<!--{ @ _loop }-->
+<div>
+<table width="100%" cellpadding="0" cellspacing="0" style="border-bottom-style:solid;border-bottom-color:#E6E6E6;border-bottom-width:1;">
+<tr height="55" onmouseover="this.style.background='#F7F7F7'" onmouseout="this.style.background=''">
+	<td width="50" align="center">{.idx}</td>
+	<td width=60 align="center"><!--{ ? .goodsno && .type == 'Q' }--><a href="goods_view.php?goodsno={.goodsno}">{=goodsimg(.img_s,lstcfg.size)}</a><!--{ / }--></td>
+	<!--{ ? .type == 'Q' }-->
+	<td style="padding-left:0px;cursor:pointer;" onclick="view_content('{.sno}')"><div style="background-image: url(../img/common/ico_q.gif); background-repeat:no-repeat;background-position:left 3px;padding:3px 0px 0px 20px;">{.subject}<!--{ ? .secretIcon }-->&nbsp;<img src="../img/common/icn_secret.gif" align=absmiddle><!--{ / }--></div></td>
+	<!--{ : .type == 'A' }-->
+	<td style="padding-left:5px;cursor:pointer;" onclick="view_content('{.sno}')"><div style="background-image: url(../img/common/ico_a.gif); background-repeat:no-repeat;background-position:left 3px;padding:3px 0px 0px 27px;"> {.subject}<!--{ ? .secretIcon }-->&nbsp;<img src="../img/common/icn_secret.gif" align=absmiddle><!--{ / }--></div></td>
+	<!--{ : .type == 'N' }-->
+	<td style="padding-left:5px;cursor:pointer;" onclick="view_content('{.sno}')">{.subject}<!--{ ? .secretIcon }-->&nbsp;<img src="../img/common/icn_secret.gif" align=absmiddle><!--{ / }--></div></td>
+	<!--{ / }-->
+	<td width="80">{ ? .name }{.name}{ : .m_name }{.m_name}{ : }{.m_id}{ / }</td>
+	<td width="80">{=substr(.regdt,0,10)}</td>
+</tr>
+</table>
+</div>
+<div id="content_id_{.sno}" style="display:none"></div>
+<!--{ / }-->
+
+<div class="pagediv">{pg->page['navi']}</div>
+
+</form>
+
+<div style="float:right;padding:10px 5px">
+<a href="javascript:;" onclick="popup_register( 'add_qna', '' )"><img src="../img/common/btn_qna.gif"></a>
+</div>
+
+</div><!-- End indiv -->
+
+{ # footer }

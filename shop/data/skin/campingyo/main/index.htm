@@ -1,0 +1,165 @@
+{*** 쇼핑몰 메인본문 | index.php ***}
+{ # header }
+
+<!-- 메인팝업창 -->
+<!--{ @ dataPopup() }-->
+
+<!--{ ? .type == 'layer' && isset(_COOKIE['blnCookie_' + .code]) === false }-->
+<div id="{'blnCookie_' + .code}" STYLE="position:absolute; width:{.width}px; height:{.height}px; left:{.left}px; top:{.top}px; z-index:200;">
+<!--{ = eval("\$_GET[code]='blnCookie_" + .code + "';") }-->
+<!--{ = include_file( .file ) }-->
+</div>
+<!--{ / }-->
+
+<!--{ ? .type == 'layerMove' && isset(_COOKIE['blnCookie_' + .code]) === false }-->
+<!-- 이동레이어 팝업창 시작 -->
+<div id="{'blnCookie_' + .code}" STYLE="position:absolute; width:{.width}px; height:{.height}px; left:{.left}px; top:{.top}px; z-index:200;">
+<div onmousedown="Start_move(event,'{'blnCookie_' + .code}');" onmouseup="Moveing_stop();" style='cursor:move;'>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td>
+<!--{ = eval("\$_GET[code]='blnCookie_" + .code + "';") }-->
+<!--{ = include_file( .file ) }-->
+</td>
+</tr>
+</table>
+</div>
+</div>
+<!-- 이동레이어 팝업창 끝 -->
+<!--{ / }-->
+
+<!--{ / }-->
+
+<script language="JavaScript"><!--
+<!--{ @ dataPopup() }-->
+<!--{ ? .type == '' }-->
+if ( !getCookie( "blnCookie_{.code}" ) ) { // {.name} 팝업호출
+var property = 'width={.width}, height={.height}, top={.top}, left={.left}, scrollbars=no, toolbar=no';
+var win=window.open( './html.php?htmid={.file}&code=blnCookie_{.code}', '{.code}', property );
+if(win) win.focus();
+}
+<!--{ / }-->
+<!--{ / }-->
+//--></script>
+
+<table border="0" cellpadding="0" cellspacing="0">
+<tr>
+	<td valign="top">
+		<table width="340" border="0" cellpadding="0" cellspacing="0" style="font-size:11px; color:#666;">
+			<tr>
+				<td style="padding-left:20px;" height="43"><img src="../img/main/txt_notice.gif"></td>
+				<!--{ @ dataBoardArticle( 'notice', 1 ) }-->
+				<td style="padding-top:0px;"><a href="../board/view.php?id={.id}&no={.no}" style="color:#666"><b>{=strcut(.subject,40)}</b></a></td>
+				<td width="39" align="right" style="padding-top:2px;"><a href="../board/list.php?id={.id}"><img src="../img/main/btn_more.gif"></a></td>
+				<!--{ / }-->
+			</tr>
+		</table>
+	</td>
+	<td width="20" align="center"><img src="../img/main/line_dot.gif"></td>
+	<td valign="top" style="border-right:solid 1px #ccc;">
+		<table width="340" border="0" cellpadding="0" cellspacing="0" style="font-size:11px; color:#666;">
+			<tr>
+				<td align="left" height="43"><img src="../img/main/txt_event.gif"></td>
+				<!-- 이벤트 게시판 생성 후 notice 를 생성 게시판 아이디를 입력하세요 -->
+				<!--{ @ dataBoardArticle( 'event', 1 ) }-->
+				<td style="padding-top:0px;"><a href="../board/view.php?id={.id}&no={.no}" style="color:#666"><b>{=strcut(.subject,40)}</b></a></td>
+				<td width="39" align="right" style="padding-top:2px;padding-right:10px;"><a href="../board/list.php?id={.id}"><img src="../img/main/btn_more.gif"></a></td>
+				<!--{ / }-->
+			</tr>
+		</table>
+	</td>
+</tr>
+<tr>
+	<td colspan="3">
+	<!-- 메인 비쥬얼 썸네일 시작 -->
+	<div id="main_banner" style="position:relative;display:none;background:url(../img/main/main_green_space.png)">
+		<!-- <div><a href="/shop/member/join.php?&"><img src="/shop/data/images/rolling_baner_cupon.jpg"></a></div> -->
+		<div><a href="/shop/goods/goods_brand.php?brand=18"><img src="/shop/data/images/lie-nielsen/rolling_baner_lienielsen.jpg"></a></div>
+		<div><a href="/shop/goods/goods_brand.php?brand=17"><img src="/shop/data/images/rolling_baner_chattapencil.jpg"></a></div>
+		<div><a href="/shop/goods/goods_list.php?&category=001"><img src="/shop/data/images/rolling_baner_gorilla.jpg"></a></div>
+		<div><a href="/shop/goods/goods_brand.php?brand=2"><img src="/shop/data/images/rolling_baner_microjig.jpg"></a></div>
+		<div><a href="/shop/goods/goods_brand.php?brand=3"><img src="/shop/data/images/rolling_baner_dmt.jpg"></a></div>
+	</div>
+	
+	<script src="../../../../lib/js/ierotator.js" type="text/javascript"></script>
+	<style>
+		#main_banner ul {top:200px !important; left:-10px !important;}
+		#main_banner ul li {padding-left:6px;}
+	</style>
+	<script>
+	var config = {
+		'id':'main_banner',
+		'effect':'FILTER: progid:DXImageTransform.Microsoft.Fade(Overlap=0.25,Duration=0.7)',
+		'width':700,
+		'height':200,
+		'wait':3000,
+		'numDisplay':'block',
+		'numimg':[
+			
+			['../img/main/main_rolling_on.png','../img/main/main_rolling_off.png'],
+			['../img/main/main_rolling_on.png','../img/main/main_rolling_off.png'],
+			['../img/main/main_rolling_on.png','../img/main/main_rolling_off.png'],
+			['../img/main/main_rolling_on.png','../img/main/main_rolling_off.png'],
+			['../img/main/main_rolling_on.png','../img/main/main_rolling_off.png'],
+			['../img/main/main_rolling_on.png','../img/main/main_rolling_off.png'],
+			['../img/main/main_rolling_on.png','../img/main/main_rolling_off.png'],
+			['../img/main/main_rolling_on.png','../img/main/main_rolling_off.png'],
+			['../img/main/main_rolling_on.png','../img/main/main_rolling_off.png'] 
+		]
+	}
+	ier = new ierotator(config);
+	</script>
+	<!-- 메인 비쥬얼 썸네일 끝 -->
+	</td>
+</tr>
+
+</table>
+<!-- 아래 상품리스트에 쓰이는 세부소스는 '디자인관리 > 상품(goods) > 상품목록 > 갤러리형,리스트형,리스트그룹형,상품이동형' 에 있습니다  -->
+
+<div style="width:678px;padding-left:20px;">
+<div style="width:678px;">
+<!-- 상품 리스트 #1 -->
+<!--{ ? _cfg_step[0].chk  }-->
+<div style="float:left;"><a href="../goods/goods_grp_01.php"><img src="/shop/data/images/new_arrivals.jpg"></a></div>
+<div style="float:left;padding-top:31px;"><hr style="width:400px"></div>
+<div align="right" style="padding-top:30px; padding-right:20px;"><a href="../goods/goods_grp_01.php"><img src="../img/main/btn_more.gif"></a></div>
+<div style="clear: both;"></div>
+<!--{ = this->assign( 'loop', dataDisplayGoods( 0, _cfg_step[0].img, _cfg_step[0].page_num ) ) // 데이타 호출 }-->
+<!--{ = this->assign( 'cols', _cfg_step[0].cols ) // 행당 컬럼수 }-->
+<!--{ = this->assign( 'size', _cfg[_cfg_step[0].img] ) // 이미지 사이즈 }-->
+<!--{ = this->assign( 'id', "main_list_01" ) // 고유 ID }-->
+<!--{ = this->assign( 'dpCfg', _cfg_step[0] ) // 설정 }-->
+<!--{ = include_file( "goods/list/" + _cfg_step[0].tpl + ".htm" ) }-->
+<!--{ / }-->
+
+<!-- 상품 리스트 #2 -->
+<!--{ ? _cfg_step[1].chk  }-->
+<div style="float:left;"><a href="../goods/goods_grp_02.php"><img src="/shop/data/images/best_products.jpg"></a></div>
+<div style="float:left;padding-top:31px;"><hr style="width:400px"></div>
+<div align="right" style="padding-top:30px; padding-right:20px;"><a href="../goods/goods_grp_02.php"><img src="../img/main/btn_more.gif"></a></div>
+<div style="clear: both;"></div>
+<!--{ = this->assign( 'loop', dataDisplayGoods( 1, _cfg_step[1].img, _cfg_step[1].page_num ) ) // 데이타 호출 }-->
+<!--{ = this->assign( 'cols', _cfg_step[1].cols ) // 행당 컬럼수 }-->
+<!--{ = this->assign( 'size', _cfg[_cfg_step[1].img] ) // 이미지 사이즈 }-->
+<!--{ = this->assign( 'id', "main_list_02" ) // 고유 ID }-->
+<!--{ = this->assign( 'dpCfg', _cfg_step[1] ) // 설정 }-->
+<!--{ = include_file( "goods/list/" + _cfg_step[1].tpl + ".htm" ) }-->
+<!--{ / }-->
+
+<!-- 상품 리스트 #3 -->
+<!--{ ? _cfg_step[2].chk  }-->
+<div style="float:left;"><a href="../goods/goods_grp_03.php"><img src="/shop/data/images/special_prices.jpg"></a></div>
+<div style="float:left;padding-top:31px;"><hr style="width:400px"></div>
+<div align="right" style="padding-top:30px; padding-right:20px;"><a href="../goods/goods_grp_03.php"><img src="../img/main/btn_more.gif"></a></div>
+<div style="clear: both;"></div>
+<!--{ = this->assign( 'loop', dataDisplayGoods( 2, _cfg_step[2].img, _cfg_step[2].page_num ) ) // 데이타 호출 }-->
+<!--{ = this->assign( 'cols', _cfg_step[2].cols ) // 행당 컬럼수 }-->
+<!--{ = this->assign( 'size', _cfg[_cfg_step[2].img] ) // 이미지 사이즈 }-->
+<!--{ = this->assign( 'id', "main_list_03" ) // 고유 ID }-->
+<!--{ = this->assign( 'dpCfg', _cfg_step[2] ) // 설정 }-->
+<!--{ = include_file( "goods/list/" + _cfg_step[2].tpl + ".htm" ) }-->
+<!--{ / }-->	
+
+</div>
+</div>
+{ # footer }

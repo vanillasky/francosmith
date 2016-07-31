@@ -1,0 +1,88 @@
+{*** 결제하기(무통장) | shopTouch_ord/settle.php ***}
+{ # header }
+
+<?php {page_title} = "결제하기";?>
+{#sub_header}
+
+<section id="settle" style="height:100%;">
+<input type="text" name="top_show" style="height:0px;width:0px;border:none;"/>
+<form name="frmSettle" method=post action="indb.php" target="ifrmHidden">
+
+<!--{ @ _POST }-->
+<!--{ ? is_array(.value_) }-->
+	<!--{ @ .value_ }-->
+	<input type=hidden name="{.key_}[]" value="{..value_}">
+	<!--{ / }-->
+<!--{ : }-->
+	<input type=hidden name="{.key_}" value="{.value_}">
+<!--{ / }-->
+<!--{ / }-->
+
+<!-- 무통장입금 -->
+<!--{ ? settlekind=="a" }-->
+
+<fieldset id="orderbox">
+<legend>입금계좌선택</legend>
+	<dl>
+		<dt>입금계좌선택</dt>
+		<dd>
+			<select name="bankAccount" required label="입금계좌">
+				<option value="">== 입금계좌를 선택해주세요 ==
+				<!--{ @ _bank }-->
+				<option value="{.sno}">{.bank} {.account} {.name}
+				<!--{ / }-->
+			</select>
+		</dd>
+		<dt>입금자명</dt>
+		<dd><input type=text name="bankSender" value="{nameOrder}" required  label="입금자명"></dd>
+		<dt>입금금액</dt>
+		<dd>{=number_format(settleprice)}원</dd>
+	</dl>
+</fieldset>
+
+<div  id="avoidDblPay" class="btn center">
+	<span class="button-red-left"><span class="button-red-right"><button type="button" onclick="submitSettleForm();" >결제하기</button></span></span>
+	<span class="button-gray-left"><span class="button-gray-right"><button onclick="history.back();">취소하기</button></span></span>
+</div>
+
+
+<!--{ / }-->
+</form>
+</section>
+
+<!--{ ? settlekind!="a" }-->
+{card_gate}
+
+<script>
+	$(document).ready(function(){
+		var fm = document.frmSettle; fm.submit();
+	});
+</script>
+<!--{ / }-->
+
+<script>
+function swapSettleButton(){
+	if (document.getElementById('avoidDblPay')) document.getElementById('avoidDblPay').innerHTML = '<ul>\
+		<li><button type="button" class="submit" onclick="submitSettleForm()"><span class="hidden">결제하기</span></button></li>\
+		<li><button class="cancel" onclick="history.back();"><span class="hidden">취소하기</span></button></li>\
+	</ul>';
+}
+function submitSettleForm()
+{
+	var fm = document.frmSettle;
+
+	if (!chkForm(fm)) return;
+
+	/*** 주문필수정보 체크 ***/
+	if (!fm.nameOrder.value) return;
+	if (!fm.ordno.value) return;
+
+	if (document.getElementById('avoidDblPay')) document.getElementById('avoidDblPay').innerHTML = "--- 현재 결제처리중입니다. 잠시만 기다려주세요. ---<br><a href='javascript:swapSettleButton();'><img src='../common/img/btn_cancel.gif'></a>";
+
+	fm.submit();
+}
+
+document.getElementsByName("top_show")[0].focus();	// 화면을 맨 위로 보내기 위한 꼼수 2012-01-31 dn 
+</script>
+
+{ # footer }

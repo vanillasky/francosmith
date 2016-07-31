@@ -1,0 +1,121 @@
+ {*** 장바구니 상품목록 | goods/goods_estimate.php ***}
+<style type = "text/css">
+table {border-collapse:collapse; border:3px solid gray; border-spacing:0px;}
+th,td {border:1px solid gray;}
+.common {font: 12pt Dodum; color: #464646;}
+.left {font: 12pt Dodum; color: #464646; text-align:left; padding-left:10px;}
+.bold {font:bold 12pt Dodum; color: #464646;}
+.title {font: bold 24pt Dodum; color: #464646; padding-bottom:10px; padding-top:10px;}
+.name {font: bold 16pt Dodum; color: #464646; text-align:right;}
+.number {font: 12pt Dodum; color: #464646; text-align:right; padding-right:10px;}
+.print-btn {font: 14pt Dodum; color: #FFFFFF; width:106px; height:33px; background:#464646; line-height:33px; cursor:pointer; display:inline-block;}
+.close-btn {font: 14pt Dodum; color: #464646; width:106px; height:33px; background:#BDBDBD; line-height:33px; cursor:pointer; display:inline-block;}
+@media print {
+	#button {display: none;}
+	#input {border:none;}
+	#etc {display: none;}
+}
+</style>
+
+
+<div id="title" align="center" class="title">견 적 서</div>
+<table id="contents" align="center" width="904px" cellspacing="0"cellpadding="0" style="background-position : 620px 0px; background-image : url(../<!--{ cartCfg.estimateSeal }-->); background-repeat: no-repeat;">
+	<tr align="center">
+		<td rowspan=5 class="bold" width="40px;" height="160px;">공<br>급<br>자</td>
+		<th class="bold" height="30px;">사업자 등록번호</th>
+		<td class="left" colspan=4><!--{ cfg.compSerial }--></td>
+
+		<td rowspan=5 colspan=2 width="200px;" style="border-left-width: 3px; border-right-width: 3px;">
+			<div class="common" style="text-decoration:underline"><b>일자: <? echo date("Y년 m월 d일"); ?> </b></div></br>
+			<input id="input" type='text' class="name" size="10" value={=memberName} >
+			<div class="common">아래와 같이 견적합니다.</div>
+		</td>
+	</tr>
+	<tr align="center" height="30px;">
+		<th class="bold">상 호</th>
+		<td class="left"><!--{ cfg.compName }--></td>
+		<th class="bold">대표자명</th>
+		<td class="left" colspan=2><!--{ cfg.ceoName }--></td>
+	</tr>
+	<tr align="center" height="30px;">
+		<th class="bold">사업장 소재지</th>
+		<!--{ ? !cfg.road_address }-->
+		<td colspan=4 class="left" style="padding-left:10px;">(<!--{ cfg.zipcode }-->) <!--{ cfg.address }--> </td>
+		<!--{:}-->
+		<td colspan=4 class="left" style="padding-left:10px;">(<!--{ cfg.zipcode }-->) <!--{ cfg.road_address }--> </td>
+		<!--{/}-->
+	</tr>
+	<tr align="center" height="30px;">
+		<th class="bold">업태</th>
+		<td class="left"><!--{ cfg.service }--></td>
+		<th class="bold">종목</th>
+		<td class="left" colspan=2><!--{ cfg.item }--></td>
+	</tr>
+	<tr align="center" height="30px;">
+		<th class="bold">전화</th>
+		<td class="left"><!--{ cfg.compPhone }--></td>
+		<th class="bold">팩스</th>
+		<td class="left" colspan=2><!--{ cfg.compFax }--></td>
+	</tr>
+	<tr align="center">
+		<th colspan=2 class="bold" height="47px;" style="border-top-width: 3px; border-bottom-width: 3px;">합계 금액<br>(공급가액+부가세)</th>
+		<td class="common" align="left" colspan=6 style="border-right-width: 3px; border-top-width: 3px; border-bottom-width: 3px; padding-left:10px;">일금 {=priceKor}원정 (\{=number_format(totalPrice)})</td>
+	</tr>
+	<tr align=center height="30px;" class="bold">
+		<th>순번</th>
+		<th colspan=3>품명</th>
+		<th width="40px;">수량</th>
+		<th width="100px;">단가</th>
+		<th width="100px;">공급가액</th>
+		<th width="100px;" style="border-right-width: 3px;">세액</td>
+	</tr>
+
+	<!--{ @item }-->
+	<tr align=center height="30px;">	
+		<td class="common">{.idxs}</td>
+		<td class="common" align="left" style="padding-left:10px;" colspan=3>{.goodsnm}<br>
+			<!--{ ? .opt }-->
+				선택옵션 : [{=implode("/",.opt)}]
+			<!--{ / }-->
+			<!--{ ? .select_addopt}-->
+				<!--{ ? .opt }--> , <!--{ / }-->
+				추가옵션 : <!--{ @ .select_addopt }-->[{..optnm}:{..opt}]<!--{ / }-->
+			<!--{ / }-->
+			<!--{ ? .input_addopt}-->
+				<!--{ ? .opt || .select_addopt }--> , <!--{ / }-->
+				입력옵션 : <!--{ @ .input_addopt }-->[{..optnm}:{..opt}]<!--{ / }-->
+			<!--{ / }-->
+		</td>
+		<td class="common" >{.ea}</td>
+		<!--{? .tax != '1' }-->
+		<td class="number">{=number_format(.price + .addprice)}</td>
+		<td class="number">{=number_format(.supply)}</td>
+		<td class="number" style="border-right-width: 3px;">0</td>
+		<!--{:}-->
+		<td class="number">{=number_format(.price + .addprice)}</td>
+		<td class="number">{=number_format(.supply)}</td>
+		<td class="number" style="border-right-width: 3px;">{=number_format(((.price + .addprice) *.ea) - .supply)}</td>
+		<!--{/}-->
+	</tr>
+	<!--{/}-->
+
+	<tr align=center> 
+		<th colspan=6 class="bold" height="30px;">소계</th>
+		<td class="number">{=number_format(totalSupplyPrice)}</td>
+		<td class="number" style="border-right-width: 3px;">{=number_format(totalPrice - totalSupplyPrice)} </td>
+	</tr>
+	<tr align=center height=60>
+		<th class="bold">비고</th>
+		<td colspan=8>{cartCfg.estimateMessage}--></td>
+	</tr>
+</table>
+
+<div id="button" align="center" style="padding-top:20px;">
+	<span class="print-btn" onclick="javascript:window.print();">인쇄</span>&nbsp;
+	<span class="close-btn" onclick="javascript:window.close();">닫기</span>
+</div>
+
+<div id="etc" class="common" align="left" style="padding-left:415px; padding-top:15px;">※ 견적서 인쇄시 직인(도장이미지)도 인쇄되려면 아래와 같이 설정되어 있어야 가능합니다.</div>
+<div id="etc" class="common" align="left" style="padding-left:430px;">1) 인터넷 익스플로러 : 브라우저의 [도구 메뉴]-[인터넷옵션]-[고급]-[인쇄] 에서 [배경색 및 이미지 인쇄] 체크</br>
+2) 파이어폭스 : 브라우저의 [파일]-[페이지 설정]-[용지 및 배경]-[설정]에서 [배경 인쇄(색상 및 이미지)] 체크</br>
+3) 크롬 : 인쇄 화면 좌측의 [옵션] 에서 [배경그래픽] 체크</div>

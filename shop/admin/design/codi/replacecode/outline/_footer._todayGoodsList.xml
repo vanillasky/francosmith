@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="EUC-KR"?>
+<codes>
+<list>
+	<code>{.goodsno}</code>
+	<desc>상품번호</desc>
+	<exam>38</exam>
+</list>
+<list>
+	<code>{.goodsnm}</code>
+	<desc>상품명</desc>
+	<exam>조깅 운동화</exam>
+</list>
+<list>
+	<code>{=goodsimg(.img,70)}</code>
+	<desc>리스트이미지 태그</desc>
+	<exam>&lt;img src="이미지경로" width=70 onerror="this.src='/~/noimg_100.gif'"&gt;</exam>
+</list>
+<list>
+	<code>{.price}</code>
+	<desc>판매가</desc>
+	<exam>28600</exam>
+</list>
+<list>
+	<code>{.index_}</code>
+	<desc>반복 인덱스 (0부터 시작, 반복할 때 1씩 증가)</desc>
+	<exam>0</exam>
+</list>
+<list>
+	<code>{.size_}</code>
+	<desc>반복 전체회수</desc>
+	<exam>20</exam>
+</list>
+</codes>

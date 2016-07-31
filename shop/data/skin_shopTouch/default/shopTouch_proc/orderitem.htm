@@ -1,0 +1,53 @@
+<div class="line"></div>
+<table>
+<!--{ @ cart->item }-->
+<tr>
+	<!--{ ? _orderitem_mode=="cart" }-->
+	<td class="oil_chkorder">
+		<input type=checkbox name=idx[] value="{.index_}" />
+	</td>
+	<!--{ / }-->
+	<td class="oil_goodsimg">{=goodsimgMobile(.img,100)}</td>
+	<td class="oil_goodsinfo">
+		<div class="oil_goodsnm">{=strcut(.goodsnm,100)}</div>
+		<!--{ ? .opt }--><div class="oil_goodsopt">[{=implode("/",.opt)}]</div><!--{ / }-->
+		<!--{ @ .addopt }--><div class="oil_goodsopt">[{..optnm}:{..opt}]</div><!--{ / }-->
+		<div class="oil_price">{=number_format(.price + .addprice)}원</div>
+		<!--{ ? .delivery_type }-->
+		<div class="oil_delivery">배송비 : 
+			<!--{ ? .delivery_type == 1 }-->
+			(무료배송)
+			<!--{ : .delivery_type == 2 && .goods_delivery }-->
+			(개별배송 : {=number_format(.goods_delivery)}원 )
+			<!--{ : .delivery_type == 3 && .goods_delivery }-->
+			(착불배송 : {=number_format(.goods_delivery)}원 )
+			<!--{ / }-->
+		</div>
+		<!--{ / }-->
+		<div class="oil_reserve">적립금 : {=number_format(.reserve)}원</div>
+		<div class="oil_ea">수량 : 
+			<!--{ ? _orderitem_mode=="cart" }--><input type=text name=ea[] size=2 value="{.ea}" class=line style="text-align:right;" onkeydown="onlynumber();">&nbsp;
+			<span class="button-black-left"><span class="button-black-right"><button type="button" onclick="frmCart.submit();">수정</button></span></span>
+			<!--{ : }-->
+			{.ea}개
+			<!--{ / }-->
+		</div>
+	</td>
+	<td class="oil_settleinfo">
+		<div class="oil_settleprice">합계 : {=number_format((.price + .addprice)*.ea)}원</div>
+	</td>
+</tr>
+<!--{ / }-->
+</table>
+<!--{ ? _orderitem_mode=="cart" }-->
+<div class="button">
+	<span class="button-arrow-left"><span class="button-arrow-right"><button type="button" onClick="chkBox('idx[]','rev');">전체선택</button></span></span>
+	<span class="button-arrow-left"><span class="button-arrow-right"><button type="button" onClick="act('delItem');">선택삭제</button></span></span>
+	<span class="button-arrow-left"><span class="button-arrow-right"><a href="cart.php?mode=empty" class="cartclear"><button type="button" >장바구니비우기</button></a></span></span>
+</div>
+<!--{ / }-->
+<div class="oil_item_total">
+	<div class="oil_price_total">상품 합계 금액 : {=number_format(cart->goodsprice)}원</div>
+	<div class="oil_reserve_total">(받으실 적립금 : {=number_format(cart->bonus)}원)</div>
+	<div class="clearb"></div>
+</div>

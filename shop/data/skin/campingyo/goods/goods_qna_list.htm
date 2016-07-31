@@ -1,0 +1,109 @@
+{*** 상품문의 목록 | goods/goods_view.php ***}
+<html>
+<head>
+<script src="../common.js"></script>
+<link rel="styleSheet" href="../style.css">
+<script id="qna_chk"></script>
+<script type="text/javascript">
+function dynamicScript(url) {
+	var script = document.createElement("script");
+	script.type = "text/javascript";
+
+	script.onload = script.onreadystatechange = function() {
+		if(!script.readyState || script.readyState == "loaded" || script.readyState == "complete"){
+			script.onload = script.onreadystatechange = null;
+		}
+	}
+
+	script.src = url;
+	document.getElementsByTagName("head")[0].appendChild(script);
+}
+
+function popup_register( mode, goodsno, sno )
+{
+<!--{ ? empty(_cfg['qnaWriteAuth']) && !_sess // 회원전용 & 로그인전 }-->
+	alert( "회원전용입니다." );
+<!--{ : }-->
+	if ( mode == 'del_qna' ) var win = window.open("goods_qna_del.php?mode=" + mode + "&sno=" + sno,"qna_register","width=400,height=200");
+	else var win = window.open("goods_qna_register.php?mode=" + mode + "&goodsno=" + goodsno + "&sno=" + sno,"qna_register","width=650,height=752,scrollbars=yes");
+	win.focus();
+<!--{ / }-->
+}
+
+var preContent;
+var IntervarId;
+
+function view_content(sno)
+{
+	var obj = document.getElementById('content_id_'+sno);
+	if(obj.style.display == "none"){
+		dynamicScript("./goods_qna_chk.php?mode=view&sno="+sno);
+	}else{
+		obj.style.display = "none";
+	}
+	preContent = obj;
+	IntervarId = setInterval( 'resizeFrame();', 100 );
+}
+
+function popup_pass(sno){
+	var win = window.open("goods_qna_pass.php?sno=" + sno,"qna_register","width=400,height=200");
+}
+
+function resizeFrame()
+{
+    var oBody = document.body;
+    var tb_contents = document.getElementById("contents-wrapper");
+    var i_height = tb_contents.offsetHeight;
+    if(i_height==0){
+    	i_height  = 100;
+    }   
+    parent.resizeFrameHeight('inqna',i_height);
+    if ( IntervarId ) clearInterval( IntervarId );
+
+	var i_width = tb_contents.offsetWidth;
+    if(i_width==0){
+    	i_width  = 100;
+    }   
+    parent.resizeFrameWidth('inqna',i_width);
+    if ( IntervarId ) clearInterval( IntervarId );
+}
+
+</script>
+</head>
+<body style="margin-top:10px" onload="setTimeout('resizeFrame()',1)">
+
+<div id="contents-wrapper">
+<table border=0 cellpadding=0 cellspacing=0>
+	<tr>
+		<TD style="background: URL(../img/common/bar_detail_04.gif) no-repeat;" nowrap width="163" height="24"></TD>
+		<TD style="background: URL(../img/common/bar_detail_04_bg.gif) repeat-x;" width='90%'></TD>
+		<TD style="background: URL(../img/common/bar_detail_04_right.gif) no-repeat;" nowrap width="10" height="24"></TD>
+	</tr>
+</table>
+<!--{ @ _loop }-->
+<div>
+<table width="100%" cellpadding="0" cellspacing="0" style="border-bottom-style:solid;border-bottom-color:#E6E6E6;border-bottom-width:1;cursor:pointer;">
+<tr height="25" onmouseover="this.style.background='#F7F7F7'" onmouseout="this.style.background=''" onclick="view_content('{.sno}');">
+	<td width="50" align="center">{.idx}</td>
+	<!--{ ? .type == 'Q' }-->
+	<td style="padding-left:0px"><div style="background-image: url(../img/common/ico_q.gif); background-repeat:no-repeat;background-position:left 3px;padding:3px 0px 0px 20px;">{.subject}<!--{ ? .secretIcon }-->&nbsp;<img src="../img/common/icn_secret.gif" align=absmiddle><!--{ / }--></div></td>
+	<!--{ : }-->
+	<td style="padding-left:5px"><div style="background-image: url(../img/common/ico_a.gif); background-repeat:no-repeat;background-position:left 3px;padding:3px 0px 0px 27px;"> {.subject}<!--{ ? .secretIcon }-->&nbsp;<img src="../img/common/icn_secret.gif" align=absmiddle><!--{ / }--></div></td>
+	<!--{ / }-->
+	<td width="80">{ ? .name }{.name}{ : .m_name }{.m_name}{ : }{.m_id}{ / }</td>
+	<td width="80">{=substr(.regdt,0,10)}</td>
+</tr>
+</table>
+</div>
+<div id="content_id_{.sno}" style="display:none"></div>
+<!--{ / }-->
+
+<div style="float:right;padding:10px 5px">
+<a href="./goods_qna.php" target="_parent"><img src="../img/common/info_btn_totalview.gif"></a>
+<a href="javascript:;" onclick="popup_register( 'add_qna', '{_goodsno}' )"><img src="../img/common/btn_qna.gif"></a>
+</div>
+
+<div style="clear:both;text-align:center;padding-bottom:15px;">{pg->page['navi']}</div>
+</div>
+</body>
+</html>

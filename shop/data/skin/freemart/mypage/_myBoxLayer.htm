@@ -1,0 +1,38 @@
+{*** 마이페이지 레이어 | main/html.php?htmid=mypage/_myBoxLayer.htm ***}
+
+<div id="MypageLayerBox" style="z-index:1000;position:absolute;border:1px solid #363636;background:#F6F6F6;width:187px;height:220px;display:none;text-align:center;">
+	<div style="float:right;">
+		<a href="javascript:void(0);" onClick="document.getElementById('MypageLayerBox').style.display='none';"><img src="../img/main/close.gif"></a>
+	</div>
+
+	<div style="clear:both;font-size:11px;margin:5px 0 3px 0;letter-spacing:-1px;">
+	{_member.name} 님은 <!--{ ? _sess.grpnm_disp_type == 'icon' }--><img src="../data/member/icon/{_sess.grpnm_icon}" align="absbottom"><!--{ / }--> <font style="font-weight:bold;" color=#4B4B4B>{_sess.grpnm}</font> 입니다.
+	</div>
+
+	<div class="my-points">
+		<dl>
+			<dt class="small1">ㆍ적립금</dt>
+			<dd class="small1"><font class=v71 color=#ff4810>{=number_format(_sess.emoney)}</font> 원</dd>
+			
+			<dt class="small1">ㆍ할인쿠폰</dt>
+			<dd class="small1"><font class=v71 color=#ff4810>{=number_format(_sess.cnt_coupon)}</font> 원</dd>
+		</dl>
+	</div>
+
+	<div class="my-cart">
+		<dl>
+			<dt class="small1">ㆍ장바구니</dt>
+			<dd class="small1"><a href="../goods/goods_cart.php"><font class=v71 color=#2246F6>{=number_format(_sess.cart_count)}</font></a> 개</dd>
+			
+			<dt class="small1">ㆍ위시리스트</dt>
+			<dd class="small1"><a href="../mypage/mypage_wishlist.php"><font class=v71 color=#2246F6>{=number_format(_sess.wish_count)}</font></a> 개</dd>
+		</dl>
+	
+	</div>
+
+	<div>
+		<a href="../mypage/mypage.php"><img src="../img/main/btn_mypage_go.gif"></a>
+		<!--<a href="../member/myinfo.php"><img src="../img/main/btn_mypage_go.gif"></a>-->
+	</div>
+
+</div>

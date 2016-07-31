@@ -1,0 +1,166 @@
+{*** 성인인증 인트로 | intro_adult.php ***}
+<!DOCTYPE html>
+<head>
+<meta name="description" content="{_meta_title}" />
+<meta name="keywords" content="{_meta_keywords}" />
+<meta http-equiv="Content-Type" content="text/html; charset=euc-kr" />
+<meta name="viewport" content="user-scalable=yes, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width, height=device-height" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+<title>{_meta_title}</title>
+
+<script src="../common/js/common.js"></script>
+<script src="../common/js/goods_list_action.js"></script>
+<script src="../common/js/jquery-1.4.2.min.js"></script>
+
+<!--{ @ mobile_script }-->
+<script src="{.script_file}"></script>
+<!--{ / }-->
+<link rel="stylesheet" type="text/css" href="../common/css/reset.css" />
+<link rel="stylesheet" type="text/css" href="../common/css/style.css" />
+<style type="text/css">
+/* 2013.11.03 성인인증 (아이핀 / 휴대폰 인증 ) */
+section#adultauth {background-color:#FFFFFF;min-height:100%;position:relative; font-family:Malgun Gothic;}
+section#adultauth>form {}
+section#adultauth>form .login_center {}
+section#adultauth>form .login_center .login_t {display:block; position:absolute; top:0; left:50%; margin-left:-146px; width:293px; height:380px;background-color:#f5f6f6;padding-top:30px;}
+section#adultauth>form .login_center .login_t .login_img {display:block; position:absolute; top:0; left:50%;  background:url('../common/img/login/19_img.png') center no-repeat; background-size:144px; 144px; margin-top:30px; margin-left:-146px; width:100%; height:144px; padding-left:5px; text-align:center;}
+section#adultauth>form .login_center .login_t .login_txt {display:block; position:absolute; top:0; left:50%; margin-top:195px; margin-left:-146px; width:280px; padding:5px; color:#61656d; text-align:center;}
+section#adultauth>form .login_center .login_t .login_txt h3.auth-text{font:bold 18px Malgun Gothic;color:#222222;line-height:1.5em;}
+section#adultauth>form .login_center .login_t .login_txt h3.auth-detail-text{font:8px Malgun Gothic;color:#666666;line-height:1.5em;}
+section#adultauth>form .login_center .login_t .login_txt h3.auth-text span{font:bold 18px Malgun Gothic;color:#e61212;line-height:1.5em;}
+section#adultauth>form .login_center .login_t .login_txt h3.auth-detail-text span{font:bold 8px Malgun Gothic;color:#666666;line-height:1.5em;}
+section#adultauth>form .login_center .login_t .login_txt p{line-height:20px; font-size:12px;}
+
+section#adultauth>form .login_center .login_t .mout_btn {position:absolute; left:50%; top:0; margin-top:350px; margin-left:-90px; margin-bottom:40px;}
+section#adultauth>form .login_center .login_t .mout_btn button.under-19 {font-family:'Malgun Gothic';color:#ffffff;width:180px; margin:auto; text-align:center; height:35px; color:#ffffff; font-size:13px; font-weight:bold; background:#e61212; border:none;}
+
+section#adultauth>form .login_center .login_b {height:540px;}
+section#adultauth>form .login_center .login_b .login_title {display:block; position:absolute; top:0; left:50%; margin-top:440px; margin-left:-146px; width:293px; padding-left:5px; font-size:16px; font-weight:bold; color:#61656d;}
+
+section#adultauth>form .login_center .login_b .ipin_btn {position:absolute; left:50%; top:0; margin-top:470px; margin-left:-146px;}
+section#adultauth>form .login_center .login_b .ipin_btn #ipin-btn { width:293px; margin:auto; text-align:center; height:35px; color:#ffffff; font-size:13px; font-weight:bold; background:#a3a3a3; font-family:Malgun Gothic; display:table-cell; vertical-align:middle; border:solid 1px #cecfcf;}
+section#adultauth>form .login_center .login_b .hpauth_btn {position:absolute; left:50%; top:0; margin-top:515px; margin-left:-146px;}
+section#adultauth>form .login_center .login_b .hpauth_btn #hpauth-btn { width:293px; margin:auto; text-align:center; height:35px; color:#ffffff; font-size:13px; font-weight:bold; background:#a3a3a3; font-family:Malgun Gothic; display:table-cell; vertical-align:middle; border:solid 1px #cecfcf;}
+
+section#memauth>form .login_center .login_b .login_title {display:block; position:absolute; top:0; left:50%; margin-top:575px; margin-left:-146px; width:293px; padding-left:5px; font-size:16px; font-weight:bold; color:#61656d;}
+section#memauth>form .login_center .login_b .input_id {display:block; position:absolute; top:0; left:50%; margin-top:600px; margin-left:-146px; width:293px; font-size:16px; font-weight:bold; color:#61656d;}
+section#memauth>form .login_center .login_b .input_pw {display:block; position:absolute; top:0; left:50%; margin-top:650px; margin-left:-146px; width:293px; font-size:16px; font-weight:bold; color:#61656d;}
+section#memauth>form .login_center .login_b input {font-family:'Malgun Gothic';font-size:15px;color:#000000;width:273px;height:35px;    float: left;cursor:pointer;display:table-cell;vertical-align:middle;border:1px solid #d3d3d3;padding-left:10px;padding-right:10px;}
+section#memauth>form .login_center .login_b .login_btn {position:absolute; left:50%; top:0; margin-top:695px; margin-left:-146px;}
+section#memauth>form .login_center .login_b .login_btn #login-btn { width:293px; margin:auto; text-align:center; height:35px; color:#ffffff; font-size:13px; font-weight:bold; background:#a3a3a3; font-family:Malgun Gothic; display:table-cell; vertical-align:middle; border:solid 1px #cecfcf;}
+#frmLayer{position:fixed; z-index:100; top:0; left:0; width:100%; height:100%;}
+.mobileLayerArea,.mobileLayerFrame{height:100% !important;}
+</style>
+<!--
+<!--	==========================================================	-->
+<!--	한국신용정보주식회사 처리 모듈 (수정 및 변경하지 마십시오)	-->
+<!--	==========================================================	-->
+<script type="text/javascript" src="http://secure.nuguya.com/nuguya/nice.nuguya.oivs.crypto.js"></script>
+<script type="text/javascript" src="http://secure.nuguya.com/nuguya/nice.nuguya.oivs.msg.js"></script>
+<script type="text/javascript" src="http://secure.nuguya.com/nuguya/nice.nuguya.oivs.util.js"></script>
+<script language="javascript">
+<!--
+function goIDCheckIpin(){
+	frmMake('','popupCertKey','아이핀인증',true);
+	$("meta[name='viewport']").attr({"content":"user-scalable=yes, width=480"});
+	<!--{ ? ipinyn == 'y' }-->
+		document.getElementById("ifrmRnCheck").contentWindow.location.href="../../../shop/member/ipin/IPINCheckRequest.php?callType=adultcheckmobile&joinGubun=mobile";
+	<!--{ : niceipinyn == 'y' }-->
+		document.getElementById("ifrmRnCheck").contentWindow.location.href="../../../shop/member/ipin/IPINMain.php?callType=adultcheckmobile&joinGubun=mobile";
+	<!--{ / }-->
+	return;
+}
+
+function rnWayChk(){
+	var ryn = document.getElementById("realname");
+	var ayn = document.getElementById("auth");
+
+	var realname	= document.getElementById("realnameyn");
+
+	if(realname && realname.checked == true) {
+		ryn.style.display = "block";
+		ayn.style.display = "none";
+	} else {
+		ryn.style.display = "none";
+		ayn.style.display = "block";
+	} 
+}
+
+function gohpauthDream(){ //휴대폰본인인증
+		var protocol = location.protocol;
+		var callbackUrl = encodeURI("{=ProtocolPortDomain()}{_cfg.rootDir}/member/hpauthDream/hpauthDream_Result.php");
+		frmMake(protocol+"//hpauthdream.godo.co.kr/module/Mobile_hpauthDream_Main.php?callType=adultcheckmobile&shopUrl="+callbackUrl+"&cpid={=hpauthDreamcpid}",'DRMOKWindow','휴대폰본인인증',false);
+	return;
+}
+//-->
+</script>
+<!--{ naverCommonInflowScript }-->
+</head>
+
+<body>
+
+<div id="dynamic"></div>
+
+<div id="wrap">
+
+<header>
+<section class="content" id="adultauth">
+	<form method=post id="form_auth" name="form_auth">
+		<fieldset>
+			<legend class="hidden">성인인증 폼</legend>
+			<div class="login_center">
+			<div class="login_t">
+				<div class="login_img"></div>
+				<div class="login_txt">
+					<h3 class="auth-text">본 정보 내용은 청소년에게 유해한 정보를 포함하고 있어 <span>성인인증 절차</span>를 거쳐야 합니다.</h3>
+					<h3 class="auth-detail-text">본 정보 내용은 <span>청소년 유해매체물</span>로서 정보통신망 이용촉진 및 정보보호등에 관한 법률 및 청소년 보호법의 규정에 의하여 <span>19세 미만의 청소년</span>이 이용할 수 없습니다.</h3>
+				</div>
+				<div class="mout_btn"><button alt="19세 미만 나가기" type="button" onclick="location.href='http://www.godo.co.kr'" class="under-19">19세 미만 나가기</button></div>
+			</div>
+			<div class="login_b">
+				<div class="login_title">비회원 성인 인증</div>
+				<!-- 인증수단 -->
+				<!--{ ? ipinyn == 'y' || niceipinyn == 'y' }-->
+				<div class="ipin_btn"><button id="ipin-btn" tabindex="4" onclick="javascript:goIDCheckIpin();return false;">아이핀 인증 받기</button></div>
+				<!--{ / }-->
+				<!--{ ? hpauthDreamyn == 'y' }-->
+				<div class="hpauth_btn"><button id="hpauth-btn" tabindex="5" onclick="javascript:gohpauthDream();return false;">휴대폰 인증 받기</button></div>
+				<!--{ / }-->
+			</div>
+			</div>
+		</fieldset>
+	</form>
+</section>
+
+<section class="content" id="memauth">
+	<form name="login_form" action="{loginActionUrl}" method="post" onSubmit="return chkForm(this);">
+	<input type=hidden name=returnUrl value="{_returnUrl}">
+	<input type=hidden name=close value="{_close}">
+		<fieldset>
+			<legend class="hidden">회원 인증 폼</legend>
+				<div class="login_center">
+					<div class="login_b">
+						<div class="login_title">회원로그인</div>
+						<label class="input_id">
+							<input type="text" name="m_id" value="" maxlength="12" title="아이디" required msgR="아이디를 입력하세요." onfocus="if(this.value=='회원아이디'){this.value='';}" placeholder="아이디를 입력하세요." tabindex="1" />
+						</label>
+						<label class="input_pw">
+							<input type="password" name="password" maxlength="34" title="비밀번호를 입력하세요." required msgR="비밀번호를 입력하세요." placeholder="비밀번호" tabindex="2" />
+						</label>
+						<div class="login_btn"><button id="login-btn" type="submit" tabindex="3" >로그인</button></div>
+					</div>
+				</div>
+			</div>
+		</fieldset>
+	</form>
+</section>
+
+<script language="javascript">var shop_key = "<?php echo $_SERVER['HTTP_HOST'];?>";</script>
+<script src="../common/js/base64.js"></script>
+<script src="../common/js/login.js"></script>
+<iframe id="ifrmRnCheck" name="ifrmRnCheck" style="width:500px;height:500px;display:none;"></iframe>
+<iframe class="" id="ifrmHidden" name="ifrmHidden" src='{_cfg.rootDir}/blank.txt'></iframe>
+</body>
+</html>

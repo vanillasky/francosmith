@@ -1,0 +1,91 @@
+{*** 하단레이아웃 | main/index.php ***}
+<div style="width:0;height:0;font-size:0"></div></td>
+<!--{ ? this->tpl_['side_inc'] && _cfg['outline_sidefloat'] == 'right' }-->
+<td valign=top width={_cfg['shopSideSize']} nowrap>{ # side_inc // 측면디자인 }</td>
+<!--{ / }-->
+<!--{? todayshop_cfg['shopMode'] != 'todayshop' && !todayshop_cfg['isTodayShopPage'] // 투데이샵 전용일경우 스크롤배너 사용안함}-->
+<td width=0 id=pos_scroll valign=top>
+
+<!-- 스크롤 배너 -->
+
+<div id=scroll style="position:absolute; padding-top:43px; padding-left:10px;">
+<!--{? setState == 'Y' && Banner != ''}-->
+<div style="text-align:left;">{Banner}</div>
+<!--{ : }-->
+<div><!-- 맨오른쪽_스크롤배너 (배너관리에서 수정가능) --><!--{ @ dataBanner( 17 ) }-->{.tag}<!--{ / }--></div>
+<!--{ / }-->
+<!--{ ? _viewPageMoveList }-->
+<script src="/shop/lib/js/prototype.js"></script>
+<script language="JavaScript">
+addOnloadEvent(function() { scrollCateList_ajax('{__SERVER['QUERY_STRING']}') });
+</script>
+<div id="scrollMoveList"></div>
+<div style="height:4px;"><!-- 여백 --></div>
+<!--{ / }-->
+
+<div style="width:90px;">
+	<div><img src="../img/common/wing_bn_top_myview.jpg" border=0></div>
+	<table width=100% border=0 cellpadding=0 cellspacing=0 style="border-style:solid;border-color:#E3E3E3;border-width:0px 1px 1px 1px;">
+	<tr>
+		<td align=center>
+		<div id=gdscroll style="height:217px;overflow:hidden">
+		<!--{ @ _todayGoodsList }-->
+		<div><a href="../goods/goods_view.php?goodsno={.goodsno}">{=goodsimg(.img,70)}</a></div>
+		<!--{ ? .index_!=.size_-1 }--><div style="height:3px;font-size:0"></div><!--{ / }-->
+		<!--{ / }-->
+		</div>
+		</td>
+	</tr>
+	<tr><td style="text-align:center;padding:4px 0"><a href="javascript:gdscroll(-107)" onfocus=blur()><img src="../img/common/sky_btn_up.gif" border=0></a> <a href="javascript:gdscroll(107)" onfocus=blur()><img src="../img/common/sky_btn_down.gif" border='0'></a></td></tr>
+	</table>
+</div>
+<div style="margin-bottom:5px;">
+	<table cellpadding=0 cellspacing=0>
+	<tr>
+		<td><!-- 맨오른쪽_스크롤배너_top (배너관리에서 수정가능) --><!--{ @ dataBanner( 28 ) }-->{.tag}<!--{ / }--></td>
+		<td><!-- 맨오른쪽_스크롤배너_back (배너관리에서 수정가능) --><!--{ @ dataBanner( 29 ) }-->{.tag}<!--{ / }--></td>
+	</tr>
+	</table>
+</div>
+
+<div><!-- 맨오른쪽_스크롤배너 (배너관리에서 수정가능) --><!--{ @ dataBanner( 18 ) }-->{.tag}<!--{ / }--></div>
+<div align="center" style="padding-top:10px;"><a href="#top"><img src="../img/main/wing_bt_top.jpg" width="30" height="30"></a></div>
+</div>
+
+<!-- 스크롤 배너 활성화 -->
+<script>scrollBanner();</script>
+
+</td>
+<!--{/ // 투데이샵 전용일경우 스크롤배너 사용안함}-->
+</tr>
+</table>
+
+</td>
+</tr>
+<!--{ ? this->tpl_['footer_inc'] }-->
+<tr>
+<td>{ # footer_inc // 하단디자인 }</td>
+</tr>
+<!--{ / }-->
+</table>
+
+<!-- 절대! 지우지마세요 : Start -->
+<iframe name="ifrmHidden" src='{_cfg.rootDir}/blank.php' style="display:none;width:100%;height:600"></iframe>
+<!-- 절대! 지우지마세요 : End -->
+
+<script>
+if (typeof nsGodo_cartTab == 'object' && '{_cfg.cartTabUse}' == 'y' && '{todayshop_cfg['shopMode']}' != 'todayshop') {
+	nsGodo_cartTab.init({
+		logged: { ? !_sess }false{:}true{/},
+		skin  : '{_cfg.tplSkin}',
+		tpl  : '{_cfg.cartTabTpl}',
+		dir	: 'horizon',	// horizon or vertical
+		width:'{_cfg.shopSize}'
+	});
+}
+{? _cfg.preventContentsCopy == '1' }
+addOnloadEvent(function(){ preventContentsCopy() });
+{ / }
+</script>
+</body>
+</html>

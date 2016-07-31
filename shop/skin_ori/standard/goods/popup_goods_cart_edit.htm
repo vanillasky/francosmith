@@ -1,0 +1,375 @@
+{*** 옵션 상세 | goods/popup_goods_cart_edit.htm ***}
+<html>
+<head>
+<title></title>
+<meta http-equiv="Content-Type" content="text/html; charset=euc-kr">
+<script src="../common.js"></script>
+<link rel="styleSheet" href="../style.css">
+</head>
+
+<script type="text/javascript">
+var price = new Array();
+var reserve = new Array();
+var consumer = new Array();
+var memberdc = new Array();
+var realprice = new Array();
+var couponprice = new Array();
+var coupon = new Array();
+var cemoney = new Array();
+var opt1img = new Array();
+var opt2icon = new Array();
+var opt2kind = "{optkind[1]}";
+var oldborder = "";
+<!--{ @ _opt }--><!--{ @ .value_ }-->
+<!--{ ? .index_ == 0 && ..index_ == 0 }-->
+var fkey = '{=addslashes(..opt1)}{?..opt2}|{=addslashes(..opt2)}{/}';
+<!--{ / }-->
+price['{=addslashes(..opt1)}{?..opt2}|{=addslashes(..opt2)}{/}'] = {..price};
+reserve['{=addslashes(..opt1)}{?..opt2}|{=addslashes(..opt2)}{/}'] = {..reserve};
+consumer['{=addslashes(..opt1)}{?..opt2}|{=addslashes(..opt2)}{/}'] = {..consumer};
+memberdc['{=addslashes(..opt1)}{?..opt2}|{=addslashes(..opt2)}{/}'] = {..memberdc};
+realprice['{=addslashes(..opt1)}{?..opt2}|{=addslashes(..opt2)}{/}'] = {..realprice};
+coupon['{=addslashes(..opt1)}{?..opt2}|{=addslashes(..opt2)}{/}'] = {..coupon};
+couponprice['{=addslashes(..opt1)}{?..opt2}|{=addslashes(..opt2)}{/}'] = {..couponprice};
+cemoney['{=addslashes(..opt1)}{?..opt2}|{=addslashes(..opt2)}{/}'] = {..coupon_emoney};
+<!--{ / }--><!--{ / }-->
+<!--{ @ _opt1img }-->
+opt1img['{.key_}'] = "{.value_}";
+<!--{ / }-->
+<!--{ @ _opticon[1] }-->
+opt2icon['{.key_}'] = "{.value_}";
+<!--{ / }-->
+
+/* 필수 옵션 분리형 스크립트 start */
+var opt = new Array();
+opt[0] = new Array("('1차옵션을 먼저 선택해주세요','')");
+<!--{ @ _opt }-->
+opt['{.index_+1}'] = new Array("('== 옵션선택 ==','')",<!--{ @ .value_ }-->"('{..opt2}{?..price!=price} ({=number_format(..price)}원){/}{?usestock&&!..stock} [품절]{/}','{..opt2}','{?usestock&&!..stock}soldout{/}','{? ..optno == item.optno}selected{/}')"{?..index_!=..size_-1},{/}<!--{ / }-->);
+<!--{ / }-->
+function subOption(obj)
+{
+	var el = document.getElementsByName('opt[]');
+	var sub = opt[obj.selectedIndex];
+	var aaaaaaaaaa = 0;
+	if (typeof el[1] == 'undefined') return;
+	while (el[1].length>0) el[1].options[el[1].options.length-1] = null;
+	for (i=0;i<sub.length;i++){
+		var div = sub[i].replace("')","").split("','");
+		eval("el[1].options[i] = new Option" + sub[i]);
+		if (div[2]=="soldout"){
+			el[1].options[i].style.color = "#808080";
+			el[1].options[i].setAttribute('disabled','disabled');
+		}
+		if (div[3]=="selected"){
+			aaaaaaaaaa = i;
+		}
+	}
+	if (aaaaaaaaaa > 0) el[1].selectedIndex = aaaaaaaaaa;
+	else {
+		el[1].selectedIndex = el[1].preSelIndex = 0;
+	}
+
+	if (el[0].selectedIndex == 0) chkOption(el[1]);
+
+	if(el[0].selectedIndex != '0'){
+		var txt = document.getElementsByName('opt_txt[]');
+		var vidx = el[0].selectedIndex - 1;
+		var v = el[0][el[0].selectedIndex].value;
+		txt[0].value = v + '|' + vidx;
+		subOption_fashion();
+	}
+}
+/* 필수 옵션 분리형 스크립트 end */
+
+function chkOptimg(){
+	var opt = document.getElementsByName('opt[]');
+	var key = opt[0].selectedIndex;
+	var opt1 = opt[0][key].value;
+	var ropt = opt1.split('|');
+	chgOptimg(ropt[0])
+}
+
+function chgOptimg(opt1){
+	var objImg = document.getElementById('objImg');
+	if(opt1img[opt1]){
+		objImg.src = (/^http(s)?:\/\//.test(opt1img[opt1])) ? opt1img[opt1] : "../data/goods/"+opt1img[opt1];
+	}else{
+		objImg.src = (/^http(s)?:\/\//.test('{img_s}')) ? '{img_s}' : "../data/goods/{img_s}";
+	}
+}
+
+function chkOption(obj)
+{
+	if (!selectDisabled(obj)) return false;
+
+	var opt = document.getElementsByName('opt[]');
+	var opt1 = opt[0].value; var opt2 = '';
+	if (typeof(opt[1])!="undefined") opt2 = "|" + opt[1].value;
+	var key = opt1 + opt2;
+	if (opt[0].selectedIndex == 0) key = fkey;
+	key = key.replace('"','&quot;');
+	if (typeof(price[key])!="undefined"){
+		if (document.getElementById('price')) document.getElementById('price').innerHTML = comma(price[key]);
+		if (document.getElementById('reserve')) document.getElementById('reserve').innerHTML = comma(reserve[key]);
+		if (document.getElementById('consumer')) document.getElementById('consumer').innerHTML = comma(consumer[key]);
+		if (document.getElementById('obj_realprice'))document.getElementById('obj_realprice').innerHTML = comma(realprice[key]) +'원&nbsp;(-'+comma(memberdc[key])+'원)';
+		if (document.getElementById('obj_coupon'))document.getElementById('obj_coupon').innerHTML = comma( couponprice[key]) +'원&nbsp;(-'+comma(coupon[key])+'원)';
+		if (document.getElementById('obj_coupon_emoney'))document.getElementById('obj_coupon_emoney').innerHTML = comma(cemoney[key]);
+	}
+}
+
+function act(form)
+{
+	if(!(form.ea.value>0))
+	{
+		alert("구매수량은 1개 이상만 가능합니다");
+		return false;
+	}
+	else {
+		var res = chkForm(form);
+
+		// 입력옵션 필드값 설정
+		if (res)
+		{
+			var addopt_inputable = document.getElementsByName('addopt_inputable[]');
+			for (var i=0,m=addopt_inputable.length;i<m ;i++ ) {
+
+				if (typeof addopt_inputable[i] == 'object') {
+					var v = addopt_inputable[i].value.trim();
+					if (v) {
+						var tmp = addopt_inputable[i].getAttribute("option-value").split('^');
+						tmp[2] = v;
+						v = tmp.join('^');
+					}
+					else {
+						v = '';
+					}
+					document.getElementsByName('_addopt_inputable[]')[i].value = v;
+				}
+			}
+		}
+
+		return res;
+	}
+}
+// 패션 기능관련 스크립트
+function click_opt_fastion(idx,vidx,v){
+	var el = document.getElementsByName('opt_txt[]');
+	el[idx].value = v + '|' + vidx;
+
+	if(idx == 0){
+		var obj = document.getElementsByName('opt[]')[0];
+		obj.selectedIndex = parseInt(vidx)+1 ;
+		subOption(obj);
+		chkOptimg();
+	}else if(idx == 1){
+		var obj = document.getElementsByName('opt[]')[1];
+		obj.selectedIndex = vidx;
+		chkOption(obj);
+	}
+}
+
+function subOption_fashion()
+{
+	var el = document.getElementsByName('opt_txt[]');
+	var el2 = document.getElementById('dtdopt2');
+	var idx = el[0].value.split("|");
+	var vidx = parseInt(idx[1])+1;
+	var sub = opt[vidx];
+	if(el2)el2.innerHTML = '';
+	var n = 1;
+	for (i=0;i<sub.length;i++){
+		var div = sub[i].replace("')","").split("','");
+		if(div[1]){
+			if(opt2kind == 'img'){
+				if(el2)el2.innerHTML += "<div style='width:43px;float:left;padding:5 0 5 0'><a href=\"javascript:click_opt_fastion('1','"+i+"','"+div[1]+"');nsGodo_MultiOption.set();\" name='icon2[]'><img id='opticon1_"+i+"' width='40' src='../data/goods/"+opt2icon[div[1]]+"' style='border:1px #cccccc solid' onmouseover=\"onicon(this);\" onmouseout=\"outicon(this)\" onclick=\"clicon(this)\"></a></div>";
+			}else{
+				if(el2)el2.innerHTML += "<div style='width:18px;float:left;padding-top:5px'><a href=\"javascript:click_opt_fastion('1','"+i+"','"+div[1]+"');subOption_fashion();nsGodo_MultiOption.set();\" name='icon2[]'><span style=\"float:left;width:15;height:15;border:1px #cccccc solid;background-color:#"+opt2icon[div[1]]+"\" onmouseover=\"onicon(this);\" onmouseout=\"outicon(this)\" onclick=\"clicon(this)\"></span></a></div>";
+			}
+		}else n++;
+	}
+}
+
+function onicon(obj){
+	oldborder = obj.style.border;
+	obj.style.border="1 #333333 solid";
+}
+function outicon(obj){
+	obj.style.border = oldborder;
+}
+
+function clicon(obj){
+	var p = obj.parentNode.name;
+	var ac = document.getElementsByName(p);
+	if(ac){
+		for(var i=0;i<ac.length;i++){
+			ac[i].childNodes[0].style.border = "1 #cccccc solid";
+		}
+		obj.style.border="1 #333333 solid";
+		oldborder="1 #333333 solid";
+	}
+}
+
+function selicon(obj){
+	var el = document.getElementsByName('opt[]');
+	var idx = obj.selectedIndex - 1;
+	if(obj == el[0]){
+		var v = document.getElementsByName('icon[]');
+		if (v.length > 0) {
+			v = v[idx].childNodes[0];
+			clicon(v);
+		}
+
+	}else{
+		var v = document.getElementsByName('icon2[]');
+		if (v.length > 0) {
+			v = v[idx].childNodes[0];
+			clicon(v);
+		}
+	}
+}
+</script>
+
+<body style="margin:10px">
+
+<img src="../img/common/cart_option_edit_title.gif">
+
+
+<form name="frmCartOption" method="post" action="./goods_cart.php?cart_type={_GET.cart_type}" onsubmit="return act(this);">
+<input type="hidden" name="mode" value="editOption">
+<input type="hidden" name="idx" value="{_GET.idx}">
+
+<div style="width:100%;height:420px;border:1px solid #D0D0D0;padding:10px;overflow-y:auto;">
+
+<table border="0">
+<tr>
+<td>
+	<!--{? todaygoods=='y'}--><a href="../todayshop/today_goods.php?tgsno={tgsno}">{=goodsimgTS(img_s,80,'id=objImg')}</a>
+	<!--{:}--><a href="../goods/goods_view.php?goodsno={goodsno}">{=goodsimg(img_s,80,'id=objImg')}</a>
+	<!--{/}-->
+</td>
+<td>
+	{goodsnm}
+</td>
+</tr>
+</table>
+
+<div style="margin:15px 0 15px 0;overflow:hidden;height:1px;background:url(../img/common/line2.gif) repeat-x top left;"></div>
+
+<!-- 추가 옵션 입력형 -->
+<!--{ @ _addopt_inputable }-->
+<div style="margin-bottom:10px;">
+<span style="display:block;margin-bottom:5px;font-weight:bold;color:#565656;"><img src="../img/common/btn_multioption_br.gif" align="absmiddle"> {.key_}</span>
+<div>
+	<input type="hidden" name="_addopt_inputable[]" value="">
+	<input type="text" name="addopt_inputable[]" label="{.key_}" option-value="{.sno}^{.key_}^{.opt}^{.addprice}" value="{.value}" { ? _addopt_inputable_req[.index_] }required fld_esssential{/} maxlength="{.opt}">
+</div>
+</select>
+</div>
+<!--{ / }-->
+
+
+<!-- 필수 옵션 일체형 -->
+<!--{ ? _opt && _typeOption=="single" }-->
+<div style="margin-bottom:10px;">
+<span style="display:block;margin-bottom:5px;font-weight:bold;color:#565656;"><img src="../img/common/btn_multioption_br.gif" align="absmiddle"> 옵션명 ({optnm})</span>
+<div><select style="width:100%" name="opt[]" onchange="chkOption(this);chkOptimg();" required msgR="{optnm} 선택을 해주세요">
+	<option value="">== 옵션선택 ==
+	<!--{ @ _opt }--><!--{ @ .value_ }-->
+	<option value="{..opt1}{?..opt2}|{..opt2}{/}" {?usestock&&!..stock} disabled class=disabled{/} {? ..optno == item.optno}selected{/}>{..opt1}{?..opt2}/{..opt2}{/} {?..price!=price}({=number_format(..price)}원){/}
+	<!--{ ? usestock && !..stock }--> [품절]<!--{ / }-->
+	<!--{ / }--><!--{ / }-->
+	</select></div>
+</select>
+</div>
+<!--{ / }-->
+
+
+<!-- 필수 옵션 분리형 -->
+<!--{ ? _opt && _typeOption=="double" }-->
+<!--{ @ _optnm }-->
+	<div style="margin-bottom:10px;">
+	<span style="display:block;margin-bottom:5px;font-weight:bold;color:#565656;"><img src="../img/common/btn_multioption_br.gif" align="absmiddle"> 옵션명 {.index_ + 1} ({.value_})</span>
+
+	<!-- 옵션 선택 -->
+	<!--{ ? !.index_ }-->
+	<div>
+	<select style="width:100%" name="opt[]" onchange="subOption(this);chkOptimg();selicon(this);" required msgR="{.value_} 선택을 해주세요">
+	<option value="">== 옵션선택 ==
+	<!--{ @ (_opt) }--><option value="{..key_}" {? ..key_ == item.opt[0]}selected{/}>{..key_}<!--{ / }-->
+	</select>
+	</div>
+	<!--{ : }-->
+	<select style="width:100%" name="opt[]" onchange="chkOption(this);selicon(this);" required msgR="{.value_} 선택을 해주세요"><option value="">==선택==</select>
+	<!--{ / }-->
+
+
+	<!-- 옵션 이미지 아이콘 -->
+	<!-- 옵션 이미지 아이콘 -->
+	<!--{? optkind[.index_] == 'img'}-->
+	<!--{ ? !.index_ }-->
+		<!--{ @ _opticon[.index_] }-->
+		<div style='width:43px;float:left;padding:5 0 5 0'><a href="javascript:click_opt_fastion('{.index_}','{..index_}','{_opt[..key_][..index_].opt1}');" name="icon[]"><img width="40" id="opticon0_{..index_}" id="opticon_{.index_}_{..index_}" style="border:1px #cccccc solid" src='../data/goods/{..value_}'  onmouseover="onicon(this);chgOptimg('{..key_}');" onmouseout="outicon(this)" onclick="clicon(this)"></a></div>
+		<!--{ / }-->
+	<!--{ : }-->
+	<div id="dtdopt2"></div>
+	<!--{ / }-->
+	<!--{ / }-->
+
+	<!-- 옵션 색상타입 아이콘 -->
+	<!--{? optkind[.index_] == 'color'}-->
+	<!--{ ? !.index_ }-->
+		<!--{ @ _opticon[.index_] }-->
+		<div style='width:18px;float:left;padding-top:5px ' ><a href="javascript:click_opt_fastion('{.index_}','{..index_}','{..key_}');" style="cursor:hand;"  name="icon[]"><span  style="float:left;width:15;height:15;border:1px #cccccc solid;background-color:#{..value_}" onmouseover="onicon(this);chgOptimg('{..key_}');" onmouseout="outicon(this)" onclick="clicon(this)"></span></a></div>
+		<!--{ / }-->
+	<!--{ : }-->
+	<div id="dtdopt2"></div>
+	<!--{ / }-->
+	<!--{ / }-->
+
+	<input type="hidden" name="opt_txt[]" value="">
+	</div>
+	<script>subOption(document.getElementsByName('opt[]')[0])</script>
+<!--{ / }-->
+<!--{ / }-->
+
+
+
+<!-- 추가 옵션 -->
+<!--{ @ _addopt }-->
+<div style="margin-bottom:10px;">
+<span style="display:block;margin-bottom:5px;font-weight:bold;color:#565656;"><img src="../img/common/btn_multioption_br.gif" align="absmiddle"> {.key_}</span>
+<div><select style="width:100%" name="addopt[]"{ ? _addoptreq[.index_] } required label="{.key_}"{ / }>
+	<option value="">=={.key_} 선택==
+	<!--{ ? !_addoptreq[.index_] }--><option value="-1">선택안함<!--{ / }-->
+	<!--{ @ .value_ }-->
+	<option value="{..sno}^{.key_}^{..opt}^{..addprice}" {? in_array(..sno,item.addopt_sno)}selected{/}>{..opt}
+	<!--{ ? ..addprice }-->({=number_format(..addprice)}원 추가)<!--{ / }-->
+	<!--{ / }-->
+	</select></div>
+</select>
+</div>
+<!--{ / }-->
+
+
+<div style="margin:15px 0 5px 0;overflow:hidden;height:1px;background:url(../img/common/line.gif) repeat-x top left;"></div>
+
+<!-- 수량 -->
+<div style="float:left;font-weight:bold;color:#565656;padding-top:6px;"><img src="../img/common/btn_multioption_br.gif" align="absmiddle"> 수량</div>
+
+<div style="float:left;margin-left:5px;"><input type=text name=ea step="{? item.sales_unit}{item.sales_unit}{:}1{/}" min="{? item.min_ea}{item.min_ea}{:}1{/}" max="{? item.max_ea}{item.max_ea}{:}0{/}" size=2 value='{item.ea}' style="border:1px solid #D3D3D3;width:30px;text-align:right;height:20px" onblur="chg_cart_ea(this, 'set');"></div>
+<div style="float:left;padding-left:3">
+<div style="padding:1 0 2 0"><img src="../img/common/btn_multioption_ea_up.gif" onClick="chg_cart_ea(frmCartOption.ea,'up')" style="cursor:pointer"></div>
+<div><img src="../img/common/btn_multioption_ea_down.gif" onClick="chg_cart_ea(frmCartOption.ea,'dn')" style="cursor:pointer"></div>
+</div>
+
+</div>
+
+<div style="text-align:center;padding:10px;">
+	<input type="image" src="../img/common/btn_modify.gif">
+	<a href="javascript:void(0);" onClick="self.close();"><img src="../img/common/btn_cancel3.gif"></a>
+</div>
+
+</form>
+</body>
+</html>

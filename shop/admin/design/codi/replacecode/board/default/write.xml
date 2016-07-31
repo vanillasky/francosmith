@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="EUC-KR"?>
+<codes>
+<list>
+	<code power="">{id}</code>
+	<desc>게시판 아이디</desc>
+	<exam>notice</exam>
+</list>
+<list>
+	<code power="">{no}</code>
+	<desc>게시물 번호</desc>
+	<exam>1</exam>
+</list>
+<list>
+	<code power="">{mode}</code>
+	<desc>모드 - write:글쓰기, modify:수정, reply:답글</desc>
+	<exam>modify</exam>
+</list>
+<list>
+	<code>{page}</code>
+	<desc>페이지번호</desc>
+	<exam>1</exam>
+</list>
+<list>
+	<code>{readonly.name}</code>
+	<desc>이름란의 스타일</desc>
+	<exam>readonly style='border:0;font-weight:bold'</exam>
+</list>
+<list>
+	<code>{name}</code>
+	<desc>이름</desc>
+	<exam>홍길동</exam>
+</list>
+<list>
+	<code>{email}</code>
+	<desc>이메일</desc>
+	<exam>test@test.co.kr</exam>
+</list>
+<list>
+	<code>{homepage}</code>
+	<desc>홈페이지</desc>
+	<exam></exam>
+</list>
+<list>
+	<code>{subject}</code>
+	<desc>제목</desc>
+	<exam>하루의 시작을 이나무와 함께</exam>
+</list>
+<list>
+	<code>{_chk.notice}</code>
+	<desc>NOTICE Checkbox 태그</desc>
+	<exam>&lt;input type=checkbox name=notice checked&gt;</exam>
+</list>
+<list>
+	<code>{_chk.secret}</code>
+	<desc>비밀글 Checkbox 태그</desc>
+	<exam>&lt;input type=checkbox name=secret checked&gt;</exam>
+</list>
+<list>
+	<code>{=htmlspecialchars(contents)}</code>
+	<desc>내용</desc>
+	<exam>Have a nice day ... !</exam>
+</list>
+<list>
+	<code>{urlLink}</code>
+	<desc>링크</desc>
+	<exam>http://www.test.co.kr/test.html</exam>
+</list>
+<list>
+	<code>{prvFile}</code>
+	<desc>업로드한 파일 수정란</desc>
+	<exam>&lt;tr&gt;~~~&lt;/tr&gt;</exam>
+</list>
+<list>
+	<code>{ ? count(file)&lt;12}</code>
+	<desc>업로드한 파일수가 12개 이하인지 체크하는 연산식</desc>
+	<exam></exam>
+</list>
+<list>
+	<code>{_ici_admin}</code>
+	<desc>관리자여부 - true, false</desc>
+	<exam>true</exam>
+</list>
+<list>
+	<code>{_bdUseLink}</code>
+	<desc>링크사용 - on:사용, '':미사용</desc>
+	<exam>on</exam>
+</list>
+<list>
+	<code>{_bdUseFile}</code>
+	<desc>파일업로드사용 - on:사용, '':미사용</desc>
+	<exam>on</exam>
+</list>
+<list>
+	<code>{_bdMaxSize}</code>
+	<desc>업로드파일 Size (Byte)</desc>
+	<exam>1048576 (=1M)</exam>
+</list>
+<list>
+	<code>{_bdHeader}</code>
+	<desc>상단디자인 (Header)</desc>
+	<exam></exam>
+</list>
+<list>
+	<code>{_bdFooter}</code>
+	<desc>하단디자인 (Footer)</desc>
+	<exam></exam>
+</list>
+<list>
+	<code>{_bdWidth}</code>
+	<desc>게시판 넓이</desc>
+	<exam>95%</exam>
+</list>
+<list>
+	<code>{_bdAlign}</code>
+	<desc>게시판 위치</desc>
+	<exam>center</exam>
+</list>
+<list>
+	<code>{ # header }</code>
+	<desc>상단과 측면을 크게 감싸는 외곽파일 인클루드, 소스 맨위에 삽입</desc>
+	<exam></exam>
+</list>
+<list>
+	<code>{ # footer }</code>
+	<desc>하단을 크게 감싸는 외곽파일 인클루드, 소스 맨아래에 삽입</desc>
+	<exam></exam>
+</list>
+</codes>

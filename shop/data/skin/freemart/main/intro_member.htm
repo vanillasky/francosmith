@@ -1,0 +1,186 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<HTML>
+ <HEAD>
+  <TITLE>{_meta_title}</TITLE>
+<script src="../common.js"></script>
+<link rel="styleSheet" href="../style.css">
+<style>
+div.head {height:240px;background:#EEEEEE;text-align:center;}
+div.head h2 {display:none;}
+div.head p {display:block;background:url(../img/auth/intro_member.jpg) top left no-repeat;height:230px;width:463px;text-indent:-5000px;margin:0 auto;}
+
+div.body {}
+div.body div.login-title {position: relative; overflow: hidden; height: 23px; margin-top: 20px;}
+div.body div.login-title img.title {position: absolute; left: 50%; margin-left: -346px;}
+div.body div.forms-wrap {background:#F3F3F3;border:1px solid #DEDEDE;padding:5px;width:680px;margin:10px auto 0;}
+div.body div.forms-wrap div.forms {background:#fff;overflow:hidden;zoom:1;}
+div.body div.forms-wrap div.forms div.form {width:310px;padding:10px;display:inline-block;vertical-align:top;float:left;}
+div.body div.forms-wrap div.forms div.form div.member-login-title {margin-top: 5px; margin-bottom: 10px; background: url('../img/login_09.gif') no-repeat; height: 12px; font-size: 0; text-indent: -9999px; display: block;}
+div.body div.forms-wrap div.forms div.sns-login {float: right; width: 270px; margin-right: 20px; margin-top: 10px;}
+div.body div.forms-wrap div.forms div.sns-login div.sns-login-title {margin-top: 5px; margin-bottom: 10px; background: url('../img/login_10.gif') no-repeat; height: 12px; font-size: 0; text-indent: -9999px; display: block;}
+div.body div.forms-wrap div.forms div.sns-login div.sns-btn-group button.sns-btn {cursor: pointer; border: none; font-size: 0; text-indent: -9999px; display: block;}
+div.body div.forms-wrap div.forms div.sns-login div.sns-btn-group button.btn-facebook {width: 125px; height: 31px; background: url('../img/login_sns_facebook.gif') no-repeat; }
+
+div.body div.forms-wrap div.forms div.form table {}
+div.body div.forms-wrap div.forms div.form table th {font-weight:bold;color:#5D5D5D;font-size:11px;letter-spacing:-1px;width:60px;text-align:left;}
+div.body div.forms-wrap div.forms div.form table td {}
+
+div.body div.forms-wrap div.forms div.form #ipinyn {padding:5px;font-size:11px; line-height:150%;letter-spacing:-1px; color:#5d5d5d;display:none}
+div.body div.forms-wrap div.forms div.form label {cursor:pointer;}
+div.body div.forms-wrap div.forms div.form input.fld {border:1px solid #DEDEDE;height:18px;}
+
+div.body p.info {line-height:150%;padding:30px 0; width:580px; margin:0 auto; font-size:11px; letter-spacing:-1px; color:#5d5d5d;text-align:left;}
+
+div.foot {border-top:1px solid #e6e6e6;margin:0 auto;width:680px;padding:10px 100px 0 100px;}
+div.foot ul.company {list-style:none; margin-bottom:5px;}
+div.foot ul.company li {padding:3px;}
+div.foot ul.company li span.divi {color:#cecece;}
+
+
+div.foot p.copyright {text-align:center;}
+
+</style>
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+	function goIDCheckIpin(){
+		var popupWindow = window.open( "../member/ipin/IPINCheckRequest.php?callType=adultcheck", "popupCertKey", "top=100, left=200, status=0, width=417, height=490" );
+		return;
+	}
+
+	function frmChk(){
+		var frm = document.form1;
+		if(frm.rnWay[1].checked == true){
+			goIDCheckIpin();
+			return;
+		}else{
+			if(frm.name.value ==""){
+				alert("이름을 입력하여 주십시오.");
+				frm.name.focus();
+				return;
+			}else if(frm.resno[0].value ==""){
+				alert("주민번호를 입력하여 주십시오.");
+				frm.resno[0].focus();
+				return;
+			}else if(frm.resno[1].value ==""){
+				alert("주민번호를 입력하여 주십시오.");
+				frm.resno[1].focus();
+				return;
+			}
+		}
+	}
+
+	function rnWayChk(){
+
+		var frm = document.form1;
+		ryn = document.getElementById("realnameyn");
+		iyn = document.getElementById("ipinyn");
+		if(frm.rnWay[1].checked == true){
+			ryn.style.display = "none";
+			iyn.style.display = "block";
+			goIDCheckIpin();
+		}else{
+			ryn.style.display = "block";
+			iyn.style.display = "none";
+		}
+	}
+//-->
+</SCRIPT>
+<!--{ customHeader }-->
+ </HEAD>
+
+<BODY>
+<div class="head">
+	<h2>회원 전용으로 운영되는 쇼핑몰 입니다.</h2>
+	<p>로그인 / 회원가입 후 이용이 가능합니다.</p>
+</div>
+
+
+<div class="body">
+
+	<div class="login-title">
+		<img src="../img/login_02.gif" alt="" class="title"/>
+	</div>
+
+	<div class="forms-wrap">
+
+	<div class="forms">
+
+
+
+
+		<!-- 로그인 폼 -->
+		<div class="form">
+
+		<div class="member-login-title">회원 로그인</div>
+
+		<form method=post action="{loginActionUrl}" id=form2 name=form2>
+		<input type=hidden name=returnUrl value="{_returnUrl}">
+		<table>
+		<tr>
+			<th>아이디</th>
+			<td><input type=text class="fld" name=m_id size=20 tabindex=5></td>
+			<td rowspan=2 class=noline><input type=image src="../img/btn_login.gif" tabindex=7></td>
+		</tr>
+		<tr>
+			<th>비밀번호</th>
+			<td><input type=password class="fld" name=password size=20 tabindex=6></td>
+		</tr>
+		<tr>
+			<td colspan="2">
+				<a href="../member/join.php" onfocus="blur()">회원가입</a>|<a href="../member/find_id.php" onfocus="blur()">아이디찾기</a>|<a href="../member/find_pwd.php" onfocus="blur()">비밀번호찾기</a>
+			</td>
+		</tr>
+		</table>
+		</form>
+		</div>
+		<!--{ ? SocialMemberEnabled }-->
+		<div class="sns-login">
+			<div class="sns-login-title">SNS 계정로그인</div>
+			<div class="sns-btn-group">
+				<!--{ ? FacebookLoginURL }-->
+				<button onclick="popup('{FacebookLoginURL}', 400, 300);" class="sns-btn btn-facebook">FACEBOOK</button>
+				<!--{ / }-->
+			</div>
+		</div>
+		<!--{ / }-->
+	</div>
+
+	</div><!-- class=forms-wrap -->
+
+</div>
+
+
+<div class="foot">
+
+	<div class="logo"><a href="./main/main.php"><?php echo $logoImage;?></a></div>
+
+	<ul class="company">
+		<li>
+			<!--{ ? _cfg['compName'] }-->상호명 : {_cfg['compName']}<!--{ / }-->
+			<!--{ ? _cfg['compSerial'] }--> <span class="divi"> | </span> 사업자등록번호 : {_cfg['compSerial']}<!--{ / }-->
+			<!--{ ? _cfg['orderSerial'] }--> <span class="divi"> | </span> 통신판매업신고번호 : {_cfg['orderSerial']}<!--{ / }-->
+		</li>
+		<li>
+			<!--{ ? _cfg['ceoName'] }-->대표 : {_cfg['ceoName']} <!--{ / }-->
+			<!--{ ? _cfg['adminName'] }--> <span class="divi"> | </span> 개인정보관리책임자 : {_cfg['adminName']}
+				<!--{ ? _cfg['adminEmail'] }-->(<a href="javascript:popup('./proc/popup_email.php?to={_cfg['adminEmail']}&hidden=1',650,600)">{_cfg['adminEmail']}</a>)
+				<!--{ / }-->
+			<!--{ / }-->
+		</li>
+		<li>
+			<!--{ ? _cfg['address'] }-->주소 : {_cfg['address']} <!--{ / }-->
+			<!--{ ? _cfg['compPhone'] }--> <span class="divi"> | </span> 대표번호 : {_cfg['compPhone']}<!--{ / }-->
+			<!--{ ? _cfg['compFax'] }--> <span class="divi"> | </span> 팩스번호 : {_cfg['compFax']} <!--{ / }-->
+		</li>
+	</ul>
+
+	<p class="copyright">
+	Copyright ⓒ <strong>{_cfg['shopUrl']}</strong> All right reserved
+	</p>
+
+</div>
+
+<iframe id="ifrmRnCheck" name="ifrmRnCheck" style="width:500px;height:500px;display:none;"></iframe>
+
+</body>
+</html>

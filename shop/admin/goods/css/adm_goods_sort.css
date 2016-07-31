@@ -1,0 +1,498 @@
+/* 
+    Document   : adm_goods_sort
+    Created on : 2013. 6. 5, 오후 2:55:13
+    Author     : workingparksee <parksee@godo.co.kr>
+    Description:
+        Purpose of the stylesheet follows.
+*/
+.adm_goods_sort_link{
+	color: #0100FF;
+	font-weight: bold;
+	border:solid 0;
+	border-bottom-width:1px;
+}
+
+#goods-search-form #goods-sort-guide,
+#goods-search-form .move-selection-box,
+#goods-sort-form .move-selection-box {
+	display: none;
+}
+
+#goods-search-form.auto #goods-sort-guide,
+#goods-search-form.auto .move-selection-box,
+#goods-sort-form.auto .move-selection-box {
+	display: none;
+}
+#goods-search-form.manual #goods-sort-guide,
+#goods-search-form.manual .move-selection-box,
+#goods-sort-form.manual .move-selection-box {
+	display: block;
+}
+
+/* 리스트 보기 옵션 */
+#list-display-option {
+	margin: 10px 0;
+}
+#list-display-option .image-size-selector {
+	display: none;
+}
+#list-display-option.list .image-size-selector {
+	display: inline;
+}
+
+#goods-sort-guide { 
+	border: dashed 2px #f17a7a;
+	background: #f2f2f2;
+	padding: 0px 7px 7px 22px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	margin: 10px 0px;
+	font-size: 11px;
+}
+#goods-sort-guide li {
+	margin-top: 7px;
+}
+#goods-content {
+	width: 100%;
+	overflow: hidden;
+}
+#goods-content .body {
+	position: relative;
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+}
+#goods-content .body .data .field {
+	word-break: break-all;
+}
+
+/* 리스트 형 보기 */
+#goods-content.view-list .body .data {
+	position: relative;
+	overflow: hidden;
+	float: left;
+	width: 100%;
+	border-bottom: solid #dddddd 1px;
+	font-size: 0px;
+}
+#goods-content.view-list .body .data .field {
+	position: absolute;
+	font-size: 12px;
+	line-height: 12px;
+	padding: 5px 0px;
+}
+#goods-content.view-list .result {
+	padding: 20px;
+	text-align: center;
+}
+#goods-content.view-list .body .data.selected {
+	background: #e8f5bb;
+}
+#goods-content.view-list .body .data .no {
+	text-align: center;
+}
+#goods-content.view-list .body .data .image {
+	text-align: center;
+}
+#goods-content.view-list .body .data .name {
+	padding-left: 5px;
+	text-align: left;
+}
+#goods-content.view-list .body .data .option {
+	padding-left: 5px;
+	text-align: left;
+}
+#goods-content.view-list .body .data .soldout {
+	text-align: center;
+}
+#goods-content.view-list .body .data .open {
+	text-align: center;
+}
+#goods-content.view-list .body .data .sell-stock {
+	text-align: center;
+}
+#goods-content.view-list .body .data .real-stock {
+	text-align: center;
+}
+#goods-content.view-list .body .data .price {
+	text-align: center;
+	margin-right: 1px;
+}
+
+/* List size 25 */
+#goods-content.view-list.image-25 .body .data {
+	height: 35px;
+}
+#goods-content.view-list.image-25 .field {
+	height: 25px;
+}
+#goods-content.view-list.image-25 .no {
+	width: 50px;
+}
+#goods-content.view-list.image-25 .image {
+	width: 35px;
+}
+#goods-content.view-list.image-25 .name {
+	min-width: 100px;
+}
+#goods-content.view-list.image-25 .option {
+	width: 230px;
+}
+#goods-content.view-list.image-25 .soldout {
+	width: 65px;
+}
+#goods-content.view-list.image-25 .open {
+	width: 65px;
+}
+#goods-content.view-list.image-25 .sell-stock {
+	width: 65px;
+}
+#goods-content.view-list.image-25 .real-stock {
+	width: 65px;
+}
+#goods-content.view-list.image-25 .price {
+	width: 80px;
+}
+#goods-content.view-list.image-25 .body .data .no {
+	left: 0px;
+}
+#goods-content.view-list.image-25 .body .data .image {
+	left: 50px;
+}
+#goods-content.view-list.image-25 .body .data .image img {
+	width: 25px;
+}
+#goods-content.view-list.image-25 .body .data .name {
+	left: 85px;
+	right: 570px;
+}
+#goods-content.view-list.image-25 .body .data .option {
+	right: 340px;
+}
+#goods-content.view-list.image-25 .body .data .soldout {
+	right: 275px;
+}
+#goods-content.view-list.image-25 .body .data .open {
+	right: 210px;
+}
+#goods-content.view-list.image-25 .body .data .sell-stock {
+	right: 145px;
+}
+#goods-content.view-list.image-25 .body .data .real-stock {
+	right: 80px;
+}
+#goods-content.view-list.image-25 .body .data .price {
+	right: 0px;
+}
+
+/* List size 50 */
+#goods-content.view-list.image-50 .body .data {
+	height: 60px;
+}
+#goods-content.view-list.image-50 .field {
+	height: 50px;
+}
+#goods-content.view-list.image-50 .no {
+	width: 50px;
+}
+#goods-content.view-list.image-50 .image {
+	width: 60px;
+}
+#goods-content.view-list.image-50 .name {
+	min-width: 100px;
+}
+#goods-content.view-list.image-50 .option {
+	width: 230px;
+}
+#goods-content.view-list.image-50 .soldout {
+	width: 65px;
+}
+#goods-content.view-list.image-50 .open {
+	width: 65px;
+}
+#goods-content.view-list.image-50 .sell-stock {
+	width: 65px;
+}
+#goods-content.view-list.image-50 .real-stock {
+	width: 65px;
+}
+#goods-content.view-list.image-50 .price {
+	width: 80px;
+}
+#goods-content.view-list.image-50 .body .data .no {
+	left: 0px;
+}
+#goods-content.view-list.image-50 .body .data .image {
+	left: 50px;
+}
+#goods-content.view-list.image-50 .body .data .image img {
+	width: 50px;
+}
+#goods-content.view-list.image-50 .body .data .name {
+	left: 110px;
+	right: 570px;
+}
+#goods-content.view-list.image-50 .body .data .option {
+	right: 340px;
+}
+#goods-content.view-list.image-50 .body .data .soldout {
+	right: 275px;
+}
+#goods-content.view-list.image-50 .body .data .open {
+	right: 210px;
+}
+#goods-content.view-list.image-50 .body .data .sell-stock {
+	right: 145px;
+}
+#goods-content.view-list.image-50 .body .data .real-stock {
+	right: 80px;
+}
+#goods-content.view-list.image-50 .body .data .price {
+	right: 0px;
+}
+
+/* List size 100 */
+#goods-content.view-list.image-100 .body .data {
+	height: 110px;
+}
+#goods-content.view-list.image-100 .field {
+	height: 100px;
+}
+#goods-content.view-list.image-100 .no {
+	width: 50px;
+}
+#goods-content.view-list.image-100 .image {
+	width: 110px;
+}
+#goods-content.view-list.image-100 .name {
+	min-width: 100px;
+}
+#goods-content.view-list.image-100 .option {
+	width: 230px;
+}
+#goods-content.view-list.image-100 .soldout {
+	width: 65px;
+}
+#goods-content.view-list.image-100 .open {
+	width: 65px;
+}
+#goods-content.view-list.image-100 .sell-stock {
+	width: 65px;
+}
+#goods-content.view-list.image-100 .real-stock {
+	width: 65px;
+}
+#goods-content.view-list.image-100 .price {
+	width: 80px;
+}
+#goods-content.view-list.image-100 .body .data .no {
+	left: 0px;
+}
+#goods-content.view-list.image-100 .body .data .image {
+	left: 50px;
+}
+#goods-content.view-list.image-100 .body .data .image img {
+	width: 100px;
+}
+#goods-content.view-list.image-100 .body .data .name {
+	left: 160px;
+	right: 570px;
+}
+#goods-content.view-list.image-100 .body .data .option {
+	right: 340px;
+}
+#goods-content.view-list.image-100 .body .data .soldout {
+	right: 275px;
+}
+#goods-content.view-list.image-100 .body .data .open {
+	right: 210px;
+}
+#goods-content.view-list.image-100 .body .data .sell-stock {
+	right: 145px;
+}
+#goods-content.view-list.image-100 .body .data .real-stock {
+	right: 80px;
+}
+#goods-content.view-list.image-100 .body .data .price {
+	right: 0px;
+}
+
+/* 갤러리 형 보기 */
+#goods-content.view-gallery .head {
+	display: none;
+}
+#goods-content.view-gallery .body .data {
+	float: left;
+	width: 150px;
+	height: 220px;
+	padding: 5px;
+}
+#goods-content.view-gallery .body .data .field {
+	text-align: center;
+}
+#goods-content.view-gallery .no {
+	display: none;
+}
+#goods-content.view-gallery .body .data .image img {
+	width: 130px;
+}
+#goods-content.view-gallery .name {
+	margin: 5px;
+	max-height: 65px;
+	overflow: hidden;
+}
+#goods-content.view-gallery .option {
+	display: none;
+}
+#goods-content.view-gallery .soldout {
+
+}
+#goods-content.view-gallery .open {
+	display: none;
+}
+#goods-content.view-gallery .sell-stock {
+	display: none;
+}
+#goods-content.view-gallery .real-stock {
+	display: none;
+}
+#goods-content.view-gallery .price {
+	font-weight: bold;
+}
+#goods-content.view-gallery .result {
+	padding: 20px;
+	text-align: center;
+}
+#goods-content.view-gallery .body .data.selected {
+	background: #e8f5bb;
+}
+
+/* 선택상품 드래그 시 엘리먼트 스타일 */
+#goods-content .body .data.on-drag {
+	font-size: 12px;
+	position: absolute !important;
+	overflow: visible !important;
+	float: left;
+	height: auto !important;
+	width: 130px !important;
+	background: #ffffff !important;
+	border: solid #f17a7a 2px !important;
+	padding: 15px;
+	text-align: center !important;
+	overflow: visible;
+}
+#goods-content .body .data.on-drag * {
+	display: none;
+}
+#goods-content .body .data.on-drag #on-drag-description {
+	display: block;
+	position: static;
+}
+
+/* 상품리스트 하단 영역 */
+#goods-content .foot {
+	margin-top: 10px;
+	text-align: center;
+	clear: both;
+}
+#goods-content .foot .page {
+	padding: 5px;
+}
+#goods-content .foot .page.normal {
+	cursor: pointer;
+}
+#goods-content .foot .page.activate {
+	font-weight: bold;
+}
+
+/* 상품진열 타입 안내 */
+#goods-sort-type-description {
+	background: #ffdc6d;
+	padding: 5px;
+	margin: 10px 0;
+	display: none;
+}
+#goods-sort-type-description .sort-type-status {
+	font-size: 13px;
+	margin-top: 3px;
+	margin-bottom: 5px;
+}
+#goods-sort-type-description .sort-type-status .sort-type,
+#goods-sort-type-description .sort-type-status .category-name {
+	font-weight: bold;
+}
+#goods-search-form.auto #goods-sort-type-description,
+#goods-search-form.manual #goods-sort-type-description {
+	display: block;
+}
+#goods-search-form.manual #goods-sort-type-description .sort-type-status .auto {
+	display: none;
+}
+#goods-search-form.auto #goods-sort-type-description .sort-type-status .manual {
+	display: none;
+}
+#goods-search-form #goods-sort-type-description .bold {
+	font-weight: bold;
+}
+#goods-search-form.manual #goods-sort-type-description .change-category-sort-type .auto {
+	display: none;
+}
+#goods-search-form.auto #goods-sort-type-description .change-category-sort-type .manual {
+	display: none;
+}
+#goods-search-form.auto #goods-sort-type-description .manual-sort-on-link-goods-position-form {
+	display: none;
+}
+#goods-sort-type-description .sort-type-status .description {
+	font-size: 12px;
+}
+#goods-sort-type-description .sort-type-status .sort-type {
+	color: #ff0000;
+}
+#goods-sort-type-description .sort-type-description {
+	font-size: 13px;
+}
+#goods-sort-type-description .sort-type-description a {
+	color: #006697;
+}
+#goods-sort-type-description .sort-type-description a:hover {
+	color: #000000;
+}
+#goods-sort-type-description .manual-sort-on-link-goods-position-form {
+	margin: 5px 0;
+}
+#goods-sort-type-description .change-category-sort-type {
+	margin: 5px 0;
+}
+
+/* 선택상품 이동 셀렉트 박스 */
+.move-selection-box {
+	margin: 5px 0;
+}
+
+/* 상품수정 취소 버튼 */
+#cancel-modified {
+	cursor: pointer;
+}
+
+/* 임시 판매재고 마스킹 */
+#goods-content .real-stock {
+	display: none !important;
+}
+#goods-content.view-list .body .data .name {
+	right: 505px !important;
+}
+#goods-content.view-list .body .data .option {
+	right: 275px !important;
+}
+#goods-content.view-list .body .data .soldout {
+	right: 210px !important;
+}
+#goods-content.view-list .body .data .open {
+	right: 145px !important;
+}
+#goods-content.view-list .body .data .sell-stock {
+	right: 80px !important;
+}

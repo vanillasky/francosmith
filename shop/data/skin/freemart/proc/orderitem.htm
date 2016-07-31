@@ -1,0 +1,148 @@
+{*** 장바구니 상품목록 | goods/goods_cart.php ***}
+
+
+<style media="screen">
+table.orderitem-list {width:100%;}
+table.orderitem-list thead tr th {border-top:2px solid #303030;border-bottom:1px solid #d6d6d6;background:#f0f0f0;height:30px;}
+table.orderitem-list tbody tr td {border-bottom:1px solid #d6d6d6;padding:3px;}
+table.orderitem-list tbody tr td table td {border:none; }
+table.orderitem-list tfoot tr td {border-bottom:1px solid #efefef;background:#f7f7f7;height:25px;text-align:right;}
+table.orderitem-list tfoot tr td table td {border:none;}
+</style>
+
+<table cellpadding=0 cellspacing=0 class="orderitem-list" >
+<!--{ ? _orderitem_mode=="cart" }--><col width=30><!--{ / }--><col width=60><col><col width=60><col width=80><col width=50><col width=80>
+<thead>
+<tr>
+	<!--{ ? _orderitem_mode=="cart" }--><th><a href="javascript:void(0);" onClick="chkBox('idxs[]','rev');nsGodo_CartAction.recalc();">선택</a></th><!--{ / }-->
+	<th colspan=2 width=200>상품정보</th>
+	<th>적립금</th>
+	<th>판매가</th>
+	<th>수량</th>
+	<!--{ ? cart->special_discount_amount }-->
+	<th>상품할인</th>
+	<!--{ / }-->
+	<!--{ ? cart->dcprice }-->
+	<th>회원할인</th>
+	<!--{ / }-->
+	<th>배송비</th>
+	<th>합계</th>
+</tr>
+</thead>
+<tbody>
+
+<!--{ @ cart->item }-->
+<tr>
+	<input type="hidden" name="adultpro[]" value="{.use_only_adult}">
+	<!--{ ? _orderitem_mode=="cart" }-->
+	<td align=center><input type="checkbox" name="idxs[]" value="{.index_}" checked onClick="nsGodo_CartAction.recalc();"></td>
+	<!--{ / }-->
+	<td height=60 align=center>
+	<!--{?.todaygoods=='y'}--><a href="../todayshop/today_goods.php?tgsno={.tgsno}">{=goodsimgTS(.img,40)}</a>
+	<!--{:}--><a href="../goods/goods_view.php?goodsno={.goodsno}">{=goodsimg(.img,40)}</a>
+	<!--{/}-->
+	</td>
+	<td align="left">
+	<div>{.goodsnm}</div>
+	<div style="margin:5px 0 5px 0;overflow:hidden;height:1px;background:url(../img/common/line2.gif) repeat-x top left;"></div>
+	<!--{ ? .opt }-->선택옵션 : [{=implode("/",.opt)}]<!--{ / }-->
+	<!--{ ? .select_addopt}-->
+	<br>추가옵션 : <!--{ @ .select_addopt }-->[{..optnm}:{..opt}]<!--{ / }-->
+	<!--{ / }-->
+	<!--{ ? .input_addopt}-->
+	<br>입력옵션 : <!--{ @ .input_addopt }-->[{..optnm}:{..opt}]<!--{ / }-->
+	<!--{ / }-->
+	<!--{ ? _orderitem_mode=="cart" }-->
+	<div style="margin:5px 0 5px 0"><a href="javascript:void(0);" onClick="nsGodo_CartAction.editOption('{.index_}');"><img src="../img/common/btn_check_modify.gif"></a></div>
+	<!--{ / }-->
+	</td>
+	<td align=center>{=number_format(.reserve)}원</td>
+	<td align=right style="padding-right:10">{=number_format(.price + .addprice)}원</td>
+	<td align=center>
+	<!--{ ? _orderitem_mode=="cart" }-->
+		<table cellpadding=0 cellspacing=0 border=0>
+		<tr>
+			<td><input type=text name=ea[] step="{? .sales_unit}{.sales_unit}{:}1{/}" min="{? .min_ea}{.min_ea}{:}1{/}" max="{? .max_ea}{.max_ea}{:}0{/}" size=2 value="{.ea}" class=line style="text-align:right;" onkeydown="onlynumber()" onblur="chg_cart_ea(this,'set')"></td>
+			<td><div style="padding-bottom:2px"><img src="../img/common/btn_plus.gif" onClick="chg_cart_ea(frmCart['ea[]'],'up',{.index_})" style="cursor:pointer"></div><img src="../img/common/btn_minus.gif" onClick="chg_cart_ea(frmCart['ea[]'],'dn',{.index_})" style="cursor:pointer"></td>
+			<td><input type=image src="../img/common/sbtn_mod.gif"></td>
+		</tr>
+		</table>
+		<!--{ : }-->
+		{.ea}개
+	<!--{ / }-->
+	</td>
+	<!--{ ? cart->special_discount_amount }-->
+	<td>
+	<div style="text-align:center;margin-top:3px">{=number_format(.special_discount_amount )}원</div>
+	</td>
+	<!--{/}-->
+	<!--{ ? .memberdc }-->
+	<td align=center>{=number_format(.memberdc)}원</td>
+	<!--{ / }-->
+	<!--{ ? orderitem_rowspan[.index_] > 0}-->
+	<td align=center rowspan="{orderitem_rowspan[.index_]}">
+		<!--{ ? .delivery_type == 1 }-->
+		무료배송
+		<!--{ : .delivery_type == 2 && .goods_delivery }-->
+		개별배송
+		<div>({=number_format(.goods_delivery)}원)</div>
+		<!--{ : .delivery_type == 3 && .goods_delivery }-->
+		착불배송
+		<div>({=number_format(.goods_delivery)}원)</div>
+		<!--{ : .delivery_type == 4 && .goods_delivery }-->
+		고정배송
+		<div>({=number_format(.goods_delivery)}원)</div>
+		<!--{ : .delivery_type == 5 && .goods_delivery }-->
+		수량별배송
+		<div>({=number_format(.goods_delivery * .ea)}원)</div>
+		<!--{ : }-->
+		<div id="el-default-delivery">
+		기본배송
+		</div>
+		<!--{ / }-->
+	</td>
+	<!--{ / }-->
+
+	<td align=right style="padding-right:10">{=number_format((.price + .addprice)*.ea)}원</td>
+</tr>
+<!--{ ? _orderitem_mode=="cart" }-->
+<script>nsGodo_CartAction.pushdata({reserve:{=.reserve},price:{=(.price + .addprice)},ea:{=.ea},special_discount_amount:{.special_discount_amount},memberdc:{.memberdc}});</script>
+<!--{ / }-->
+<!--{ / }-->
+</tbody>
+
+<tfoot>
+<tr>
+	<td colspan=10>
+
+	<table style="display:block;float:right;">
+	<tr>
+		<td align=right width=80 nowrap>상품합계금액</td>
+		<td align=right style="font-weight:bold;padding-left:25px"><span id="el-orderitem-total-price">{=number_format(cart->goodsprice)}</span>원&nbsp;</td>
+	</tr>
+	<!--{ ? cart->special_discount_amount || cart->dcprice }-->
+	<tr>
+		<td align=right width=80 nowrap>할인금액</td>
+		<td align=right style="font-weight:bold;padding-left:25px"><span id="el-orderitem-total-special_discount_amount">{=number_format(cart->special_discount_amount + cart->dcprice)}</span>원&nbsp;</td>
+	</tr>
+	<tr>
+		<td align=right width=80 nowrap>할인적용금액</td>
+		<td align=right style="font-weight:bold;padding-left:25px" class=red><span id="el-orderitem-total-result">{=number_format(cart->goodsprice - (cart->special_discount_amount + cart->dcprice))}</span>원&nbsp;</td>
+	</tr>
+	<!--{ / }-->
+	<tr>
+		<td align=right><!-- { ?_set.emoney.emoney_standard == 1} -->예상적립금<!-- { : } -->받으실적립금<!-- { / } --></td>
+		<td align=right style="font-weight:bold;padding-left:25px"><span id="el-orderitem-total-reserve">{=number_format(cart->bonus)}</span>원&nbsp;</td>
+	</tr>
+	<!--{? view_aboutdc}-->
+	<tr>
+		<td align=right>어바웃쿠폰</td>
+		<td align=right style="font-weight:bold;padding-left:25px">{=number_format(about_coupon)}원&nbsp;</td>
+	</tr>
+	<!--{ / }-->
+	</table>
+
+	</td>
+</tr>
+</tfoot>
+</table>

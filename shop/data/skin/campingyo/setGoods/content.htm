@@ -1,0 +1,104 @@
+{*** 코디상세페이지 | setGoods/content.php ***}
+<!--{? state == 'N'}-->
+	<script>alert('진열되지 않은 코디상품 입니다.'); location.href="../setGoods/";</script>
+<!--{/}-->
+<!-- 절대! 지우지마세요 : Start -->
+{# h_include_item}
+<!-- 절대! 지우지마세요 : End -->
+{# header}
+<link rel="styleSheet" href="./css/content.css">
+<script type="text/javascript" src="../../../../setGoods/js/content.js"></script>
+<!--container -->
+<div id="container">
+	<div class="title"><img src="./img/front/title_cody.gif" /></div>
+	<div class="path" style="float:right;margin:30px 28px 0 0;vertical-align:text-bottom;">HOME > <a href="../setGoods/">코디상품 리스트</a> > <B>코디상품 상세페이지</B></div>
+	<div class="clear"></div>
+
+	<div class="codi-left">
+		<div class="codi-bg">
+			<div class="codi-area">
+				{=html_entity_decode(obj[0].CD_content)}
+			</div>
+		</div>
+		<div class="codi-info">{=nl2br(obj[0].memo)}</div>
+		
+		<div class="codiSymbol">
+			<div style="float:left;">
+				<span class="icon"><img src='./img/front/icon_comment.gif' style="vertical-align:middle;"/>{obj[0].recody_cnt}</span>
+				<span class="icon"><img src='./img/front/icon_likeit.gif' style="vertical-align:middle;"/>{obj[0].like_cnt}</span>
+			</div>
+			<div class="likeBtn"><a href="javascript:" onclick="like_cnt('{obj[0].idx}')" ><img src="./img/front/btn_likeit.gif" /></a></div>
+			<div class="clear"></div>
+		</div>
+		
+		<!--{? setGConfig.means != 4}-->
+			<div id="relationCody" class="relationCody"></div>
+		<!--{/}-->
+		
+		<!--{? setGConfig.memo == 'Y'}-->
+			<div id="comment" name="comment"></div>
+		<!--{/}-->
+		 
+	</div>
+
+	<div class="codi-right">
+		<div class="codi-right-top-bg">
+			<div class="setName">
+				{obj[0].cody_name}
+			</div>
+			<div class="setitemTotal"><b>{=count(Iobj)}</b> items</div>
+		</div>
+		<div class="orderList">
+		<!--{@ Iobj}-->
+			<div class="orderList-item" id="image-info{.tem_index}" onmouseover="image_highlight('{.tem_index}')" onmouseout="UN_image_highlight('{.tem_index}')">
+				<div class="orderList-item-txt">
+					<a href="/shop/goods/goods_view.php?goodsno={.goods_idx}" target="_new"><div class="orderList-item-name">{=strCut(html_entity_decode(Iobj.name),50)}</div></a>
+					<div class="orderList-item-price" >￦{=number_format(price[.goods_idx])}</div>
+				</div>
+				<div class="clear"></div>
+				<div class="orderList-menuBtn"><a href="javascript:" onclick="Load_popup.one_action('{.goods_idx}')"><img src="./img/front/btn_order.gif"/></a>&nbsp;<a href="../setGoods/?cody={.goods_idx}"><img src="./img/front/btn_codymore.gif"/></a></div>
+			</div>
+		<!--{/}-->
+
+		<!--{? Iobj.size_ > 1}-->
+			<div class="orderList-totalCost">
+				<div class="orderList-total">Total</div>
+				<div class="orderList-cost">￦{=number_format(price['total'])}</div>
+			</div>
+			<div class="orderList-buyBtn"><a href="javascript:" onclick="Load_popup.action()"><img src="./img/front/btn_orderall.gif" /></a></div>
+		<!--{/}-->
+		</div>
+		
+		<div><img src="./img/front/subright_boxbottom.gif" /></div>
+		
+		
+		<div class="sns">
+		{snsBtn}			 
+		</div>
+		
+	</div>
+
+
+	<div class="clear"></div>
+
+
+</div>
+<!--//container -->
+
+<script type="text/javascript">
+
+var idx = '{idx}';
+<!--{@ Iobj}-->
+	inURL('../goods/goods_view.php?goodsno={.goods_idx}','{Iobj.tem_index}');
+	Load_popup.set('{Iobj.goods_idx}');	
+<!--{/}-->
+
+jQuery(window).load(function() {
+	load_comment(idx);
+<!--{? setGConfig.means != 4}-->
+	relationCody(idx);
+<!--{/}-->
+});
+
+</script>
+{ # footer }

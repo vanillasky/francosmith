@@ -1,0 +1,150 @@
+.button-small {
+    background-color: #4CAF50; /* Green */
+    border: none;
+    padding: 3px 5px 3px 5px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 11px;
+    margin: 4px 2px;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+    cursor: pointer;
+    border-radius:3px;
+}
+
+.button-medium {
+    background-color: #4CAF50; /* Green */
+    border: none;
+    padding: 5px 5px 5px 5px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 12px;
+    margin: 4px 2px;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+    cursor: pointer;
+    border-radius:3px;
+}
+
+
+.button-big {
+    background-color: #4CAF50; /* Green */
+    border: none;
+    padding: 10px 10px 10px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 12px;
+    margin: 4px 2px;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+    cursor: pointer;
+    border-radius:3px;
+    
+     font-family:notokr-regular,dotum,Arial; 
+}
+
+.button-big-cs {
+	background-color: #4CAF50; /* Green */
+    border: none;
+    padding: 5px 10px 5px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 12px;
+    margin: 4px 2px;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+    cursor: pointer;
+    border-radius:3px;
+    
+    font-family:notokr-regular,dotum,Arial;
+}
+
+.button-big-wide {
+    background-color: #4CAF50; /* Green */
+    border: none;
+    padding: 10px 20px 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    margin: 5px 3px;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+    cursor: pointer;
+    border-radius:3px;
+ 
+    font-family:notokr-regular,dotum,Arial; 
+}
+
+
+.button-red {
+    background-color: #C9242B; 
+    color: white; 
+    border:2px solid #C9242B;
+}
+
+.button-red:hover {
+    background-color: #d62619;
+    color: white;
+    border:2px solid #d62619;
+}
+
+.button-grey {
+	background-color: #EDEDED; 
+  color: black; 
+  border:2px solid #EDEDED;
+}
+
+.button-dark {
+    background-color: #3B3B3B; 
+    color: white; 
+    border:2px solid #3B3B3B;
+}
+
+.button-dark:hover {
+    background-color: #181717;
+    color: white;
+    border:2px solid #181717;
+}
+
+
+
+.button-grey:hover {
+	background-color: white; 
+  color: black; 
+  border:2px solid #EDEDED;
+}
+
+.button-grey-b {
+  background-color: #EDEDED; 
+  color: black; 
+  border:2px solid #ccc;
+}
+
+.button-grey-b:hover {
+  background-color: white; 
+  color: black; 
+  border:2px solid #ccc;
+}
+
+.button-cart {
+	background-color: #00798F;
+	color: white; 
+	border:2px solid #00798F;
+	/*font-family:notokr-regular,dotum,Arial;*/
+	font-family:"Arial", "Geneva",  "Helvetica", "sans-serf";
+	font-weight:bold;
+}
+
+.button-cart:hover {
+	background-color: #006b8f;
+	color: white; 
+	border:2px solid #006b8f;
+	/*font-family:notokr-regular,dotum,Arial;*/
+	font-family:"Arial", "Geneva",  "Helvetica", "sans-serf";
+	font-weight:bold;
+}

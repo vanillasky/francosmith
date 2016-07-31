@@ -1,0 +1,336 @@
+{*** 코디주문하기/전체주문하기 | setGoods/goodsView/goodsView.php ***}
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="euc-kr"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>상품 상세보기</title>
+	<script type="text/javascript" src="../../../../../setGoods/js/jquery-1.7.2.min.js"></script>
+	<script type="text/javascript" src="../../../../../setGoods/js/default.js"></script>
+	<script src="../../../../../../shop/lib/js/prototype.js"></script>
+	<script type="text/javascript" src="../../common.js"></script>
+	<!--link rel="stylesheet" type="text/css" href="../../../../../setGoods/css/style.css"/-->
+	<link rel="stylesheet" type="text/css" href="../css/goodsView.css"/>
+	{naverCommonInflowScript}
+	<script>
+	<!--{?naverNcash=='Y'}-->
+		function mileage_info() {
+			window.open("http://static.mileage.naver.net/static/20130708/ext/intro.html", "mileageIntroPopup", "width=404, height=412, status=no, resizable=no");
+		}
+	<!--{/}-->
+
+		function chkOption(obj){
+			if (!selectDisabled(obj)) return false;
+		}
+
+		function selectDisabled(oSelect){
+			var isOptionDisabled = oSelect.options[oSelect.selectedIndex].disabled;
+			if (isOptionDisabled){
+				oSelect.selectedIndex = oSelect.preSelIndex;
+				return false;
+			} else oSelect.preSelIndex = oSelect.selectedIndex;
+			return true;
+		}
+
+		function act(action,target){
+			var form = document.frmView;
+			form.action = "/shop/goods/"+action + ".php";
+			if(target == "cat"){
+				form.target = "ifrmHidden";
+			}else if(target == "order"){
+				opener.parent.name="frmview2";
+				form.target=opener.parent.name;
+			}else{
+				alert('정상적인 접속이 아닙니다');
+				return false ;
+			}
+
+			var opt_cnt = 0, data;
+
+			if (opt_cnt > 0) {
+				form.submit();
+				self.close();
+			}else {
+				if (chkForm(form)){
+					form.submit();
+					self.close();
+				}
+			}
+
+			return;
+		}
+
+	</script>
+	{=acecounterHeader}
+</head>
+<body>
+
+<form name=frmView method=post onsubmit="return false">
+<div id="wrap">
+	<div class="titleBar"><div class="titleBar-txt">상품 미리보기</div><!--div class="close"><a href="javascript:window.close()"><img src="../img/front/btn_layerpop_close.gif"/></a></div--></div>
+
+	<input type=hidden name=preview value="y">
+	<input type=hidden name="cody" value="y">
+	<!--{@ goodsInfo}-->
+	<div id="content">
+		<div id="left">
+			<input type=hidden name=mode value="addItem">
+
+			<input type=hidden name=goodsno[{.index_}] value="<!--{ ? !.open || !.runout }-->{.goodsno}<!--{/}-->">
+
+			<input type=hidden name=goodsCoupon[{.index_}] value="{.coupon}">
+			<!--{ ? .min_ea>1}--><input type="hidden" name="min_ea[{.index_}]" value="{.min_ea}"><!--{/}-->
+			<!--{ ? .max_ea!='0'}--><input type="hidden" name="max_ea[{.index_}]" value="{.max_ea}"><!--{ / }-->
+			<div class="photo"  >
+				<div>{=goodsimg(.r_img[0],300,'id="objImg"','4')}</div>
+			</div>
+		</div>
+
+		<div id="right">
+			<div class="name">
+				<div style="padding-top:10px:word-wrap:break-word;">{.goodsnm}</div>
+			</div>
+			<div class="infoBOx">
+				<div class="info1">
+					<table>
+					<!--{ ? .runout && _cfg_soldout.price == 'image'}-->
+						<tr>
+							<td width="90" align="right">판매가격 :</td>
+							<td><img src="/shop/data/goods/icon/custom/soldout_price"></td>
+						</tr>
+					<!--{ : .runout && _cfg_soldout.price == 'string'}-->
+						<tr>
+							<td width="90" align="right">판매가격 :</td>
+							<td>{_cfg_soldout.price_string}</td>
+						</tr>
+					<!--{ : !.strprice }-->
+						<tr>
+							<td width="90" align="right">판매가격 :</td>
+							<td>
+								<!--{ ? .consumer }-->
+									<strike>{=number_format(.consumer)}</strike> →
+								<!--{ / }-->
+									<b>{=number_format(.price)}원</b>
+							</td>
+						</tr>
+
+						<!--{ ? .memberdc }-->
+							<tr>
+								<td width="90" align="right">회원할인가 :</td>
+								<td style="color:#ef1c21">{=number_format(.realprice)}원&nbsp;(-{=number_format(.memberdc)}원)</td>
+							</tr>
+						<!--{ / }-->
+
+						<!--{ ? .coupon }-->
+							<tr>
+								<td width="90" align="right">쿠폰적용가 :</td>
+								<td style="color:#ef1c21">{=number_format(.couponprice)}원&nbsp;(-{=number_format(.coupon)}원)</td>
+							</tr>
+							<div>{about_coupon}</div>
+						<!--{ / }-->
+							<tr>
+								<td width="90" align="right">적립금 :</td>
+								<td>{=number_format(.reserve)}원</td>
+							</tr>
+						<!--{ ? .naverNcash == 'Y' }-->
+							<tr class="naver-mileage-accum" style="display: none;">
+								<th>네이버&nbsp;&nbsp;<br/>마일리지 :</th>
+								<td>
+									<!--{ ? .exception }-->
+									{.exception}
+									<!--{ : }-->
+									<span class="naver-mileage-accum-rate" style="font-weight:bold;color:#1ec228;">{.NaverMileageAccumRate}%</span> 적립
+									<!--{ / }-->
+									<img src="\{_cfg.rootDir}/proc/naver_mileage/images/n_mileage_info4.png" onclick="javascript:mileage_info();" style="cursor: pointer; vertical-align: middle;">
+								</td>
+							</tr>
+						<!--{ / }-->
+
+						<!--{ ? .coupon_emoney }-->
+							<tr>
+								<td width="90" align="right">쿠폰적립금 :</td>
+								<td><span id=obj_coupon_emoney style="font-weight:bold;color:#EF1C21"></span> &nbsp;<span style="font:bold 9pt tahoma; color:#FF0000" >{=number_format(.coupon_emoney)}원</span></td>
+							</tr>
+						<!--{ / }-->
+
+						<!--{ ? .delivery_type == 1 }-->
+							<tr>
+								<td width="90" align="right">배송비 :</td>
+								<td>무료배송</td>
+							</tr>
+						<!--{ : .delivery_type == 2 }-->
+							<tr>
+								<td width="90" align="right">개별배송비 :</td>
+								<td>{=number_format(.goods_delivery)}원</td>
+							</tr>
+						<!--{ : .delivery_type == 3 }-->
+							<tr>
+								<td width="90" align="right">착불배송비 :</td>
+								<td>{=number_format(.goods_delivery)}원</td>
+							</tr>
+						<!--{ : .delivery_type == 4 }-->
+							<tr>
+								<td width="90" align="right">고정배송비 :</td>
+								<td>{=number_format(.goods_delivery)}원</td>
+							</tr>
+						<!--{ : .delivery_type == 5 }-->
+							<tr>
+								<td width="90" align="right">수량별배송비 :</td>
+								<td>{=number_format(.goods_delivery)}원 (수량에 따라 배송비가 추가됩니다.)</td>
+							</tr>
+						<!--{ / }-->
+					<!--{ : }-->
+						<tr>
+							<td width="90" align="right">판매가격 :</td>
+							<td><b>{.strprice}</b></td>
+						</tr>
+					<!--{/}-->
+					</table>
+				</div>
+
+				<div class="info2">
+					<table style="margin-top:5px">
+						<!--{ ? .origin }-->
+							<tr>
+								<td width="90" align="right">원산지 :</td>
+								<td>{.origin}</td>
+							</tr>
+						<!--{ / }-->
+						<!--{ ? .maker }-->
+							<tr>
+								<td width="90" align="right">제조사 :</td>
+								<td>{.maker}</td>
+							</tr>
+						<!--{ / }-->
+						<!--{ ? .brand }-->
+							<tr>
+								<td width="90" align="right">브랜드 :</td>
+								<td>{.brand.brandnm}</td>
+							</tr>
+						<!--{ / }-->
+						<!--{ ? .launchdt }-->
+							<tr>
+								<td width="90" align="right">출시일 :</td>
+								<td>{.launchdt}</td>
+							</tr>
+						<!--{ / }-->
+						<!--{ @ .ex }-->
+							<tr>
+								<td width="90" align="right"><div id="ex{..index_}">{..key_} :</div></td>
+								<td>{..value_}</td>
+							</tr>
+						<!--{ / }-->
+
+
+							<tr>
+								<td width="90" align="right">구매수량 :</div></td>
+								<!--{ ? !.open }-->
+								<td>해당상품은 진열이 허용된 상품이 아닙니다.</td>
+								<!--{:}-->
+									<!--{ ? !.runout }-->
+									<td>
+										<input type=text name=ea[{.index_}] size=2 value={? .min_ea}{.min_ea}{:}1{/} class=line style="text-align:right;height:18px"> 개
+										<div style="padding-left:10px;" class="stxt">
+											<!--{ ? .min_ea>1}--><div>최소구매수량 : {.min_ea}개</div><!--{ / }-->
+											<!--{ ? .max_ea != '0'}--><div>최대구매수량 : {.max_ea}개</div><!--{ / }-->
+										</div>
+									</td>
+									<!--{ : }-->
+									<td>품절된 상품입니다</td>
+									<!--{ / }-->
+								<!--{ / }-->
+
+							</tr>
+
+						<!--{ ? .chk_point}-->
+							<tr>
+								<td width="90" align="right">고객선호도</td>
+								<td><!--{ @ array_fill(0,.chk_point,'') }-->★<!--{ / }--></td>
+							</tr>
+						<!--{ / }-->
+
+						<!--{ ? .icon }-->
+							<tr>
+								<td width="90" align="right">제품상태</td>
+								<td>{.icon}</td>
+							</tr>
+						<!--{ / }-->
+					</table>
+				</div>
+
+				<!-- 옵션 -->
+				<!--{ ? .open && !.runout }-->
+					<!--{ ? opt[.index_]}-->
+					<div class="info1" style="height:40px">
+						<table style="margin-top:5px">
+							<tr>
+								<td width="90" align="right">{.optnm} :</td>
+								<td>
+									<select name="opt[{.index_}][]" onchange="chkOption(this);" required msgR="{.optnm} 선택을 해주세요">
+										<option value="">== 옵션선택 ==</option>
+										<!--{ @ opt[.index_] }-->
+											<!--{ @ ..value_ }-->
+												<option value="{...opt1}{? ...opt2}|{...opt2}{/}" {? .usestock&&!...stock} disabled class=disabled{/}>{...opt1}{? ...opt2}/{...opt2}{/} {? ...price!=.price}({=number_format(...price)}원){/}<!--{ ? .usestock && !...stock }--> [품절]<!--{ / }--></option>
+
+											<!--{ / }-->
+										<!--{ : }-->
+											데이터없음
+										<!--{ / }-->
+									</select>
+								</td>
+							</tr>
+						</table>
+					</div>
+					<!--{ / }-->
+
+
+					<!-- 추가 옵션 -->
+
+					<div class="info2" style="height:40px">
+						<table style="margin-top:5px">
+							<!--{ @ option_val[.index_].addopt }-->
+							<tr>
+								<td width="90" align="right">{..key_} :</td>
+								<td>
+									<!--{ ? option_val[.index_].addoptreq[..index_] }-->
+									<select name="addopt[{.index_}][]" required label="{..key_}">
+										<option value="">=={..key_} 선택==</option>
+									<!--{ : }-->
+									<select name="addopt[{.index_}][]" label="{.key_}">
+										<option value="">=={..key_} 선택==</option>
+										<option value="-1">선택안함</option>
+									<!--{ / }-->
+									<!--{ @ ..value_ }-->
+										<option value="{...sno}^{..key_}^{...opt}^{...addprice}">{...opt}
+										<!--{ ? ...addprice }-->
+											({=number_format(...addprice)}원 추가)
+										<!--{ / }-->
+									<!--{ / }-->
+									</select>
+								</td>
+							</tr>
+							<!--{ / }-->
+						</table>
+					</div>
+				<!--{ / }-->
+
+
+				<div class="btnList">
+					<!--{?(.size_ -1) == .index_}-->
+						<a href="javascript:act('../order/order','order')"><img src="../img/front/btn_buynow.gif" /></a>
+						<a href="javascript:cartAdd(frmView,'{ cartCfg->redirectType }')"><img src="../img/front/btn_cart.gif" /></a>
+					<!--{ / }-->
+				</div>
+			</div>
+		</div>
+
+		<div class="clear"></div>
+	</div>
+	<!--{ / }-->
+
+	</div>
+</div>
+</form>
+<iframe name="ifrmHidden" src='/shop/blank.php' style="display:none;width:100%;width:0px;height:0px"></iframe><!-- //display:none; -->
+</body>
+</html>

@@ -1,0 +1,42 @@
+<html>
+<head>
+<link rel="styleSheet" href="../new_address_style.css">
+<script type="text/javascript" src="../new_address.js"></script>
+</head>
+<body>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr><td style="background:#000000; border-bottom:2px solid #DDDDDD"><img src="../img/common/title_address.gif" border=0></td></tr></tr>
+</table>
+<div class="new-address">
+	<form name="form" method="post">
+	<input type="hidden" name="form" value="{_form}" />
+		<div class="address_sech_type">
+			<label><input type="radio" id="type_a" value="srchRoadName" name="mode" {_checked.mode.srchRoadName} onclick="reSearchAddress(this.value)" />도로명+건물번호</label>
+			<label><input type="radio" id="type_b" value="srchGroundNo" name="mode" {_checked.mode.srchGroundNo} onclick="reSearchAddress(this.value)" />동(읍/면)+지번</label>
+			<label><input type="radio" id="type_c" value="srchBuildingName" name="mode" {_checked.mode.srchBuildingName} onclick="reSearchAddress(this.value)" />건물명(아파트명)</label>
+		</div>
+
+		<div class="addr-add">
+			<div class="addr-add-title">상세주소입력</div>
+			<div class="addr-add-box">
+				<div id="zipcode">
+					<input type="text" name="zipcode1" id="zipcode1" value="{_zipcode1}" readonly /><span style="margin:0 10px;"> - </span><input type="text" name="zipcode2" id="zipcode2" value="{_zipcode2}" readonly />
+				</div>
+				<div id="road_address">
+					<input type="text" name="road_address" value="{_road_address}" readonly/>
+				</div>
+				<div id="ground_address">
+					<input type="text" name="ground_address" value="{_ground_address}" readonly/>
+				</div>
+
+				<div>
+					<div class="explain">나머지 주소를 입력하신 후 '주소입력' 버튼을 눌러주세요.</div>
+					<div id="addr-sub"><input type="text" name="address_sub" value="" /></div>
+				</div>
+			</div>
+		</div>
+		<div class="btn_address_ok"><input type="image" value="주소입력" src="../img/common/btn_addressok.gif" onclick="writeAddress({_form});" /></div>
+	</form>
+</div>
+</body>
+</html>

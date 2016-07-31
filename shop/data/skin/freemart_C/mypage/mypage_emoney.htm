@@ -1,0 +1,51 @@
+{*** 적립금내역 | mypage/mypage_emoney.php ***}
+{ # header }
+
+<!-- 상단이미지 || 현재위치 -->
+<div class="page_title_div">
+	<div class="page_title">YOUR REWARDS</div>
+	<div class="page_path"><a href="/shop/">HOME</a> &gt; <a href="/shop/mypage/mypage.php">마이페이지</a> &gt; <span class='bold'>적립금내역</span></div>
+</div>
+<div class="page_title_line"></div>
+
+<div class="indiv"><!-- Start indiv -->
+
+	<div style="width:100%; text-align:left"><img src="../img/common/mypoint_01.gif"></div>
+	<div style="width:100%; border:1px solid #DEDEDE;">
+		<table width=100% cellpadding=10 cellspacing=0 border=0>
+		<tr>
+			<td style="border:5px solid #F3F3F3;">
+			<div style="width:100%; text-align:center">
+			현재 <strong>{_name}</strong>님의 적립금은 <strong><FONT COLOR="#007FC8">{=number_format(_emoney)} point</font></strong>입니다
+			</div>
+			</td>
+		</tr>
+		</table>
+	</div>
+
+
+	<div style="width:100%; text-align:left; padding-top:20"><img src="../img/common/mypoint_02.gif"></div>
+		<table class="mypage-board-table">
+		<tr class="mypage-board-title">
+			<th width=10%>번호</th>
+			<th width=15%>발생일시</th>
+			<th>상세내역</th>
+			<th width=15%>적립금액</th>
+			<th width=15%>사용금액</th>
+		</tr>
+		<!--{ @ _loop }-->
+		<tr height=25 onmouseover=this.style.background="#F7F7F7" onmouseout=this.style.background="" style="border-bottom:1px solid #ededed">
+			<td align="center">{.idx}</td>
+			<td align="center">{.regdts}</td>
+			<td>{.memo}</td>
+			<td align="center">{ ? .emoney > 0 }{=number_format(.emoney)}{ : }―{ / }</td>
+			<td align="center">{ ? .emoney < 0 }{=number_format(.emoney)}{ : }―{ / }</td>
+		</tr>
+		<!--{ / }-->
+		</table>
+
+		<div class="pagediv">{pg->page['navi']}</div>
+
+</div><!-- End indiv -->
+
+{ # footer }

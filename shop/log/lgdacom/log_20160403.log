@@ -1,0 +1,94 @@
+2016-04-03 20:22:12 [INFO ] [] XPayClient initialize [/www/francotr3287_godo_co_kr/shop/conf/lgdacom] [service]
+2016-04-03 20:22:12 [DEBUG] [] Config [server_id] = [01]
+2016-04-03 20:22:12 [DEBUG] [] Config [timeout] = [60]
+2016-04-03 20:22:12 [DEBUG] [] Config [log_level] = [4]
+2016-04-03 20:22:12 [DEBUG] [] Config [verify_cert] = [1]
+2016-04-03 20:22:12 [DEBUG] [] Config [verify_host] = [1]
+2016-04-03 20:22:12 [DEBUG] [] Config [report_error] = [1]
+2016-04-03 20:22:12 [DEBUG] [] Config [output_utf8] = [0]
+2016-04-03 20:22:12 [DEBUG] [] Config [auto_rollback] = [1]
+2016-04-03 20:22:12 [DEBUG] [] Config [log_dir] = [/log/lgdacom]
+2016-04-03 20:22:12 [DEBUG] [] Config [go_francosmith] = [fdfb4a2f34d255d2537461c422912f49]
+2016-04-03 20:22:12 [DEBUG] [] Config [tgo_francosmith] = [fdfb4a2f34d255d2537461c422912f49]
+2016-04-03 20:22:12 [DEBUG] [] Config [url] = [https://xpayclient.lgdacom.net/xpay/Gateway.do]
+2016-04-03 20:22:12 [DEBUG] [] Config [test_url] = [https://xpayclient.lgdacom.net:7443/xpay/Gateway.do]
+2016-04-03 20:22:12 [DEBUG] [] Config [aux_url] = [http://xpay.lgdacom.net:7080/xpay/Gateway.do]
+2016-04-03 20:25:06 [INFO ] [] XPayClient initialize [/www/francotr3287_godo_co_kr/shop/conf/lgdacom] [service]
+2016-04-03 20:25:06 [DEBUG] [] Config [server_id] = [01]
+2016-04-03 20:25:06 [DEBUG] [] Config [timeout] = [60]
+2016-04-03 20:25:06 [DEBUG] [] Config [log_level] = [4]
+2016-04-03 20:25:06 [DEBUG] [] Config [verify_cert] = [1]
+2016-04-03 20:25:06 [DEBUG] [] Config [verify_host] = [1]
+2016-04-03 20:25:06 [DEBUG] [] Config [report_error] = [1]
+2016-04-03 20:25:06 [DEBUG] [] Config [output_utf8] = [0]
+2016-04-03 20:25:06 [DEBUG] [] Config [auto_rollback] = [1]
+2016-04-03 20:25:06 [DEBUG] [] Config [log_dir] = [/log/lgdacom]
+2016-04-03 20:25:06 [DEBUG] [] Config [go_francosmith] = [fdfb4a2f34d255d2537461c422912f49]
+2016-04-03 20:25:06 [DEBUG] [] Config [tgo_francosmith] = [fdfb4a2f34d255d2537461c422912f49]
+2016-04-03 20:25:06 [DEBUG] [] Config [url] = [https://xpayclient.lgdacom.net/xpay/Gateway.do]
+2016-04-03 20:25:06 [DEBUG] [] Config [test_url] = [https://xpayclient.lgdacom.net:7443/xpay/Gateway.do]
+2016-04-03 20:25:06 [DEBUG] [] Config [aux_url] = [http://xpay.lgdacom.net:7080/xpay/Gateway.do]
+2016-04-03 20:25:06 [DEBUG] [go_francosmith-0120160403202506b1c9c3fd5a3daaa951f848403fcb8fab7c3f1f03] Post [LGD_TXID] = [go_francosmith-0120160403202506b1c9c3fd5a3daaa951f848403fcb8fab7c3f1f03]
+2016-04-03 20:25:06 [DEBUG] [go_francosmith-0120160403202506b1c9c3fd5a3daaa951f848403fcb8fab7c3f1f03] Post [LGD_AUTHCODE] = [c5fc5717fb96c3f4a19e39eb818dead912f01532]
+2016-04-03 20:25:06 [DEBUG] [go_francosmith-0120160403202506b1c9c3fd5a3daaa951f848403fcb8fab7c3f1f03] Post [LGD_MID] = [go_francosmith]
+2016-04-03 20:25:06 [DEBUG] [go_francosmith-0120160403202506b1c9c3fd5a3daaa951f848403fcb8fab7c3f1f03] Post [LGD_TXNAME] = [PaymentByKey]
+2016-04-03 20:25:06 [DEBUG] [go_francosmith-0120160403202506b1c9c3fd5a3daaa951f848403fcb8fab7c3f1f03] Post [LGD_PAYKEY] = [201604032025068EC5B1F5B02D74BB4CDF5A1BB5063820E88A1571]
+2016-04-03 20:25:06 [DEBUG] [go_francosmith-0120160403202506b1c9c3fd5a3daaa951f848403fcb8fab7c3f1f03] Post [LGD_CUSTOM_PROCESSTIMEOUT] = [600]
+2016-04-03 20:25:06 [DEBUG] [go_francosmith-0120160403202506b1c9c3fd5a3daaa951f848403fcb8fab7c3f1f03] post_string = LGD_TXID=go_francosmith-0120160403202506b1c9c3fd5a3daaa951f848403fcb8fab7c3f1f03&LGD_AUTHCODE=c5fc5717fb96c3f4a19e39eb818dead912f01532&LGD_MID=go_francosmith&LGD_TXNAME=PaymentByKey&LGD_PAYKEY=201604032025068EC5B1F5B02D74BB4CDF5A1BB5063820E88A1571&LGD_CUSTOM_PROCESSTIMEOUT=600
+2016-04-03 20:25:07 [DEBUG] [go_francosmith-0120160403202506b1c9c3fd5a3daaa951f848403fcb8fab7c3f1f03] Result = [
+
+
+
+
+
+
+
+
+
+{"LGD_RESPCODE":"0000","LGD_RESPMSG":"Í≤∞Ï†úÏÑ±Í≥µ","LGD_RESPONSE":[{"LGD_CARDACQUIRER":"11","LGD_CARDNOINTEREST_YN":"0","LGD_IFOS":"373I7C","LGD_MID":"go_francosmith","LGD_FINANCENAME":"Íµ≠ÎØºMASTER","LGD_PCANCELFLAG":"1","LGD_FINANCEAUTHNUM":"30001037","LGD_DELIVERYINFO":"","LGD_BUYER":"Ïù¥ÌòÑÎ™Ö","LGD_AFFILIATECODE":"001553","LGD_TRANSAMOUNT":"28900","LGD_BUYERID":"lhm44","LGD_OID":"1459682424913","LGD_CARDNUM":"502123******3125","LGD_RECEIVERPHONE":"010-3899-1424","LGD_2TR_FLAG":"Y","LGD_DEVICE":"","LGD_TID":"go_fr2016040320250645149","LGD_TIMESTAMP":"20160403202508","LGD_FINANCECODE":"11200","LGD_CARDNOINTYN":"0","LGD_PCANCELSTR":"0","LGD_DISCOUNTUSEYN":"0","LGD_ISPKEY":"320250645150","LGD_BUYERPHONE":"010-3899-1424","LGD_ESCROWYN":"N","LGD_PAYTYPE":"SC0010","LGD_AMOUNT":"28900","LGD_VANCODE":"van0012","LGD_EXCHANGERATE":"1.0","LGD_BUYERSSN":"","LGD_CARDINSTALLMONTH":"00","LGD_RESPMSG":"Í≤∞Ï†úÏÑ±Í≥µ","LGD_PAYDATE":"20160403202507","LGD_PRODUCTINFO":"[ÎîîÏñ¥Ìè¨Ïä§] 6Ïù∏Ïπòx9ÌôÄ Î≤®ÌÅ¨Î°úÌÉÄÏûÖ ÏõêÌòïÏÇ¨Ìè¨/#800#1000Î∞© ÏûÖÍ≥† Ïô∏3Í±¥","LGD_PRODUCTCODE":"","LGD_HASHDATA":"eccff4c9277dd82570b434bf5eeb4a13","LGD_CARDGUBUN1":"0","LGD_CARDGUBUN2":"1","LGD_BUYERADDRESS":"Í≤ΩÍ∏∞ Í≥†ÏñëÏãú ÏùºÏÇ∞ÎèôÍµ¨ Ï†ïÎ∞úÏÇ∞Îèô 1276-13Î≤àÏßÄ 1Ï∏µ","LGD_RECEIVER":"Ïù¥ÌòÑÎ™Ö","LGD_RESPCODE":"0000","LGD_BUYEREMAIL":"lhm_44@naver.com","LGD_DISCOUNTUSEAMOUNT":"0"}]}
+]
+2016-04-03 20:25:07 [INFO ] [go_francosmith-0120160403202506b1c9c3fd5a3daaa951f848403fcb8fab7c3f1f03] Response Code=[0000], Msg=[∞·¡¶º∫∞¯], Count=1
+2016-04-03 20:25:07 [DEBUG] [go_francosmith-0120160403202506b1c9c3fd5a3daaa951f848403fcb8fab7c3f1f03] Response (LGD_CARDACQUIRER, 0) = 11
+2016-04-03 20:25:07 [DEBUG] [go_francosmith-0120160403202506b1c9c3fd5a3daaa951f848403fcb8fab7c3f1f03] Response (LGD_CARDNOINTEREST_YN, 0) = 0
+2016-04-03 20:25:07 [DEBUG] [go_francosmith-0120160403202506b1c9c3fd5a3daaa951f848403fcb8fab7c3f1f03] Response (LGD_IFOS, 0) = 373I7C
+2016-04-03 20:25:07 [DEBUG] [go_francosmith-0120160403202506b1c9c3fd5a3daaa951f848403fcb8fab7c3f1f03] Response (LGD_MID, 0) = go_francosmith
+2016-04-03 20:25:07 [DEBUG] [go_francosmith-0120160403202506b1c9c3fd5a3daaa951f848403fcb8fab7c3f1f03] Response (LGD_FINANCENAME, 0) = ±ππŒMASTER
+2016-04-03 20:25:07 [DEBUG] [go_francosmith-0120160403202506b1c9c3fd5a3daaa951f848403fcb8fab7c3f1f03] Response (LGD_PCANCELFLAG, 0) = 1
+2016-04-03 20:25:07 [DEBUG] [go_francosmith-0120160403202506b1c9c3fd5a3daaa951f848403fcb8fab7c3f1f03] Response (LGD_FINANCEAUTHNUM, 0) = 30001037
+2016-04-03 20:25:07 [DEBUG] [go_francosmith-0120160403202506b1c9c3fd5a3daaa951f848403fcb8fab7c3f1f03] Response (LGD_DELIVERYINFO, 0) = 
+2016-04-03 20:25:07 [DEBUG] [go_francosmith-0120160403202506b1c9c3fd5a3daaa951f848403fcb8fab7c3f1f03] Response (LGD_BUYER, 0) = ¿Ã«ˆ∏Ì
+2016-04-03 20:25:07 [DEBUG] [go_francosmith-0120160403202506b1c9c3fd5a3daaa951f848403fcb8fab7c3f1f03] Response (LGD_AFFILIATECODE, 0) = 001553
+2016-04-03 20:25:07 [DEBUG] [go_francosmith-0120160403202506b1c9c3fd5a3daaa951f848403fcb8fab7c3f1f03] Response (LGD_TRANSAMOUNT, 0) = 28900
+2016-04-03 20:25:07 [DEBUG] [go_francosmith-0120160403202506b1c9c3fd5a3daaa951f848403fcb8fab7c3f1f03] Response (LGD_BUYERID, 0) = lhm44
+2016-04-03 20:25:07 [DEBUG] [go_francosmith-0120160403202506b1c9c3fd5a3daaa951f848403fcb8fab7c3f1f03] Response (LGD_OID, 0) = 1459682424913
+2016-04-03 20:25:07 [DEBUG] [go_francosmith-0120160403202506b1c9c3fd5a3daaa951f848403fcb8fab7c3f1f03] Response (LGD_CARDNUM, 0) = 502123******3125
+2016-04-03 20:25:07 [DEBUG] [go_francosmith-0120160403202506b1c9c3fd5a3daaa951f848403fcb8fab7c3f1f03] Response (LGD_RECEIVERPHONE, 0) = 010-3899-1424
+2016-04-03 20:25:07 [DEBUG] [go_francosmith-0120160403202506b1c9c3fd5a3daaa951f848403fcb8fab7c3f1f03] Response (LGD_2TR_FLAG, 0) = Y
+2016-04-03 20:25:07 [DEBUG] [go_francosmith-0120160403202506b1c9c3fd5a3daaa951f848403fcb8fab7c3f1f03] Response (LGD_DEVICE, 0) = 
+2016-04-03 20:25:07 [DEBUG] [go_francosmith-0120160403202506b1c9c3fd5a3daaa951f848403fcb8fab7c3f1f03] Response (LGD_TID, 0) = go_fr2016040320250645149
+2016-04-03 20:25:07 [DEBUG] [go_francosmith-0120160403202506b1c9c3fd5a3daaa951f848403fcb8fab7c3f1f03] Response (LGD_TIMESTAMP, 0) = 20160403202508
+2016-04-03 20:25:07 [DEBUG] [go_francosmith-0120160403202506b1c9c3fd5a3daaa951f848403fcb8fab7c3f1f03] Response (LGD_FINANCECODE, 0) = 11200
+2016-04-03 20:25:07 [DEBUG] [go_francosmith-0120160403202506b1c9c3fd5a3daaa951f848403fcb8fab7c3f1f03] Response (LGD_CARDNOINTYN, 0) = 0
+2016-04-03 20:25:07 [DEBUG] [go_francosmith-0120160403202506b1c9c3fd5a3daaa951f848403fcb8fab7c3f1f03] Response (LGD_PCANCELSTR, 0) = 0
+2016-04-03 20:25:07 [DEBUG] [go_francosmith-0120160403202506b1c9c3fd5a3daaa951f848403fcb8fab7c3f1f03] Response (LGD_DISCOUNTUSEYN, 0) = 0
+2016-04-03 20:25:07 [DEBUG] [go_francosmith-0120160403202506b1c9c3fd5a3daaa951f848403fcb8fab7c3f1f03] Response (LGD_ISPKEY, 0) = 320250645150
+2016-04-03 20:25:07 [DEBUG] [go_francosmith-0120160403202506b1c9c3fd5a3daaa951f848403fcb8fab7c3f1f03] Response (LGD_BUYERPHONE, 0) = 010-3899-1424
+2016-04-03 20:25:07 [DEBUG] [go_francosmith-0120160403202506b1c9c3fd5a3daaa951f848403fcb8fab7c3f1f03] Response (LGD_ESCROWYN, 0) = N
+2016-04-03 20:25:07 [DEBUG] [go_francosmith-0120160403202506b1c9c3fd5a3daaa951f848403fcb8fab7c3f1f03] Response (LGD_PAYTYPE, 0) = SC0010
+2016-04-03 20:25:07 [DEBUG] [go_francosmith-0120160403202506b1c9c3fd5a3daaa951f848403fcb8fab7c3f1f03] Response (LGD_AMOUNT, 0) = 28900
+2016-04-03 20:25:07 [DEBUG] [go_francosmith-0120160403202506b1c9c3fd5a3daaa951f848403fcb8fab7c3f1f03] Response (LGD_VANCODE, 0) = van0012
+2016-04-03 20:25:07 [DEBUG] [go_francosmith-0120160403202506b1c9c3fd5a3daaa951f848403fcb8fab7c3f1f03] Response (LGD_EXCHANGERATE, 0) = 1.0
+2016-04-03 20:25:07 [DEBUG] [go_francosmith-0120160403202506b1c9c3fd5a3daaa951f848403fcb8fab7c3f1f03] Response (LGD_BUYERSSN, 0) = 
+2016-04-03 20:25:07 [DEBUG] [go_francosmith-0120160403202506b1c9c3fd5a3daaa951f848403fcb8fab7c3f1f03] Response (LGD_CARDINSTALLMONTH, 0) = 00
+2016-04-03 20:25:07 [DEBUG] [go_francosmith-0120160403202506b1c9c3fd5a3daaa951f848403fcb8fab7c3f1f03] Response (LGD_RESPMSG, 0) = ∞·¡¶º∫∞¯
+2016-04-03 20:25:07 [DEBUG] [go_francosmith-0120160403202506b1c9c3fd5a3daaa951f848403fcb8fab7c3f1f03] Response (LGD_PAYDATE, 0) = 20160403202507
+2016-04-03 20:25:07 [DEBUG] [go_francosmith-0120160403202506b1c9c3fd5a3daaa951f848403fcb8fab7c3f1f03] Response (LGD_PRODUCTINFO, 0) = [µæÓ∆˜Ω∫] 6¿Œƒ°x9»¶ ∫ß≈©∑Œ≈∏¿‘ ø¯«¸ªÁ∆˜/#800#1000πÊ ¿‘∞Ì ø‹3∞«
+2016-04-03 20:25:07 [DEBUG] [go_francosmith-0120160403202506b1c9c3fd5a3daaa951f848403fcb8fab7c3f1f03] Response (LGD_PRODUCTCODE, 0) = 
+2016-04-03 20:25:07 [DEBUG] [go_francosmith-0120160403202506b1c9c3fd5a3daaa951f848403fcb8fab7c3f1f03] Response (LGD_HASHDATA, 0) = eccff4c9277dd82570b434bf5eeb4a13
+2016-04-03 20:25:07 [DEBUG] [go_francosmith-0120160403202506b1c9c3fd5a3daaa951f848403fcb8fab7c3f1f03] Response (LGD_CARDGUBUN1, 0) = 0
+2016-04-03 20:25:07 [DEBUG] [go_francosmith-0120160403202506b1c9c3fd5a3daaa951f848403fcb8fab7c3f1f03] Response (LGD_CARDGUBUN2, 0) = 1
+2016-04-03 20:25:07 [DEBUG] [go_francosmith-0120160403202506b1c9c3fd5a3daaa951f848403fcb8fab7c3f1f03] Response (LGD_BUYERADDRESS, 0) = ∞Ê±‚ ∞ÌæÁΩ√ ¿œªÍµø±∏ ¡§πﬂªÍµø 1276-13π¯¡ˆ 1√˛
+2016-04-03 20:25:07 [DEBUG] [go_francosmith-0120160403202506b1c9c3fd5a3daaa951f848403fcb8fab7c3f1f03] Response (LGD_RECEIVER, 0) = ¿Ã«ˆ∏Ì
+2016-04-03 20:25:07 [DEBUG] [go_francosmith-0120160403202506b1c9c3fd5a3daaa951f848403fcb8fab7c3f1f03] Response (LGD_RESPCODE, 0) = 0000
+2016-04-03 20:25:07 [DEBUG] [go_francosmith-0120160403202506b1c9c3fd5a3daaa951f848403fcb8fab7c3f1f03] Response (LGD_BUYEREMAIL, 0) = lhm_44@naver.com
+2016-04-03 20:25:07 [DEBUG] [go_francosmith-0120160403202506b1c9c3fd5a3daaa951f848403fcb8fab7c3f1f03] Response (LGD_DISCOUNTUSEAMOUNT, 0) = 0

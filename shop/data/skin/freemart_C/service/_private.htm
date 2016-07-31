@@ -1,0 +1,31 @@
+{*** 개인정보취급방침 (회원가입내 프레임) | service/_private.php ***}
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=euc-kr">
+<meta name="description" content="{_meta_title}">
+<meta name="keywords" content="{_meta_keywords}">
+<title>{_meta_title}</title>
+<link rel="styleSheet" href="../style.css">
+<style>
+.scroll	{
+scrollbar-face-color: #FFFFFF;
+scrollbar-shadow-color: #AFAFAF;
+scrollbar-highlight-color: #AFAFAF;
+scrollbar-3dlight-color: #FFFFFF;
+scrollbar-darkshadow-color: #FFFFFF;
+scrollbar-track-color: #F7F7F7;
+scrollbar-arrow-color: #838383;
+}
+</style>
+<script src="../common.js"></script>
+{=copyProtect()}
+<body style="margin:0" {=copyProtect(true)} class=scroll>
+
+<A name="ptop"></A>
+<table>
+<tr><td>
+<!--{ = include_file( "/service/_private.txt" ) }-->
+</td></tr>
+</table>
+</body>
+</html>

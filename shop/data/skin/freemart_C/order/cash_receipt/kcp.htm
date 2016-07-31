@@ -1,0 +1,148 @@
+<script language="javascript">
+// 현금영수증 MAIN FUNC
+function jsf__pay_cash( form )
+{
+	jsf__show_progress(true);
+	if ( jsf__chk_cash( form ) == false )
+	{
+		jsf__show_progress(false);
+		return false;
+	}
+
+	if(confirm("현금영수증을 발행하시겠습니까?") === false) return false;
+
+	return true;
+}
+
+// 진행 바
+function jsf__show_progress( show )
+{
+	if ( show == true )
+	{
+		_ID('show_pay_btn').style.display = "none";
+		_ID('show_progress').style.display = "inline";
+	}
+	else
+	{
+		_ID('show_pay_btn').style.display = "inline";
+		_ID('show_progress').style.display = "none";
+	}
+}
+
+// 포맷 체크
+function jsf__chk_cash( form )
+{
+	if ( form.tr_code[0].checked )
+	{
+		if ( form.id_info.value.length != 10 && form.id_info.value.length != 11)
+		{
+			alert("휴대폰번호를 정확히 입력해 주시기 바랍니다.");
+			form.id_info.select();
+			form.id_info.focus();
+			return false;
+		}
+	}
+	else if ( form.tr_code[1].checked )
+	{
+		if ( form.id_info.value.length != 10 )
+		{
+			alert("사업자번호를 정확히 입력해 주시기 바랍니다.");
+			form.id_info.select();
+			form.id_info.focus();
+			return false;
+		}
+	}
+	return true;
+}
+
+function jsf__chk_tr_code( form )
+{
+	var span_tr_code_0 = document.getElementById( "span_tr_code_0" );
+	var span_tr_code_1 = document.getElementById( "span_tr_code_1" );
+
+	if ( form.tr_code[0].checked )
+	{
+		span_tr_code_0.style.display = "block";
+		span_tr_code_1.style.display = "none";
+	}
+	else if (form.tr_code[1].checked )
+	{
+		span_tr_code_0.style.display = "none";
+		span_tr_code_1.style.display = "block";
+	}
+}
+</script>
+
+<script language="javascript">
+<!-- 현금영수증 연동 스크립트 -->
+function receiptView(cash_no)
+{
+	receiptWin = receiptWin = "http://admin.kcp.co.kr/Modules/Service/Cash/Cash_Bill_Common_View.jsp?cash_no="+cash_no;
+	window.open(receiptWin , "" , "width=360, height=647")
+}
+</script>
+
+<table width="100%" style="border:1px solid #DEDEDE" cellpadding="0" cellspacing="0">
+<tr>
+	<td width="150" valign="top" align="right" bgcolor="#F3F3F3"></td>
+	<td id="orderbox">
+
+	<table>
+	<col width="100">
+	<tr>
+		<td valign="top">현금영수증</td>
+		<td>
+		<!--{ ? cashreceipt && (settlekind == "o" || settlekind == "v") }--><!-- 계좌이체 -->
+		<a href="http://현금영수증.kr" target=_blank>현금영수증확인</a>(KCP 현금영수증시스템에 해당 결제자의 영수증 등록을 한 날짜의 3일후에 해당건의 "현금영수증.kr"에 확인가능)<br>
+
+		<!--{ : cashreceipt && settlekind == "a"}-->
+		<input type="button" name="receiptView" value="영수증 확인" class="box" onClick="javascript:receiptView('{cashreceipt}')">
+
+		<!--{ : cashreceipt == '' && step == 0 }-->
+		입금하셔야 현금영수증을 발급하실 수 있습니다.
+
+		<!--{ : cashreceipt == '' && step2 }-->
+		취소중이거나 취소된 주문은 현금영수증을 발급하실 수 없습니다.
+
+		<!--{ : cashreceipt == '' && step && !step2 && _set.receipt.period && orddt && (strtotime(orddt)+(86400*_set.receipt.period)) < time() }-->
+		주문일로부터 {_set.receipt.period}일이 경과하여 발행할 수 없습니다. ({=date('y-m-d H:i',(strtotime(orddt)+(86400*_set.receipt.period)))})
+
+		<!--{ : cashreceipt == '' && step && !step2 }-->
+		<form name="cash_form" action="../order/card/kcp/receipt/request/cash/pp_cli_hub.php" onSubmit="return jsf__pay_cash(this)" method="post" target="ifrmHidden">
+		<input type="hidden" name="req_tx" value="pay">
+		<input type="hidden" name="ordr_idxx" value="{ordno}">
+		<input type="hidden" name="good_name" value="{=strcut(_item[0]['goodsnm'],30)}{? count(_item)>1} 외  {=(count(_item)-1)}건{/}">
+		<input type="hidden" name="buyr_name" value="{nameOrder}">
+		<input type="hidden" name="buyr_mail" value="{email}">
+		<input type="hidden" name="buyr_tel1" value="{phoneOrder}">
+		<input type="hidden" name="amt_tot" value="{prn_settleprice}">
+		<input type="hidden" name="amt_sup" value="{_cashReceipt.supply}">
+		<input type="hidden" name="amt_tax" value="{_cashReceipt.vat}">
+
+		<table>
+		<tr>
+			<td width="100">발행용도</td>
+			<td>
+			<input type="radio" name="tr_code" value="0" onClick="jsf__chk_tr_code( this.form )" checked>소득공제용
+			<input type="radio" name="tr_code" value="1" onClick="jsf__chk_tr_code( this.form )">지출증빙용
+			</td>
+		</tr>
+		<tr>
+			<td>
+			<span id="span_tr_code_0" style="display:block;">휴대폰번호</span>
+			<span id="span_tr_code_1" style="display:none;">사업자번호</span>
+			</td>
+			<td><input type="text" name="id_info" value="{=str_replace('-','',mobileOrder)}" class="line"> <span class="small">("-" 생략)</span></td>
+		</tr>
+		</table>
+		</form>
+		<span id="show_pay_btn"><input type="button" value="현금영수증발급요청" name="app_btn" onClick="javascript:if (jsf__pay_cash(document.cash_form)) document.cash_form.submit();"></span>
+		<span id="show_progress" style="display:none"><b>등록 진행중입니다. 잠시만 기다려주십시오</b></span>
+		<!--{ / }-->
+		</td>
+	</tr>
+	</table>
+
+	</td>
+</tr>
+</table>

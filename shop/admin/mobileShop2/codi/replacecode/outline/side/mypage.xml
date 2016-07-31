@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="EUC-KR"?>
+<codes>
+<list>
+	<code>{_member.name}</code>
+	<desc>회원이름</desc>
+	<exam>홍길동</exam>
+</list>
+<list>
+	<code>{ # myBox }</code>
+	<desc>회원쇼핑정보 파일 인클루드</desc>
+	<exam></exam>
+</list>
+</codes>

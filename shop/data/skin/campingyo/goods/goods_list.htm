@@ -1,0 +1,163 @@
+{*** 분류화면 | goods/goods_list.php ***}
+{ # header }
+
+<!-- 상단 HTML -->
+<div style="padding:5px 0 10px 0">{=stripslashes(_lstcfg.body)}</div>
+
+
+<div class="indiv"><!-- Start indiv -->
+
+<form name=frmList>
+<input type=hidden name=category value="{_category}">
+<input type=hidden name=sort value="{_GET['sort']}">
+<input type=hidden name=page_num value="{_GET['page_num']}">
+
+<!-- 상단 카테고리 메뉴 -->
+<table width=100% border=0 cellpadding=0 cellspacing=0>
+<tr>
+<td background="../img/common/ed_top_back.gif">
+<table width=100% border=0 cellpadding=0 cellspacing=0>
+<tr><td width=50%><img src="../img/common/ed_left_top.gif" border=0></td>
+<td width=50% align=right><img src="../img/common/ed_right_top.gif" border=0></td>
+</tr></table>
+</td>
+</tr>
+<tr>
+<td bgcolor="#F5F5F5" style="padding:5px 10px; border-left:1px solid #E2E1E1; border-right:1px solid #E2E1E1"><img src="../img/common/icon_submenu.gif" border=0 align=absmiddle><b>{=currPosition(_category)}</b></td>
+</tr>
+<tr>
+<td style="padding:5 10 5 10; line-height:20px; border-left:1px solid #E2E1E1; border-right:1px solid #E2E1E1">
+<!--{ @ dataSubCategory( _category, true ) }-->
+<!--{ ? _category == .category }--><b><!--{ / }-->
+<a href="?category={.category}">{.catnm}<font color=#777777>({.gcnt+0})</font></a>
+<!--{ ? _category == .category }--></b><!--{ / }-->
+<!--{ ? .index_!=.size_-1 }--> <font color=#cccccc>|</font> <!--{ / }-->
+<!--{ / }-->
+</td>
+</tr>
+<tr>
+<td background="../img/common/ed_bot_back.gif">
+<table width=100% border=0 cellpadding=0 cellspacing=0>
+<tr><td width=50%><img src="../img/common/ed_left_bot.gif" border=0></td>
+<td width=50% align=right><img src="../img/common/ed_right_bot.gif" border=0></td>
+</tr></table>
+</td>
+</tr>
+</table>
+
+<!-- 추천상품 -->
+<!--{ = this->assign( 'loop', dataDisplayGoods( _category , lstcfg.rimg, lstcfg.rpage_num ) ) // 데이타 호출 }-->
+<!--{ = this->assign( 'dpCfg', _dpCfg.rtpl ) // 설정 }-->
+<!--{ = this->assign( 'cols', lstcfg.rcols ) // 행당 컬럼수 }-->
+<!--{ = this->assign( 'size', lstcfg.rsize ) // 이미지 크기 }-->
+<!--{ ? loop }-->
+<div style="font:0;padding-top:10"></div>
+<table border=0 cellpadding=0 cellspacing=0>
+	<tr>
+		<TD style="background: URL(../img/common/title_recom.gif) no-repeat;" nowrap width="236" height="30"></TD>
+		<TD style="background: URL(../img/common/title_recom_bg.gif) repeat-x;" width='90%' height="30"></TD>
+	</tr>
+</table>
+<div style="font:0;padding-top:10"></div>
+<!--{ / }-->
+<!--{ = include_file( "goods/list/" + lstcfg.rtpl + ".htm" ) }-->
+
+<table width=100% border=0 cellpadding=0 cellspacing=0>
+<tr><td height=10></td></tr>
+<tr>
+<td bgcolor=9e9e9e class=small height=27 style="padding:0 0 0 5" background="../img/common/bg_goodlist_bar.gif">
+<table width=100% border=0 cellpadding=0 cellspacing=0>
+<tr>
+<td id="b_white"><img src="../img/common/icon_goodalign2.gif" align=absmiddle>{=currPosition(_category)}
+<FONT COLOR="#FFFFFF">총 <b>{pg->recode['total']}</b>개의 상품이 있습니다.</FONT>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td>
+<!-- capture_start("list_top") -->
+<table width=100% cellpadding=0 cellspacing=0>
+<tr>
+<td><img src="../img/common/goodlist_txt_01.gif"><a href="javascript:sort('maker desc')"><img name=sort_maker_desc src="../img/common/list_up_off.gif"></a><a href="javascript:sort('maker')"><img name=sort_maker src="../img/common/list_down_off.gif"></a><img src="../img/common/goodlist_txt_03.gif"><a href="javascript:sort('goodsnm desc')"><img name=sort_goodsnm_desc src="../img/common/list_up_off.gif"></a><a href="javascript:sort('goodsnm')"><img name=sort_goodsnm src="../img/common/list_down_off.gif"></a><img src="../img/common/goodlist_txt_04.gif"><a href="javascript:sort('price desc')"><img name=sort_price_desc src="../img/common/list_up_off.gif"></a><a href="javascript:sort('price')"><img name=sort_price src="../img/common/list_down_off.gif"></a><img src="../img/common/goodlist_txt_05.gif"><a href="javascript:sort('reserve desc')"><img name=sort_reserve_desc src="../img/common/list_up_off.gif"></a><a href="javascript:sort('reserve')"><img name=sort_reserve src="../img/common/list_down_off.gif"></a></td>
+<td align=right><img src="../img/common/goodlist_txt_06.gif" align=absmiddle><select onchange="if(typeof(document.sSearch) != 'undefined') { _ID('page_num').value=this.value; document.sSearch.submit() } else { this.form.page_num.value=this.value;this.form.submit() }" style="font:8pt 돋움"><!--{ @ lstcfg.page_num }--><option value="{.value_}" {_selected.page_num[.value_]}>{.value_}개씩 정렬<!--{ / }--></select></td>
+</tr>
+</table>
+<!-- capture_end ("list_top") -->
+</td>
+</tr>
+<tr><td height=1 bgcolor=#DDDDDD></td></tr>
+<tr>
+<td style="padding:15 0">
+<!--{ = this->assign( 'loop', loopM ) // 데이타 호출 }-->
+<!--{ = this->assign( 'slevel', slevel ) // 권한관련 }-->
+<!--{ = this->assign( 'clevel', clevel ) // 권한관련 }-->
+<!--{ = this->assign( 'clevel_auth', clevel_auth ) // 권한관련 }-->
+<!--{ = this->assign( 'auth_step', auth_step ) // 권한관련 }-->
+<!--{ = this->assign( 'dpCfg', _dpCfg.tpl ) // 설정 }-->
+<!--{ = this->assign( 'cols', lstcfg.cols ) // 행당 컬럼수 }-->
+<!--{ = this->assign( 'size', lstcfg.size ) // 이미지 크기 }-->
+<!--{ = include_file( "goods/list/" + lstcfg.tpl + ".htm" ) }-->
+</td>
+</tr>
+<tr><td height=1 bgcolor=#DDDDDD></td></tr>
+<tr>
+<td>
+<!-- capture_print("list_top") -->
+</td>
+</tr>
+<tr><td height=2 bgcolor=#DDDDDD></td></tr>
+<tr><td align=center height=50>{pg->page['navi']}</td></tr>
+</table>
+
+</form>
+<form name=frmCharge method=post>
+<input type=hidden name=mode value="">
+<input type=hidden name=goodsno value="">
+<input type=hidden name=ea value="1">
+<input type=hidden name=opt[] id=opt value="">
+</form>
+</div><!-- End indiv -->
+
+
+<script>
+function act(target,goodsno,opt1,opt2)
+{
+var form = document.frmCharge;
+
+form.mode.value = "addItem";
+form.goodsno.value = goodsno;
+
+if(opt2) opt1 += opt2;
+document.getElementById("opt").value=opt1;
+
+form.action = target + ".php";
+form.submit();
+}
+function sort(sort)
+{
+var fm = document.frmList;
+if(typeof(document.sSearch) != "undefined") fm = document.sSearch;
+fm.sort.value = sort;
+fm.submit();
+}
+function sort_chk(sort)
+{
+if (!sort) return;
+sort = sort.replace(" ","_");
+var obj = document.getElementsByName('sort_'+sort);
+if (obj.length){
+div = obj[0].src.split('list_');
+for (i=0;i<obj.length;i++){
+chg = (div[1]=="\up_off.gif") ? "\up_on.gif" : "\down_on.gif";
+obj[i].src = div[0] + "list_" + chg;
+}
+}
+}
+<!--{ ? _GET['sort'] }-->
+sort_chk('{_GET['sort']}');
+<!--{ / }-->
+</script>
+
+{ # footer }

@@ -1,0 +1,29 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+ <HEAD>
+  <TITLE> New Document </TITLE>
+
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+	function chk(){
+    var f = document.frm;
+    params = 'width=650,height=450,status=0,toolbar=0,menubar=0,top=100,left=200';	
+	mypopup = window.open('','ACTIVEXWIN',params);
+	f.action = "down2.html"; 
+	f.target = 'ACTIVEXWIN';
+    f.submit();	
+	mypopup.focus();
+	}
+//-->
+</SCRIPT>
+</HEAD>
+
+<BODY>
+<FORM METHOD=POST ACTION="" NAME = "frm">
+	<INPUT TYPE="hidden" NAME="UserLoginId" VALUE = "james088@pc080.net">
+	<INPUT TYPE="hidden" NAME="UserLoginPassword" VALUE = "1234">
+</FORM>
+
+<A HREF="#" onClick="chk();"><IMG SRC="btn_down.gif" WIDTH="175" HEIGHT="40" BORDER="0" ALT=""></A>
+</BODY>
+</HTML>

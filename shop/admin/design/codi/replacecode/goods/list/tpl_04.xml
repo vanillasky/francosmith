@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="EUC-KR"?>
+<codes>
+<list>
+	<code>{id}</code>
+	<desc>상품이동형의 아이디</desc>
+	<exam>{id} = "es_".md5(crypt(''));</exam>
+</list>
+<list>
+	<code power="">{@ loop}</code>
+	<desc>상품</desc>
+	<exam more="goods/list/tpl.loop.xml"></exam>
+</list>
+<list>
+	<code>{cols}</code>
+	<desc>라인당 상품수</desc>
+	<exam></exam>
+</list>
+<list>
+	<code>{size}</code>
+	<desc>이미지 사이즈</desc>
+	<exam></exam>
+</list>
+</codes>

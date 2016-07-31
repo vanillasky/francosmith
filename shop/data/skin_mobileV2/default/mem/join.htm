@@ -1,0 +1,462 @@
+{#header}
+<?php {page_title} = "회원가입 (계정생성)";?>
+{#sub_header}
+<script type="text/javascript">
+function idCheck(obj) {
+
+	var $id = $(obj).val();
+
+	if($id.length < 6) {
+		$("[name=id_chk]").val('n');
+		$("#id_description").addClass("wrong");
+		$("#id_description").text('아이디는 6자 이상으로 입력해 주세요');
+	}
+	else {
+		var data_param = "mode=id_check&id="+$id;
+
+		$.ajax({
+			type : "post",
+			url : "/"+mobile_root+"/proc/mAjaxAction.php",
+			cache:false,
+			async:false,
+			data: data_param,
+			success: function (res) {
+				chk_data = res;
+
+				$("[name=id_chk]").val(chk_data.code);
+				$("#id_description").text(chk_data.msg);
+
+				if(chk_data.code == "n") {
+					$("#id_description").addClass("wrong");
+				}
+				else {
+					$("#id_description").removeClass("wrong");
+				}
+			},
+			dataType:"json"
+		});
+	}
+}
+
+function pwdCheck(obj) {
+
+	var $pwd = $("[name=password]").val();
+
+	if($pwd.length < 6) {
+		alert('비밀번호는 6~12자의 영문자, 숫자조합으로 입력해주세요');
+		$("[name=pwd_chk]").val('n');
+		$("[name=password]").focus();
+		return;
+	}
+	else {
+		$c_pwd = $(obj).val();
+
+		if($pwd != $c_pwd) {
+			$("[name=pwd_chk]").val('n');
+			$("#pwd_description").text('비밀번호가 일치하지 않습니다');
+			$("#pwd_description").addClass("wrong");
+		}
+		else {
+			$("[name=pwd_chk]").val('y');
+			$("#pwd_description").text('비밀번호가 일치합니다');
+			$("#pwd_description").removeClass("wrong");
+		}
+	}
+}
+
+function onlyNum(obj) {
+	if ((event.keyCode<48) || (event.keyCode>57)) {
+		event.returnValue = false;
+		return false;
+	}
+	else {
+		return true;
+	}
+}
+
+function nextField(obj, len, nextObjName) {
+	if (obj.value.length == len) {
+		alert(obj.value.length);
+		obj.nextSibling.focus();
+	}
+}
+
+function nextStep() {
+	var check_required = 1;
+
+	if(!$("[name=m_id]").val()) {
+		alert("아이디를 입력해주세요");
+		$("[name=m_id]").focus();
+		return;
+	}
+	if(!$("[name=password]").val()) {
+		alert("비밀번호를 입력해주세요");
+		$("[name=password]").focus();
+		return;
+	}
+	if($("[name=id_chk]").val() != 'y') {
+		alert('아이디를 확인해 주세요');
+		$("[name=m_id]").focus();
+		return;
+	}
+	if($("[name=pwd_chk]").val() != 'y') {
+		alert('비밀번호가 일치하지 않습니다');
+		$("[name=password2]").focus();
+		return;
+	}
+
+	$("input[required='']").each(function(i, obj) {
+		if (obj.value == '') {
+			check_required = 0;
+			alert("필수값("+obj.getAttribute('label')+")을 입력하세요.");
+			obj.focus();
+			return false;
+		}
+	});
+	if (check_required == 0) return;
+
+	$frm = $("#form");
+	$frm.submit();
+}
+
+</script>
+
+<section class="content" id="memberjoin">
+<form id=form name=frmAgree method=post action="indb.php" target="ifrmHidden">
+	<input type="hidden" name="mode" value="member_join" />
+	<input type="hidden" name="id_chk" value="" />
+	<input type="hidden" name="pwd_chk" value="" />
+	<input type="hidden" name="type" />
+	<input type="hidden" name="rncheck" value="{rncheck}" />
+	<input type="hidden" name="dupeinfo" value="{dupeinfo}" />
+	<input type="hidden" name="pakey" value="{pakey}" />
+	<input type="hidden" name="foreigner" value="{foreigner}" />
+	<div class="join_step">
+		<div class="join_step1" onclick="javascript:history.back(-2);">약관동의</div>
+		<div class="join_arrow"></div>
+		<div class="join_step2 now_step">계정생성</div>
+		<div class="join_arrow"></div>
+		<div class="join_step4">가입완료</div>
+	</div>
+	<div class="content_border"></div>
+	<div class="account">
+		<div class="account_title"><div class="bullet"></div><div class="title">계정 생성하기</div></div>
+		<div class="content_border"></div>
+		<div class="account_content">
+			<div class="input_title"><font color=FF6000>*</font>아이디(ID)</div>
+			<div class="input_bar"></div>
+			<div class="input_content">
+				<input type="text" name="m_id" size="13" maxlength="16" style="ime-mode:diable" onKeyUp="javascript:idCheck(this);"/>
+				<div class="description">6~16자의 영문자, 숫자조합</div>
+				<div class="description wrong" id="id_description">아이디는 6자 이상으로 입력해 주세요</div>
+			</div>
+			<div class="content_border"></div>
+			<div class="input_title"><font color=FF6000>*</font>비밀번호</div>
+			<div class="input_bar"></div>
+			<div class="input_content">
+				<input type="password" name="password" size="13" maxlength="12" style="ime-mode:disabled" />
+				<div class="description">6~12자의 영문자, 숫자조합</div>
+			</div>
+			<div class="content_border"></div>
+			<div class="input_title"><font color=FF6000>*</font>비밀번호확인</div>
+			<div class="input_bar"></div>
+			<div class="input_content">
+				<input type="password" name="password2" size="13" maxlength="12" style="ime-mode:disabled"  onKeyUp="javascript:pwdCheck(this);" />
+				<div class="description wrong" id="pwd_description">비밀번호가 일치하지 않습니다</div>
+			</div>
+			<div class="content_border"></div>
+			<div class="input_title"><font color=FF6000>*</font>이름</div>
+			<div class="input_bar"></div>
+			<div class="input_content">
+				<!--{ ? _mode=="joinMember" && name }-->
+				<input type="text" value="{name}" readonly="readonly"/>
+				<input type="hidden" name="name" value="{name}"/>
+				<!--{ : }-->
+				<input type="text" name="name" value="{name}" size="13" maxlength="10" style="ime-mode:active" required label="이름" /> <span class="description">6~16자</span>
+				<!--{ / }-->
+			</div>
+			<div class="content_border"></div>
+			<!--{ ? _checked_mobile.useField.nickname }-->
+			<div class="input_title"><!--{ ? _checked_mobile.reqField.nickname }--><font color=FF6000>*</font><!--{ / }-->닉네임</div>
+			<div class="input_bar"></div>
+			<div class="input_content">
+				<input type="text" name="nickname" size="13" maxlength="12" style="ime-mode:active" <!--{ ? _checked_mobile.reqField.nickname }-->required<!--{ / }--> label="닉네임"/>
+			</div>
+			<div class="content_border"></div>
+			<!--{ / }-->
+			<!--{ ? _checked_mobile.useField.sex }-->
+			<div class="input_title"><!--{ ? _checked_mobile.reqField.sex }--><font color=FF6000>*</font><!--{ / }-->성별</div>
+			<div class="input_bar"></div>
+			<div class="input_content">
+				<label><input type="radio" name="sex" label="성별" value="m" {_checked.sex.m} label="성별" <!--{ ? _checked_mobile.reqField.sex }-->required<!--{ / }--> /> 남자</label>
+				<label><input type="radio" name="sex" label="성별" value="w" {_checked.sex.w} label="성별" <!--{ ? _checked_mobile.reqField.sex }-->required<!--{ / }--> /> 여자</label>
+			</div>
+			<div class="content_border"></div>
+			<!--{ / }-->
+			<!--{ ? _checked_mobile.useField.birth }-->
+			<div class="input_title"><!--{ ? _checked_mobile.reqField.birth }--><font color=FF6000>*</font><!--{ / }-->생년월일</div>
+			<div class="input_bar"></div>
+			<div class="input_content">
+				<input type="Text" placeholder="Enter Text" pattern="[0-9]*" name="birth_year" value="{birth_year}" size="4" maxlength="4" onKeyPress="javascript:onlyNum(this, event);" style="ime-mode:disabled" label="생년월일" <!--{ ? _checked_mobile.reqField.birth }-->required<!--{ / }--> /> 년
+				<input type="number" placeholder="Enter Text" pattern="[0-9]*" name="birth[]" value="{birth[0]}" size="2" maxlength="2" onKeyPress="javascript:onlyNum(this, event);" style="ime-mode:disabled" label="생년월일" <!--{ ? _checked_mobile.reqField.birth }-->required<!--{ / }--> /> 월
+				<input type="number" placeholder="Enter Text" pattern="[0-9]*" name="birth[]" value="{birth[1]}" size="2" maxlength="2" onKeyPress="javascript:onlyNum(this, event);"  style="ime-mode:disabled" label="생년월일" <!--{ ? _checked_mobile.reqField.birth }-->required<!--{ / }--> /> 일
+				<!--{ ? _checked_mobile.useField.calendar }-->
+				<div class=noline style="padding-top:10px">
+				<input type=radio name=calendar value="s" {_checked.calendar.s} label="일월간지" <!--{ ? _checked_mobile.reqField.calendar }-->required<!--{ / }--> > 양력
+				<input type=radio name=calendar value="l" {_checked.calendar.l} label="일월간지" <!--{ ? _checked_mobile.reqField.calendar }-->required<!--{ / }--> > 음력
+				</div>
+				<!--{ / }-->
+			</div>
+			<div class="content_border"></div>
+			<!--{ / }-->
+			<!--{ ? _checked_mobile.useField.marriyn }-->
+			<div class="input_title"><!--{ ? _checked_mobile.reqField.marriyn }--><font color=FF6000>*</font><!--{ / }-->결혼여부</div>
+			<div class="input_bar"></div>
+			<div class="input_content">
+				<label><input type="radio" name="marriyn" label="결혼여부" value="n" checked label="결혼여부" <!--{ ? _checked_mobile.reqField.marriyn }-->required<!--{ / }--> /> 미혼</label>
+				<label><input type="radio" name="marriyn" label="결혼여부" value="y" label="결혼여부" <!--{ ? _checked_mobile.reqField.marriyn }-->required<!--{ / }--> /> 기혼</label>
+			</div>
+			<div class="content_border"></div>
+			<!--{ / }-->
+			<!--{ ? _checked_mobile.useField.marridate }-->
+			<div class="input_title"><!--{ ? _checked_mobile.reqField.marridate }--><font color=FF6000>*</font><!--{ / }-->결혼기념일</div>
+			<div class="input_bar"></div>
+			<div class="input_content">
+				<input type="Text"  placeholder="Enter Text" pattern="[0-9]*"  name="marridate[]" size="4" maxlength="4" onKeyPress="javascript:onlyNum(this, event);" style="ime-mode:disabled" label="결혼기념일" <!--{ ? _checked_mobile.reqField.marridate }-->required<!--{ / }--> /> 년
+				<input type="number"  placeholder="Enter Text" pattern="[0-9]*" name="marridate[]" size="2" maxlength="2" onKeyPress="javascript:onlyNum(this, event);" style="ime-mode:disabled" label="결혼기념일" <!--{ ? _checked_mobile.reqField.marridate }-->required<!--{ / }--> /> 월
+				<input type="number"  placeholder="Enter Text" pattern="[0-9]*" name="marridate[]" size="2" maxlength="2" onKeyPress="javascript:onlyNum(this, event);" style="ime-mode:disabled" label="결혼기념일" <!--{ ? _checked_mobile.reqField.marridate }-->required<!--{ / }--> /> 일
+			</div>
+			<div class="content_border"></div>
+			<!--{ / }-->
+			<!--{ ? _checked_mobile.useField.email }-->
+			<div class="input_title"><!--{ ? _checked_mobile.reqField.email }--><font color=FF6000>*</font><!--{ / }-->이메일</div>
+			<div class="input_bar"></div>
+			<div class="input_content">
+				<input type="email" name="email" size="17" style="ime-mode:inactive" label="이메일" <!--{ ? _checked_mobile.reqField.email }-->required<!--{ / }--> />
+				<!--{ ? _checked.useField.mailling }-->
+				<div class="description chk">
+					<label><input type="checkbox" name="mailling" />  정보,이벤트메일수신</label>
+				</div>
+				<div class="description">
+					※ 주문정보,공지사항 등 주요 안내사항은 동의 여부에 관계없이 자동 발송됩니다.
+				</div>
+				<!--{ / }-->
+				<div class="description">
+					※ 아이디 / 비밀번호 찾기에 활용 되므로 정확하게 입력해 주세요.
+				</div>
+			</div>
+			<div class="content_border"></div>
+			<!--{ / }-->
+			<!--{ ? _checked_mobile.useField.address }-->
+			<div class="input_title"><!--{ ? _checked_mobile.reqField.address }--><font color=FF6000>*</font><!--{ / }-->주소</div>
+			<div class="input_bar"></div>
+			<div class="input_content">
+				<span class="btn_zip"><button id="zipcode-btn" class="btn_zipcode" type="button" onClick="window.open('{_cfg.rootDir}/proc/popup_address.php?isMobile=true','','scrollbars=1');">우편번호 검색</button></span>
+			</div>
+			<div class="none_content_border"></div>
+			<div class="input_title"></div>
+			<div class="input_bar"></div>
+			<div class="input_content">
+				<input type="number" name="zipcode[]" id="zipcode0" size="3" maxlength="4" onKeyPress="javascript:onlyNum(this, event);" style="ime-mode:disabled; width: 40px;" readonly label="주소" <!--{ ? _checked_mobile.reqField.address }-->required<!--{ / }-->  /> -
+				<input type="number" name="zipcode[]" id="zipcode1" size="3" maxlength="4" onKeyPress="javascript:onlyNum(this, event);" style="ime-mode:disabled; width: 40px;" readonly label="주소" <!--{ ? _checked_mobile.reqField.address }-->required<!--{ / }-->  />
+			</div>
+			<div class="none_content_border"></div>
+			<div class="input_title"></div>
+			<div class="input_bar"></div>
+			<div class="input_content">
+				<input type="text" name="address" id="address" size="20" style="ime-mode:active" label="주소" <!--{ ? _checked_mobile.reqField.address }-->required<!--{ / }-->  />
+			</div>
+			<div class="none_content_border"></div>
+			<div class="input_title"></div>
+			<div class="input_bar"></div>
+			<div class="input_content">
+				<input type="text" name="address_sub" id="address_sub" size="20" style="ime-mode:active" onkeyup="SameAddressSub(this)" oninput="SameAddressSub(this)" label="주소" />
+				<br/>
+				<input type="hidden" name="road_address" id="road_address" value="{road_address}">
+				<span style="padding:5px 5px 0 1px;font:12px dotum;color:#999;" id="div_road_address">{road_address}</span>
+				<span style="padding:5px 0 0 1px;font:12px dotum;color:#999;" id="div_road_address_sub"><!--{ ? road_address }-->{address_sub}<!--{ / }--></span>
+			</div>
+			<div class="content_border"></div>
+			<!--{ / }-->
+			<!--{ ? _checked_mobile.useField.mobile }-->
+			<div class="input_title"><!--{ ? _checked_mobile.reqField.mobile }--><font color=FF6000>*</font><!--{ / }-->휴대폰</div>
+			<div class="input_bar"></div>
+			<div class="input_content">
+				<input type="tel" value="{mobile[0]}" placeholder="Enter Text" pattern="[0-9]*" name="mobile[]" size="3" maxlength="3" onKeyPress="javascript:onlyNum(this, event);" style="ime-mode:disabled" label="휴대폰" <!--{ ? _checked_mobile.reqField.mobile }-->required<!--{ / }-->  /> -
+				<input type="tel" value="{mobile[1]}" placeholder="Enter Text" pattern="[0-9]*" name="mobile[]" size="4" maxlength="4" onKeyPress="javascript:onlyNum(this, event);" style="ime-mode:disabled" label="휴대폰" <!--{ ? _checked_mobile.reqField.mobile }-->required<!--{ / }--> /> -
+				<input type="tel" value="{mobile[2]}" placeholder="Enter Text" pattern="[0-9]*" name="mobile[]" size="4" maxlength="4" onKeyPress="javascript:onlyNum(this, event);" style="ime-mode:disabled" label="휴대폰" <!--{ ? _checked_mobile.reqField.mobile }-->required<!--{ / }--> />
+				<!--{ ? _checked_mobile.useField.sms }-->
+				<div class="description chk">
+					<label><input type="checkbox" name="sms"  /> 정보,이벤트SMS수신</label>
+				</div>
+				<div class="description">
+					※ 주문정보 등 주요 안내사항은 동의 여부에 관계없이 자동 발송됩니다.
+				</div>
+				<!--{ / }-->
+			</div>
+			<div class="none_content_border"></div>
+			<!--{ / }-->
+			<!--{ ? _checked_mobile.useField.phone }-->
+			<div class="input_title"><!--{ ? _checked_mobile.reqField.phone }--><font color=FF6000>*</font><!--{ / }-->전화번호</div>
+			<div class="input_bar"></div>
+			<div class="input_content">
+				<input type="tel"  placeholder="Enter Text" pattern="[0-9]*" name="phone[]" size="3" maxlength="3" onKeyPress="javascript:onlyNum(this, event);" style="ime-mode:disabled" label="전화번호" <!--{ ? _checked_mobile.reqField.phone }-->required<!--{ / }-->/> -
+				<input type="tel"  placeholder="Enter Text" pattern="[0-9]*" name="phone[]" size="4" maxlength="4" onKeyPress="javascript:onlyNum(this, event);" style="ime-mode:disabled" label="전화번호" <!--{ ? _checked_mobile.reqField.phone }-->required<!--{ / }-->/> -
+				<input type="tel"  placeholder="Enter Text" pattern="[0-9]*" name="phone[]" size="4" maxlength="4" onKeyPress="javascript:onlyNum(this, event);" style="ime-mode:disabled" label="전화번호" <!--{ ? _checked_mobile.reqField.phone }-->required<!--{ / }-->/>
+			</div>
+			<div class="content_border"></div>
+			<!--{ / }-->
+			<!--{ ? _checked_mobile.useField.fax }-->
+			<div class="input_title"><!--{ ? _checked_mobile.reqField.fax }--><font color=FF6000>*</font><!--{ / }-->팩스</div>
+			<div class="input_bar"></div>
+			<div class="input_content">
+				<input type="tel"  placeholder="Enter Text" pattern="[0-9]*" name="fax[]" size="3" maxlength="3" onKeyPress="javascript:onlyNum(this, event);" style="ime-mode:disabled" label="팩스" <!--{ ? _checked_mobile.reqField.fax }-->required<!--{ / }-->/> -
+				<input type="tel"  placeholder="Enter Text" pattern="[0-9]*" name="fax[]" size="4" maxlength="4" onKeyPress="javascript:onlyNum(this, event);" style="ime-mode:disabled" label="팩스" <!--{ ? _checked_mobile.reqField.fax }-->required<!--{ / }-->/> -
+				<input type="tel"  placeholder="Enter Text" pattern="[0-9]*" name="fax[]" size="4" maxlength="4" onKeyPress="javascript:onlyNum(this, event);" style="ime-mode:disabled" label="팩스" <!--{ ? _checked_mobile.reqField.fax }-->required<!--{ / }-->/>
+			</div>
+			<div class="content_border"></div>
+			<!--{ / }-->
+			<!--{ ? _checked_mobile.useField.company }-->
+			<div class="input_title"><!--{ ? _checked_mobile.reqField.fax }--><font color=FF6000>*</font><!--{ / }-->회사</div>
+			<div class="input_bar"></div>
+			<div class="input_content">
+				<input type="text" name="company" size="17" maxlength="10" style="ime-mode:active" label="회사" <!--{ ? _checked_mobile.reqField.company }-->required<!--{ / }-->/>
+			</div>
+			<div class="content_border"></div>
+			<!--{ / }-->
+			<!--{ ? _checked_mobile.useField.service }-->
+			<div class="input_title"><!--{ ? _checked_mobile.reqField.service }--><font color=FF6000>*</font><!--{ / }-->업태</div>
+			<div class="input_bar"></div>
+			<div class="input_content">
+				<input type="text" name="service" size="17" maxlength="20" style="ime-mode:active" label="업태"  <!--{ ? _checked_mobile.reqField.service }-->required<!--{ / }--> />
+			</div>
+			<div class="content_border"></div>
+			<!--{ / }-->
+			<!--{ ? _checked_mobile.useField.item }-->
+			<div class="input_title"><!--{ ? _checked_mobile.reqField.item }--><font color=FF6000>*</font><!--{ / }-->종목</div>
+			<div class="input_bar"></div>
+			<div class="input_content">
+				<input type="text" name="item" size="17" maxlength="20" style="ime-mode:active" label="종목" <!--{ ? _checked_mobile.reqField.item }-->required<!--{ / }-->/>
+			</div>
+			<div class="content_border"></div>
+			<!--{ / }-->
+			<!--{ ? _checked_mobile.useField.busino }-->
+			<div class="input_title"><!--{ ? _checked_mobile.reqField.busino }--><font color=FF6000>*</font><!--{ / }-->사업자번호</div>
+			<div class="input_bar"></div>
+			<div class="input_content">
+				<input type="number" name="busino" size="13" maxlength="11" style="ime-mode:active" label="사업자번호" <!--{ ? _checked_mobile.reqField.busino }-->required<!--{ / }-->/>
+			</div>
+			<div class="content_border"></div>
+			<!--{ / }-->
+			<!--{ ? _checked_mobile.useField.job }-->
+			<div class="input_title"><!--{ ? _checked_mobile.reqField.job }--><font color=FF6000>*</font><!--{ / }-->직업</div>
+			<div class="input_bar"></div>
+			<div class="input_content">
+				<select name="job" label="직업" <!--{ ? _checked_mobile.reqField.job }-->required<!--{ / }-->>
+					<option value="">==선택하세요==
+					<!--{ @ codeitem('job') }-->
+					<option value="{.key_}" {_selected.job[.key_]}>{.value_}
+					<!--{ / }-->
+				</select>
+			</div>
+			<div class="content_border"></div>
+			<!--{ / }-->
+			<!--{ ? _checked_mobile.useField.interest }-->
+			<div class="input_title"><!--{ ? _checked_mobile.reqField.interest }--><font color=FF6000>*</font><!--{ / }-->관심분야</div>
+			<div class="input_bar"></div>
+			<div class="input_content">
+				<!--{ @ codeitem('like') }-->
+				<input type="checkbox" name="interest[]" value="{=pow(2,.key_+0)}" label="관심분야" <!--{ ? _checked_mobile.reqField.interest }-->required<!--{ / }-->/>{.value_}<br />
+				<!--{ / }-->
+			</div>
+			<div class="content_border"></div>
+			<!--{ / }-->
+			<!--{ ? _checked_mobile.useField.ex1 }-->
+			<div class="input_title"><!--{ ? _checked_mobile.reqField.ex1 }--><font color=FF6000>*</font><!--{ / }-->{_joinset.ex1}</div>
+			<div class="input_bar"></div>
+			<div class="input_content">
+				<input type="text" name="ex1" size="17" maxlength="20" style="ime-mode:active" label="{_joinset.ex1}" <!--{ ? _checked_mobile.reqField.ex1 }-->required<!--{ / }-->/>
+			</div>
+			<div class="content_border"></div>
+			<!--{ / }-->
+			<!--{ ? _checked_mobile.useField.ex2 }-->
+			<div class="input_title"><!--{ ? _checked_mobile.reqField.ex2 }--><font color=FF6000>*</font><!--{ / }-->{_joinset.ex2}</div>
+			<div class="input_bar"></div>
+			<div class="input_content">
+				<input type="text" name="ex2" size="17" maxlength="20" style="ime-mode:active" label="{_joinset.ex2}" <!--{ ? _checked_mobile.reqField.ex2 }-->required<!--{ / }-->/>
+			</div>
+			<div class="content_border"></div>
+			<!--{ / }-->
+			<!--{ ? _checked_mobile.useField.ex3 }-->
+			<div class="input_title"><!--{ ? _checked_mobile.reqField.ex3 }--><font color=FF6000>*</font><!--{ / }-->{_joinset.ex3}</div>
+			<div class="input_bar"></div>
+			<div class="input_content">
+				<input type="text" name="ex3" size="17" maxlength="20" style="ime-mode:active" label="{_joinset.ex3}" <!--{ ? _checked_mobile.reqField.ex3 }-->required<!--{ / }-->/>
+			</div>
+			<div class="content_border"></div>
+			<!--{ / }-->
+			<!--{ ? _checked_mobile.useField.ex4 }-->
+			<div class="input_title"><!--{ ? _checked_mobile.reqField.ex4 }--><font color=FF6000>*</font><!--{ / }-->{_joinset.ex4}</div>
+			<div class="input_bar"></div>
+			<div class="input_content">
+				<input type="text" name="ex4" size="17" maxlength="20" style="ime-mode:active" label="{_joinset.ex4}" <!--{ ? _checked_mobile.reqField.ex4 }-->required<!--{ / }-->/>
+			</div>
+			<div class="content_border"></div>
+			<!--{ / }-->
+			<!--{ ? _checked_mobile.useField.ex5 }-->
+			<div class="input_title"><!--{ ? _checked_mobile.reqField.ex5 }--><font color=FF6000>*</font><!--{ / }-->{_joinset.ex5}</div>
+			<div class="input_bar"></div>
+			<div class="input_content">
+				<input type="text" name="ex5" size="17" maxlength="20" style="ime-mode:active" label="{_joinset.ex5}" <!--{ ? _checked_mobile.reqField.ex5 }-->required<!--{ / }-->/>
+			</div>
+			<div class="content_border"></div>
+			<!--{ / }-->
+			<!--{ ? _checked_mobile.useField.ex6 }-->
+			<div class="input_title"><!--{ ? _checked_mobile.reqField.ex6 }--><font color=FF6000>*</font><!--{ / }-->{_joinset.ex6}</div>
+			<div class="input_bar"></div>
+			<div class="input_content">
+				<input type="text" name="ex6" size="17" maxlength="20" style="ime-mode:active" label="{_joinset.ex6}" <!--{ ? _checked_mobile.reqField.ex6 }-->required<!--{ / }-->/>
+			</div>
+			<div class="content_border"></div>
+			<!--{ / }-->
+			<!--{ ? _checked_mobile.useField.interest_category }-->
+			<div class="input_title"><!--{ ? _checked_mobile.reqField.interest_category }--><font color=FF6000>*</font><!--{ / }-->관심분류</div>
+			<div class="input_bar"></div>
+			<div class="input_content">
+				<select name="interest_category" label="관심분류" <!--{ ? _checked_mobile.reqField.interest_category }-->required<!--{ / }-->>
+					<option value="">==선택하세요==
+					<!--{ @ ts_category_all }-->
+					<option value="{.category}" {_selected.interest_category[.key_]}>{.catnm}
+					<!--{ / }-->
+				</select>
+			</div>
+			<div class="content_border"></div>
+			<!--{ / }-->
+			<!--{ ? _checked_mobile.useField.memo }-->
+			<div class="input_title"><!--{ ? _checked_mobile.reqField.memo }--><font color=FF6000>*</font><!--{ / }-->남기는 말씀</div>
+			<div class="input_bar"></div>
+			<div class="input_content">
+				<input type="text" name="memo" size="17" style="ime-mode:active" label="남기는말씀" <!--{ ? _checked_mobile.reqField.memo }-->required<!--{ / }-->/>
+			</div>
+			<div class="content_border"></div>
+			<!--{ / }-->
+			<!--{ ? _checked_mobile.useField.recommid }-->
+			<div class="input_title"><!--{ ? _checked_mobile.reqField.recommid }--><font color=FF6000>*</font><!--{ / }-->추천인아이디</div>
+			<div class="input_bar"></div>
+			<div class="input_content">
+				<input type="text" name="recommid" size="18" style="ime-mode:active" label="추천인아이디" <!--{ ? _checked_mobile.reqField.recommid }-->required<!--{ / }-->/>
+			</div>
+			<div class="content_border"></div>
+			<!--{ / }-->
+		</div>
+		<div class="content_border"></div>
+	</div>
+	<div class="step_btn">
+		<div class="next_btn"><button id="next-btn" tabindex="5" onclick="javascript:nextStep();return false;">다음단계</button></div>
+		<div class="cancel_btn"><button id="cancel-btn" tabindex="5" onclick="javascript:location.href='/'+mobile_root+'/index.php';return false;">가입취소</button></div>
+	</div>
+	<div class="none_content_border2"></div>
+</form>
+</section>
+
+{#footer}

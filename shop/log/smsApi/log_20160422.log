@@ -1,0 +1,12 @@
+
+===== API LOG START =====
+[POSTDATA]
+a:3:{s:4:"mode";s:12:"smsAcceptApi";s:9:"sms_logNo";s:4:"1334";s:6:"sms_no";N;}
+[REQUEST]
+a:5:{s:12:"msgTranDTime";s:19:"2016-04-22 11:12:43";s:7:"msgKind";s:3:"sms";s:13:"msgSmsContent";s:83:"6인치9홀 180방 1box 34,000원.
+우리 1005 602 458044 김성환.
+입금후 주소부탁드립니다.";s:13:"msgMmsSubject";N;s:13:"msgMmsContent";N;}
+[RESULT]
+d:1;
+
+===== API LOG END =====

@@ -1,0 +1,42 @@
+{*** 마이페이지 레이어 | main/html.php?htmid=mypage/_myBoxLayer.htm ***}
+
+<div id="MypageLayerBox" style="z-index:1000;position:absolute;border:1px solid #363636;background:#F6F6F6;width:187px;height:220px;display:none;text-align:center;">
+
+	<div style="float:right;">
+		<a href="javascript:void(0);" onClick="document.getElementById('MypageLayerBox').style.display='none';"><img src="../img/main/close.gif"></a>
+	</div>
+
+	<div style="clear:both;font-size:11px;margin:5px 0 3px 0;letter-spacing:-1px;">
+	{_member.name} 님은 <!--{ ? _sess.grpnm_disp_type == 'icon' }--><img src="../data/member/icon/{_sess.grpnm_icon}" align="absbottom"><!--{ / }--> <font style="font-weight:bold;" color=#4B4B4B>{_sess.grpnm}</font> 입니다.
+	</div>
+
+	<div style="width:170px;background:#ffffff;border:1px solid #E6E6E6;padding:8px;">
+		<table width="100%">
+		<tr>
+			<td class="small1" width="60">ㆍ총구매액</td><td class="small1" align="right"><font class=v71 color=#ff4810>{=number_format(_sess.sum_sale)}</font> 원</td>
+		</tr>
+		<tr>
+			<td class="small1">ㆍ적립금</td><td class="small1" align="right"><font class=v71 color=#ff4810>{=number_format(_sess.emoney)}</font> 원</td>
+		</tr>
+		<tr>
+			<td class="small1">ㆍ할인쿠폰</td><td class="small1" align="right"><font class=v71 color=#ff4810>{=number_format(_sess.cnt_coupon)}</font> 원</td>
+		</tr>
+		</table>
+	</div>
+
+	<div style="width:170px;padding:8px;">
+		<table width="100%">
+		<tr>
+			<td class="small1" width="60">ㆍ장바구니</td><td class="small1" align="right"><a href="../goods/goods_cart.php"><font class=v71 color=#2246F6>{=number_format(_sess.cart_count)}</font></a> 개</td>
+		</tr>
+		<tr>
+			<td class="small1">ㆍ위시리스트</td><td class="small1" align="right"><a href="../mypage/mypage_wishlist.php"><font class=v71 color=#2246F6>{=number_format(_sess.wish_count)}</font></a> 개</td>
+		</tr>
+		</table>
+	</div>
+
+	<div>
+		<a href="../member/myinfo.php"><img src="../img/main/btn_mypage_go.gif"></a>
+	</div>
+
+</div>

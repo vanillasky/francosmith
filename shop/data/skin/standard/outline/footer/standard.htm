@@ -1,0 +1,92 @@
+{*** 하단기본타입 | main/index.php ***}
+<div id="footer_top" align="{_cfg['shopAlign']}">
+<table width="{_cfg['shopSize']}px" id="cs_contents" border="0" cellpadding="0" cellspacing="0">
+	<tr>
+		<td valign="top" width="210" style="padding:38px 0 0 50px;"> 
+		<!-- 고객센터 01 : Start -->
+		<div id="cscenter">
+			<div style=""><a href="../service/customer.php"><img src="../../img/main/callcenter.gif"></a></div>
+			<div class="cstel">{_cfg.customerPhone}</div>
+			<dl>
+				<dd><span class="txt">{_cfg.customerHour}</span></dd>
+			</dl>
+		</div>
+		<!-- 고객센터 01 : End --> 
+		</td>
+		<td valign="top" width="189" style="padding:38px 0;">
+			<!-- 메인 무통장입금 : Start -->
+			<table id="bankinfo" border="0" cellpadding="0" cellspacing="0">
+				<tr>
+					<td style="padding-bottom:24px;"><img src="../../img/main/banking.gif"></td>
+				</tr>
+				<!--{ @ dataBank() }-->
+				<tr>
+					<td style="padding-top:5px;">{.bank}</td>
+				</tr>
+				<tr>
+					<td><span class="bold">{.account}</span> {.name}</td>
+				</tr>
+				<tr>
+					<td></td>
+				</tr>
+				<!--{ / }--> 
+			</table>
+			<!-- 메인 무통장입금 : End --> 
+		</td>
+		<td valign="top" width="173" style="padding-top:38px">  
+			<table id="about" border="0" cellpadding="0" cellspacing="0">
+				<tr>
+					<td align="left" style="padding-bottom:28px;"><img src="../../img/main/about.gif"></td>
+				</tr>
+				<tr>
+					<td align="left" class="bold"><a href="../service/private.php" style="color:#fb4b12;"><strong>개인정보취급방침</strong></a></td>
+				</tr>
+				<tr>
+					<td align="left"><a href="../service/company.php">회사소개</a> &nbsp;<span style="color:#e0e0e0;">|</span>&nbsp; <a href="../service/agreement.php">이용약관</a></td>
+				</tr>
+				<tr>
+					<td align="left"><a href="../service/guide.php">이용안내</a> &nbsp;<span style="color:#e0e0e0;">|</span>&nbsp; <a href="../service/cooperation.php">제휴안내</a></td>
+				</tr>
+				<tr>
+					<td align="left"><a href="../service/sitemap.php">SITE MAP</a></td>
+				</tr>
+			</table>
+		</td>
+		<td valign="top" width="330" style="padding:38px 0">
+			<table id="info" border="0" cellpadding="0" cellspacing="0">
+				<tr>
+					<td width="20" rowspan="2" style="border-left:solid 1px #e5e5e5;"></td>
+					<td align="left" style="padding-bottom:28px;"><img src="../../img/main/info.gif"></td>
+				</tr>
+				<tr>
+					<td>
+						<div id="footer_company">
+							<p class="line_h20"><span class="txt">회사</span> {_cfg['compName']} </p>
+							<p><span class="txt">주소</span> {_cfg['address']} </p>
+							<p class="line_h20">
+								<span class="txt">대표</span> {_cfg['ceoName']} 
+								<span class="bar"> <span style="color:#e0e0e0;">|</span>  </span>
+								<span class="txt">사업자등록번호</span> {_cfg['compSerial']} <a href="http://www.ftc.go.kr/info/bizinfo/communicationList.jsp" target="_blank"><img src="../../img/common/btn_business.gif" style="vertical-align:text-bottom;"></a>
+							</p>
+							<p>
+								<span class="txt">통신판매업신고번호</span> {_cfg['orderSerial']} 
+								<span class="bar"> <span style="color:#e0e0e0;">|</span>  </span>
+								<span class="txt">개인정보관리자</span> {_cfg['adminName']} 
+							</p>
+							<p class="line_h20">
+								<span class="txt">팩스번호</span> {_cfg['compFax']} 
+								<span class="bar"> <span style="color:#e0e0e0;">|</span>  </span>
+								<span class="txt">메일</span> <a href="javascript:popup('../proc/popup_email.php?to={_cfg['adminEmail']}&hidden=1',650,600)">{_cfg['adminEmail']}</a>
+							</p>
+							<p class="line_h20" style="padding-top:10px;">
+								Copyright ⓒ <strong>{_cfg['shopUrl']}</strong> All right reserved
+							</p>
+							<img src="../../img/common/footer_godomall.png">
+						</div>
+					</td>
+				</tr>
+			</table>
+		</td>
+	</tr>	
+</table>
+</div>

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="EUC-KR"?>
+<codes>
+<list>
+	<code>{_GET['sort']}</code>
+	<desc>정렬방식</desc>
+	<exam>price (=가격 오름차순)</exam>
+</list>
+<list>
+	<code>{_GET['page_num']}</code>
+	<desc>페이지당 출력개수 (=선택한 목록수)</desc>
+	<exam>20</exam>
+</list>
+<list>
+	<code>{@ _r_page_num}</code>
+	<desc>페이지당 출력개수 종류 (=목록수)</desc>
+	<exam>array(20,40,60,80)</exam>
+</list>
+<list>
+	<code>{_selected.page_num[.value_]}</code>
+	<desc>페이지당 출력개수 selected 여부</desc>
+	<exam>selected 또는 공백</exam>
+</list>
+<list>
+	<code>{@ loop}</code>
+	<desc>상품</desc>
+	<exam more="goods/goods_grp.loop.xml"></exam>
+</list>
+<list>
+	<code power="">{ = this->assign( 'loop', loop ) }</code>
+	<desc>리스트 > 상품 변수대입</desc>
+	<exam></exam>
+</list>
+<list>
+	<code power="">{ = this->assign( 'cols', 4 ) }</code>
+	<desc>리스트 > 라인당 상품수 변수대입</desc>
+	<exam></exam>
+</list>
+<list>
+	<code power="">{ = this->assign( 'size', 130 ) }</code>
+	<desc>리스트 > 이미지 사이즈 변수대입</desc>
+	<exam></exam>
+</list>
+<list>
+	<code power="">{ = include_file( "goods/list/tpl_01.htm" ) }</code>
+	<desc>리스트 > 디스플레이파일 인클루드</desc>
+	<exam></exam>
+</list>
+<list>
+	<code>{pg->recode['total']}</code>
+	<desc>페이징 > 전체데이터개수</desc>
+	<exam>23</exam>
+</list>
+<list>
+	<code>{pg->page['navi']}</code>
+	<desc>페이징 > 네비게이션</desc>
+	<exam>1 [2]</exam>
+</list>
+<list>
+	<code>{ # header }</code>
+	<desc>상단과 측면을 크게 감싸는 외곽파일 인클루드, 소스 맨위에 삽입</desc>
+	<exam></exam>
+</list>
+<list>
+	<code>{ # footer }</code>
+	<desc>하단을 크게 감싸는 외곽파일 인클루드, 소스 맨아래에 삽입</desc>
+	<exam></exam>
+</list>
+</codes>

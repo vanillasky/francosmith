@@ -1,0 +1,86 @@
+<style>
+.allat_cell_1 {width:100px;background:#f7f7f7;padding-right:10px;text-align:right;}
+.allat_cell_2 {padding:2px 0 2px 10px;}
+.card_sub {font:8pt dotum; letter-spacing:-1; padding:3px 0 0 24px; }
+.head { background-color:#EFF7FC; text-align:center;  }
+.body { background-color:#FFFFFF; padding: 0 10 0 10  }
+.nbody { background-color:#FFFFCC; padding: 0 10 0 10  }
+</style>
+
+<script language=JavaScript src="https://tx.allatpay.com/common/AllatPayRE.js"></script>
+<!--//----------------------초기화 함수 : Object 초기화------------------------------//-->
+<script language=Javascript>
+Allat_Object_Init("{pg.id}","{pg.zerofee}");   //allat_shop_id,allat_zerofee_yn
+</script>
+<script language=Javascript>
+function ftn_approval(dfm) {
+  var dfm = document.fm;
+
+  var ret;
+  ret = visible_Approval(dfm);//Function 내부에서 submit을 하게 되어있음.
+  if( ret.substring(0,4)!="0000" && ret.substring(0,4)!="9999"){
+    // 오류 코드 : 0001~9998 의 오류에 대해서 적절한 처리를 해주시기 바랍니다.
+    alert(ret.substring(4,ret.length));     // Message 가져오기
+  }
+  if( ret.substring(0,4)=="9999" ){
+    // 오류 코드 : 9999 의 오류에 대해서 적절한 처리를 해주시기 바랍니다.
+    alert(ret.substring(8,ret.length));     // Message 가져오기
+  }
+}
+
+// 플러그인 설치가 올바른지 확인
+function chkPgFlag(){
+	if (typeof(document.AllatPayRE.PayPlus) == 'undefined'){
+		alert ('삼성올앳 전자결제를 위한 플러그인 설치 후 다시 시도 하십시오.');
+		return false;
+	}
+	return true;
+}
+</script>
+
+<!------------- HTML : Form 설정 --------------//-->
+<form name="fm"  method="POST" action="../order/card/allatbasic/card_return.php"> <!--승인요청 및 결과수신페이지 지정 //-->
+<input type="hidden" name="allat_shop_id" value="{pg.id}">				<!-- 상점 ID -->
+<input type="hidden" name="allat_order_no" value="{ordno}">				<!-- 주문번호-->
+<input type="hidden" name="allat_amt" value="{settleprice}">			<!-- 승인금액 -->
+
+<!-- 회원ID : 쇼핑몰의 회원ID (최대 20 bytes) -->
+<input type="hidden" name="allat_pmember_id" value="{?_sess.m_id}{_sess.m_id}{:email}{=substr(email,0,20)}{:}guest{/}">
+<!-- 상품코드 : 여러상품의 경우 대표상품만 기록 (최대 50 bytes) -->
+<input type="hidden" name="allat_product_cd" value="{_ordgoodsno}">
+<!-- 상품명 : 여러상품의 경우 대표상품만 기록 (최대 100 bytes)-->
+<input type="hidden" name="allat_product_nm" value="{=_ordnm}">
+<input type="hidden" name="allat_buyer_nm" value="{nameOrder}">			<!-- 결제자성명 : (최대 20 bytes)-->
+<input type="hidden" name="allat_enc_data" value="">					<!-- 자동설정 (후에 암호화값 리턴받는 필드) -->
+<input type="hidden" name="allat_recp_nm" value="{nameReceiver}">		<!-- 수취인성명 -->
+<input type="hidden" name="allat_recp_addr" value="{address} {address_sub}">	<!-- 수취인주소 -->
+<input type="hidden" name="allat_email_addr" value="{email}">			<!-- 결제자 Email -->
+<input type="hidden" name="allat_test_yn" value="{pg.test}">					<!-- 테스트 여부 : 테스트(Y),서비스(N) -->
+<input type="hidden" name="allat_real_yn" value="{pg.real}">			<!-- 상품 실물 여부 : 상품이 실물일 경우 (Y), 상품이 실물이 아닐경우 (N) -->
+<input type="hidden" name="allat_escrow_yn" value="{_POST.escrow}">		<!-- 상품 에스크로 여부 : 적용(Y),미적용(N)-->
+
+<!-- 카드 결제시 필수 필드, 계좌 이체시에는 사용하지 않음 -->
+<input type="hidden" name="allat_card_yn"		value="{pg.CARD}" />					<!-- 신용카드 사용 여부-->
+<input type="hidden" name="allat_bank_yn"		value="{pg.ABANK}" />					<!-- 계좌이체 사용 여부-->
+<input type="hidden" name="allat_vbank_yn"		value="{pg.VBANK}" />					<!-- 무통장(가상계좌) 사용 여부-->
+<input type="hidden" name="allat_hp_yn"			value="{pg.HP}" />						<!-- 휴대폰 사용 여부-->
+<input type="hidden" name="allat_ticket_yn"		value="N" />													<!-- 상품권 사용 여부-->
+<input type="hidden" name="allat_account_key"	value="" />														<!-- 무통장(가상계좌) 인증 Key -->
+<input type="hidden" name="allat_tax_yn"		value="" />														<!-- 과세여부 (Y(과세), N(비과세) - Default : Y) -->
+<input type="hidden" name="allat_sell_yn"		value="{pg.sell}" />	<!-- 할부 사용여부 -->
+<input type="hidden" name="allat_zerofee_yn"	value="{pg.zerofee}" />	<!-- 일반/무이자 할부 -->
+<input type="hidden" name="allat_cardcert_yn"	value="{pg.cert}" />		<!-- 카드 인증 여부 -->
+<input type="hidden" name="allat_bonus_yn"		value="N" />				<!-- 포인트 사용 여부 -->
+<input type="hidden" name="allat_cash_yn"		value="{pg.receipt}" />	<!-- 현금 영수증 발급 여부 -->
+<input type="hidden" name="allat_product_img"	value="" />														<!-- 상품이미지 URL -->
+
+<input type="hidden" name="allat_cardes_yn"		value="N" />					<!-- 카드 에스크로 적용여부 -->
+<input type="hidden" name="allat_bankes_yn"		value="{pg.AABANK}" />				<!-- 계좌이체 에스크로 적용여부 -->
+<input type="hidden" name="allat_vbankes_yn"	value="{pg.VVBANK}" />				<!-- 무통장(가상계좌) 에스크로 적용여부 -->
+<input type="hidden" name="allat_hpes_yn"		value="N" />					<!-- 휴대폰 에스크로 적용여부 -->
+<input type="hidden" name="allat_ticketes_yn"	value="N" />	<!-- 상품권 에스크로 적용여부 -->
+<input type="hidden" name="allat_registry_no"	value="" />														<!-- 주민번호 (주민번호 13자리(ISP일때는 특정 사업자만 사용함.대부분 사용하지 않음))-->
+<input type="hidden" name="allat_gender"		value="" />														<!-- 성별 (남자 - M /여자 - F) -->
+<input type="hidden" name="allat_birth_ymd"		value="" />														<!-- 생년월일 (YYYYMMDD형식) -->
+</form>
+<script language=Javascript>initCheckOB();</script>

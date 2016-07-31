@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="EUC-KR"?>
+<codes>
+<list>
+	<code>{.sno}</code>
+	<desc>게시물번호</desc>
+	<exam>2</exam>
+</list>
+<list>
+	<code>{.subject}</code>
+	<desc>제목</desc>
+	<exam>언제쯤 배송이 될까요?</exam>
+</list>
+<list>
+	<code>{.goodsno}</code>
+	<desc>상품번호</desc>
+	<exam>37</exam>
+</list>
+</codes>

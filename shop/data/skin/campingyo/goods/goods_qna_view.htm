@@ -1,0 +1,115 @@
+{*** 상품문의 상세 | goods/goods_qna_view.php ***}
+{ # header }
+<!-- 상단이미지 || 현재위치 -->
+<TABLE width=100% cellpadding=0 cellspacing=0 border=0>
+<tr>
+	<td><img src="../img/common/title_qna.gif" border=0></td>
+</tr>
+<TR>
+	<td class="path">HOME > <B>상품Q&A</B></td>
+</TR>
+</TABLE>
+
+
+<div class="indiv"><!-- Start indiv -->
+
+<!-- 질문 : start -->
+
+<div><img src="../img/common/question.gif"></div>
+<table width=100% cellpadding=2 cellspacing=0 border=0>
+<tr height=2><td colspan="2" bgcolor=#303030></td></tr>
+<tr height=30 bgcolor="#F7F7F7">
+	<td width="70%" style="padding:6 6 6 10">{_data.subject}</td>
+	<td width="30%" style="padding:3px;" align="right" class=stxt><B>작성자 :</B> {_data.m_id}&nbsp;&nbsp;│&nbsp;{=substr(_data.regdt,0,10)}</td>
+</tr>
+<tr height=1><td colspan="2" bgcolor=D6D6D6 style="padding:0px;"></td></tr>
+<tr>
+	<td colspan="2" style="padding:15px 0px 0px 20px;">
+	<div style="float:left;margin:0px;border:dotted 1px #BCBCBC;width:80%;">
+	<table width=100% border="0" cellspacing="10" cellpadding="0">
+	<tr>
+		<td width="60"><a href="goods_view.php?goodsno={_data.goodsno}">{=goodsimg(_data.img_s,80)}</a></td>
+		<td>
+			<div><a href="goods_view.php?goodsno={_data.goodsno}"><strong>{_data.goodsnm}</strong></a></div>
+			<div>{=number_format(_data.price)} 원</div>
+			<div style="margin-top:10px;"><a href="goods_view.php?goodsno={_data.goodsno}"><img src="../img/common/btn_goodview.gif"></a></div>
+		</td>
+	</tr>
+	</table>
+	</div>
+
+
+	<div style="float:right;margin:0px;">
+	<!--{ ? _data.authreply == 'Y' }-->
+	<a href="javascript:;" onclick="popup_register( 'reply_qna', '{_data.goodsno}', '{_data.sno}' );"><img src="../img/common/btn_reply.gif" border="0" align="absmiddle"></a>
+    <!--{ / }-->
+	<!--{ ? _data.authmodify == 'Y' }-->
+	<a href="javascript:;" onclick="popup_register( 'mod_qna', '{_data.goodsno}', '{_data.sno}' );"><img src="../img/common/btn_modify2.gif" border="0" align="absmiddle"></a>
+    <!--{ / }-->
+	<!--{ ? _data.authdelete == 'Y' }-->
+    <a href="javascript:;" onclick="popup_register( 'del_qna', '{_data.goodsno}', '{_data.sno}' );"><img src="../img/common/btn_delete.gif" border="0" align="absmiddle"></a>
+    <!--{ / }-->
+    </div>
+   	</td>
+</tr>
+<tr>
+	<td colspan="2" style="padding:15px 0px 20px 20px;">{_data.contents}</td>
+</tr>
+<tr><td colspan=2 height=1 bgcolor="#D6D6D6" style="padding:0px;"></td></tr>
+</table>
+<!-- 질문 : end -->
+
+<!-- 답변 : start -->
+<div style="padding-top:20"><img src="../img/common/answer.gif"></div>
+<!--{ @ _loop }-->
+
+<table width=100% cellpadding=0 cellspacing=0 style="border-top-style:solid;border-top-color:#303030;border-top-width:2;" onmouseover=this.style.background="#F7F7F7" onmouseout=this.style.background="">
+<tr height=30 bgcolor="#F8F8F8">
+	<td width="70%" style="padding:3px;"><strong>{.index_ + 1}.</strong> {.subject}</td>
+	<td width="30%" style="padding:3px;" align="right" class=stxt><B>작성자</B> : {.m_id}&nbsp;&nbsp;│&nbsp;{=substr(.regdt,0,10)}</td>
+</tr>
+<tr height=30>
+	<td colspan="2" style="border-top-style:solid;border-top-color:#E6E6E6;border-top-width:1;padding:5 5 5 0;">
+	<div style="margin-left:19px;">{.contents}</div>
+	<div style="float:right;">
+	<!--{ ? .authmodify == 'Y' }-->
+	<a href="javascript:;" onclick="popup_register( 'mod_qna', '{.goodsno}', '{.sno}' );"><img src="../img/common/btn_modify2.gif" border="0" align="absmiddle"></a>
+    <!--{ / }-->
+	<!--{ ? .authdelete == 'Y' }-->
+    <a href="javascript:;" onclick="popup_register( 'del_qna', '{.goodsno}', '{.sno}' );"><img src="../img/common/btn_delete.gif" border="0" align="absmiddle"></a>
+    <!--{ / }-->
+    </div>
+	</td>
+</tr>
+<tr><td colspan=2 height=1 bgcolor="#E6E6E6" style="padding:0px;"></td></tr>
+</div>
+</table>
+<!--{ : }-->
+<TABLE width=100% cellpadding=10 cellspacing=0>
+<tr><td colspan=2 height=2 bgcolor="#303030"></td></tr>
+<TR>
+	<TD bgcolor="#F8F8F8" align=center class=stxt>해당 답변이 없습니다</TD>
+</TR>
+<tr><td colspan=2 height=1 bgcolor="#D6D6D6" style="padding:0px;"></td></tr>
+</TABLE>
+<!--{ / }-->
+<!-- 답변 : end -->
+
+</div><!-- End indiv -->
+
+
+<script language="javascript">
+
+function popup_register( mode, goodsno, sno )
+{
+<!--{ ? empty(_cfg['qnaWriteAuth']) && !_sess // 회원전용 & 로그인전 }-->
+	alert( "회원전용입니다." );
+<!--{ : }-->
+	if ( mode == 'del_qna' ) var win = window.open("goods_qna_del.php?mode=" + mode + "&sno=" + sno,"qna_register","width=400,height=200");
+	else var win = window.open("goods_qna_register.php?mode=" + mode + "&goodsno=" + goodsno + "&sno=" + sno,"qna_register","width=600,height=500");
+	win.focus();
+<!--{ / }-->
+}
+</script>
+
+{ # footer }

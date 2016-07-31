@@ -1,0 +1,121 @@
+{*** 목록 | board/list.php ***}
+<!--{ ? !_pageView }-->
+{ # header } {_bdHeader}
+<!--{ / }-->
+
+<table width={_bdWidth} align={_bdAlign} cellpadding=0 cellspacing=0><tr><td>
+
+<form name=frmList action="list.php" onsubmit="return chkFormList(this)">
+<input type=hidden name=id value="{id}">
+
+<table width=100% border=0 cellpadding=0 cellspacing=0>
+<tr>
+	<td>
+
+	<table width=100% cellpadding=0 cellspacing=0>
+	<tr>
+		<td colspan=10 align=right class=eng height=20>
+		<!--{ ? !search.word }--> Total {recode.total} Articles, {page.now} of {page.total} Pages
+		<!--{ : }-->	Search Mode {page.now} Page
+		<!--{ / }-->
+		</td>
+	</tr>
+	<tr>
+		<!--{ ? !(_bdField&1) }--><td align=center height=30 background="img/board_bg.gif">{link.chk}<img src="img/board_field_01.gif">{link.end}</td><!--{ / }-->
+		<!--{ ? !(_bdField&2) }--><td align=center background="img/board_bg.gif"><img src="img/board_field_02.gif"></td><!--{ / }-->
+		<!--{ ? !(_bdField&4) }-->
+		<!--{ ? _bdUseSubSpeech }--><td align=center background="img/board_bg.gif">{speechBox}</td><!--{ / }-->
+		<td align=center background="img/board_bg.gif"><img src="img/board_field_03.gif"></td>
+		<!--{ / }-->
+		<!--{ ? !(_bdField&8) }--><td align=center background="img/board_bg.gif"><img src="img/board_field_04.gif"></td><!--{ / }-->
+		<!--{ ? !(_bdField&16) }--><td align=center background="img/board_bg.gif"><img src="img/board_field_05.gif"></td><!--{ / }-->
+		<!--{ ? !(_bdField&32) }--><td align=center background="img/board_bg.gif"><img src="img/board_field_06.gif"></td><!--{ / }-->
+	</tr>
+	<!--{ @ list }-->
+	<tr height=27 onmouseover=this.style.backgroundColor="#FAFAFA" onmouseout=this.style.backgroundColor=""
+	{ ? _checked['chk'][.no] }bgcolor=#F7F7F7{ : .notice }bgcolor=#FAFAFA{ / }
+	>
+		<!--{ ? !(_bdField&1) }-->
+		<td width=20 nowrap align=center><input type=checkbox name=sel[] value={.no} {_checked['chk'][.no]}></td>
+		<!--{ / }-->
+		<!--{ ? !(_bdField&2) }-->
+		<td width=50 nowrap align=center class=eng>
+		<!--{ ? .notice }--><img src="img/board_notice.gif" align=absmiddle><!--{ : }-->{.num}<!--{ / }-->
+		</td>
+		<!--{ / }-->
+		<!--{ ? !(_bdField&4) }-->
+		<!--{ ? _bdUseSubSpeech }--><td width=50 nowrap><!--{ ? .category }-->[{.category}]<!--{ / }--></td><!--{ / }-->
+		<td width=100% style="padding-left:10px">
+		{.gapReply}<!--{ ? .sub }--><img src="img/board_re.gif" align=absmiddle><!--{ / }-->
+		{.link.view}<!--{ ? .notice }--><b style="color:#FE8300"><!--{ / }-->{.subject}{link.end}
+		<!--{ ? _bdUseComment && .comment }-->&nbsp;<span class=engs><FONT COLOR="#007FC8">[{.comment}]</FONT></span><!--{ / }-->
+		<!--{ ? .secret }--><img src="img/icn_secret.gif" align=absmiddle><!--{ / }-->
+		<!--{ ? .new }--><img src="img/board_new.gif" align=absmiddle><!--{ / }-->
+		<!--{ ? .hot }--><img src="img/board_hot.gif" align=absmiddle border=0><!--{ / }-->
+		{.xx}
+		</td>
+		<!--{ / }-->
+		<!--{ ? !(_bdField&8) }-->
+		<td width=100 nowrap align=center>
+		<!--{ ? .m_no }--><b><!--{ / }-->{.name}
+		</td>
+		<!--{ / }-->
+		<!--{ ? !(_bdField&16) }-->
+		<td width=100 nowrap align=center class=eng>{=substr(.regdt,0,10)}</td>
+		<!--{ / }-->
+		<!--{ ? !(_bdField&32) }-->
+		<td width=30 nowrap align=center class=eng><!--{ ? .hot }--><font color=FF6C68><!--{ / }-->{.hit}</td>
+		<!--{ / }-->
+	</tr>
+	<tr><td colspan=10 height=1 bgcolor=#E0DFDF></td></tr>
+	<!--{ / }-->
+	</table>
+
+	</td>
+</tr>
+<tr>
+	<td height=40 bgcolor="#F7F7F7">
+
+	<table width=100%>
+	<tr>
+		<td class=eng>
+		{page.navi}
+		<!--{ ? link.prev }-->{link.prev}이전{link.end} <!--{ / }-->
+		<!--{ ? link.next }-->{link.next}다음{link.end}<!--{ / }-->
+		</td>
+		<td align=right>
+		<table cellpadding=0 cellspacing=0>
+		<tr>
+			<td class=stxt>
+			<!--{ ? !(_bdField&8) }-->
+			<input type=checkbox name="search[name]" {checked['search']['name']}>이름
+			<!--{ / }-->
+			<input type=checkbox name="search[subject]" {checked['search']['subject']}>제목
+			<input type=checkbox name="search[contents]" {checked['search']['contents']}>내용&nbsp;
+			</td>
+			<td><input name="search[word]" value="{search.word}" style="background-color:#FFFFFF;border:1px solid #DFDFDF;width:140" required></td>
+			<td><a href="javascript:document.frmList.submit()"><img src="img/board_btn_search.gif"></a></td>
+			<td><a href="list.php?id={id}"><img src="img/board_btn_cancel.gif"></a></td>
+		</tr>
+		</table>
+		</td>
+	</tr>
+	</table>
+
+	</td>
+</tr>
+<tr>
+	<td align=center style="padding-top:15">
+	<!--{ ? link.delete }-->{link.delete}<img src="img/board_btn_delete.gif">{link.end} <!--{ / }-->
+	<!--{ ? !(_bdField&1) }-->{link.viewSel}<img src="img/board_btn_view.gif">{link.end} <!--{ / }-->
+	{link.list}<img src="img/board_btn_list.gif">{link.end}
+	<!--{ ? link.write }-->{link.write}<img src="img/board_btn_write.gif">{link.end}<!--{ / }-->
+	</td>
+</tr>
+</table><p>
+
+</form>
+
+</td></tr></table>
+
+<!--{ ? !_pageView }-->{_bdFooter} { # footer }<!--{ / }-->

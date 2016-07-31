@@ -1,0 +1,10 @@
+[2016-05-04 12:32:54] Paygate open start
+File : /www/francotr3287_godo_co_kr/shop/order/card/danal/card_gate.php
+Transaction ID : 1462332764191
+Send data : Command=ITEMSEND2&SERVICE=TELEDIT&ItemType=Amount&ItemCount=1&OUTPUTOPTION=DEFAULT&ID=9010S23312&PWD=1FLOF1im&ItemInfo=2%7C38500%7C1%7C22S0rQ0001%7CWOLFCRAFT+DOWELMASTER+JIG%2F%B5%B5%C0%A3%B8%B6%BD%BA%C5%CD&SUBCP=SGD0004644&USERID=franco&ORDERID=1462332764191&IsPreOtbill=N&IsSubscript=N
+[2016-05-04 12:33:45] Paygate open start
+File : /www/francotr3287_godo_co_kr/shop/order/card/danal/card_gate.php
+Transaction ID : 1462332804291
+Send data : Command=ITEMSEND2&SERVICE=TELEDIT&ItemType=Amount&ItemCount=1&OUTPUTOPTION=DEFAULT&ID=9010S23312&PWD=1FLOF1im&ItemInfo=2%7C4000%7C1%7C22S0rQ0001%7C%5BKreg%5D+%C5%A9%B7%B9%B1%D7+%C6%F7%C4%CF-%C8%A6+%BD%BA%C5%A9%B7%F9+Zinc%5BSML-C1%5B25mm%2F100ea%5D%5D&SUBCP=SGD0004644&USERID=franco&ORDERID=1462332804291&IsPreOtbill=N&IsSubscript=N
+[2016-05-04 12:34:30] 결제 정보 저장 시작
+[2016-05-04 12:34:30] 결제성공

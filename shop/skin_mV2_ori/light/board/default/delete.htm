@@ -1,0 +1,39 @@
+{*** 게시글 삭제 | board/delete.php ***}
+{ # header }
+
+{#sub_header}
+<section id="page_title">
+	<button class="btn_list" onclick="location.href='list.php?id={_GET.id}'">목록보기</button>
+	<div class="top_title">{=_bdName}</div>
+</section>
+
+<section id="board-delete" >
+	<form name=frmDelete action="delete_ok.php" method=post onSubmit="return chkForm(this)">
+		<input type=hidden name=id value={_GET.id}>
+		<input type=hidden name=sel[] value={_no}>
+		<input type=hidden name=mode value="{_mode}">
+		<input type=hidden name=returnUrl value="{_returnUrl}">
+
+		<div class="content">
+			<br/>
+			<?php {auth} = true ?>
+			<!--{ ? (_m_no && _m_no==_sess.m_no) || _ici_admin }-->
+			정말로 삭제하시겠습니까? 데이터 삭제시 복구가 불가능 합니다.
+			<!--{ : _m_no }-->
+			<?php {auth} = false ?>
+			<b>삭제권한이 없습니다</b><p>
+			글을 삭제할수 있는 권한을 가지고 있지 않습니다
+			<!--{ : }-->
+			비밀번호를 입력하여 주십시오. <br/>데이터 삭제시 복구가 불가능 합니다.<br/><br/>
+			<input type=password name=password required class=line placeholder="비밀번호">
+			<!--{ / }-->
+		</div>
+
+		<div class="btn_center">
+			<button type="submit" class="btn_confirm">확인</button>
+			<button type="button" class="btn_back" onclick="history.back();">취소</button>
+		</div>
+	</form>
+</section>
+{_bdFooter}
+{ # footer }

@@ -1,0 +1,1 @@
+<img src="./3DBar_conf.php?G_Width=300&G_Height=30" />

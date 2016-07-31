@@ -1,0 +1,132 @@
+{*** 주문완료 | shopTouch_ord/order_end.php ***}
+{ # header }
+
+<?php {page_title} = "주문완료";?>
+{#sub_header}
+
+<section id="order_end">
+
+	<table>
+	<col width="100" />
+	<!--{ ? settlekind=="a" }-->
+	<tr>
+		<th>입금은행</h>
+		<td>{bank}</td>
+	</tr>
+	<tr>
+		<th>입금계좌</th>
+		<td>{account}</td>
+	</tr>
+	<tr>
+		<th>예금주명</th>
+		<td>{name}</td>
+	</tr>
+	<tr>
+		<th>입금자명</th>
+		<td>{bankSender}</td>
+	</tr>
+	<tr>
+		<th>입금금액</th>
+		<td><b>{=number_format(settleprice)}원</b></td>
+	</tr>
+	<!--{ : settlekind=="c" }-->
+	<tr>
+		<th>결제카드</th>
+		<td>{_GET.card_nm}</td>
+	</tr>
+	<tr>
+		<th>결제금액</th>
+		<td><b>{=number_format(settleprice)}원</b></td>
+	</tr>
+	<!--{ : settlekind=="o" }-->
+	<tr>
+		<th>결제방법</th>
+		<td>계좌이체</td>
+	</tr>
+	<tr>
+		<th>결제금액</th>
+		<td><b>{=number_format(settleprice)}원</b></td>
+	</tr>
+	<!--{ : settlekind=="v" }-->
+	<tr>
+		<th>가상계좌</th>
+		<td>{vAccount}</td>
+	</tr>
+	<tr>
+		<th>결제금액</th>
+		<td><b>{=number_format(settleprice)}원</b></td>
+	</tr>
+	<!--{ : settlekind=="d" }-->
+	<tr>
+		<th>결제방법</th>
+		<td>전액할인 결제 (적립금 사용)</td>
+	</tr>
+	<!--{ / }-->
+	<tr>
+		<th>상품가격</th>
+		<td>{=number_format(goodsprice)}원</td>
+	</tr>
+	<tr>
+		<th>배송비</th>
+		<td><!--{ ? deli_msg }-->{deli_msg}<!--{ : }-->{=number_format(delivery)}원<!--{ / }--></td>
+	</tr>
+	<!--{ ? memberdc }-->
+	<tr>
+		<th>회원할인</th>
+		<td>{=number_format(memberdc)}원</td>
+	</tr>
+	<!--{ / }-->
+	<!--{ ? coupon }-->
+	<tr>
+		<th>쿠폰할인</th>
+		<td>{=number_format(coupon)}원</td>
+	</tr>
+	<!--{ / }-->
+	<!--{ ? coupon_emoney }-->
+	<tr>
+		<th>쿠폰적립</th>
+		<td>{=number_format(coupon_emoney)}원</td>
+	</tr>
+	<!--{ / }-->
+	<tr>
+		<th>적립금결제</th>
+		<td><b>{=number_format(emoney)}원</b></td>
+	</tr>
+
+	</table>
+
+	<table>
+	<col width="100" />
+	<tr>
+		<th>주문번호</th>
+		<td>{ordno}</td>
+	</tr>
+	<tr>
+		<th>주문자명</th>
+		<td>{nameOrder}</td>
+	</tr>
+	<tr>
+		<th>주문일자</th>
+		<td>{orddt}</td>
+	</tr>
+	<tr>
+		<th>주문금액</th>
+		<td>{=number_format(settleprice)}원</td>
+	</tr>
+	<!--{ ? cashreceipt_useopt == '0' || cashreceipt_useopt == '1' }-->
+	<tr>
+		<th>현금영수증</th>
+		<td>
+			<!--{ ? cashreceipt_useopt == '0' }-->
+			소득공제용
+			<!--{ : }-->
+			지출증빙용
+			<!--{ / }-->
+			현금영수증 신청
+		</td>
+	</tr>
+	<!--{ / }-->
+	</table>
+</section>
+
+{ # footer }

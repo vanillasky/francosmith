@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="EUC-KR"?>
+<codes>
+<list>
+	<code>{.mode}</code>
+	<desc>모드</desc>
+	<exam>e1</exam>
+</list>
+<list>
+	<code power="">{.goodsno}</code>
+	<desc>상품번호</desc>
+	<exam>37</exam>
+</list>
+<list>
+	<code power="">{.goodsnm}</code>
+	<desc>상품명</desc>
+	<exam>런닝 운동화</exam>
+</list>
+<list>
+	<code>{.goodscd}</code>
+	<desc>상품코드</desc>
+	<exam>PSH-0102</exam>
+</list>
+<list>
+	<code>{.origin}</code>
+	<desc>원산지</desc>
+	<exam>대한민국</exam>
+</list>
+<list>
+	<code>{.maker}</code>
+	<desc>제조사</desc>
+	<exam>나이키</exam>
+</list>
+<list>
+	<code>{.strprice}</code>
+	<desc>가격대체문구</desc>
+	<exam>가격 미정</exam>
+</list>
+<list>
+	<code power="">{.price}</code>
+	<desc>판매가</desc>
+	<exam>4800</exam>
+</list>
+<list>
+	<code power="">{.reserve}</code>
+	<desc>적립금</desc>
+	<exam>450</exam>
+</list>
+<list>
+	<code power="">{.consumer}</code>
+	<desc>정가</desc>
+	<exam>5000</exam>
+</list>
+<list>
+	<code>{.stock}</code>
+	<desc>재고량</desc>
+	<exam>300</exam>
+</list>
+<list>
+	<code power="">{.runout}</code>
+	<desc>품절상품 - 1:품절</desc>
+	<exam>1</exam>
+</list>
+<list>
+	<code>{.shortdesc}</code>
+	<desc>짧은설명</desc>
+	<exam>전사이즈 재입고!!</exam>
+</list>
+<list>
+	<code>{.img_i}</code>
+	<desc>메인이미지</desc>
+	<exam>1164783000_i_0.jpg</exam>
+</list>
+<list>
+	<code power="">{.img_s}</code>
+	<desc>리스트이미지</desc>
+	<exam>1164783000_s_0.jpg</exam>
+</list>
+<list>
+	<code power="">{.icon}</code>
+	<desc>아이콘</desc>
+	<exam>[추천.gif] [기획.gif]</exam>
+</list>
+<list>
+	<code>{.ex_title}</code>
+	<desc>상품추가정보 타이틀(|)</desc>
+	<exam>저자|역|출판사|발행일|PAGE|ISBN</exam>
+</list>
+<list>
+	<code>{.ex1}</code>
+	<desc>상품추가정보 1</desc>
+	<exam>미셸 투르니에</exam>
+</list>
+<list>
+	<code>{.ex2}</code>
+	<desc>상품추가정보 2</desc>
+	<exam>김화영</exam>
+</list>
+<list>
+	<code>{.ex3}</code>
+	<desc>상품추가정보 3</desc>
+	<exam>현대문학</exam>
+</list>
+<list>
+	<code>{.ex4}</code>
+	<desc>상품추가정보 4</desc>
+	<exam>2004년 01월 29일</exam>
+</list>
+<list>
+	<code>{.ex5}</code>
+	<desc>상품추가정보 5</desc>
+	<exam>331페이지</exam>
+</list>
+<list>
+	<code>{.ex6}</code>
+	<desc>상품추가정보 6</desc>
+	<exam>8972752754</exam>
+</list>
+<list>
+	<code>{.coupon}</code>
+	<desc>쿠폰금액/할인율</desc>
+	<exam>10%</exam>
+</list>
+<list>
+	<code>{.coupon_ea}</code>
+	<desc>쿠폰수량</desc>
+	<exam>20</exam>
+</list>
+<list>
+	<code>{.coupon_usecnt}</code>
+	<desc>쿠폰수량제한 - '':없음, o:있음 </desc>
+	<exam>o</exam>
+</list>
+<list>
+	<code>{.coupon_date}</code>
+	<desc>쿠폰종료일</desc>
+	<exam>20070831</exam>
+</list>
+</codes>

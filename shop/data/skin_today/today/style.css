@@ -1,0 +1,172 @@
+body {margin:0}
+body,table,input,textarea,select {
+font:12px dotum;
+color:#333333;
+}
+img	{border:0}
+form	{margin:0}
+
+a	{text-decoration:none;color:#000000}
+a:hover {text-decoration:none;color:#007FC8}
+
+.eng	{font:8pt tahoma}
+.engs	{font:7pt tahoma}
+.engb	{font:bold 8pt tahoma}
+.stxt	{font:8pt 돋움; color:#4C4C4C; letter-spacing:-1; line-height:16px}
+.b_cate	{font:bold 11pt 돋움; color:#464646; letter-spacing:-1}
+.path	{font:8pt 돋움; color:#464646; text-align:right; padding-right:17; height:25} /** 현재경로 **/
+.input_txt	{font:bold 8pt 돋움; color:#5D5D5D; letter-spacing:-1;padding-top:4px;}
+#b_white a {font:bold 11pt 돋움; color:#FFFFFF; letter-spacing:-1}
+.pagediv	{text-align:center;padding:15px} /** 페이징 DIV **/
+
+.indiv {margin:0px 18px 0px 17px;} /** 본문 컨텐츠 DIV **/
+* html .indiv {width:100%;} /** 본문 컨텐츠 DIV (IE 전용) **/
+
+* html .hundred {width:100%;} /** 넓이 100% css (IE 전용) **/
+
+.cellC {
+	width:120px;
+	background:#f7f7f7;
+	text-align:right;
+	padding-right:10px;
+}
+.cellL {padding-left:10px;}
+.cell_R {text-align:right;padding-right:10px}
+
+.btn	{border:1px solid #cccccc;background-color:#000000;color:#ffffff;font:bold 8pt tahoma;width:60px}
+.btn_white	{border:0;background-color:#ffffff;font:bold 8pt tahoma}
+.btnL	{border:1px solid #cccccc;background-color:#000000;color:#ffffff;font:bold 8pt tahoma}
+.line	{border:1px solid #cccccc}
+.lineBig	{border:1px solid #cccccc;width:300px;}
+.lineBg	{border:1px solid #DFDFDF;background-color:#F7F7F7}
+.hand	{cursor:pointer}
+
+.blue	{color:#007FC8}
+.red	{color:#FF6C68}
+
+.float	{float:left}
+.clear	{clear:both}
+option.disabled {color:#808080}
+
+.white	{color:#FFFFFF}
+A.white	{text-decoration:none;color:#FFFFFF}
+A.white:hover {text-decoration:none;color:#FFFFFF}
+
+.position	{text-align:right;padding:5px 10px;border-bottom-width:1; border-bottom-style:solid; border-bottom-color:#dddddd;}
+
+#form input,textarea {border-width:1; border-style:solid; border-color:#DFDFDF ; background:#F7F7F7}
+#form .noline input {border:0; background:transparent}
+.select {font-family:돋움;font-size:8pt;BACKGROUND-COLOR:#626262;color:ffffff;}
+.null {border:0}
+
+#bottom div {float:left;}
+
+#menuLayer .subLayer {
+	position:absolute;
+	display:none;
+	width:150px;
+	border:2px solid #efefef;
+	background:#ffffff;
+	top:-5px;
+	left:-35px;
+	padding:8px;
+}
+#menuLayer .cate {
+	padding-left:10px;
+	height:25px;
+}
+
+
+.small {
+	font:8pt Dotum;
+	letter-spacing:0px;
+	padding-top:3px;
+}
+
+.small1 {
+	font:8pt Dotum;
+	letter-spacing:-1px;
+	padding-top:3px;
+}
+
+
+.v8 {
+	font:8pt verdana;
+	letter-spacing:0px;
+	padding-top:3px;
+}
+
+
+.v81 {
+	font:8pt verdana;
+	letter-spacing:-1px;
+	padding-top:3px;
+}
+
+
+.v7 {
+	font:7pt verdana;
+	letter-spacing:0px;
+	padding-top:3px;
+}
+
+
+.v71 {
+	font:7pt verdana;
+	letter-spacing:-1px;
+	padding-top:3px;
+}
+
+
+
+/*** 웹에디터 보정 ***/
+#contents p {
+margin:2px 0;
+}
+
+/*** list 제품클론 이미지 ***/
+.Move_listClone{
+	cursor:move;
+	border:2px dotted #E6E6E6;
+}
+
+/*** 스크롤바 장바구니존,위시리스트 존 ***/
+.Cartz_imgline{
+	border:1px solid #ffffff;
+}
+
+/*** 스크롤바 장바구니 클릭시 ***/
+.Cartz_click{
+	border:2px dotted #cccccc;
+}
+.Wishz_click{
+	border:2px dotted #cccccc;
+}
+
+/*** 스크롤바 장바구니 이미지 드래그시 ***/
+.Cartz_move_On{
+	background-color : #efefef;
+}
+.Cartz_move_Off{
+	background-color : #ffffff;
+}
+
+/*** 스크롤바 위시리스트 이미지 드래그시 ***/
+.Wishz_move_On{
+	background-color : #efefef;
+}
+.Wishz_move_Off{
+	background-color : #ffffff;
+}
+
+/*** 스크롤바 삭제존 이미지 드래그시 ***/
+.Delz_move_On{
+	background-color : #efefef;
+}
+.Delz_move_Off{
+	background-color : #ffffff;
+}
+
+
+
+

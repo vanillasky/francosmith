@@ -1,0 +1,137 @@
+{*** 회원 성인인증 인트로 | intro_adult_login.php ***}
+<!DOCTYPE html>
+<head>
+<meta name="description" content="{_meta_title}" />
+<meta name="keywords" content="{_meta_keywords}" />
+<meta http-equiv="Content-Type" content="text/html; charset=euc-kr" />
+<meta name="viewport" content="user-scalable=yes, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width, height=device-height" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+<title>{_meta_title}</title>
+
+<script src="../common/js/common.js"></script>
+<script src="../common/js/goods_list_action.js"></script>
+<script src="../common/js/jquery-1.4.2.min.js"></script>
+<script src="../common/js/jquery.mobile-1.1.1.js"></script>
+<script src="../common/js/jquery.cookie.js"></script>
+
+<!--{ @ mobile_script }-->
+<script src="{.script_file}"></script>
+<!--{ / }-->
+<link rel="stylesheet" type="text/css" href="../common/css/reset.css" />
+<link rel="stylesheet" type="text/css" href="../common/css/style.css" />
+<style type="text/css">
+/* 2013.11.03 성인인증 (아이핀 / 휴대폰 인증 ) */
+section#adultauth {background-color:#FFFFFF;min-height:100%;position:relative; font-family:Malgun Gothic;}
+section#adultauth>form {}
+section#adultauth>form .login_center {}
+section#adultauth>form .login_center .login_t {display:block; position:absolute; top:0; left:50%; margin-left:-146px; width:293px; height:380px;background-color:#f5f6f6;padding-top:30px;}
+section#adultauth>form .login_center .login_t .login_img {display:block; position:absolute; top:0; left:50%;  background:url('../common/img/login/19_img.png') center no-repeat; background-size:144px; 144px; margin-top:30px; margin-left:-146px; width:100%; height:144px; padding-left:5px; text-align:center;}
+section#adultauth>form .login_center .login_t .login_txt {display:block; position:absolute; top:0; left:50%; margin-top:195px; margin-left:-146px; width:280px; padding:5px; color:#61656d; text-align:center;}
+section#adultauth>form .login_center .login_t .login_txt h3.auth-text{font:bold 18px Malgun Gothic;color:#222222;line-height:1.5em;}
+section#adultauth>form .login_center .login_t .login_txt h3.auth-detail-text{font:8px Malgun Gothic;color:#666666;line-height:1.5em;}
+section#adultauth>form .login_center .login_t .login_txt h3.auth-text span{font:bold 18px Malgun Gothic;color:#e61212;line-height:1.5em;}
+section#adultauth>form .login_center .login_t .login_txt h3.auth-detail-text span{font:bold 8px Malgun Gothic;color:#666666;line-height:1.5em;}
+section#adultauth>form .login_center .login_t .login_txt p{line-height:20px; font-size:12px;}
+
+section#adultauth>form .login_center .login_t .mout_btn {position:absolute; left:50%; top:0; margin-top:350px; margin-left:-90px; margin-bottom:40px;}
+section#adultauth>form .login_center .login_t .mout_btn button.under-19 {font-family:'Malgun Gothic';color:#ffffff;width:180px; margin:auto; text-align:center; height:35px; color:#ffffff; line-height:35px; font-size:13px; font-weight:bold; background:#e61212; border:none;}
+
+section#adultauth>form .login_center .login_b {height:540px;}
+section#adultauth>form .login_center .login_b .login_title {display:block; position:absolute; top:0; left:50%; margin-top:440px; margin-left:-146px; width:293px; padding-left:5px; font-size:16px; font-weight:bold; color:#61656d;}
+
+section#adultauth>form .login_center .login_b .ipin_btn {position:absolute; left:50%; top:0; margin-top:470px; margin-left:-146px;}
+section#adultauth>form .login_center .login_b .ipin_btn #ipin-btn { width:293px; margin:auto; text-align:center; height:35px; color:#ffffff; line-height:35px; font-size:13px; font-weight:bold; background:#a3a3a3; font-family:Malgun Gothic; display:table-cell; vertical-align:middle; border:solid 1px #cecfcf;}
+section#adultauth>form .login_center .login_b .hpauth_btn {position:absolute; left:50%; top:0; margin-top:515px; margin-left:-146px;}
+section#adultauth>form .login_center .login_b .hpauth_btn #hpauth-btn { width:293px; margin:auto; text-align:center; height:35px; color:#ffffff; line-height:35px; font-size:13px; font-weight:bold; background:#a3a3a3; font-family:Malgun Gothic; display:table-cell; vertical-align:middle; border:solid 1px #cecfcf;}
+#frmLayer{position:absolute; top:0; left:0; width:100%; height:100%;}
+.mobileLayerArea,.mobileLayerFrame{height:100% !important;}
+</style>
+<!--
+<!--	==========================================================	-->
+<!--	한국신용정보주식회사 처리 모듈 (수정 및 변경하지 마십시오)	-->
+<!--	==========================================================	-->
+<script type="text/javascript" src="http://secure.nuguya.com/nuguya/nice.nuguya.oivs.crypto.js"></script>
+<script type="text/javascript" src="http://secure.nuguya.com/nuguya/nice.nuguya.oivs.msg.js"></script>
+<script type="text/javascript" src="http://secure.nuguya.com/nuguya/nice.nuguya.oivs.util.js"></script>
+<script language="javascript">
+<!--
+function goIDCheckIpin(){
+	frmMake('','popupCertKey','아이핀인증',true);
+	$("meta[name='viewport']").attr({"content":"user-scalable=yes, width=480"});
+	<!--{ ? ipinyn == 'y' }-->
+		var returnUrl ="{=urlencode(_returnUrl)}";
+		document.getElementById("ifrmRnCheck").contentWindow.location.href="../../../shop/member/ipin/IPINCheckRequest.php?callType=adultcheckmobile&joinGubun=mobile&returnUrl="+returnUrl;
+	<!--{ : niceipinyn == 'y' }-->
+		var returnUrl ="{=urlencode(_returnUrl)}";
+		document.getElementById("ifrmRnCheck").contentWindow.location.href="../../../shop/member/ipin/IPINMain.php?callType=adultcheckmobile&joinGubun=mobile&returnUrl="+returnUrl;
+	<!--{ / }-->
+	return;
+}
+
+function rnWayChk(){
+	var ryn = document.getElementById("realname");
+	var ayn = document.getElementById("auth");
+
+	var realname	= document.getElementById("realnameyn");
+
+	if(realname && realname.checked == true) {
+		ryn.style.display = "block";
+		ayn.style.display = "none";
+	} else {
+		ryn.style.display = "none";
+		ayn.style.display = "block";
+	} 
+}
+
+function gohpauthDream(){ //휴대폰본인인증
+		var protocol = location.protocol;
+		var callbackUrl = encodeURI("{=ProtocolPortDomain()}{_cfg.rootDir}/member/hpauthDream/hpauthDream_Result.php");
+		var returnUrl ="{=urlencode(_returnUrl)}";
+		frmMake(protocol+"//hpauthdream.godo.co.kr/module/Mobile_hpauthDream_Main.php?callType=adultcheckmobile&shopUrl="+callbackUrl+"&cpid={=hpauthDreamcpid}&returnUrl="+returnUrl,'DRMOKWindow','휴대폰본인인증',false);
+	return;
+}
+//-->
+</script>
+<!--{ customHeader }-->
+</head>
+
+<body>
+
+<div id="dynamic"></div>
+
+<div id="wrap">
+
+<header>
+<section class="content" id="adultauth">
+	<form method=post id="form_auth" name="form_auth">
+		<fieldset>
+			<legend class="hidden">성인인증 폼</legend>
+			<div class="login_center">
+			<div class="login_t">
+				<div class="login_img"></div>
+				<div class="login_txt">
+					<h3 class="auth-text">{_member.name}님, <span>성인인증</span> 해 주셔야 서비스를 이용하실 수 있습니다.</h3>
+					<h3 class="auth-detail-text">개정된 청소년 관련 법령 및 여성가족부 정책에 따라 <span>1년에 한번 성인인증</span> 하도록 변경되었습니다. 오늘 성인인증 하시면 <span>1년간 별도의 인증 없이</span> 서비스를 이용하실 수 있습니다.</h3>
+				</div>
+			</div>
+			<div class="login_b">
+				<div class="login_title">인증수단 선택</div>
+				<!-- 인증수단 -->
+				<!--{ ? ipinyn == 'y' || niceipinyn == 'y' }-->
+				<div class="ipin_btn"><button id="ipin-btn" tabindex="2" class="ipinAuth" onclick="javascript:goIDCheckIpin();return false;">아이핀 인증 받기</button></div>
+				<!--{ / }-->
+				<!--{ ? hpauthDreamyn == 'y' }-->
+				<div class="hpauth_btn"><button id="hpauth-btn" tabindex="3" class="phoneAuth" onclick="javascript:gohpauthDream();return false;">휴대폰 인증 받기</button></div>
+				<!--{ / }-->
+			</div>
+			</div>
+		</fieldset>
+	</form>
+</section>
+
+<iframe id="ifrmRnCheck" name="ifrmRnCheck" style="width:500px;height:500px;display:none;"></iframe>
+<iframe class="" id="ifrmHidden" name="ifrmHidden" src='{_cfg.rootDir}/blank.txt'></iframe>
+</body>
+</html>

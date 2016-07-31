@@ -1,0 +1,268 @@
+{*** 마이페이지 대시보드 | mypage/mypage.php ***}
+{ # header }
+
+
+<script type='text/javascript'>
+	function order_confirm(ordno)
+	{
+		var fm = document.frmOrderList;
+		fm.mode.value = 'confirm';
+		fm.ordno.value = ordno;
+		fm.action = 'indb.php';
+		if (confirm('주문하신 상품을 수령하셨습니까?')) fm.submit();
+	}
+
+	function popup_register( mode, sno )
+	{
+		if ( mode == 'del_qna' ) var win = window.open('../mypage/mypage_qna_del.php?mode=' + mode + '&sno=' + sno,'qna_register','width=400,height=200');
+		else var win = window.open('../mypage/mypage_qna_register.php?mode=' + mode + '&sno=' + sno,'qna_register','width=600,height=500');
+		win.focus();
+	}
+
+	var oldIdx;
+	function viewContent(idx) {
+		var nowIdx = idx.split('_')[1];
+		var cntqna = document.getElementById('cntqna').value;
+		if(oldIdx == nowIdx) {
+			document.getElementById(idx).style.display='none';
+			oldIdx = '';
+		} else {
+			for(var i=1 ; i<=cntqna ; i++) {
+				if(i == nowIdx) document.getElementById(idx).style.display='table-row';
+				else document.getElementById('idx_'+i).style.display='none';
+			}
+			oldIdx = nowIdx;
+		}
+	}
+
+	/* 최근 본 상품 스크립트 */
+	var latelySlide = new eSlide;
+	latelySlide.id = 'scrolling_latelySlide';
+	latelySlide.mode = 'left';
+	latelySlide.line = 5;
+	latelySlide.width = 115;
+	latelySlide.height = 220;
+	latelySlide.align = 'center';
+	latelySlide.valign = 'top';
+	latelySlide.fps = 40;
+	latelySlide.repeat = true;
+	latelySlide.paddingLeft = 0;
+	latelySlide.direction = ('{dpCfg.dOpt4}' === '1') ? 1 : -1;
+	<!--{ @ loop }-->
+		 var tmp = "<div class='slidediv'><a href='{.goods_view_url}'>{=goodsimg(.img_s,size,addslashes('class='+.css_selector+' rsize'))}</a></div><div class='stitle'><!--{ ? .coupon }--><div><span class='pink bold'>{.coupon}</span> <img src='../img/icon/good_icon_coupon.gif' align='absmiddle'></div> <!--{ / }--><!--{ ? .brandnm }--><div class='stxt'><span class='bold'>{.brandnm}</span></div> <!--{ / }--><!--{ ? .goodsnm }--><div class='gsnm'><a href='{.goods_view_url}' title='{=strip_tags(.goodsnm)}'>{=strip_tags(.goodsnm)}</a> </div><!--{ / }--><!--{ ? .soldout_icon }--><div>{? .soldout_icon == 'custom'}<img src='../data/goods/icon/custom/soldout_icon'>{:}<img src='../img/icon/good_icon_soldout.gif'>{/}</div><!--{ / }--><!--{ ? .icon }-->{.icon} <!--{ / }--></div>\
+			<div class='sprice'><!--{ ? !.strprice }--><!--{ ? .goodsDiscountPrice}--><!--{ ? .oriPrice }--><div class='gray'><strike>{=number_format(.oriPrice)}</strike>↓</div><!--{ / }--><span>{=number_format(.goodsDiscountPrice)}원</span><!--{ : .price}--><!--{ ? .consumer }--><div class='gray'><strike>{=number_format(.consumer)}</strike>↓</div><!--{ / }--><span>{=number_format(.price)}원</span> {? .special_discount_amount}<img src='../img/icon/goods_special_discount.gif'>{/}<!--{ / }--><!--{? .soldout_price_string}-->{.soldout_price_string}<!--{/}--><!--{? .soldout_price_image}-->{.soldout_price_image}<!--{/}--><!--{ : }-->{.strprice}<!--{ / }--></div>\
+			<div class='sdefault'>적립금:{=number_format(.reserve)}원</div>";
+		latelySlide.add(tmp);
+
+	<!--{ / }-->
+	/* 최근 본 상품 스크립트 */
+</script>
+
+
+<div class='mypage-wrapper'>
+	<!-- 상단이미지 || 현재위치 -->
+	<div class="page_title_div">
+		<div class="page_title">MY DASHBOARD</div>
+		<div class="page_path"><a href="/shop/">HOME</a> &gt; <span class='bold'>마이페이지</span></div>
+	</div>
+	<div class="page_title_line"></div>
+	<!-- 상단이미지 || 현재위치 -->
+
+	<!-- 진행 중인 주문 -->
+	<div class='mplist'>
+		<div class='ordtitle'>
+			<span class='ordment'><span class='b_cate'>진행 중인 주문</span><span class='mpsubtit'> | 최근 <span class='pink'>30</span>일 내 주문 내역</span></span>
+			<span class='ordlink'><button type='button' onclick='location.href="mypage_orderlist.php"' class='w93' style="cursor:pointer;">전체 주문 보기</button></span>
+		</div>
+		<div class='ordlistdiv'>
+			<table class='ordlisttbl' cellpadding='0' cellspacing='0' summary='최근 30일 내 주문 내역'>
+				<caption>최근 30일 내 주문 내역</caption>
+				<colgroup>
+					<col width='16%'>
+					<col width='16%'>
+					<col width='16%'>
+					<col width='16%'>
+					<col width='16%'>
+					<col width='*'>
+				</colgroup>
+				<tr>
+					<th scope='col'>입금대기중</th>
+					<th scope='col'>결제완료</th>
+					<th scope='col'>배송준비중</th>
+					<th scope='col'>배송중</th>
+					<th scope='col'>배송완료</th>
+					<th scope='col'>취소/교환/반품</th>
+				</tr>
+				<tr>
+					<td scope='row'><span class='pink'>{ordering.pendingPayment}</span> 건</td>
+					<td><span class='pink'>{ordering.confirmPayment}</span> 건</td>
+					<td><span class='pink'>{ordering.deliveryPrepare}</span> 건</td>
+					<td><span class='pink'>{ordering.delivering}</span> 건</td>
+					<td><span class='pink'>{ordering.deliveryComplete}</span> 건</td>
+					<td><span class='pink'>{ordering.cancel}</span> 건</td>
+				</tr>
+			</table>
+		</div>
+	</div>
+	<!-- 진행 중인 주문 -->
+
+	<!-- 최근 주문 정보 -->
+	<div class='mplist'>
+		<div class='ordtitle'>
+			<span class='ordment'><span class='b_cate'>최근 주문 정보</span><span class='mpsubtit'> | 최근 <span class='pink'>3</span>건의 주문 정보</span></span>
+			<span class='ordlink'><button type='button' onclick='location.href="mypage_orderlist.php"' class='w93' style="cursor:pointer;">전체 주문 보기</button></span>
+		</div>
+		<div class='ordlistdiv'>
+			<form name='frmOrderList' method='post'>
+				<input type='hidden' name='mode'>
+				<input type='hidden' name='ordno'>
+				<table class='ordlatelytbl' cellpadding='0' cellspacing='0'  summary='최근 3건의 주문 정보'>
+					<caption>최근 3건의 주문 정보</caption>
+					<colgroup>
+						<col width='18%'>
+						<col width='18%'>
+						<col width='10%'>
+						<col width='10%'>
+						<col width='10%'>
+						<col width='10%'>
+						<col width='10%'>
+						<col width='*'>
+					</colgroup>
+					<tr>
+						<th scope='col'>주문일시</th>
+						<th scope='col'>주문번호</th>
+						<th scope='col'>결제방법</th>
+						<th scope='col'>주문금액</th>
+						<th scope='col'>취소금액</th>
+						<th scope='col'>주문상태</th>
+						<th scope='col'>수령확인</th>
+						<th scope='col'>상세보기</th>
+					</tr>
+					<!--{ ? orderInfo }-->
+						<!--{ @ orderInfo }-->
+							<tr onmouseover='this.style.background="#F7F7F7"' onmouseout='this.style.background="#fff"'>
+								<td scope='row'>{.orddt}</td>
+								<td><a href='mypage_orderview.php?ordno={.ordno}'>{.ordno}</a></td>
+								<td>{.str_settlekind}</td>
+								<td class='right'>{=number_format(.settleprice)}</td>
+								<td class='right'>{=number_format(.canceled_price)}</td>
+								<td class='stxt'><span class='blue'>{.str_step}</span></td>
+								<td>&nbsp;
+									<!--{ ? .step==3 && !.step2 }-->
+										<a href='javascript:order_confirm({.ordno})'><img src='../img/common/btn_receive.gif'></a>
+									<!--{ : .escrowconfirm==2 }-->
+										수령
+									<!--{ / }-->
+								</td>
+								<td><a href='mypage_orderview.php?ordno={.ordno}'><img src='../img/common/btn_detailview.gif'></a></td>
+							</tr>
+						<!--{ / }-->
+					<!--{ : }-->
+						<tr>
+							<td colspan='8' class='nodata'>최근 주문 정보가 없습니다.</td>
+						</tr>
+					<!--{ / }-->
+				</table>
+			</form>
+		</div>
+	</div>
+	<!-- 최근 주문 정보 -->
+
+	<!-- 1:1 문의내역 -->
+	<div class='mplist'>
+		<div class='ordtitle'>
+			<span class='ordment'><span class='b_cate'>1:1 문의내역</span><span class='mpsubtit'> | 최근 <span class='pink'>3</span>건의 1:1문의</span></span>
+			<span class='ordlink'><button type='button' onclick='location.href="./mypage_qna.php"' class='w93' style="cursor:pointer;">1:1 문의게시판</button></span>
+		</div>
+		<div class='ordlistdiv'>
+			<input type='hidden' name='cntqna' id='cntqna' value='{=count(qna)}' />
+			<table class='ordlatelytbl' cellpadding='0' cellspacing='0' summary='최근 3건의 1:1문의'>
+				<caption>최근 3건의 1:1문의</caption>
+				<colgroup>
+					<col width='10%'>
+					<col width='15%'>
+					<col width='*'>
+					<col width='12%'>
+					<col width='12%'>
+				</colgroup>
+				<tr>
+					<th>번호</th>
+					<th>질문유형</th>
+					<th>제목</th>
+					<th>작성자</th>
+					<th>작성일</th>
+				</tr>
+				<!--{ ? qna }-->
+					<!--{ @ qna }-->
+						<tr class='ordhover' onmouseover='this.style.background="#F7F7F7"' onmouseout='this.style.background="#fff"'>
+						<!--{ ? .sno == .parent // 질문 }-->
+							<td>{.idx}</td>
+							<td class='stxt' style='text-align:left'>[{.itemcd}]</td>
+							<td style='text-align:left'><a href='javascript:viewContent("idx_{.idx}")'>{.subject}</a> <span class='stxt blue'>[{.repleCnt}]</span></td>
+							<td>{.m_id}</td>
+							<td>{=substr(.regdt,0,10)}</td>
+						<!--{ : .sno != .parent // 답글 }-->
+							<td>{.idx}</td>
+							<td class='stxt' style='text-align:left'><span class='blue'>ㄴ답변 : </span></td>
+							<td style='text-align:left'><a href='javascript:viewContent("idx_{.idx}")'>{.subject}</a></td>
+							<td>{.m_id}</td>
+							<td>{=substr(.regdt,0,10)}</td>
+						<!--{ / }-->
+						</tr>
+						<tr style='display:none;' id='idx_{.idx}'>
+							<td colspan='5' style='text-align:left;padding:10px;'>
+								<!--{ ? .ordno != '0' }-->
+								<div style='padding-left:55px;'>[ 주문번호 {.ordno} 문의 ]</div>
+								<!--{ / }-->
+								<div style='padding-left:55px;'>{.contents}</div>
+								<div style='text-align:right;'>
+								<!--{ ? .m_no == _sess.m_no }-->
+								<a href='javascript:popup_register( "reply_qna", "{.sno}" );'><img src='../img/common/btn_reply.gif' border='0' align='absmiddle'></a>
+								<a href='javascript:popup_register( "mod_qna", "{.sno}" );'><img src='../img/common/btn_modify2.gif' border='0' align='absmiddle'></a>
+								<a href='javascript:popup_register( "del_qna", "{.sno}" );'><img src='../img/common/btn_delete.gif' border='0' align='absmiddle'></a>
+								<!--{ / }-->
+							</td>
+						</tr>
+					<!--{ / }-->
+				<!--{ : }-->
+					<tr>
+						<td colspan='5' class='nodata'>1:1 문의 내역이 없습니다.</td>
+					</tr>
+				<!--{ / }-->
+			</table>
+		</div>
+	</div>
+	<!-- 1:1 문의내역 -->
+
+	<!-- 최근 본 상품 목록 -->
+	<div class='mplist'>
+		<div class='ordtitle'>
+			<span class='ordment'><span class='b_cate ordsubtitle'>최근 본 상품</span></span>
+			<span class='ordlink'><button type='button' onclick='location.href="./mypage_today.php"' class='w108' style="cursor:pointer;">최근 본 상품 목록</button></span>
+		</div>
+		<div id='latelyList' class='ordlistdiv'>
+			<table cellpadding='0' cellspacing='0' border='0' class='slidetbl'>
+				<tr align='center'>
+					<td class='prev'>
+						<div class='slidebtn'><a href='javascript:latelySlide.go()'><img src='../img/common/btn_common_prev.gif' onmouseover='latelySlide.direct(-1)'></a></div>
+					</td>
+					<td valign='top'>
+						<script>latelySlide.exec();</script>
+					</td>
+					<td class='next'>
+						<div class='slidebtn'><a href='javascript:latelySlide.go()'><img src='../img/common/btn_common_next.gif' onmouseover='latelySlide.direct(1)'></a></div>
+					</td>
+				</tr>
+			</table>
+		</div>
+	</div>
+	<!-- 최근 본 상품 목록 -->
+</div>
+<p></p>
+<script type='text/javascript'>
+	<!--{ ? !count(loop) }-->
+	document.getElementById('latelyList').innerHTML='최근 본 상품이 없습니다.';
+	document.getElementById('latelyList').setAttribute("class", 'nodata_div');
+	<!--{/}-->
+</script>
+{ # footer }

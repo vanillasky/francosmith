@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="EUC-KR"?>
+<codes>
+<list>
+	<code>{_orderitem_mode}</code>
+	<desc>모드 - cart:장바구니,  '':주문루트</desc>
+	<exam>cart</exam>
+</list>
+<list>
+	<code power="">{@ cart->item}</code>
+	<desc>장바구니 상품목록</desc>
+	<exam more="proc/orderitem.cart-item.xml"></exam>
+</list>
+<list>
+	<code>{=number_format(cart->goodsprice)}</code>
+	<desc>상품합계금액</desc>
+	<exam>5,800</exam>
+</list>
+<list>
+	<code>{=number_format(cart->bonus)}</code>
+	<desc>받으실적립금</desc>
+	<exam>450</exam>
+</list>
+<list>
+	<code>{=number_format(cart->delivery)}</code>
+	<desc>배송비</desc>
+	<exam>2,500</exam>
+</list>
+<list>
+	<code>{=number_format(cart->totalprice)}</code>
+	<desc>총주문금액 (=상품합계금액+배송비)</desc>
+	<exam>8,300</exam>
+</list>
+</codes>

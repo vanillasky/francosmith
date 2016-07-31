@@ -1,0 +1,53 @@
+{*** 갤러리형 | goods/goods_list.php ***}
+<!-- 상품 리스트 -->
+<ul id="{id}" class="gl_type_01">
+	<!--{ @ loop }--><li>
+		<dl>
+			<dt class="hidden">상품이미지</dt>
+			<dd class="gl_img">
+				<a href="{_cfgMobileShop.mobileShopRootDir}/goods/view.php?goodsno={.goodsno}&amp;category={_GET.category}">{=goodsimgMobile(array(.img_mobile,.img_i,.img_s,.img_m),74)}</a>
+			</dd>
+			<dt class="hidden">상품명</dt>
+			<dd class="gl_name">
+				<a href="{_cfgMobileShop.mobileShopRootDir}/goods/view.php?goodsno={.goodsno}&amp;category={_GET.category}">{=strcut(strip_tags(.goodsnm),23)}</a>
+			</dd>
+			<!--{ ? .strprice }-->
+				<div class="goods-price">상품가격 : <span class="red">{.strprice}</span></div>
+	<!--{ ? .reserve }-->
+		<div class="goods-reserve">적립금 : {=number_format(.reserve)}원</div>
+	<!--{ / }-->
+<!--{ : .goodsDiscountPrice }-->
+	<!--{ ? .oriPrice }-->
+		<div class="goods-consumer" style="display: none;">상품가격 : <strike>{.oriPrice}원</strike>↓</div>
+		<div class="goods-price">
+			<span class="red">{=number_format(.goodsDiscountPrice)}원</span>
+			<!--{ ? .special_discount }-->
+			<span class="goods-discount" style="display: none;">({=number_format(.special_discount)} 
+			<!--{ ? strstr('원',.special_discount) }-->원<!--{ / }-->
+			<!--{ ? strstr('%',.special_discount) }-->%<!--{ / }-->
+			 할인)</span>
+			<!--{ / }-->
+		</div>
+		<!--{ : }-->
+		<div class="goods-price">
+			<span class="goods-consumer" style="display: none;"> 상품가격 : </span> <span class="red" style="margin-left:0px;">{=number_format(.goodsDiscountPrice)}원</span>
+			<!--{ ? .special_discount }-->
+			<span class="goods-discount" style="display: none;">({=number_format(.special_discount)} 
+			<!--{ ? strstr('원',.special_discount) }-->원<!--{ / }-->
+			<!--{ ? strstr('%',.special_discount) }-->%<!--{ / }-->
+			 할인)</span>
+			<!--{ / }-->
+		</div>
+	<!--{ / }-->
+	<!--{ ? .coupon }-->
+		<div class="goods-coupon-price" style="display: none;">쿠폰할인 : <span class="red">{=number_format(.coupon)}원</span> <div class="goods-coupon-icon"></div></div>
+	<!--{ / }-->
+	<!--{ ? .reserve }-->
+		<div class="goods-reserve">적립금 : {=number_format(.reserve)}원</div>
+	<!--{ / }-->
+
+		</dl>
+	</li><!--{ / }-->
+</ul>
+
+<script>addListFillEvent('{id}',78);</script>

@@ -1,0 +1,192 @@
+{*** 상세 | board/view.php ***}
+{ # header } {_bdHeader}
+
+<table width={_bdWidth} align={_bdAlign} cellpadding=0 cellspacing=0><tr><td>
+
+<!--{ @ loop }-->
+
+<table width=100% cellpadding=0 cellspacing=0>
+<tr>
+	<td>
+		<table width=100% cellpadding=0 cellspacing=0>
+		<tr height=29 background="../default/img/board_view_bg.gif">
+			<td background="../default/img/board_view_bg.gif" style="padding-left:15"><!--{ ? _bdUseSubSpeech && .category }--><b>[{.category}]</b> <!--{ / }--><b>{.subject}</b></td>
+			<!--{ ? !(_bdField&8) }-->
+			<td align=right background="../default/img/board_view_bg.gif" style="padding-right:15">{.name}</td>
+			<!--{ / }-->
+		</tr>
+		</table>
+	</td>
+</tr>
+
+<!--{ ? .urlLink }-->
+<tr>
+	<td class=eng style="padding:5">LINK : <a href="{.urlLink}" target=_blank>{.urlLink}</a>
+	</td>
+</tr>
+<tr><td height=1 bgcolor=#efefef></td></tr>
+<!--{ / }-->
+<!--{ ? .uploadedFile }-->
+<tr>
+	<td class=eng style="padding:5">FILE : {.uploadedFile}
+	</td>
+</tr>
+<tr><td height=1 bgcolor=#efefef></td></tr>
+<!--{ / }-->
+<tr>
+	<td align=right class=eng style="padding:5">
+	Posted at {.regdt}
+	<!--{ ? (.ip && (_bdIp || _ici_admin)) }-->
+	/ IP {.ip}
+	<!--{ / }-->
+	<!--{ ? .email && _ici_admin }-->
+	<div>{.email}</div>
+	<!--{ / }-->
+	</td>
+</tr>
+<tr>
+	<td style="padding:10" height=300 valign=top>
+
+	<table width=100% style="table-layout:fixed">
+	<tr>
+		<td style="word-wrap:break-word;word-break:break-all" id=contents_{.no}></td>
+	</tr>
+	</table>
+
+	</td>
+</tr>
+<tr><td height=10 style="font-size:0;padding:0px;"></td></tr>
+<tr><td height=1 bgcolor="#E0DFDF" colspan=2 style="font-size:0;padding:0px;"></td></tr>
+<tr><td height=3 bgcolor="#F7F7F7" colspan=2 style="font-size:0;padding:0px;"></td></tr>
+</table><br>
+
+<table width=100% style="table-layout:fixed" cellpadding=0 cellspacing=0>
+<!--{ ? _bdUseComment }-->
+<tr>
+	<td>
+
+	<table width=100% cellpadding=0 cellspacing=0>
+	<!--{ @ .loopComment }-->
+	<tr><td colspan=3 height=1 bgcolor="#EFEFEF"></td></tr>
+	<tr><td colspan=3 height=1 bgcolor="#FFFFFF"></td></tr>
+	<tr height=22 bgcolor=#f7f7f7>
+		<td width=100% style="padding-left:10">
+		<!--{ ? ..m_no }--><b><!--{ / }-->
+		{..name}
+		</td>
+		<td nowrap class=eng>{..regdt}</td>
+		<td style="padding:0 10" class=engb align=center>
+		<!--{ ? ..link.delete }-->{..link.delete}x{link.end}
+		<!--{ : }-->-<!--{ / }-->
+		</td>
+	</tr>
+	<tr>
+		<td colspan=3 style="padding:5; word-wrap:break-word; word-break:break-all;">{..comment}</td>
+	</tr>
+	<!--{ / }-->
+	</table>
+
+	</td>
+</tr>
+<tr>
+	<td>
+
+	<form name=frmComment_{no} method=post action="comment_ok.php" onsubmit="return chkForm(this)">
+	<input type=hidden name=id value="{id}">
+	<input type=hidden name=no value="{.no}">
+	<input type=hidden name=mode value="write">
+	<input type=hidden name=returnUrl value="{_SERVER.REQUEST_URI}">
+
+	<table width=100% align=center>
+	<tr>
+		<td valign=top width=100 nowrap class=stxt>
+		<B>이름</B><br>
+		<input name=name class=linebg style="width:100%" required fld_esssential msgR="이름을 입력해주세요" value="{_member.name}" {readonly.name}>
+		<!--{ ? !readonly.name }-->
+		<B>비밀번호</B><br>
+		<input type=password name=password class=linebg style="width:100%" required fld_esssential msgR="비밀번호를 입력해주세요">
+		<!--{ / }-->
+		</td>
+		<td width=100% class=stxt>
+		<B>메모</B><br>
+		<textarea name=memo style="width:100%;height:56" class=linebg required fld_esssential msgR="코멘트를 입력해주세요"></textarea>
+		<!--{ ? _bdSpamComment&2 }-->
+		<div style="margin-top:5px;"><B>자동등록방지</B><BR><!--{ = include_file( "proc/_captcha.htm" ) }--></div>
+		<!--{ / }-->
+		</td>
+		<td valign=top style="padding-top:19">
+		<input type=image src="img/board_btn_review.gif">
+		</td>
+	</tr>
+	</table>
+
+	</form>
+
+	</td>
+</tr>
+<!--{ / }-->
+<tr>
+	<td align=center style="padding-top:10">
+
+	<table width=100%>
+	<tr>
+		<td>
+		<!--{ ? .link.modify }-->{.link.modify}<img src="img/board_btn_modify.gif">{link.end} <!--{ / }-->
+		<!--{ ? .link.delete }-->{.link.delete}<img src="img/board_btn_delete.gif">{link.end} <!--{ / }-->
+		<!--{ ? link.write }-->{.link.reply}<img src="img/board_btn_reply.gif">{link.end}<!--{ / }-->
+		</td>
+		<td align=right>
+		{link.list}<img src="img/board_btn_list.gif">{link.end}
+		<!--{ ? link.write }-->{link.write}<img src="img/board_btn_write.gif">{link.end}<!--{ / }-->
+		</td>
+	</tr>
+	</table>
+
+	</td>
+</tr>
+</table>
+
+<!--{ ? .relation }-->
+<br><table width=100% cellpadding=5 cellspacing=0>
+<col width=100 align=right bgcolor=#f7f7f7 style="padding-right:10px">
+<col style="padding-left:10px">
+<tr><td colspan=2 height=1 bgcolor=#cccccc></td></tr>
+<!--{ ? .relation.next.subject }-->
+<tr height=20>
+	<td class=input_txt>다음글</td>
+	<td>{.relation.next.link.view}{.relation.next.subject}</a></td>
+</tr><tr><td colspan=2 height=1 bgcolor=#cccccc></td></tr>
+<!--{ / }-->
+<!--{ ? .relation.prev.subject }-->
+<tr height=20>
+	<td class=input_txt>이전글</td>
+	<td>{.relation.prev.link.view}{.relation.prev.subject}</a></td>
+</tr><tr><td colspan=2 height=1 bgcolor=#cccccc></td></tr>
+<!--{ / }-->
+<!--{ ? .relation.reply }-->
+<tr>
+	<td valign=top class=input_txt>답글</td>
+	<td>
+
+	<table cellpadding=0 cellspacing=0>
+	<!--{ @ .relation.reply }-->
+	<tr>
+		<td height=20>{..gapReply}<!--{ ? ..sub }--><img src="img/board_re.gif" align=absmiddle><!--{ / }-->{..link.view}{..subject}</a></td>
+	</tr>
+	<!--{ / }-->
+	</table>
+
+	</td>
+</tr><tr><td colspan=2 height=1 bgcolor=#cccccc></td></tr>
+<!--{ / }-->
+</table><p>
+<!--{ / }-->
+
+<br><textarea id=examC_{.no} style="display:none">{=htmlspecialchars(.contents)}</textarea>
+<!--{ / }-->
+
+</td></tr></table>
+
+<!--{ ? _bdTypeView==2 }-->{ # list }<!--{ / }-->
+
+{_bdFooter} { # footer }

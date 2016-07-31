@@ -1,0 +1,28 @@
+{#header}
+
+<?php {page_title} = "쿠폰내역";?>
+{#sub_header}
+
+<section id="couponlist">
+	<table>
+	<tr>
+		<th class="left">쿠폰명</th>
+		<th>할인/적립</th>
+		<th>사용여부</th>
+	</tr>
+	<!--{ @ loop }-->
+	<tr {?.cnt=='사용'}class="used"{/}>
+		<td class="cl_info">
+			<div class="cl_name">{.coupon}</div>
+			{ ? .goodsnm }<div class="cl_goodsnm"">적용상품 : { .goodsnm }</div>{ / }
+			<div class="cl_priod">적용기간 : {? .priodtype == 1 } 발급 후 { .sdate }일{ : }{=substr(.sdate,0,10)}~{=substr(.edate,0,10)} { / }</div>
+		</td>
+		<td class="cl_price center">{=number_format(.price)}{ ? substr(.price,-1)!='%' }원{:}%{/}<br />{_r_couponAbility[.ability]}</td>
+		<td class="cl_cnt center">{.cnt}</td>
+	</tr>
+	<!--{ / }-->
+	</table>
+
+</section>
+
+{#footer}

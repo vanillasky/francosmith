@@ -1,0 +1,81 @@
+{*** 인기상품 순위 롤오버형 ***}
+<script>
+var populate = new eScroll;
+populate.id = "scrolling_populate";
+populate.mode = "top";
+populate.line = 1;
+populate.width = 140;
+populate.height = 34;
+populate.align = "left";
+populate.valign = "middle";
+populate.delay = 1000;
+
+<!--{ @ populate_list }-->
+populate.add('<div><img src="../img/common/list_num{=sprintf('%02d',.index_ + 1)}.gif" align="absmiddle"> <a href="../goods/goods_view.php?goodsno={.goodsno}">{=strcut(.goodsnm,15)}</a></div>');
+<!--{ / }-->
+
+var nsGodo_populateList = function() {
+	return {
+		_timer : null,
+		show : function() {
+
+			if (this._timer != null) {
+				clearTimeout(this._timer);
+			}
+
+			var el = document.getElementById('populate_expand');
+			if (el.style.display == 'none') {
+				el.style.display = 'block';
+				populate.stop();
+			}
+
+
+		},
+		hide : function() {
+
+			if (this._timer != null) {
+				clearTimeout(this._timer);
+			}
+
+			this._timer = setTimeout(function(){
+				document.getElementById('populate_expand').style.display='none';
+				populate.go();
+			},100);
+
+		}
+	}
+}();
+</script>
+
+<div style="position:relative;">
+	<div onmouseover="nsGodo_populateList.show();" style="background:url(../img/common/hotitem_viewbg.gif) no-repeat top left;height:34px;width:190px;">
+	<table border="0" cellspacing="0" cellpadding="0">
+	<tr>
+		<td width="46"><img src="../img/common/hotitem_bu.gif"></td>
+		<td><script>populate.exec();</script></td>
+	</tr>
+	</table>
+	</div>
+
+	<div id="populate_expand" onmouseout="nsGodo_populateList.hide();" onmouseover="nsGodo_populateList.show();" style="display:none;position:absolute;top:0;left:0;z-index:100;">
+		<table border="0" cellspacing="0" cellpadding="0" width="190">
+		<tr>
+			<td><img src="../img/common/hotitem_box_top.gif"></td>
+		</tr>
+		<tr>
+			<td style="background:url(../img/common/hotitem_box_body.gif) repeat-y top left;">
+			<table width="100%">
+			<!--{ @ populate_list }-->
+			<tr>
+				<td style="padding-left:14px;height:18px"><img src="../img/common/list_num{=sprintf('%02d',.index_ + 1)}.gif" align="absmiddle"> <a href="../goods/goods_view.php?goodsno={.goodsno}">{=strcut(.goodsnm,18)}</a></td>
+			</tr>
+			<!--{ / }-->
+			</table>
+			</td>
+		</tr>
+		<tr>
+			<td><img src="../img/common/hotitem_box_bottom.gif"></td>
+		</tr>
+		</table>
+	</div>
+</div>

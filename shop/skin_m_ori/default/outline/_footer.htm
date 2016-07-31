@@ -1,0 +1,50 @@
+<footer>
+	<hr class="hidden" />
+	<!--{ ? _mainpage }-->
+	<ul id="fnb">
+		<li><a href="{_cfg.rootDir}/?pc" title="PC버전으로 보기" class="btn_pcmode"><span class="hidden">PC버전으로 보기</span></a></li>
+	</ul>
+	<!--{ / }-->
+
+	<div align='center'>
+		<ul>
+			<li><hr widht=100%></li>
+		</ul>
+		<nav class="bottom">
+			<a href="{_mobileRootDir}/service/agrmt.php">이용약관</a> | <a href="{_mobileRootDir}/service/private.php" style="font-weight:bold;">개인정보취급방침</a>
+		</nav>
+		<ul>
+			<li style='display:inline'>{_cfg.shopName}</li>
+			<li style='display:inline'>|</li>
+			<li style='display:inline'>대표이사:{_cfg.ceoName}</li>
+		</ul>
+		<ul>
+			<li style='display:inline'>주소:{_cfg.address}</li>
+		</ul>
+		<ul>
+			<li style='display:inline'>사업자번호:{_cfg.compSerial}</li>
+			<li style='display:inline'>|</li>
+			<li style='display:inline'>통신판매업신고:{_cfg.orderSerial}</li>
+		</ul>
+		<ul>
+			<li style='display:inline'>고객센터: 게시판에 문의해주세요.</li>
+		</ul>
+	</div>
+
+	<div id="copyright" style='padding-top:5'>
+		<ul><li>
+			COPYRIGHT (C) <span>{_cfg.shopName}</span> ALL RIGHTS RESERVED.</li>
+		</ul>
+		<ul><li>SYSTEM BY <span style='color:blue'>Godo</span>Mall</li>
+		</ul>
+	</div>
+</footer>
+
+</div>
+
+<script>setTimeout(scrollTo, 0, 0, 0);</script>
+
+<iframe id="ifrmHidden" name="ifrmHidden" src='{_cfg.rootDir}/blank.txt'></iframe>
+
+</body>
+</html>

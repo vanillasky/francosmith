@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="EUC-KR"?>
+<codes>
+<list>
+	<code>{.brand}</code>
+	<desc>브랜드코드</desc>
+	<exam>1</exam>
+</list>
+<list>
+	<code>{.name}</code>
+	<desc>브랜드명</desc>
+	<exam>나이키</exam>
+</list>
+</codes>
