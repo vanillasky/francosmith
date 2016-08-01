@@ -22,7 +22,19 @@
 			<li><a href="/shop/goods/goods_list.php?&category=031002001" class="top_ul_font">개인결제</a>
 			</li>
 			<li class="top_ul_line">|</li>
+			
 			<li><a href="../goods/goods_cart.php">장바구니({=_sess.cart_count})</a></li>
+			
+			
+			<li class="top_ul_line">|</li>
+			<li><a href="/shop/board/list.php?id=notice" class="top_ul_font">공지사항</a>
+			</li>
+			
+			<li class="top_ul_line">|</li>
+			<li><a href="/shop/board/list.php?id=bbs" class="top_ul_font">자료실</a>
+			</li>
+			
+			
 			<li class="top_ul_line">
 				<a href="#" id="contact"><span>1599-7835<span></a>	
 			</li>
@@ -76,6 +88,11 @@
 				<!-- 검색 끝-------------------------------------->
 			</div>
 			<div id="top_right">
+				<table style="margin-top:3px;">
+				 <!--{ @ dataBoardArticle( 'notice', 2 ) }-->
+				 <tr><td height=19><a href="../board/view.php?id={.id}&no={.no}">&bull;&nbsp;{=strcut(.subject,36)}</a></td></tr>
+				 <!--{ / }-->
+				 </table>
 			</div>
 		</div>
 	</div>

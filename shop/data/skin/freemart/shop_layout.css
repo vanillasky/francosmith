@@ -189,9 +189,11 @@ a { outline:0; }
 }
 
 #top_right {
+	float:right;
 	display:inline-block;
 	*display:inline;
-	height:80px;
+	height:50px;
+	margin-top:12px;
 }
 
 
