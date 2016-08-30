@@ -130,9 +130,10 @@ switch ($mode){
 			}
 
 			$nowPath = $dir . $tmp[ ( count( $tmp ) - 1 ) ]; # 업로드경로 재정의
+			$ext = array_pop(explode('.',$nowPath));	// 파일 확장자
 
 			## 파일정보
-			if ( $_GET['design_file'] != 'proc/_agreement.txt' )
+			if ( $_GET['design_file'] != 'proc/_agreement.txt' && !in_array($ext,array('js','css')))
 			{
 				preg_match("/\{\*\*\*( .*)\*\*\*\}/i", $_POST['content'], $matches);
 
