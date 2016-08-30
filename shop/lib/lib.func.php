@@ -4927,18 +4927,13 @@ function todayGoodsMobile($arr, $date=1)
 	$max = 30;	// 리스트 저장 개수
 	$goodsno = $arr[goodsno];
 	$div = explode(",",$_COOKIE[todayGoodsMobileIdx]);
-	$todayG = unserialize(stripslashes($_COOKIE[todayGoodsMobile]));
-	if (!is_array($todayG)) $todayG = array();
 	if (in_array($goodsno,$div)){
 		$key = array_search($goodsno,$div);
 		array_splice($div,$key,1);
-		array_splice($todayG,$key,1);
 	}
-	array_unshift($div,$goodsno); array_unshift($todayG,$arr);
-	array_splice($todayG,$max); //array_splice($div,$max);
+	array_unshift($div,$goodsno);
 
 	setcookie('todayGoodsMobileIdx',implode(",",$div),time()+3600*24*$date,'/');
-	setcookie('todayGoodsMobile',serialize($todayG),time()+3600*24*$date,'/');
 }
 
 ### 모바일 회원로그인 로그 남기기
