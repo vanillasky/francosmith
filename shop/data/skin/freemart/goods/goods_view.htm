@@ -402,7 +402,7 @@ var nsGodo_MultiOption = new GMultiOption( {?runout}true{:}false{/} );
 							<td>
 								<span class="price-normal price-strike" id="nprice">{=number_format(price)}</span><span class="price-won">원</span><span class="slash">/</span>
 								<span class="price-sale" id="cprice">{=number_format(couponprice)}</span><span class="price-won">원</span><span class="slash">/</span>
-								<span class="price-sale-ratio">SALE {=coupon/price * 100}%↓</span><span class="sale-txt">(쿠폰적용시)</span>
+								<span class="price-sale-ratio" id="discount_ratio">SALE {=coupon/price * 100}%↓</span><span class="sale-txt">(쿠폰적용시)</span>
 								<span class="slash"></span>
 								<!--{ @ a_coupon }-->
 								<span class="price-sale"><button onclick="ifrmHidden.location.href='../proc/dn_coupon_goods.php?goodsno={goodsno}&couponcd={.couponcd}'"  class="medium button-dark">쿠폰받기</button></span>
@@ -419,26 +419,22 @@ var nsGodo_MultiOption = new GMultiOption( {?runout}true{:}false{/} );
 							<td>
 								<span class="price-normal price-strike" id="nprice">{=number_format(price)}</span><span class="price-won">원</span><span class="slash">/</span>
 								<span class="price-sale" id="price-amount">{=number_format(price-memberdc)}</span><span class="price-won">원</span><span class="slash">/</span>
-								<span class="price-sale-ratio">SALE {=memberdc/price * 100}%↓</span><span class="sale-txt">(회원할인)</span>
+								<span class="price-sale-ratio" id="discount_ratio">SALE {=memberdc/price * 100}%↓</span><span class="sale-txt">(회원할인)</span>
 							</td>
 						</tr>
 						<!--{ : }-->
 						<tr>
 							<!-- <th>판매금액 :</th> -->
-							<td>
+							<td id="price_display">
 								<span class="price-sale" id="nprice">{=number_format(price)}</span><span class="price-won">원</span>
+								<!--{ ? consumer && consumer > 0}-->
+								<span class="slash">/</span><span class="price-normal price-strike" id="uslprice">{=number_format(consumer)}</span><span class="price-won">원</span><span class="slash">/</span>
+								<span class="price-sale-ratio" id="discount_ratio">SALE {=round((1-(price/consumer)) * 100)} %↓</span>
+								<!--{ / }-->
 							</td>
 						</tr>
 						<!--{ / }-->
 						
-						<!--{ ? consumer }-->
-						<tr>
-							<!-- <th>소비자가격 :</th> -->
-							<td>
-								<span id="consumer">{=number_format(consumer)}</span>원
-							</td>
-						</tr>
-						<!--{ / }-->
 						
 						<tr>
 							<!-- <th>예상적립금 :</th> -->
@@ -873,14 +869,14 @@ var nsGodo_MultiOption = new GMultiOption( {?runout}true{:}false{/} );
 			<table border=0 cellpadding=0 cellspacing=0>
 			<tr>
 				<TD style="background: URL(../img/common/bar_detail_l.gif) no-repeat;" nowrap width="10" height="24"></TD>
-				<TD style="background: URL(../img/common/bar_detail_c.gif) repeat-x; font-weight:bold;" width='100%'>{=.title}2</TD>
-				<TD style="background: URL(../img/common/bar_detail_r.gif) no-repeat;" nowrap width="10" height="24">3</TD>
+				<TD style="background: URL(../img/common/bar_detail_c.gif) repeat-x; font-weight:bold;" width='100%'>{=.title}</TD>
+				<TD style="background: URL(../img/common/bar_detail_r.gif) no-repeat;" nowrap width="10" height="24"></TD>
 			</tr>
 			</table>
 			<div style="width:100%;padding:10 10 10 10;overflow:hidden">
-				<table cellspacing=0 cellpadding=0>
+				<table cellspacing=0 cellpadding="3">
 				<tr>
-					<td>{=.info}</td>
+					<td style="text-align:left">{=.info}</td>
 				</tr>
 				</table>
 			</div>
