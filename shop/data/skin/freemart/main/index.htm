@@ -47,6 +47,42 @@ if(win) win.focus();
 <div id="main-banner-container">
 	<div class="main-banner" id="main-banner-wrapper"> 
 		
+		
+		<div class="banner-item" style="display:none;">
+			<div class="img-holder">
+				<img class="main-banner-img" src="http://francosmith.godohosting.com/banner/main/kreg_main.jpg">
+			</div>
+			<div class="bar">
+				<div class="text-holder">
+					<h1>Kreg&reg; HARDWARE INSTALLATION SOLUTIONS</h1>
+					<p class="last">크레그 하드웨어 지그 신제품 10% 할인</p>
+					
+					<div class="button-holder">
+						<button class="button-big button-red" onclick="location.href='/shop/goods/goods_list.php?&category=031003002'">Find out more</button>
+					</div>
+					
+				</div>
+			</div>
+		</div>
+		
+		<div class="banner-item" style="display:none;">
+			<div class="img-holder">
+				<img class="main-banner-img" src="http://francosmith.godohosting.com/banner/main/plano_clamp.jpg">
+			</div>
+			<div class="bar">
+				<div class="text-holder">
+					<h1>집성 클램프의 최강자</h1>
+					<p class="last">전문가를 위한 집성 클램프 PLANO SYSTEM AB</p>
+					
+					<div class="button-holder">
+						<button class="button-big button-red" onclick="location.href='/shop/goods/goods_view.php?goodsno=627&category=035003001'">Find out more</button>
+					</div>
+					
+				</div>
+			</div>
+		</div>
+		
+		<!-- 
 		<div class="banner-item" style="display:none;">
 			<div class="img-holder">
 				<img class="main-banner-img" src="http://francosmith.godohosting.com/event/festool_df700_event_main.jpg">
@@ -63,7 +99,9 @@ if(win) win.focus();
 				</div>
 			</div>
 		</div>
-		
+		 -->
+		 
+		 
 		<div class="banner-item" style="display:none;">
 			<div class="img-holder">
 				<img class="main-banner-img" src="http://francosmith.godohosting.com/main/vicmarc_main_vl300.jpg">
@@ -175,20 +213,39 @@ if(win) win.focus();
 		<div><!--{ @ dataBanner( 12 ) }-->{.tag}<!--{ / }--></div>
 		<div><!--{ @ dataBanner( 13 ) }-->{.tag}<!--{ / }--></div>
 	</div>
-	<div id="best_item">
+	
+	<div id="new_arrival">
 		<div class="title-block">
-			<div class="title"><a href="../goods/goods_grp_01.php"><h2><span style="color:#C9242B">BEST</span> SELLERS</h2></a></div>
+			<div class="title"><a href="../goods/goods_grp_01.php"><h2><span style="color:#C9242B">NEW</span> PRODUCTS</h2></a></div>
 			<div class="more_link"><a href="../goods/goods_grp_01.php"><img src="../img/main/icon_more.gif"></a></div>
 		</div>
-		<div class="contents">
-		<!--{ ? _cfg_step[0].chk  }--> 
-		<!--{ = this->assign( 'loop', dataDisplayGoods( 0, _cfg_step[0].img, _cfg_step[0].page_num ) ) // 데이타 호출 }--> 
-		<!--{ = this->assign( 'cols', _cfg_step[0].cols ) // 행당 컬럼수 }--> 
-		<!--{ = this->assign( 'size', _cfg[_cfg_step[0].img] ) // 이미지 사이즈 }--> 
-		<!--{ = this->assign( 'id', "main_list_01" ) // 고유 ID }--> 
-		<!--{ = this->assign( 'dpCfg', _cfg_step[0] ) // 설정 }--> 
-		<!--{ = include_file( "goods/list/" + _cfg_step[0].tpl + ".htm" ) }--> 
+		<div class="contents-box">
+			<!--{ ? _cfg_step[0].chk  }--> 
+			<!--{ = this->assign( 'loop', dataDisplayGoods( 0, _cfg_step[0].img, _cfg_step[0].page_num ) ) // 데이타 호출 }--> 
+			<!--{ = this->assign( 'cols', _cfg_step[0].cols ) // 행당 컬럼수 }--> 
+			<!--{ = this->assign( 'size', _cfg[_cfg_step[0].img] ) // 이미지 사이즈 }--> 
+			<!--{ = this->assign( 'id', "main_list_01" ) // 고유 ID }--> 
+			<!--{ = this->assign( 'dpCfg', _cfg_step[0] ) // 설정 }--> 
+			<!--{ = include_file( "goods/list/" + _cfg_step[0].tpl + ".htm" ) }--> 
 		<!--{ / }--> 
+		</div>
+	</div>
+	
+	
+	<div id="best_item">
+		<div class="title-block">
+			<div class="title"><a href="../goods/goods_grp_02.php"><h2><span style="color:#C9242B">BEST</span> SELLERS</h2></a></div>
+			<div class="more_link"><a href="../goods/goods_grp_02.php"><img src="../img/main/icon_more.gif"></a></div>
+		</div>
+		<div class="contents-box">
+			<!--{ ? _cfg_step[1].chk  }--> 
+			<!--{ = this->assign( 'loop', dataDisplayGoods( 1, _cfg_step[1].img, _cfg_step[1].page_num ) ) // 데이타 호출 }--> 
+			<!--{ = this->assign( 'cols', _cfg_step[1].cols ) // 행당 컬럼수 }--> 
+			<!--{ = this->assign( 'size', _cfg[_cfg_step[1].img] ) // 이미지 사이즈 }--> 
+			<!--{ = this->assign( 'id', "main_list_02" ) // 고유 ID }--> 
+			<!--{ = this->assign( 'dpCfg', _cfg_step[1] ) // 설정 }--> 
+			<!--{ = include_file( "goods/list/" + _cfg_step[1].tpl + ".htm" ) }--> 
+			<!--{ / }--> 
 		</div>
 	</div>
 	
