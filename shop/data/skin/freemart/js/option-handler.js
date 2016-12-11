@@ -515,8 +515,11 @@ function updateUnitPrice(selObj, oPrice, oSalePrice, optObj) {
 		return;
 	}
 	
+	
 	var $j = jQuery.noConflict();
 	$j('#nprice').html(comma(price[key]));
+	var normalPrice = price[key];  // 판매가
+	
 	
 	if($j('#price-amount').length) {
 		$j('#price-amount').html(comma(realprice[key]));
@@ -526,6 +529,24 @@ function updateUnitPrice(selObj, oPrice, oSalePrice, optObj) {
 		$j('#cprice').html(comma(couponprice[key]));
 	}
 	
+	if($j('#uslprice').length) {
+		if ( consumer[key] == 0 ) {
+			normalPrice = price[key]; 
+		} else {
+			normalPrice = consumer[key]; // 소비자가 있는 경우
+		}
+		
+		$j('#uslprice').html(comma(normalPrice));
+	}
+
+	if (normalPrice - realprice[key] == 0) {
+		$j('#discount_ratio').html("");
+	} else {
+		if($j('#discount_ratio').length) {
+			var ratio = Math.round((1-(parseInt(realprice[key], 10) / normalPrice)) * 100);
+			$j('#discount_ratio').html("SALE " + ratio + " %↓");
+		}
+	}
 }
 
 function getOptionKey(obj) {

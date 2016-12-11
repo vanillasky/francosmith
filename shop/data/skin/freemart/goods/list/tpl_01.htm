@@ -12,6 +12,7 @@ function fnPreviewGoods_{id}(goodsno) {
 <tr>
 	<!--{ @ loop }-->
 	<!--{ ? .index_ && .index_% cols == 0 }--></tr><tr><!--{ / }-->
+	
 	<td align="center" valign=top style="width:{100/cols - 1}%;" >
 		<div class="goods_grid" style="width:100%;">
 			<?php if(strpos({.icon}, 'icon_sale.gif') || strpos({.icon}, 'my_icon_142458133510')) : ?>
@@ -60,7 +61,8 @@ function fnPreviewGoods_{id}(goodsno) {
 		</div>
 	</td>
 	<!--{ / }-->
-	<?php if( {pg->recode['total']} < {cols}) :?><td style="border:0;"></td><?php endif; ?>
+	
+	
 </tr>
 </table>
 
@@ -68,4 +70,18 @@ function fnPreviewGoods_{id}(goodsno) {
 <div id="el-goods-soldout-image-mask" style="display:none;position:absolute;top:0;left:0;background:url({ ? _cfg_soldout.display_overlay == 'custom'}../data/goods/icon/custom/soldout_overlay{:}../data/goods/icon/icon_soldout{_cfg_soldout.display_overlay}{/}) no-repeat center center;"></div>
 <script>
 //addOnloadEvent(function(){ setGoodsImageSoldoutMask() });
+ var colsPerRow = parseInt(<?php print({cols}) ?>, 10);
+ var lastRow = $("#goods-grid tr:last");
+ var cellCount = lastRow.children('td').length;
+ var cnt = colsPerRow - cellCount - 1;
+ 
+// console.debug("cellCount:"+ cellCount + ", colsPerRow:"+colsPerRow);
+ if (cellCount < colsPerRow) {
+	 //console.debug("add cell:"+cnt);
+	 for (var i=0; i <  cnt; i++) {
+		 $("#goods-grid tr:last").append("<td style='border-right:none;'>&nbsp;</td>");
+	 }
+ }
+ 
+
 </script>

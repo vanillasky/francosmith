@@ -522,9 +522,11 @@ ul.sort_list li a:hover { text-decoration:none;}
 }
 
 #goods-grid tr td:last-child {
-	border-right:0px;
 	border-right:none;
-	border-right-style:hidden;
+}
+
+#goods-grid tr:last-child td:last-child {
+	border-right:none;
 }
 
 .goods-price { margin-top:10px; padding:20px 10px 5px 10px; }
@@ -840,6 +842,7 @@ table.extra-information td {width:35%;color:#666666;}
 .cmt-rh { background: url(http://francosmith.godohosting.com/goods/cmt/rh.gif) no-repeat left center; }
 .cmt-twrr { background: url(http://francosmith.godohosting.com/goods/cmt/twrr.gif) no-repeat left center; }
 .cmt-twb { background: url(http://francosmith.godohosting.com/goods/cmt/twb.gif) no-repeat left center; }
+.cmt-ak { background: url(http://francosmith.godohosting.com/goods/cmt/ak.gif) no-repeat left center; }
 
 ul.no-indent {
 	font-size:12px;

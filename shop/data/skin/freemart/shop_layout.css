@@ -6,6 +6,9 @@
 .water-50-r { background: url(http://francosmith.godohosting.com/shop/water-m-50.png) no-repeat right center;}
 .water-50-c { background: url(http://francosmith.godohosting.com/shop/water-m-50.png) no-repeat center center;}
 
+.notice_h2 h2 { font-family: notokr-regular,dotum,Arial; font-size:14px; text-decoration: underline; text-align:center;}
+.notice_txt { text-align:left; margin:12px 5px 5px 12px; font-family: dotum,Arial; font-size:12px; }
+
 a { outline:0; }
 
 /** ºÓ«Œ∏Ù √÷ªÛ¥‹ ∂Û¿Œ */
@@ -598,17 +601,18 @@ a { outline:0; }
 #main_contents #three_banner div { width:31%; height:auto; margin:0; display:inline-block;}
 #main_contents #three_banner img {max-width:100%; height:auto;}
 
-#main_contents #best_item { width:100%; margin:0; padding-top:10px; text-align:center; }
+#main_contents #new_arrival { width:100%; margin:0; padding-top:10px; text-align:center; }
 .title-block { width:100%; height:25px; postion:relative; }
 .title-block .title { width:95%; height:25px; text-align:left; display:inline-block; padding:0; margin:0; float:left;}
 .title-block .title h2 { font-weight:bold; font-family: font-family:Tahoma, Geneva, sans-serif; padding:0;margin:0;}
 .more_link { width:48px; margin:0; padding-top:5px; float:right;}
 
-#main_contents #new_arrival { margin:0; padding-top:35px; border:solid 1px #e5e5e5; border-width:0 1px; text-align:center;  }
+#main_contents #best_item { margin-top:20px; text-align:center;  }
 #main_contents #md_pick { margin:0; padding-top:35px; border:solid 1px #e5e5e5; border-width:0 1px; text-align:center;  }
 
 .title2 { width:948px; text-align:left; margin:0 0 0px 20px; padding:0 0 11px 0; float:left; border-bottom:solid 1px #e5e5e5; }
 
+#main_contents .contents-box { width:100%; margin:0 0 15px 0; padding:0; padding-bottom:10px;}
 .contents { width:100%; margin:0; padding:0; padding-bottom:10px; text-align:center; border-bottom:1px dotted #ccc;}
 
 /*#table_best { width:948px; margin:0 0 0 20px; border-bottom:solid 1px #e5e5e5; border-collapse:collapse; }*/
