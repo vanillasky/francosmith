@@ -491,7 +491,8 @@ a { outline:0; }
 
 
 #main-banner-container { 
-	position:relative;
+	position:relative; 
+	margin-top:4px;
 }
 
 .img-holder { 
