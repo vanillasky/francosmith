@@ -1,0 +1,73 @@
+{*** 이미지 스크롤형 | m2/index.php ***}
+<div class="list_imgscroll" id="imgscroll-{dpCfg.mdesign_no}">
+	<div class="list_title">
+		<div class="bullet"></div>
+		<div class="title">{dpCfg.title}</div>
+		<div class="list_page"><span id="swipe_is-{dpCfg.mdesign_no}-page" class="n_page">1</span> / <span id="swipe_is-{dpCfg.mdesign_no}-tpage">{dpCfg.page_cnt}</span></div>
+	</div>
+	<div class="list_content_wrap">
+		<div class="swipe_is" id="swipe_is-{dpCfg.mdesign_no}">
+			<div>
+			<!--{ @ range(0, dpCfg.page_cnt - 1) }-->
+				<!--{ ? dpCfg.goods_cnt > .index_ }-->
+				<div class="list_content{?.index_ != 0} hidden{/}" id="imgscroll-{dpCfg.mdesign_no}-{.index_+1}">
+					<div class="list_content_border"></div>
+					<!--{ @ dpCfg.goods_data[.index_] }-->
+					<div class="list_item" style="width:{dpCfg.item_width}%;{?..index_%dpCfg.disp_cnt == 0}clear:both;{/}" onClick="{?dpCfg.display_type == '3'}goCate('{..goodsno}'){:}goGoods('{..goodsno}'){/}">
+						<!--{ ? ..goods_img != '' }-->
+						<div class="item_img">
+							<!--{?..coupon_discount}--><div class="item_coupon_img"></div><!--{/}-->
+							<img src="{..goods_img}" {..css_selector} />
+							<!--{? ..tts_url }-->
+							<div class="goods-speach-description" style="display:none;">
+								<span class="speach-description-play" data-src="{..tts_url}">재생</span>
+								<span class="speach-description-timer"></span>
+							</div>
+							<!--{ / }-->
+						</div>
+						<!--{ : }-->
+						<div class="item_img"><!--{?..coupon_discount}--><div class="item_coupon_img"></div><!--{/}--></div>
+						<!--{ / }-->
+						<div class="item_text-wrap">
+							<div class="item_text">
+								<div class="item_name">{..goodsnm}</div>
+								<!--{? ..goods_strprice == '' && ..goodsDiscountPrice }-->
+									<!--{? ..oriPrice}-->
+									<div class="item_consumer" style="display:none;"><strike>{=number_format(..oriPrice)} 원</strike>↓</div>
+									<!--{ / }-->
+									<div class="item_price"><b>{..goodsDiscountPrice}</b></div>
+								<!--{ : }-->
+									<!--{? ..goods_strprice == '' && ..consumer != '' }-->
+									<div class="item_consumer" style="display:none;"><strike>{=number_format(..consumer)} 원</strike>↓</div>
+									<!--{ / }-->
+									<div class="item_price"><b>{..goods_price}</b></div>
+								<!--{ / }-->
+								<!--{? ..special_discount }-->
+								<div class="item_discount" style="display:none;">{..special_discount} 할인</div>
+								<!--{ / }-->
+								<!--{? ..coupon }-->
+								<div class="item_coupon_price" style="display:none;">{=number_format(..coupon)} 원 <div class="item_coupon_icon"></div></div>
+								<!--{ / }-->
+							</div>
+						</div>
+					</div>
+					<!--{ / }-->
+					<div class="list_content_border"></div>
+				</div>
+				<!--{ / }-->
+			<!--{ / }-->
+			</div>
+		</div>
+		<!--{ ? dpCfg.page_cnt > 1 }-->
+		<div class="list_page_btn">
+			<div class="left_btn">
+				<div class="left_btn_img" onclick="javascript:scroll_btn('swipe_is-{dpCfg.mdesign_no}', 'left');"></div>
+			</div>
+			<div class="right_btn">
+				<div class="right_btn_img" onclick="javascript:scroll_btn('swipe_is-{dpCfg.mdesign_no}', 'right');"></div>
+			</div>
+		</div>
+		<!--{ / }-->
+	</div>
+	<div class="list_margin"></div>
+</div>

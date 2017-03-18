@@ -1,0 +1,28 @@
+{*** 이벤트 롤링형 | m2/index.php ***}
+<div class="list_banner" id="banner-{dpCfg.mdesign_no}">
+	<div class="list_title"><div class="bullet"></div><div class="title">{dpCfg.title}</div></div>
+	<div class="list_content_border"></div>
+	<div class="swipe_ban" id="swipe_ban-{dpCfg.mdesign_no}">
+		<div>
+			<!--{ @ dpCfg.event_data }-->
+			<!--{ ? .banner_img }-->
+			<div class="list_content{?.index_ != 0} hidden{/}" id="banner-{dpCfg.mdesign_no}-{.index_+1}">
+				<div class="list_item" onClick="document.location.href='{.link_url}'">
+					<img style="width:{dpCfg.img_width}px;height:{dpCfg.img_height}px;" src="{.banner_img}" />
+				</div>
+			</div>
+			<!--{ / }-->
+			<!--{ / }-->
+		</div>
+	</div>
+	<div class="list_content_border"></div>
+	<div class="list_page">
+		<div class="list_page_wrap">
+			<!--{ @ range(0, dpCfg.banner_cnt - 1) }-->
+			<div class="list_page_box{?.index_ == 0} now_page{/}" id="banner-{dpCfg.mdesign_no}-page-box-{.index_+1}"></div>
+			<!--{ / }-->
+			<div class="list_page_num hidden"><span id="swipe_ban-{dpCfg.mdesign_no}-page" class="n_page">1</span> / <span id="banner-{dpCfg.mdesign_no}-tpage">{dpCfg.banner_cnt}</span></div>
+		</div>
+	</div>
+	<div class="list_margin"></div>
+</div>

@@ -1,0 +1,32 @@
+{*** 이용안내 | m2/html.php?htmid=proc/guide.htm ***}
+{ # header }
+
+<script type="text/javascript">
+$(document).ready(function(){
+	//$("#guide > article").html($("#guide > article").html().replace(/\n/gi, "<br/>"));
+});
+</script>
+
+<style type="text/css">
+html, body{ width:100%; height:100%; margin:0; padding:0; background-color:#ffffff;}
+
+#top_title {
+	text-align:center;
+}
+#guide{
+	padding: 12px;
+}
+</style>
+
+<section id="page_title" class="content">
+	<div id="top_title" class="top_title">이용안내</div>
+</section>
+
+<section id="guide"  class="content">
+	<article>
+		{guideOperate}
+	</article>
+</section>
+
+
+{ # footer }

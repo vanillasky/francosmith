@@ -1,0 +1,60 @@
+{*** 매거진 스크롤형 | m2/index.php ***}
+<div class="list_magazine" id="magazine-{dpCfg.mdesign_no}">
+	<div class="list_title"><div class="bullet"></div><div class="title">{dpCfg.title}</div></div>
+	<div class="swipe_mg" id="swipe_mg-{dpCfg.mdesign_no}">
+		<div>
+			<!--{ @ dpCfg.goods_data }-->
+			<div class="list_content{?.index_ != 0} hidden{/}" id="magazine-{dpCfg.mdesign_no}-{.index_}">
+				<div class="list_content_border"></div>
+				<div class="list_item" style="width:100%;overflow:hidden;<!--{?dpCfg.banner_height>0}-->height:{=dpCfg.banner_height}px;<!--{/}-->" onClick="{?dpCfg.display_type == '3'}goCate('{.goodsno}'){:}goGoods('{.goodsno}'){/}">
+					<!--{ ? .goods_img != '' }-->
+					<div class="item_img">
+						<!--{?.coupon_discount}--><div class="item_coupon_img"></div><!--{/}-->
+						<img style="width:100%;" src="{.goods_img}" {.css_selector} />
+						<!--{? .tts_url }-->
+						<div class="goods-speach-description" style="display:none;">
+							<span class="speach-description-play" data-src="{.tts_url}">재생</span>
+							<span class="speach-description-timer"></span>
+						</div>
+						<!--{ / }-->
+					</div>
+					<!--{ : }-->
+					<div class="item_img"><!--{?.coupon_discount}--><div class="item_coupon_img"></div><!--{/}--></div>
+					<!--{ / }-->
+					<div class="item_text-wrap">
+						<div class="item_text">
+							<div class="item_name">{.goodsnm}</div>
+							<!--{? .goods_strprice == '' && .goodsDiscountPrice }-->
+								<!--{? .oriPrice}-->
+									<div class="item_consumer" style="display:none;"><strike>{=number_format(.oriPrice)} 원</strike>↓</div>
+								<!--{ / }-->
+								<div class="item_price"><b>{.goodsDiscountPrice}</b></div>
+							<!--{ : }-->
+								<!--{? .goods_strprice == '' && .consumer != '' }-->
+								<div class="item_consumer" style="display:none;"><strike>{=number_format(.consumer)} 원</strike>↓</div>
+								<!--{ / }-->
+								<div class="item_price"><b>{.goods_price}</b></div>
+							<!--{ / }-->
+							<!--{? .special_discount }-->
+							<div class="item_discount" style="display:none;">{.special_discount} 할인</div>
+							<!--{ / }-->
+							<!--{? .coupon }-->
+							<div class="item_coupon_price" style="display:none;">{=number_format(.coupon)} 원 <div class="item_coupon_icon"></div></div>
+							<!--{ / }-->
+						</div>
+					</div>
+				</div>
+				<div class="list_content_border"></div>
+			</div>
+			<!--{ / }-->
+		</div>
+	</div>
+	<div class="list_page">
+		<div class="list_page_wrap">
+			<div class="list_page_left" onclick="javascript:scroll_btn('swipe_mg-{dpCfg.mdesign_no}', 'left');"></div>
+			<div class="list_page_num"><span id="swipe_mg-{dpCfg.mdesign_no}-page" class="n_page">1</span> / <span id="magazine-{dpCfg.mdesign_no}-tpage">{dpCfg.page_cnt}</span></div>
+			<div class="list_page_right" onclick="javascript:scroll_btn('swipe_mg-{dpCfg.mdesign_no}', 'right');"></div>
+		</div>
+	</div>
+	<div class="list_margin"></div>
+</div>

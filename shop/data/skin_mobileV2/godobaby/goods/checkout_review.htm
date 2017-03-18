@@ -1,0 +1,131 @@
+{***네이버페이 상품후기 | goods/checkout_review.php ***}
+{ # header }
+
+
+{#sub_header}
+
+<style type="text/css">
+section#content-wrap {background:#FFFFFF;}
+section#nreviewlist {background-color:#FFFFFF;min-height:100%; padding:12px;}
+section#nreviewlist table {width:100%; }
+/*section#reviewlist table th {height:50px; border-bottom:solid 1px #bbbbbb; background-color:#cccccc; line-height:50px; font-size:16px; text-align:center; border-right:solid 1px #bbbbbb; color:#444444;}*/
+section#nreviewlist th { font-size:12px; font-weight:bold; color:#353535; height:33px; line-height:33px; background:url(../common/img/nmyp/bdtit_bg.png) repeat-x; border-right:solid 1px #DBDBDB; font-family:Dotum; }
+section#nreviewlist th.first{ border-left:solid 1px #DBDBDB; }
+section#nreviewlist .title td { height:64px; border-right:solid 1px #DBDBDB; border-bottom:solid 1px #DBDBDB; font-size:12px; text-align:center; color:#353535; background-color:#FFFFFF; font-family:Dotum;  vertical-align:middle;}
+section#nreviewlist .active td {border-bottom:dashed 1px #DBDBDB; background:#EDF4F8;}
+
+section#nreviewlist .content-board {display:none;}
+section#nreviewlist .content-board td { border-left:solid 1px #DBDBDB; border-right:solid 1px #DBDBDB; border-bottom:solid 1px #DBDBDB; font-size:12px; text-align:left; color:#353535; background-color:#FFFFFF; font-family:Dotum;  vertical-align:middle;}
+section#nreviewlist .content-board td .content-review{ padding: 12px;}
+section#nreviewlist .content-board td .del-btn {float:right; margin-bottom:8px; width:70px; height:27px; line-height:27px; font-size:12px; color:#FFFFFF; font-weight:normal; text-align:center; background:#808591; font-family:dotum; border-radius:3px;}
+section#nreviewlist .content-board td .content-reply{ padding: 12px; border-top:dashed 1px #DBDBDB;}
+section#nreviewlist .content-board td .content-reply .reply-icon{float:left; background:url("../common/img/new/btn_re.png") no-repeat; background-size:20px 14px; width:20px; height:14px; margin-right:5px;}
+
+section#nreviewlist td.first{ border-left:solid 1px #DBDBDB; }
+section#nreviewlist td.left { padding-left:10px; padding-right:10px; text-align:left; }
+section#nreviewlist td.img { }
+section#nreviewlist td.img img{width:48px; height:48px; margin:5px 5px 0px 5px; }
+section#nreviewlist .name { font-size:14px; color:#353535; height:25px; line-height:25px; vertical-align:bottom; overflow:hidden; text-align:left; margin-top:12px; }
+section#nreviewlist .remain { font-size:12px; height:20px; line-height:20px; vertical-align:top; color:#F03C3C; text-align:left; margin-bottom:8px; }
+section#nreviewlist .remain span { font-weight:bold; }
+section#nreviewlist .notused { font-weight:bold; color:#F03C3C; border-right:none; }
+section#nreviewlist .used { font-weight:bold; color:#797979; border-right:none; }
+section#nreviewlist .nolist { border-right:none; }
+
+section#nreviewlist .more-btn {width:300px; margin:auto; text-align:center; height:35px; color:#ffffff; line-height:35px; font-size:15px; font-weight:bold; background:#808591; border-radius:3px; font-family:dotum; margin-top:15px;}
+
+.coupon-number { margin-top:14px; height:58px; line-height:58px; background-color:#ECECEC; font-size:12px; color:#353535; text-align:center; }
+.coupon-number .inputnum { font-size:14px; font-weight:bold; color:#436693; padding:3px 0; width:18%;}
+.coupon-regist-description { text-align:center; margin-top:15px; font-size:12px; color:#353535; }
+.confirm-coupon-wrap { margin-top:15px; text-align:center; }
+button#confirm-coupon { width:94px; height:38px; background:url(../common/img/detailp/btn_buy_off.png) no-repeat; color:#FFFFFF; font-size:14px; font-weight:bold; border:none; cursor:pointer; }
+button#confirm-coupon:active { background:url(../common/img/detailp/btn_buy_on.png) no-repeat; cursor:pointer; }
+
+.point-star{color:#d4d4d4;display:inline-block;}
+.point-star span {color:#d4d4d4;font-weight:bold;background:url("../common/img/new/btn_star_off.png") no-repeat;display:block;width:20px;height:20px;float:left;font-size:0;background-size: 100% 100%;}
+.point-star .active {color:#FECE00;font-weight:bold;background:url("../common/img/new/btn_star_on.png") no-repeat;display:block;width:20px;height:20px;float:left;font-size:0;background-size: 100% 100%;}
+
+.review-title {font-size:14px; font-weight:bold; font-family:dotum; color:#353535; height:27px; line-height:27px; margin-bottom:12px;}
+.review-title .title{float:left;}
+.review-title .title .title_cnt{color:#466996}
+.review-title .write-btn{float:right;width:80px; height:27px; line-height:27px; font-size:12px; color:#FFFFFF; font-weight:normal;text-align:center; background:#808591; font-family:dotum; border-radius:3px;}
+
+#page_title{position:relative;}
+#page_title .btn_back {position:absolute; top:5px; left:10px; border:none; font-size:0; width:38px; height:27px; background-image:url("../common/img/new/btn_back.png"); background-size:100% 100%;}
+#page_title .btn_write {position:absolute; top:5px; right:10px; border:none; font-size:0; width:56px; height:27px; background-image:url("../common/img/new/btn_postscript.png"); background-size:100% 100%;}
+</style>
+<script type="text/javascript">
+
+$(document).ready(function(){
+	$("#review-table .title .first.img").click(function(event){
+		
+		var goodsno = this.getAttribute("data-goodsno");
+		if (parseInt(goodsno) > 0) {
+			location.href = "./view.php?goodsno=" + goodsno;
+			event.stopPropagation();
+		}
+	});
+});
+
+function reviewTab(value) {
+
+	if (value == 'reviewDiv')
+	{
+		location.href = "./review.php";
+	} 
+	if (value == 'checkoutDiv')
+	{	
+		location.href = "./checkout_review.php";
+	}
+}
+
+</script>
+
+<section id="content-wrap" class="content">
+	<section id="page_title">
+		<button class="btn_back" onclick="history.back();">뒤로</button>
+		<div class="top_title">상품후기</div>
+		<button class="btn_write" onclick="location.href='/'+getMobileHomepath()+'/goods/review_register.php?mode=add_review';">후기작성</button>
+	</section>
+
+	<!--{ ? _checkoutReviewCfg['use'] === 'y' }-->
+	<section style="width:100%; padding: 20px 0 30px 0">
+		<section id = "reviewTab" onclick="reviewTab('reviewDiv');" style="width:50%; float:left; text-align:center; padding-bottom:10px; color:#b7b7b7; font-weight:bold;"><span style="font-size:14px;">쇼핑몰 상품후기</span></section>
+		<section id = "checkoutTab" onclick="reviewTab('checkoutDiv');" style="width:50%;float:left; text-align:center; padding-bottom:10px; color:#000; font-weight:bold; border-bottom:2px solid #000;"><span style="font-size:14px;">네이버 페이 상품후기</span></section>
+	</section>
+	<!--{ / }-->
+
+	<section id="nreviewlist" class="content">
+		<table id="review-table" border="">
+			<colgroup>
+				<col width="58"/>
+				<col/>
+			</colgroup>
+			<tr>
+				<th class="first">상품</th>
+				<th>제목</th>
+			</tr>
+			<!--{ @ review_loop }-->
+			<tr class="title">
+				<td class="first img non-notice" data-goodsno="{.ProductID}">{=goodsimgMobile(.img_s,48)}</td>
+				<td class="left">
+					<div class="point-star">{.PurchaseReviewScore}</div>
+					<div style="word-break: break-all;">{.Title}</div>
+					<div><img src="../common/img/goods/npay_img.png">&nbsp;네이버 페이 구매자| {=str_replace('-', '.', substr(.CreateYmdt, 0, 10))}</div>
+				</td>
+			</tr>
+			<!--{ : }-->
+			<tr class="title">
+				<td class="first" colspan="2"> 상품후기가 없습니다.</td>
+			</tr>
+			<!--{ / }-->
+		</table>
+
+		<!--{ ? review_total > 10 }-->
+		<div class="more-btn" onclick="javascript:getCheckoutReviewData();">더보기</div>
+		<!--{ / }-->
+
+	</section>
+</section>
+
+{ # footer }

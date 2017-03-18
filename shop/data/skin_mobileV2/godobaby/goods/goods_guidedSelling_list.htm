@@ -1,0 +1,457 @@
+{*** 해시태그 가이드 셀링 리스트 | goods/goods_guidedSelling_list.php ***}
+{#header}
+
+<!--{ ? page_title }-->
+{#sub_header}
+<!--{ / }-->
+
+<link rel="stylesheet" href="{_cfgMobileShop.mobileShopRootDir}/lib/js/swipe3.4.0/swiper.css?v=20161124">
+<script type="text/javascript" src="{_cfgMobileShop.mobileShopRootDir}/lib/js/swipe3.4.0/swiper.js?v=20161124"></script>
+<script type="text/javascript">
+// 스토리지 저장용 키
+var key = {
+	html: 'html_guidedSelling',
+	total: 'total_guidedSelling',
+	page: 'page_guidedSelling',
+	is_last: 'islast_guidedSelling',
+	view_type: 'key_guidedSelling'
+};
+
+var guidedSellingSameCheck = false;
+var hashtagNameBuildQuery = '{hashtagNameBuildQuery}';
+if(hashtagNameBuildQuery && hashtagNameBuildQuery === loadSession('guidedSelling')){
+	guidedSellingSameCheck = true;
+}
+else {
+	saveSession('guidedSelling', hashtagNameBuildQuery);
+}
+
+if(loadSession('GLOBAL_FILENAME') === 'view.php' && guidedSellingSameCheck === true){
+	var GD_STORAGE = loadSession(key.html);
+}
+else {
+	var GD_STORAGE = null;
+}
+var GD_VIEW_TYPE = ($.cookie('goods_view_type') ? $.cookie('goods_view_type') : 'list');
+var GD_SORT_TYPE = ($.cookie('sort_type') ? $.cookie('sort_type') : 'regdt');
+
+// 뷰타입 선택시 액션
+function setViewType(view_type) {
+	toggleViewType(view_type);
+	$.cookie('goods_view_type', view_type);
+	$.cookie('sort_type', GD_SORT_TYPE);
+	GD_VIEW_TYPE = view_type;
+	loadGoodsHtml(true);
+}
+
+// 정렬선택시 액션
+function setSortType(sort_type) {
+	$.cookie('sort_type', sort_type);
+	GD_SORT_TYPE = sort_type;
+	loadGoodsHtml(true);
+}
+
+// 뷰타입 토글버튼 UI 처리
+function toggleViewType(view_type) {
+	if(view_type == 'gallery') {
+		$(".view-gallery").removeClass("view-gallery-disable");
+		$(".view-list").addClass("view-list-disable");
+	}
+	else {
+		$(".view-gallery").addClass("view-gallery-disable");
+		$(".view-list").removeClass("view-list-disable");
+	}
+}
+
+// 각 뷰타입별 상품의 출력 갯수
+function getItemCnt() {
+	var item_cnt = 0;
+	switch(GD_VIEW_TYPE) {
+		case 'gallery':
+			item_cnt = $(".goods-item").length;
+			break;
+		case 'gallery1':
+			item_cnt = $(".goods-gallery1-item").length;
+			break;
+		case 'gallery2':
+			item_cnt = $(".goods-gallery2-item").length;
+			break;
+		default:
+		case 'list':
+			item_cnt = $(".goods-list-item").length;
+			break;
+	}
+	return item_cnt;
+}
+
+// HTML 데이터 호출
+function loadGoodsHtml(is_empty) {
+	var param = {
+		kw: '',
+		mode:	'get_goods_html',
+		view_type: GD_VIEW_TYPE,
+		sort_type: GD_SORT_TYPE,
+		item_cnt: $("[name=item_cnt]").val(),
+		hashtag : '{hashtagNameBuildQuery}',
+		guidedSellingPage : 'y'
+	};
+
+	param.item_cnt = is_empty ? 0 : getItemCnt();
+
+	if ($("[name=keyword]").val()) {
+		param.kw = $("[name=keyword]").val();
+	}
+	$("[name=item_cnt]").val(param.item_cnt);
+
+	try {
+		$.ajax({
+			type: "post",
+			url: "/"+ mobile_root + "/proc/mAjaxAction.php",
+			cache: false,
+			async: true,
+			data: param,
+			beforeSend: function (xhr) {
+				// is_empty가 true인 경우 수행
+				if(is_empty) {
+					$(".goods-content").empty();
+				}
+				$('.indicator').show();
+				$(".more-btn").hide();
+			},
+			success: function (data) {
+				// 화면구성
+				$(".goods-content").append(data.html);
+				$('.indicator').hide();
+				setGoodsImageSoldoutMask();
+				if(data.html.length < 5 || getItemCnt() >= data.total) {
+					$(".more-btn").hide();
+				} else {
+					$(".more-btn").show();
+				}
+
+				// 데이터 저장
+				if (!$("[name=keyword]").val()) {
+					saveSession(key.view_type, GD_VIEW_TYPE);
+					saveSession(key.html, $('.goods-content').html());
+					saveSession(key.total, data.total);
+					saveSession(key.page, data.page);
+					saveSession(key.is_last, data.is_last_page);
+				}
+			},
+			error: function (xhr, status, error) {
+				alert('로딩 중 에러가 발생했습니다. 잠시 후 다시 시도해주세요!')
+				$('.indicator').hide();
+			},
+			dataType:"json"
+		});
+	}
+	catch(e) {
+		alert(e);
+	}
+}
+
+$(document).ready(function(){
+	// UI 초기화
+	$('.indicator').css({width: screen.width + 'px', height: (screen.height - 80) + 'px'});
+	$("[name=goods_sort]").val(GD_SORT_TYPE);
+
+	<!--{ ? goods_total }-->
+	/*
+	 * 스토리지에 값이 있는 경우 : 스토리지의 html 데이터를 본문에 추가
+	 * 스토리지에 값이 없는 경우 : Ajax 호출 후 html 데이터를 본문에 추가
+	 */
+	if(GD_STORAGE && GD_STORAGE != 'null' && !$("[name=keyword]").val()) {
+		toggleViewType(GD_VIEW_TYPE);
+		if (loadSession(key.view_type) == GD_VIEW_TYPE) {
+			$('.goods-content').html(loadSession(key.html));
+			if (getItemCnt() >= loadSession(key.total)) {
+				$(".more-btn").hide();
+			} else {
+				$(".more-btn").show();
+			}
+			$('.indicator').hide();
+		} else {
+			setViewType(GD_VIEW_TYPE);
+		}
+	} else {
+		setViewType(GD_VIEW_TYPE);
+	}
+	<!--{ / }-->
+
+	// 탑버튼 클릭
+	$("a[href=#top]").bind("click", function(e) {
+		e.preventDefault();
+		$("html body").animate({scrollTop: 0}, 'fast');
+	});
+
+	// 스크롤 최하단시 탑아이콘 출력
+	$(window).scroll(function() {
+		if ($(window).scrollTop() >= 117) {
+			$("#top-anchor").fadeIn(150);
+		} else {
+			$("#top-anchor").fadeOut(100);
+		}
+		var left = (screen.width/2) - ($("#top-anchor").width()/2);
+		$("#top-anchor").css({left: left + 'px'});
+	});
+
+	// 읽어주는 상품설명
+	$(".goods-content").find(".speach-description-play").live("click", function(event){
+		var $player = $("#speach-description-player");
+		if (!$player.length) return false;
+		$player.trigger("$play", [$(this).parent()]);
+		event.preventDefault();
+		event.stopPropagation();
+	});
+});
+
+$(function() {
+	$("#kakaoStory").click(function() {
+		var post		= "{msg_kakaoStory_goodsurl}";
+		var appid		= "http://{__SERVER.HTTP_HOST}";
+		var appver		= "1.0";
+		var appname		= "{msg_kakaoStory_shopnm}";
+		var imageurl	= "{msg_kakaoStory_img_l}";
+		var title		= "{msg_kakaoStory_goodsnm}";
+
+		kakao.link("story").send({
+			post : post,
+			appid : appid,
+			appver : appver,
+			appname : appname,
+			urlinfo : JSON.stringify({title: title, imageurl: [imageurl], type: "website"})
+		});
+	});
+});
+
+$(window).load(function(){
+	if(document.getElementById("guidedSelling_slider")){
+		var swiper = new Swiper('.swiper-container', {
+			pagination: '.guidedSelling_imageIndicatorArea',
+			slidesPerView: 1,
+			paginationClickable: true,
+			spaceBetween: 30,
+			loop: true,
+			autoplay : 2000,
+			paginationBulletRender: function (swiper, index, className) {
+				return '<span class="' + className + '"></span>';
+			}
+		});
+
+		var imageItemObj = $('.guidedSellingUserMobile-item-image');
+		var imageLenth = imageItemObj.length;
+		if(imageLenth > 0){
+			imageItemObj.each(function(index, value){
+				var imageWidth = parseInt($(document).width());
+				var imageHeight = parseInt(imageWidth * 0.6);
+
+				$(this).width(imageWidth);
+				$(this).height(imageHeight);
+			});
+		}
+	}
+});
+</script>
+
+<style>
+.swiper-pagination-bullet {
+	width: 20px !important;
+	height: 20px !important;
+	border-radius: 0% !important;
+	opacity: 1 !important;
+	background: #ffffff !important;
+	margin-left: 3px !important;
+	background: url('../common/img/square_gray.png') !important;
+}
+.swiper-pagination-bullet-active {
+	opacity: 1 !important;
+	background: #ffffff !important;
+	background: url('../common/img/square_blue.png') !important;
+}
+.guidedSelling_subjectArea {
+	height: 34px;
+	background-color: #f9f9f9;
+	font-family: Malgun Gothic;
+	font-weight: bold;
+	font-size: 18px;
+	color: #222222;
+	border-bottom: solid 2px #969ca3;
+	text-align: center;
+	line-height: 34px;
+}
+.guidedSelling-backArea { float: left; padding-left: 3px; }
+.guidedSelling-restartArea { float: right; padding-right: 3px; }
+.guidedSelling-backArea img,
+.guidedSelling-restartArea img { margin-top: 4px;}
+.guidedSelling_page_title_area {
+	clear:both;
+	background:#f9f9f9;
+	font-family: Malgun Gothic;
+	font-weight: bold;
+	font-size: 24px;
+	padding-left: 20px;
+	border-bottom: solid 1px #969ca3;
+	min-height:60px;
+	overflow: hidden;
+	height: auto;
+}
+.guidedSelling_page_title_area .guidedSelling_page_title {
+	color: #2188f1;
+	text-align: left;
+	margin-top: 10px;
+}
+.guidedSelling_page_title_area .guidedSelling_page_sns { height:43px; margin:8px 10px 8px 0; float: right;}
+.guidedSelling_page_title_area .guidedSelling_page_sns .share-btn {float:left; height: 30px; }
+.guidedSelling_page_title_area .guidedSelling_page_sns .share-btn .sns01{background:transparent url("../common/img/detailp/icon_twitter_off.png") no-repeat;  width:29px; height:29px; float:left; margin-right:5px; margin-top:7px; background-size:29px 29px; }
+.guidedSelling_page_title_area .guidedSelling_page_sns .share-btn .sns01:active{background:transparent url("../common/img/detailp/icon_twitter_on.png") no-repeat;}
+.guidedSelling_page_title_area .guidedSelling_page_sns .share-btn .sns02{background:transparent url("../common/img/detailp/icon_facebook_off.png") no-repeat;  width:29px; height:29px; float:left; margin-right:5px; margin-top:7px; background-size:29px 29px;}
+.guidedSelling_page_title_area .guidedSelling_page_sns .share-btn .sns02:active{background:transparent url("../common/img/detailp/icon_facebook_on.png") no-repeat;}
+.guidedSelling_page_title_area .guidedSelling_page_sns .share-btn .sns03{background:transparent url("../common/img/detailp/icon_kakao_off.png") no-repeat;  width:29px; height:29px; float:left; margin-right:5px; margin-top:7px; background-size:29px 29px;}
+.guidedSelling_page_title_area .guidedSelling_page_sns .share-btn .sns03:active{background:transparent url("../common/img/detailp/icon_kakao_on.png") no-repeat;}
+.guidedSelling_page_title_area .guidedSelling_page_sns .share-btn .sns04{background:transparent url("../common/img/detailp/icon_me2day_off.png") no-repeat;  width:29px; height:29px; float:left; margin-right:5px; margin-top:7px; background-size:29px 29px;}
+.guidedSelling_page_title_area .guidedSelling_page_sns .share-btn .sns04:active{background:transparent url("../common/img/detailp/icon_me2day_on.png") no-repeat;}
+.guidedSelling_page_title_area .guidedSelling_page_sns .share-btn .sns05{background:transparent url("../common/img/detailp/icon_cyworld_off.png") no-repeat;  width:29px; height:29px; float:left; margin-top:5px; background-size:29px 29px;}
+.guidedSelling_page_title_area .guidedSelling_page_sns .share-btn .sns05:active{background:transparent url("../common/img/detailp/icon_cyworld_on.png") no-repeat;}
+.guidedSelling_page_title_area .guidedSelling_page_sns .share-btn .sns06{background:transparent url("../common/img/detailp/icon_kakaoStory_off.png") no-repeat;  width:29px; height:29px; float:left; margin-right:5px; margin-top:7px; display: block !important; background-size:29px 29px;}
+.guidedSelling_page_title_area .guidedSelling_page_sns .share-btn .sns06:active{background:transparent url("../common/img/detailp/icon_kakaoStory_on.png") no-repeat; display: block !important;}
+.guidedSelling_page_title_area .guidedSelling_page_sns .share-btn .sns08{background:transparent url("../common/img/detailp/icon_url_off.png") no-repeat;  width:29px; height:29px; float:left;margin-top:7px; display: block !important; cursor:pointer; background-size:29px 29px;}
+.guidedSelling_page_title_area .guidedSelling_page_sns .share-btn .sns08:active{background:transparent url("../common/img/detailp/icon_url_on.png") no-repeat; display: block !important;}
+
+.guidedSelling_layout { background-color: #f4f4f4; width: 100%; text-align: center; padding-bottom: 20px; border-bottom: solid 2px #969ca3;}
+.guidedSelling_layout .guidedSelling_imageIndicatorArea { width: 100%; height: 30px; margin-top: 20px;}
+
+.guidedSelling_layout .guidedSellingUserMobile-questionArea { font:20px Dotum; font-weight: bold; color: #252525; padding: 20px 0 20px 0; }
+.guidedSelling_layout .guidedSellingUserMobile-itemArea { width: 90%; margin: 0 auto; }
+.guidedSelling_layout .guidedSellingUserMobile-itemArea .guidedSellingUserMobile-item { width: 100%; }
+.guidedSelling_layout .guidedSellingUserMobile-itemArea .guidedSellingUserMobile-item .guidedSellingUserMobile-hashtagArea {
+	font: 14px Dotum;
+	color: #ffffff;
+	height: 34px;
+	line-height: 34px;
+	width: 100%;
+	margin-top: -37px;
+	background: url('/shop/admin/img/background_gray.png') repeat-x;
+	position: relative;
+}
+.guidedSelling_layout .guidedSellingUserMobiletext-questionArea { font:20px Dotum; font-weight: bold; color: #252525; padding: 20px 0 10px 0; }
+.guidedSelling_layout .guidedSellingUserMobiletext-itemArea { margin: 0 10px 0 10px; padding: 20px 10px 20px 10px; }
+.guidedSelling_layout .guidedSellingUserMobiletext-itemArea .guidedSellingUserMobiletext-item {
+	height: 50px;
+	background: url('/shop/admin/img/background_black.png') no-repeat;
+	background-position:center center;
+	width: 100%;
+	margin-bottom: 10px;
+	padding-left: 5px;
+}
+.guidedSelling_layout .guidedSellingUserMobiletext-itemArea .guidedSellingUserMobiletext-item .guidedSellingUserMobiletext-hashtagArea {
+	font: 14px Dotum;
+	color: #ffffff;
+	float: left;
+	line-height: 50px;
+	margin-left: -5px;
+	text-align: center;
+	width: 100%;
+}
+</style>
+
+<!--{ ? guidedSelling_firstPage !== 'y' }-->
+<div class="guidedSelling-backArea"><img src="../common/img/btn_back_korean.png" border="0" class="hand" alt="back" onclick="javascript:location.href='{pageUrl.prevPageUrl}';" /></div>
+<div class="guidedSelling-restartArea"><img src="../common/img/btn_restart_korean.png" border="0" class="hand" alt="restart" onclick="javascript:location.href='{pageUrl.restartPageUrl}';" /></div>
+<!--{ / }-->
+<div class="guidedSelling_subjectArea">가이드 셀링</div>
+
+<!--{ ? guidedSelling_lastPage !== 'y' }-->
+<div id="guidedSelling_layout" class="guidedSelling_layout" <!--{? guidedSelling_backgroundColor}-->style="background-color: #{guidedSelling_backgroundColor};"<!--{ / }-->>
+	<!--{ ? displayType === 'i' }-->
+		<div>
+			<div class='guidedSellingUserMobile-questionArea'>{_GET.step}.{questionName}</div>
+			<div id='guidedSelling_slider' class='guidedSellingUserMobile-itemArea'>
+				<div class="swiper-container">
+					<div class="swiper-wrapper">
+						<!--{ @ answerList }-->
+						<div class='guidedSellingUserMobile-item swiper-slide' onclick="javascript:location.href='{pageUrl.nextPageUrl}&hashtagName[]={=urlencode(.detail_hashtagName)}';">
+							<img src='{.mobileImageUrl}' border='0' class="hand guidedSellingUserMobile-item-image"  />
+							<div class='guidedSellingUserMobile-hashtagArea'>#{.detail_hashtagName}</div>
+						</div>
+						<!--{ / }-->
+					</div>
+				</div>
+				<div class="guidedSelling_imageIndicatorArea"></div>
+			</div>
+		</div>
+	<!--{ : displayType === 't' }-->
+		<div>
+			<div class='guidedSellingUserMobiletext-questionArea'>{_GET.step}.{questionName}</div>
+			<div class='guidedSellingUserMobiletext-itemArea'>
+				<!--{ @ answerList }-->
+				<div class='guidedSellingUserMobiletext-item hand' onclick="javascript:location.href='{pageUrl.nextPageUrl}&hashtagName[]={=urlencode(.detail_hashtagName)}';">
+					<div class='guidedSellingUserMobiletext-hashtagArea'>#{.detail_hashtagName}</div>
+				</div>
+				<!--{ / }-->
+			</div>
+		</div>
+	<!--{ : }-->
+	<!--{ / }-->
+</div>
+<!--{ / }-->
+
+<div class="guidedSelling_page_title_area">
+	<div class="guidedSelling_page_title">{guidedSellingTitle}</div>
+
+	<!--{ ? snsBtn}-->
+	<div class="guidedSelling_page_sns">
+		<div class="share-btn">
+			{=snsBtn}
+		</div>
+	</div>
+	<!--{ / }-->
+</div>
+
+<a href="#top" id="top-anchor">TOP</a>
+
+<section id="goodslist" class="content">
+	<input type="hidden" name="keyword" value="{=kw}" />
+	<input type="hidden" name="item_cnt" value="0" />
+	<div class="goods-sort-area">
+		<div class="goods-sort">
+			<select name="goods_sort" onChange="javascript:setSortType(this.value);">
+				<option value="regdt">등록순</option>
+				<option value="low_price">낮은가격순</option>
+				<option value="high_price">높은가격순</option>
+			</select>
+		</div>
+		<div class="goods-view-type">
+			<div class="view-list" onClick="javascript:setViewType('list');"></div>
+			<div class="view-gallery" onClick="javascript:setViewType('gallery');"></div>
+		</div>
+	</div>
+	<!--{ ? !goods_total }-->
+	<ul class="goods_item_list" id="goods-item-list">
+		<li class="more">
+			<!--{ ? _kw }-->
+			검색 결과가 없습니다.
+			<!--{ : }-->
+			해당 해시태그에 상품이 없습니다.
+			<!--{ / }-->
+		</li>
+	</ul>
+	<!--{ : }-->
+	<audio id="speach-description-player"></audio>
+	<div class="goods-area">
+		<!-- 동적 상품리스트 시작 -->
+		<div class="goods-content">	</div>
+		<!-- 동적 상품리스트 끝 -->
+		<div class="more-btn hidden" onclick="javascript:loadGoodsHtml();">더보기</div>
+	</div>
+	<!--{ / }-->
+</section>
+
+<div class="indicator"<!--{ ? !goods_total }--> style="display:none"<!--{/}-->></div>
+
+<!-- 품절상품 마스크 -->
+<div id="el-goods-soldout-image-mask" style="display:none;position:absolute;top:0;left:0;background:url({ ? _cfg_soldout.mobile_display_overlay == 'custom'}{_cfg.rootDir}/data/goods/icon/mobile_custom_soldout{:}{_cfg.rootDir}/data/goods/icon/mobile_icon_soldout{_cfg_soldout.mobile_display_overlay}{/}) no-repeat center center; background-size:cover;"></div>
+<script>
+addOnloadEvent(function(){ setGoodsImageSoldoutMask() });
+</script>
+
+{#footer}

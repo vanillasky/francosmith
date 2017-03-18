@@ -1,0 +1,152 @@
+{*** 가이드 셀링 위젯 | proc/guidedSellingWidget.php ***}
+<!DOCTYPE html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=euc-kr" />
+<meta name="viewport" content="user-scalable=yes, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width, height=device-height" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<title>guided selling widget</title>
+<script type="text/javascript" src="{jQueryPath}"></script>
+<link rel="stylesheet" href="{_cfgMobileShop.mobileShopRootDir}/lib/js/swipe3.4.0/swiper.css?v=20161124">
+<script type="text/javascript" src="{_cfgMobileShop.mobileShopRootDir}/lib/js/swipe3.4.0/swiper.js?v=20161124"></script>
+<style>
+html, body { margin: 0; padding: 0; min-height: 100%; }
+.guidedSelling_layout { background-color: #f4f4f4; width: 100%; text-align: center; padding-bottom: 20px; min-height: 100%; }
+.guidedSelling_layout .guidedSelling_imageIndicatorArea { width: 100%; height: 30px; margin-top: 20px; }
+.guidedSelling_layout .guidedSellingUserMobile-questionArea { font:20px Dotum; font-weight: bold; color: #252525; padding: 20px 0 20px 0; }
+.guidedSelling_layout .guidedSellingUserMobile-itemArea { padding-bottom: 20px; width: 90%; margin: 0 auto; }
+.guidedSelling_layout .guidedSellingUserMobile-itemArea .guidedSellingUserMobile-item { width: 100%; }
+.guidedSelling_layout .guidedSellingUserMobile-itemArea .guidedSellingUserMobile-item .guidedSellingUserMobile-hashtagArea {
+	font: 14px Dotum;
+	color: #ffffff;
+	height: 34px;
+	line-height: 34px;
+	width: 100%;
+	margin-top: -38px;
+	background: url('/shop/admin/img/background_gray.png') repeat-x;
+	position: relative;
+}
+.guidedSelling_layout .guidedSellingUserMobiletext-questionArea { font:20px Dotum; font-weight: bold; color: #252525; padding: 20px 0 10px 0; }
+.guidedSelling_layout .guidedSellingUserMobiletext-itemArea { margin: 0 10px 0 10px; padding: 20px 10px 20px 10px; }
+.guidedSelling_layout .guidedSellingUserMobiletext-itemArea .guidedSellingUserMobiletext-item {
+	height: 50px;
+	background: url('/shop/admin/img/background_black.png') no-repeat;
+	width: 100%;
+	margin-bottom: 10px;
+	padding-left: 5px;
+}
+.guidedSelling_layout .guidedSellingUserMobiletext-itemArea .guidedSellingUserMobiletext-item .guidedSellingUserMobiletext-hashtagArea {
+	font: 14px Dotum;
+	color: #ffffff;
+	float: left;
+	line-height: 50px;
+	margin-left: -5px;
+	text-align: center;
+	width: 100%;
+}
+.swiper-pagination-bullet {
+	width: 20px !important;
+	height: 20px !important;
+	border-radius: 0% !important;
+	opacity: 1 !important;
+	background: #ffffff !important;
+	margin-left: 3px !important;
+	background: url('../common/img/square_gray.png') !important;
+}
+.swiper-pagination-bullet-active {
+	opacity: 1 !important;
+	background: #ffffff !important;
+	background: url('../common/img/square_blue.png') !important;
+}
+</style>
+</head>
+
+<body>
+<input type="hidden" name="guided_no" id="guided_no" value="{guided_no}" />
+<input type="hidden" name="guided_widgetId" id="guided_widgetId" value="{guided_widgetId}" />
+
+<div id="guidedSelling_layout" class="guidedSelling_layout" <!--{? guidedSelling_backgroundColor}-->style="background-color: #{guidedSelling_backgroundColor};"<!--{ / }-->>
+	<!--{ ? displayType === 'i' }-->
+		<div>
+			<div class='guidedSellingUserMobile-questionArea'>{questionName}</div>
+			<div id='guidedSelling_slider' class='guidedSellingUserMobile-itemArea'>
+				<div class="swiper-container">
+					<div class="swiper-wrapper">
+						<!--{ @ answerList }-->
+						<div class='guidedSellingUserMobile-item swiper-slide' onclick="javascript:parent.location.href='../goods/goods_guidedSelling_list.php?guided_no={guided_no}&step=2&hashtagName[]={=urlencode(.detail_hashtagName)}';">
+							<img src='{.mobileImageUrl}' border='0' class="hand guidedSellingUserMobile-item-image" width="100%" />
+							<div class='guidedSellingUserMobile-hashtagArea'>#{.detail_hashtagName}</div>
+						</div>
+						<!--{ / }-->
+					</div>
+				</div>
+				<div class="guidedSelling_imageIndicatorArea"></div>
+			</div>
+		</div>
+	<!--{ : displayType === 't' }-->
+		<div>
+			<div class='guidedSellingUserMobiletext-questionArea'>{questionName}</div>
+			<div class='guidedSellingUserMobiletext-itemArea' <!--{? backgroundImageUrl}-->style="background: url('{backgroundImageUrl}') no-repeat; background-size: 100% 100%;"<!--{ / }-->>
+				<!--{ @ answerList }-->
+				<div class='guidedSellingUserMobiletext-item hand' onclick="javascript:parent.location.href='../goods/goods_guidedSelling_list.php?guided_no={guided_no}&step=2&hashtagName[]={=urlencode(.detail_hashtagName)}';">
+					<div class='guidedSellingUserMobiletext-hashtagArea'>#{.detail_hashtagName}</div>
+				</div>
+				<!--{ / }-->
+			</div>
+		</div>
+	<!--{ : }-->
+	<!--{ / }-->
+</div>
+
+<script type="text/javascript">
+jQuery(window).load(function(){
+	if($('.swiper-wrapper').length > 0){
+		$('.swiper-wrapper').css('width', $(window).width() - 50 );
+	}
+
+	var preview = '{preview}';
+	if(preview === 'y'){
+		jQuery(".guidedSellingUserMobile-item, .guidedSellingUserMobiletext-item").attr('onclick', '').unbind('click');
+	}
+
+	if(document.getElementById("guidedSelling_slider")){
+		var swiper = new Swiper('.swiper-container', {
+			pagination: '.guidedSelling_imageIndicatorArea',
+			slidesPerView: 1,
+			paginationClickable: true,
+			spaceBetween: 30,
+			loop: true,
+			autoplay : 2000,
+			paginationBulletRender: function (swiper, index, className) {
+				return '<span class="' + className + '"></span>';
+			}
+		});
+
+		var imageItemObj = $('.guidedSellingUserMobile-item-image');
+		var imageLenth = imageItemObj.length;
+		if(imageLenth > 0){
+			imageItemObj.each(function(index, value){
+				var imageWidth = parseInt($(document).width());
+				var imageHeight = parseInt(imageWidth * 0.6);
+
+				$(this).width(imageWidth);
+				$(this).height(imageHeight);
+			});
+		}
+	}
+
+	setTimeout(function(){
+		var displayType = '{displayType}';
+		if(displayType === 'i'){
+			var iframeHeight = parseInt(jQuery('.guidedSelling_layout').height());
+		}
+		else {
+			var iframeHeight = parseInt(jQuery('body').height());
+		}
+
+		jQuery('#' + jQuery("#guided_widgetId").val(), parent.document).height(iframeHeight);
+	}, 100);
+});
+</script>
+</body>
+</html>

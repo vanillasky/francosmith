@@ -1,0 +1,41 @@
+{*** 비밀번호 재확인 | mem/myinfo.php ***}
+
+<style rel="stylesheet" type="text/css">
+	#page_title .top_subtitle { height:30px; border-bottom:solid 1px #dddde1; padding:10px 0; line-height:30px; font-weight:bold; font-size:14px; text-align:center; font-family:dotum; }
+	.top_subtitle_btm { height:100%; border-bottom:solid 1px #dddde1; padding-left:10px; margin-bottom:15px; line-height:30px; font-size:14px; text-align:center; }
+	section#confirmPwd { width:95%; margin:auto; padding-top:10px; text-align:center;}
+	#confirmContent {padding-top:20px;}
+</style>
+<script type="text/javascript">
+	$(function () {
+		$("#next-btn").click(function () {
+			var pwd = $("input[name=password]");
+			if(pwd.val() == "") {
+				alert("비밀번호를 확인해주세요.");
+				pwd.focus();
+				return false;
+			}
+		});
+		$("#cancel-btn").click(function () {
+			location.href = "../myp/menu_list.php";
+			return false;
+		});
+	});
+</script>
+
+<section id="page_title">
+	<div class="top_subtitle">아이디 재인증</div>
+	<div class="top_subtitle_btm">회원님의 정보를 안전하게 보호 하기 위하여<Br />회원 계정에 대한 재인증이 필요합니다.</div>
+</section>
+<section class="content" id="confirmPwd">
+	<div class="sns-account">
+		<!--{ ? SocialCode == 'PAYCO' }-->
+		<button class="btn btn-payco login-payco" onclick="javascript:location.replace('{SocialConfirmMemberURL}');return false;"></button>
+		<!--{ : SocialCode == 'FACEBOOK' }-->
+		<button class="btn btn-facebook login-facebook" onclick="javascript:location.replace('{SocialConfirmMemberURL}');return false;">페이스북</button>
+		<!--{ / }-->
+		<div id="confirmContent">
+			회원 계정의 재인증을 위하여 로그인 되어 있는 SNS를 클릭해 주세요.
+		</div>
+	</div>
+</section>

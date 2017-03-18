@@ -1,0 +1,71 @@
+{*** 탭형 | m2/index.php ***}
+<div class="list_tab" id="tab-{dpCfg.mdesign_no}">
+	<div class="tab_title">
+		<!--{ @ range(0, dpCfg.tab_cnt - 1) }-->
+		<div class="title_wrap{?.index_ == 0} title_active{/}" style="width:{dpCfg.tab_width}%;" id="title-tabcontent-{dpCfg.mdesign_no}-{.index_+1}">
+			<div class="title" onclick="javascript:tab_click('tabcontent-{dpCfg.mdesign_no}-{.index_+1}', '{dpCfg.mdesign_no}', '{.index_}', {dpCfg.tab_cnt});">
+				{dpCfg.tpl_opt.tab_name[.index_+1]}
+			</div>
+		</div>
+		<!--{ / }-->
+	</div>
+	<!--{ @ range(0, dpCfg.tab_cnt - 1) }-->
+	<div class="list_tabcontent{?.index_ != 0} hidden{/}" id="tabcontent-{dpCfg.mdesign_no}-{.index_+1}">
+		<div class="swipe_tab" style="clear:both" id="swipe_tab-{dpCfg.mdesign_no}-{.index_+1}">
+			<div>
+				<!--{ @ range(0, dpCfg.goods_data_opt[.index_].page_cnt - 1) }-->
+				<div class="list_content" id="tabcontent-{dpCfg.mdesign_no}-{.index_+1}">
+					<div class="list_content_tab_border"></div>
+					<!--{ @ dpCfg.goods_data[.index_][..index_] }-->
+					<div class="list_item" style="width:{dpCfg.item_width}%;{?...index_%dpCfg.disp_cnt == 0}clear:both;{/}" onClick="javascript:goGoods({...goodsno});">
+						<!--{ ? ...goods_img != '' }-->
+						<div class="item_img">
+							<!--{?...coupon_discount}--><div class="item_coupon_img"></div><!--{/}-->
+							<img src="{...goods_img}" {...css_selector} />
+							<!--{? ...tts_url }-->
+							<div class="goods-speach-description" style="display:none;">
+								<span class="speach-description-play" data-src="{...tts_url}">재생</span>
+								<span class="speach-description-timer"></span>
+							</div>
+							<!--{ / }-->
+						</div>
+						<!--{ : }-->
+						<div class="item_img"><!--{?...coupon_discount}--><div class="item_coupon_img"></div><!--{/}--></div>
+						<!--{ / }-->
+						<div class="item_name" style="width:50%">{...goodsnm}</div>
+						<!--{? ...goods_strprice == '' && ...goodsDiscountPrice }-->
+							<!--{? ...oriPrice}-->
+							<div class="item_consumer" style="display:none;"><strike>{=number_format(...oriPrice)} 원</strike>↓</div>
+							<!--{ / }-->
+							<div class="item_price"><b>{...goodsDiscountPrice}</b></div>
+						<!--{ : }-->
+							<!--{? ...goods_strprice == '' && ...consumer != '' }-->
+							<div class="item_consumer" style="display:none;"><strike>{=number_format(...consumer)} 원</strike>↓</div>
+							<!--{ / }-->
+							<div class="item_price"><b>{...goods_price}</b></div>
+						<!--{ / }-->
+						<!--{? ...special_discount }-->
+						<div class="item_discount" style="display:none;">{...special_discount} 할인</div>
+						<!--{ / }-->
+						<!--{? ...coupon }-->
+						<div class="item_coupon_price" style="display:none;">{=number_format(...coupon)} 원 <div class="item_coupon_icon"></div></div>
+						<!--{ / }-->
+						<!--{? ...hashtag }--><div class="goods-hashtag" onclick="event.cancelBubble=true;">{...hashtag}</div><!--{ / }-->
+					</div>
+					<!--{ / }-->
+					<div class="list_content_border"></div>
+				</div>
+				<!--{ / }-->
+			</div>
+			<div class="list_page">
+				<div class="list_page_wrap">
+					<div class="list_page_left" onclick="javascript:scroll_btn('swipe_tab-{dpCfg.mdesign_no}-{.index_+1}', 'left');"></div>
+					<div class="list_page_num"><span id="swipe_tab-{dpCfg.mdesign_no}-{.index_+1}-page" class="n_page">1</span> / <span id="tabcontent-{dpCfg.mdesign_no}-{.index_+1}-tpage">{dpCfg.goods_data_opt[.index_].page_cnt}</span></div>
+					<div class="list_page_right" onclick="javascript:scroll_btn('swipe_tab-{dpCfg.mdesign_no}-{.index_+1}', 'right');"></div>
+				</div>
+			</div>
+			<div class="list_margin"></div>
+		</div>
+	</div>
+	<!--{ / }-->
+</div>

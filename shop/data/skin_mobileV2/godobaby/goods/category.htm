@@ -1,0 +1,37 @@
+{*** 카테고리페이지 | m2/goods/category.php ***}
+
+{#header}
+
+<!--{ ? page_title }-->
+{#sub_header}
+<!--{ / }-->
+
+<script type="text/javascript">
+
+$(document).ready(function(){
+
+});
+
+</script>
+<section id="categorylist" class="content">
+	<nav class="gd-gnb">
+		<ul class="dep1">
+			<li>
+				<ul class="dep2">
+					<!--{ @ loop }-->
+					<li class="category-menu-area">
+						<button type="button" class="btn-reset gnb-arr" onClick="goCate('{.category}')"><span class="sprite-icon icon-arr-b-white"></span></button>
+						<!--{ ? .sub_count > 0 }-->
+						<a href="#" onClick="javascript:showCateMenu(this, '{.category}');" class="sub-icon"><span class="sprite-icon icon-plus1"></span>{.catnm}</a>
+						<!--{ : }-->
+						<a href="#" onClick="goCate('{.category}')">{.catnm}</a>
+						<!--{ / }-->
+					</li>
+					<!--{ / }-->
+				</ul>
+			</li>
+		</ul>
+	</nav>
+</section>
+
+{#footer}

@@ -1,0 +1,90 @@
+{#header}
+<?php {page_title} = "아이디 찾기";?>
+{#sub_header}
+
+<section class="find_common_layout">
+	<!--{ ? act == 'Y' && _m_id}-->
+		<div class="find_common_center">
+			<div class="find_id_info"><span>{_name}</span> 회원님의 아이디는 <span>{_m_id}</span> 입니다.</div>
+		</div>
+	<!--{ : }-->
+		<form name="fm" id="fm" action="" method="post" onsubmit="return chkForm(this);">
+		<input type="hidden" name="act" value="Y">
+		<input type="hidden" name="rncheck" value="none">
+		<input type="hidden" name="dupeinfo" value="">
+			<fieldset>
+				<div class="find_common_center">
+					<div class="find_common_title">회원정보로 찾기</div>
+					<label for="srch_name">
+						<input type="text" name="srch_name" id="srch_name" value="" title="이름" required="required" msgR="이름을 입력하세요." placeholder="이름" tabindex="1" />
+					</label>
+					<!--{ ? _checked.useField.email }-->
+					<label for="srch_mail">
+						<input type="email" name="srch_mail" id="srch_mail" value="" title="가입 메일주소" option=regEmail label="가입 메일주소" required="required" msgR="가입 메일주소를 입력하세요." placeholder="가입 메일주소" tabindex="1" class="find_common_margin_bottom" />
+					</label>
+					<!--{ / }-->
+					<div class="find_common_step_btn"><button id="find_id_btn" type="submit" tabindex="5">찾기</button></div>
+
+					<!--{ ? ipinType || hpauthyn == 'y' }-->
+					<div class="find_id_authentication">
+						<div class="authentication-title">회원가입 시 사용한 본인인증 수단으로 찾기</div>
+
+						<!--{ ? ipinType == 'ipin' || ipinType == 'niceipin' // 아이핀인증여부 }-->
+						<button type="button" id="find_id_ipin">아이핀 인증</button>
+						<iframe id="ifrmRnCheck" name="ifrmRnCheck" style="width:500px;height:500px;display:none;"></iframe>
+						<!--{ / }-->
+
+						<!--{ ? hpauthyn == 'y' // 휴대폰인증여부 }-->
+						<button type="button" id="find_id_hpauth">휴대폰 인증</button>
+						<!--{ / }-->
+
+					</div>
+					<!--{ / }-->
+				</div>
+			</fieldset>
+		</form>
+	<!--{ / }-->
+
+	<div class="find_common_bottom_center">
+		<div class="find_common_bottom_btn">
+			<button id="login_btn" tabindex="5" onclick="javascript:location.replace('./login.php');">로그인</button>
+			<button id="find_password_btn" tabindex="5" onclick="javascript:location.replace('./find_password.php');">비밀번호 찾기</button>
+		</div>
+	</div>
+</section>
+
+<script type="text/javascript">
+$(document).ready(function(){
+	var act = '{act}';
+	if(act == 'Y'){
+		var resultID = '{_m_id}';
+		if(!resultID){
+			alert("입력하신 정보로 회원정보를 찾을 수 없습니다.\n정보가 정확한지 확인 후 다시 시도해 주세요");
+		}
+	}
+
+	//아이핀
+	$("#find_id_ipin").bind("click", function(){
+		var ipinType = '{ipinType}';
+		if(ipinType == 'niceipin' || ipinType == 'ipin'){
+			frmMake('', 'popupCertKey', '아이핀인증', true);
+			$("meta[name='viewport']").attr({"content":"user-scalable=yes, width=480"});
+			if(ipinType == 'niceipin'){
+				$("#ifrmRnCheck").attr("src", "{_cfg.rootDir}/member/ipin/IPINMain.php?callType=findid&joinGubun=mobile");
+			}
+			else {
+				$("#ifrmRnCheck").attr("src", "{_cfg.rootDir}/member/ipin/IPINCheckRequest.php?callType=findid&joinGubun=mobile");
+			}
+		}
+	});
+
+	//휴대폰인증
+	$("#find_id_hpauth").bind("click", function(){
+		var protocol = location.protocol;
+		var callbackUrl = "{=ProtocolPortDomain()}{_cfg.rootDir}/member/hpauthDream/hpauthDream_Result.php";
+		frmMake(protocol + "//hpauthdream.godo.co.kr/module/Mobile_hpauthDream_Main.php?callType=findid&shopUrl=" + callbackUrl + "&cpid={=hpauthCPID}", 'hpauthFrame', '휴대폰본인인증', false);
+	});
+});
+</script>
+
+{#footer}

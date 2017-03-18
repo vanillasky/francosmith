@@ -1,0 +1,24 @@
+{*** 고객센터 | service/agrmt.php ***}
+{ # header }
+
+<style type="text/css">
+.customer					{ padding: 15px; }
+.customer div				{ line-height: 130%;}
+.customer h2				{ margin-bottom: 15px; font-size: 15px; }
+.customer .customerTitle	{ padding: 20px 0 10px 0 ; }
+</style>
+
+<section class="customer">
+	<h2>고객센터</h2>
+	<article>
+		<div class="customerTitle">연락처 안내</div>
+		<div>전화번호 : {_cfg['customerPhone']}</div>
+		<div>팩스번호 : {_cfg['customerFax']}</div>
+		<div>E-Mail : {_cfg['customerEmail']}</div>
+
+		<div class="customerTitle">운영시간 안내</div>
+		<div>{_cfg['customerHour']}</div>
+	</article>
+</section>
+
+{ # footer }
