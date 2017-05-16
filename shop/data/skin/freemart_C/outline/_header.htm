@@ -102,24 +102,27 @@ border-right-color:#{_cfg['shopLineColorR']};
 
 
 	
-<table width=100% height=100% cellpadding=0 cellspacing=0 border="0">
+<table width=100% height=100% cellpadding=0 cellspacing=0 border="1">
 <!--{ ? this->tpl_['header_inc'] }-->
 <tr>
 	<td>{ # header_inc // 상단디자인 }</td>
 </tr>
+</table>
+
+<table width=100% height=100% cellpadding=1 cellspacing=3 border="2" style="background-color:whitesmoke">
 <!--{ / }-->
 <tr>
 	<td height=100% align={_cfg['shopAlign']}>
 		<!--{ ? this->tpl_['side_inc'] && _cfg['outline_sidefloat'] == 'left' }-->
-		<table width="{_cfg['shopSize']}" height="100%" class="outline_both">
+		<table width="{_cfg['shopSize']}" class="outline_both">
 		<!--{:}-->
-		<table width="99%" height=100% cellpadding=0 cellspacing=0 border=0>
+		<table width="99%" cellpadding=0 cellspacing=0 border=0>
 		<!--{/}-->
 		<tr>
 		<!--{ ? this->tpl_['side_inc'] && _cfg['outline_sidefloat'] == 'left' }-->
 			<td valign=top width="{_cfg['shopSideSize']}" nowrap>{ # side_inc // 측면디자인 }</td>
 		<!--{ / }-->
-			<td valign=top width="100%" height="100%" bgcolor="{_cfg['inbg_color']}" background="{_cfg['inbg_img']}" >
+			<td valign=top width="100%" bgcolor="{_cfg['inbg_color']}" background="{_cfg['inbg_img']}" >
 			
 			
 			

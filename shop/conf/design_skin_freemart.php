@@ -761,4 +761,12 @@ $design_skin['popup/festool_201607_01.htm'] = array(
 'linkurl'			=> 'main/html.php?htmid=popup/festool_201607_01.htm',
 );
 
+$design_skin['main/index_internal.htm'] = array(
+	'linkurl'			=> 'index.php',
+	'outline_header'	=> 'outline/header/main.htm',
+	'outline_footer'	=> 'outline/footer/main_footer.htm',
+	'text'			=> '¼îÇÎ¸ô ¸ÞÀÎº»¹®',
+	'_et'			=> 'codemirror',
+);
+
 ?>
