@@ -251,7 +251,7 @@ a { outline:0; }
 .dropdown {
 	display:none;
 	position:absolute; 
-	height:400px;
+	height:420px;
 	left:0;
 	background-color:#F1F1F1; 
 	/**filter: alpha(opacity=90); 

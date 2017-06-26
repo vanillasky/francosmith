@@ -202,6 +202,17 @@ class nScreenPayment
 						}
 						</script>";
 				}
+				else if (checkPatchPgStandard('lgdacom') === true) { // PC PG 표준결제창 패치여부
+					echo "<script>
+						if(parent.document.getElementsByName('LGD_AMOUNT')[0].value == '".$this->_settleprice."'){
+							parent.document.getElementsByName('LGD_TAXFREEAMOUNT')[0].value = '".$this->_taxfree."';
+							parent.launchCrossPlatform();
+						}else{
+							alert('결제금액이 올바르지 않습니다.');
+							parent.location.replace('order.php');
+						}
+						</script>";
+				}
 				else {
 					// 기존 결제 방식
 					echo "<script>
@@ -548,10 +559,16 @@ class nScreenPayment
 				}
 			}
 			else {
-
-				include (SHOPROOT.'/order/card/'.$this->_settle_pg.'/card_gate.php');
-				$tpl->assign('pg',$this->_pg_config);
-				$tpl->define('card_gate','order/card/'.$this->_settle_pg.'.htm');
+				if (checkPatchPgStandard($this->_settle_pg) === true) { // PC PG 표준결제창 패치여부
+					include (SHOPROOT.'/order/card/'.$this->_settle_pg.'/card_gate_std.php');
+					$tpl->assign('pg',$this->_pg_config);
+					$tpl->define('card_gate','order/card/'.$this->_settle_pg.'_std.htm');
+				}
+				else {
+					include (SHOPROOT.'/order/card/'.$this->_settle_pg.'/card_gate.php');
+					$tpl->assign('pg',$this->_pg_config);
+					$tpl->define('card_gate','order/card/'.$this->_settle_pg.'.htm');
+				}
 			}
 		}
 	}

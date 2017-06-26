@@ -39,7 +39,7 @@
 
 #rel-articles
 {
-	font-family: "Lucida Sans Unicode", "돋움", dotum, "Lucida Grande", Sans-Serif;
+	font-family: "Lucida Sans Unicode", "Dotum", dotum, "Lucida Grande", Sans-Serif;
 	font-size: 12px;
 	background: #fff;
 	margin: -5px 0 1em 0;
@@ -79,7 +79,7 @@
 
 #hor-minimalist-b
 {
-	font-family: "Lucida Sans Unicode", 돋움, dotum, "Lucida Grande", Sans-Serif;
+	font-family: "Lucida Sans Unicode", Dotum, dotum, "Lucida Grande", Sans-Serif;
 	font-size: 12px;
 	background: #fff;
 	margin: 10px;
@@ -114,7 +114,7 @@
 /** */
 #rounded-corner
 {
-	font-family: "Lucida Sans Unicode", "돋움", "dotum", "Lucida Grande", Sans-Serif;
+	font-family: "Lucida Sans Unicode", "Dotum", "dotum", "Lucida Grande", Sans-Serif;
 	font-size: 12px;
 	margin: 10px 0 10px 30px;
 	width: 480px;
@@ -166,7 +166,7 @@
 #order-notice-table 
 { 
 	width:95%;
-	font-family: "돋움", "dotum", "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
+	font-family: "Dotum", "dotum", "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
 	font-size: 12px;
 	margin: 10px 0 10px 30px;
 	border-collapse: collapse; 
@@ -274,7 +274,7 @@
 
 #order-notice-table p.heading { 
 	vertical-align:top;
-	font-family:Verdana, Geneva, sans-serif,돋움;
+	font-family:Verdana, Geneva, sans-serif,Dotum;
 	font-weight:bold; 
 	color:#195005 ; 
 	font-size:1.1em;
@@ -372,7 +372,7 @@
 	padding:5px 5px 5px 5px;	
 }
 
-.simple-table { border-collapse:collapse; font-family:Verdana, 돋움, Geneva, sans-serif; margin-bottom:10px;}
+.simple-table { border-collapse:collapse; font-family:Verdana, Dotum, Geneva, sans-serif; margin-bottom:10px;}
 .simple-table tr th { text-align:center; font-weight:bold; border:1px solid #999; vertical-align:middle; line-height:15px; padding:3px 0 3px 0;}
 .simple-table tr td { text-align:center; border:1px solid #999; vertical-align:middle; line-height:15px;padding:3px 0 3px 0;}
 .simple-table tr td.al { text-align:left; border:1px solid #999; vertical-align:middle; line-height:15px;padding:3px 0 3px 5px;}
@@ -403,10 +403,10 @@ table.fullwidth {
 }
 
 .outline { border-collapse: collapse; border:1px solid #cccccc;}
-.specification-table { border-collapse: collapse; font-family:Verdana, 돋움, Geneva, sans-serif; margin-bottom:10px; }
+.specification-table { border-collapse: collapse; font-family:Verdana, Dotum, Geneva, sans-serif; margin-bottom:10px; }
 .specification-table tr.table-row { border-bottom:1px solid #ededed }
-.specification-table .label { width:15%; min-width:120px; text-align:left; font-weight:bold; vertical-align:middle; padding:7px 30px 7px 5px; white-space: nowrap;}
-.specification-table .label-narrow { width:11%; min-width:100px; text-align:left; font-weight:bold; vertical-align:middle; padding:7px 30px 7px 5px; white-space: nowrap;}
+.specification-table .label { width:35%; min-width:120px; text-align:left; font-weight:bold; vertical-align:middle; padding:7px 30px 7px 5px; white-space: nowrap;}
+.specification-table .label-narrow { width:20%; min-width:100px; text-align:left; font-weight:bold; vertical-align:middle; padding:7px 30px 7px 5px; white-space: nowrap;}
 .specification-table .data { text-align:left; font-weight:normal; vertical-align:middle; padding:7px 30px 7px 5px; }
 .specification-table .data-indent { text-align:left; font-weight:normal; vertical-align:middle; padding:7px 30px 7px 20px; }
 
@@ -428,7 +428,7 @@ table.fullwidth {
 .specification-table tr.subject, tr.even { background-color:#ededed;}
 
 .grid-table { border-bottom: #333333 2px solid; border-left: #333333 2px solid; border-top: #333333 2px solid; border-right: #333333 2px solid; 
-	font-family:Verdana, 돋움, Geneva, sans-serif; margin-bottom:10px;  
+	font-family:Verdana, Dotum, Geneva, sans-serif; margin-bottom:10px;  
 }
 
 .grid-table .label { text-align:center; padding:5px 0 5px 0; border-collapse: collapse; border:1px solid #cccccc; background-color:#ededed; }

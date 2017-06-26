@@ -190,10 +190,14 @@ switch ($_POST[settlekind]){
 	case "p":	// 포인트
 	case "u":	// 중국카드결제 (현재 LG u+ 만 가능함)
 	case "y":	// 옐로페이
-
-		if($nScreenPayment->getScreenType() == 'MOBILE') {
+		if ($nScreenPayment->getScreenType() == 'MOBILE') {
 			include("../conf/pg.".$cfg['settlePg'].".php");
 			$nScreenPayment->getCardGate($tpl, $cart);
+		}
+		else if (checkPatchPgStandard($cfg['settlePg']) === true) { // PC PG 표준결제창 패치여부
+			include "card/$cfg[settlePg]/card_gate_std.php";
+			$tpl->assign('pg',$pg);
+			$tpl->define('card_gate',"order/card/{$cfg[settlePg]}_std.htm");
 		}
 		else {
 			include "card/$cfg[settlePg]/card_gate.php";
@@ -201,7 +205,6 @@ switch ($_POST[settlekind]){
 			$tpl->define('card_gate',"order/card/{$cfg[settlePg]}.htm");
 		}
 		break;
-
 	case "d":	// 할인결제 (결제금액이 0일 경우)
 
 		break;

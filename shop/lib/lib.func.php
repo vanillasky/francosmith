@@ -5551,4 +5551,30 @@ function daum_goods_review($sno) {
 	else
 		return;
 }
+
+/**
+ * PC PG 표준결제창 패치여부
+ * $param string $pgCode
+ * @return boolean
+ * true - 패치함
+ * false - 패치안함
+ */
+function checkPatchPgStandard($pgCode)
+{
+	global $cfg;
+	if (!$cfg) include dirname(__FILE__) . '/../conf/config.php';
+
+	$pgs = array('lgdacom');
+	if (in_array($pgCode, $pgs) === false) {
+		return false;
+	}
+
+	$file_std = dirname(__FILE__) . '/../order/card/' . $pgCode . '/card_gate_std.php';
+	$skin_std = dirname(__FILE__) . '/../data/skin/'.$cfg['tplSkin'].'/order/card/' . $pgCode . '_std.htm';
+	if (file_exists($file_std) === false || file_exists($skin_std) === false) {
+		return false;
+	}
+
+	return true;
+}
 ?>

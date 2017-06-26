@@ -49,6 +49,9 @@ else{
 	$pgStatus = 'menual';
 }
 $checked['displayEgg'][$cfg['displayEgg']+0] = "checked";
+
+// PC PG 표준결제창 패치여부
+$chkPatchPgStandard = checkPatchPgStandard('lgdacom');
 ?>
 <script language=javascript>
 
@@ -224,7 +227,13 @@ LG U+PG 설정<span>신용카드 결제 및 기타결제방식은 반드시 전자결제서비스 업체와 �
 <col class="cellC"><col class="cellL">
 <tr>
 	<td>PG사</td>
-	<td><b>LG U+ (XPay 1.0 - 결제창2.0) <?=$spot?></b></td>
+	<td><b>
+	<?if ($chkPatchPgStandard === true) {?>
+		LG U+ (Xpay 2.5 - 결제창2.5)
+	<?}else {?>
+		LG U+ (XPay 1.0 - 결제창2.0)
+	<?}?>
+	<?=$spot?></b></td>
 </tr>
 <tr>
 <td>결제 수단</td>
@@ -318,12 +327,19 @@ LG U+PG 설정<span>신용카드 결제 및 기타결제방식은 반드시 전자결제서비스 업체와 �
 <tr>
 	<td>결제창 색상</td>
 	<td class="noline">
-	<input type="radio" name="pg[skin]" value="red" <?=$checked['skin']['red']?>> Red
-	<input type="radio" name="pg[skin]" value="blue" <?=$checked['skin']['blue']?>> Blue
-	<input type="radio" name="pg[skin]" value="cyan" <?=$checked['skin']['cyan']?>> Cyan
-	<input type="radio" name="pg[skin]" value="green" <?=$checked['skin']['green']?>> Green
-	<input type="radio" name="pg[skin]" value="yellow" <?=$checked['skin']['yellow']?>> Yellow
+	<?if ($chkPatchPgStandard === true) {?>
+		<input type="radio" name="pg[skin]" value="red" <?=$checked['skin']['red']?>> Red
+		<input type="radio" name="pg[skin]" value="purple" <?=$checked['skin']['purple']?>> Purple
+		<input type="radio" name="pg[skin]" value="yellow" <?=$checked['skin']['yellow']?>> Yellow
+	<?}else {?>
+		<input type="radio" name="pg[skin]" value="red" <?=$checked['skin']['red']?>> Red
+		<input type="radio" name="pg[skin]" value="blue" <?=$checked['skin']['blue']?>> Blue
+		<input type="radio" name="pg[skin]" value="cyan" <?=$checked['skin']['cyan']?>> Cyan
+		<input type="radio" name="pg[skin]" value="green" <?=$checked['skin']['green']?>> Green
+		<input type="radio" name="pg[skin]" value="yellow" <?=$checked['skin']['yellow']?>> Yellow
+	<?}?>
 	</td>
+	
 </tr>
 <input type="hidden" name="pg[serviceType]" value="service">
 <!--<tr>

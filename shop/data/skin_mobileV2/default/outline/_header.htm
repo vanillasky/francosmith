@@ -148,8 +148,17 @@ $(document).ready(function(){
 });
 
 </script>
+
 <link rel="stylesheet" type="text/css" href="../common/css/reset.css" />
 <link rel="stylesheet" type="text/css" href="../common/css/style.css" />
+
+<link rel="stylesheet" type="text/css" href="../common/css/shop_layout.css" />
+<link rel="stylesheet" type="text/css" href="../common/css/prod.css" />
+<link rel="stylesheet" type="text/css" href="../common/css/table.css" />
+<link rel="stylesheet" type="text/css" href="../common/css/font.css" />
+<link rel="stylesheet" type="text/css" href="../common/css/button.css" />
+<link rel="stylesheet" type="text/css" href="../common/css/mypage.css" />
+
 <style type="text/css">
 .cart-item-quantity{font-weight:normal;}
 
@@ -179,7 +188,7 @@ $(document).ready(function(){
 	<div id="home-btn" onClick="javascript:goHome();"><img src="../common/img/gnb/btn_home_object.png" /></div>
 	<div id="logo">
 		<!--{ ? _cfgMobileShop.mobileShopLogo}-->
-		<a href="{_mobileRootDir}"><img src="/shop/data/images/top_logo-mobile.jpg" alt="{_cfg.shopName}" title="{_cfg.shopName}" width="110px" height="35px"/></a>
+		<a href="{_mobileRootDir}"><img src="/shop/data/images/top_logo-mobile.png" alt="{_cfg.shopName}" title="{_cfg.shopName}" width="110px" height="35px"/></a>
 		<!--{ : }-->
 		<div class="top_title"><a href="{_mobileRootDir}">{_shop_name}</a></div>
 		<!--{ / }-->
@@ -188,6 +197,7 @@ $(document).ready(function(){
 
 	<div id="search-btn" onClick="javascript:showSearchArea();"><img src="../common/img/gnb/btn_search_object.png" /></div>
 </div>
+
 <div class="search-area">
 	<div id="search-box">
 		<input type="text" name="search_key" placeholder="검색어를 입력해 주세요"/>
