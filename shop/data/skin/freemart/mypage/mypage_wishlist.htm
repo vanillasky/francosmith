@@ -13,31 +13,28 @@
 function act(mode, msg)
 {
 	var fm = document.frmWish;
-	if(!isChked('sno[]', msg)) return;
+	if(!isChked('sno[]')) return;
+	
+	if (msg && msg.length > 0) {
+		if (!confirm(msg)) return; 
+	}
 	
 	fm.mode.value = mode;
 	fm.submit();
 }
 
-function isChked(El,msg)
+function isChked(El)
 {
-	var result  = false;
 	if (!El) return;
 	if (typeof(El)!="object") El = document.getElementsByName(El);
 	
 	for (i=0;i<El.length;i++) {
 		if (El[i].checked) {
-			result = true;
-			break;
+			return true;
 		}
 	}
 	
-	if(!result) {
-		alert ("선택된 사항이 없습니다");
-		return false;
-	}
-	
-	alert(msg);
+	alert ("선택된 사항이 없습니다");
 	return false;
 }
 
