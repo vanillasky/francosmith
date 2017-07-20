@@ -74,6 +74,7 @@ class Template_Compiler_
 		$this->prefilters    =array();
 		$this->postfilters   =array();
 		$this->safe_mode     =$tpl->safe_mode;
+		$this->disable_php_tag = $tpl->disable_php_tag;	// PHP 태그 비활성화
 		$this->auto_constant =empty($tpl->auto_constant) ? false : $tpl->auto_constant;
 		$this->tpl_path      =$tpl_path;
 		$this->plugins       =array();
@@ -95,7 +96,23 @@ class Template_Compiler_
 			$functions['user'],
 			array('isset','empty','eval','list','array','include','require','include_once','require_once')
 		);
-
+		
+		// PHP 구문에서 실행 제한 PHP 함수( 코드 및 시스템 명령어 실행 함수 필터 )
+		if ($this->disable_php_tag == true){
+			$this->except_functions = array('eval', 'system', 'exec', 'passthru', 'escapeshellcmd', 'pcntl_exec', 'shell_exec', 'proc_open', 'popen');
+		}
+		
+		// Template_ 구문에서 실행 제한 PHP 함수 필터
+		if (is_array($this->except_functions) === true) {
+			for ($i = 0, $c = count($this->except_functions); $i < $c; $i++) {
+				$key = array_search($this->except_functions[$i], $this->all_functions);
+				if ($key != NULL || $key !== false ) {
+					unset($this->all_functions[$key]);
+				}
+			}
+			$this->all_functions = array_values($this->all_functions);
+		}
+		
 		// 2013-09-04 slowj 디자인 미리보기 수정
 		$this->gd_preview = $tpl->gd_preview;
 		$this->gd_srcview = $tpl->gd_srcview;
@@ -278,8 +295,9 @@ class Template_Compiler_
 
 		$gt_than_or_eq_to_5_4 = defined('PHP_MAJOR_VERSION') and  5.4 <= (float)(PHP_MAJOR_VERSION.'.'.PHP_MINOR_VERSION);
 
+	// PHP 태그 비활성화
 	// disable php tag
-		if ($this->safe_mode) {
+		if ($this->safe_mode || $this->disable_php_tag) {
 			if (ini_get('short_open_tag')) $safe_map['/<\?/']='&lt;?';
 			elseif ($gt_than_or_eq_to_5_4) $safe_map['/<\?(php|=)/i']='&lt;?$1';
 			else $safe_map['/<\?(php)/i']='&lt;?$1';
@@ -407,14 +425,25 @@ class Template_Compiler_
 				if (!$this->mark_php) $this->mark_php = $this->_index;
 				break;
 			case   '?>':
-			case   '%>':
-				if ($this->mark_php) {
-					$phpcode=implode('', array_slice($this->_split, $this->mark_php+1, $this->_index-$this->mark_php-1));
-					if (!preg_match('/"|\'/', implode('',preg_split($php_quote_or_comment, $phpcode)))) {
-						$this->mark_php=0;
+				case   '%>':
+					if ($this->mark_php) {
+						$phpcode=implode('', array_slice($this->_split, $this->mark_php+1, $this->_index-$this->mark_php-1));
+						if (!preg_match('/"|\'/', implode('',preg_split($php_quote_or_comment, $phpcode)))) {
+							$this->mark_php=0;
+						}
+						// PHP 구문에서 PHP 함수 실행 제한
+						if (is_array($this->except_functions) === true) {
+							preg_match_all('/(([A-Z_a-z\x7f-\xff][\w\x7f-\xff]*)\s*(\()\s*([\$|"|\'])([^\)]*)(\)))/ix', $phpcode, $m);
+							for ($pi=0, $pc=count($m[2]); $pi < $pc; $pi++) {
+								$func = $m[2][$pi];
+								if (in_array($func, $this->except_functions) === true) {
+									$this->report('Error #36', 'call to undefined function <b>'.$func.'</b> in <b>{'.$m[0][$pi].'}</b>', true, true);
+									$this->exit_();
+								}
+							}
+						}
 					}
-				}
-				break;
+					break;
 			case'<!--{':
 			case    '{':
 				$mark_tpl = $this->_index;

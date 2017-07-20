@@ -16,6 +16,7 @@ class Template_
 	var $postfilter    = '';
 	var $permission    = 0777;
 	var $safe_mode     = false;
+	var $disable_php_tag = false; // PHP 태그 비활성화
 	var $auto_constant = false;
 
 	var $caching       = false;
@@ -63,7 +64,25 @@ class Template_
 	function assign($arg)
 	{
 		if (is_array($arg)) $var = array_merge($var=&$this->var_[$this->scp_], $arg);
-		else $this->var_[$this->scp_][$arg] = func_get_arg(1);
+		else {
+			// 전역변수 assign
+			if (func_get_arg(2) == 1) {
+				if (preg_match('/^(_GET|_POST)\[[\'|\"]*([^\]]*)[\'|\"]*\]/ix', $arg, $matches)) {
+					if ($matches[1] == '_GET') {
+						$_GET[ $matches[2] ] = func_get_arg(1);
+					}
+					else if ($matches[1] == '_POST') {
+						$_POST[ $matches[2] ] = func_get_arg(1);
+					}
+				}
+				else {
+					$GLOBALS[$arg] = func_get_arg(1);
+				}
+			}
+			else {
+				$this->var_[$this->scp_][$arg] = func_get_arg(1);
+			}
+		}
 	}
 	function fetch($fid)
 	{

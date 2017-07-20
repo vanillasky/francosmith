@@ -1,5 +1,5 @@
 {*** 상품이동형 | goods/goods_list.php ***}
-<!--{ ? !id }--><? {id} = "es_".md5(crypt('')); ?><!--{ / }-->
+<!--{ ? !id }--><!--{ = this->assign( 'id', "es_"+md5(crypt('')) ) }--><!--{ / }-->
 <style>
 #slide { width:505px; height:243px; float:left; }
 #slide #slide_img { float:left; }

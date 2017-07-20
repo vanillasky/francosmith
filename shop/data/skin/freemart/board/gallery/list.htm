@@ -11,7 +11,9 @@
 <table width=100%>
 <tr>
 <!--{ @ list }-->
-<!--{ ? .notice }--><? {cnt_notice}++; ?>
+
+	<!--{ ? .notice }-->
+	<!--{ = this->assign( 'cnt_notice', cnt_notice+1 ) }-->
 </tr>
 <tr>
 	<td height=25 colspan=10 bgcolor=#f7f7f7 style="border-bottom:1 solid #efefef">

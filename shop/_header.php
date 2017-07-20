@@ -198,7 +198,13 @@ setCookie('Xtime',time(),0,'/');
 $tpl = new Template_;
 $tpl->template_dir	= dirname(__FILE__)."/data/skin/".$cfg['tplSkin'];
 $tpl->compile_dir	= dirname(__FILE__)."/Template_/_compiles/".$cfg['tplSkin'];
-$tpl->prefilter		= "adjustPath|include_file|capture_print|sitelinkConvert|systemHeadTag";
+$tpl->prefilter		= "adjustPath|include_file|capture_print|sitelinkConvert|systemHeadTag|layerMoveCode";
+
+// PHP 태그 비활성화
+if ($cfg['skinSecurityMode'] == 'y') {
+	$tpl->disable_php_tag = true;
+}
+
 
 #### 코디상품 베너 설정
 $tpl->assign('Banner', "<a href='../setGoods/'><img src='../setGoods/data/banner/".$setGoodsConfig['setGoodsBanner']."'></a>");

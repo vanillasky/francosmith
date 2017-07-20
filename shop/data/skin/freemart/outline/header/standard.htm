@@ -64,17 +64,14 @@
 				<input type="hidden" name="hid_link_url" value="{_s_type['link_url']}" />
 				<input type="hidden" id="edit" name="edit" value=""/>
 				<!--{? _s_type['keyword_chk'] == 'on' && _s_type['pr_text'] && !_GET['sword']}-->
-				<?php
-					{id} = "sword";
-					{onkeyup} = "document.getElementById('edit').value='Y'";
-					{onclick} = "document.getElementById('sword').value=''";
-					{value} = {_s_type['pr_text']};
-				?>
+					<!--{ = this->assign( 'id', 'sword' ) }-->
+					<!--{ = this->assign( 'onkeyup', "document.getElementById('edit').value='Y'" ) }-->
+					<!--{ = this->assign( 'onclick', "document.getElementById('sword').value=''" ) }-->
+					<!--{ = this->assign( 'value', _s_type['pr_text'] ) }-->
 				<!--{:}-->
-				<?php
-					{value} = {_GET['sword']};
-				?>
+					<!--{ = this->assign( 'value', _GET['sword'] ) }-->
 				<!--{/}-->
+		
 				<div id="top_keywords">
 					<span><!--{? _s_type['keyword'] }-->인기검색어: {_s_type['keyword']}<!--{/}--></span>	
 				</div>

@@ -474,11 +474,11 @@ scrollbar-arrow-color: #838383;
 							<input type="text"t name="eggBirthYear" size=4 maxlength=4 />년
 							<select name="eggBirthMon">
 							<option value="">선택</option>
-							<? for ($i = 1; $i <= 12; $i++ ){ echo '<option value="'.$i.'">'.$i.'</option>'; } ?>
+							<!--{@ range(1, 12) }--><option value="{.value_}">{.value_}</option><!--{/}-->
 							</select>월
 							<select name="eggBirthDay">
 							<option value="">선택</option>
-							<? for ($i = 1; $i <= 31; $i++ ){ echo '<option value="'.$i.'">'.$i.'</option>'; } ?>
+							<!--{@ range(1, 31) }--><option value="{.value_}">{.value_}</option><!--{/}-->
 							</select>일
 						</div>
 						<div class=noline>&#149; 성별 : <input type=radio name=eggSex value="1"> 남성 <input type=radio name=eggSex value="2"> 여성</div>

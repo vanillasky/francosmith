@@ -6,7 +6,7 @@
 
 <!--{ ? .type == 'layer' && isset(_COOKIE['blnCookie_' + .code]) === false }-->
 <div id="{'blnCookie_' + .code}" STYLE="position:absolute; width:{.width}px; height:{.height}px; left:{.left}px; top:{.top}px; z-index:200;"> 
-	<!--{ = eval("\$_GET[code]='blnCookie_" + .code + "';") }--> 
+	<!--{ = this->assign( '_GET[code]', 'blnCookie_' + .code, 1 ) }-->
 	<!--{ = include_file( .file ) }--> 
 </div>
 <!--{ / }--> 
@@ -18,7 +18,7 @@
 		<table>
 			<tr>
 				<td> 
-					<!--{ = eval("\$_GET[code]='blnCookie_" + .code + "';") }--> 
+					<!--{ = this->assign( '_GET[code]', 'blnCookie_' + .code, 1 ) }-->
 					<!--{ = include_file( .file ) }--> 
 				</td>
 			</tr>

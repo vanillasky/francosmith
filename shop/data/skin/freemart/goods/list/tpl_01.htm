@@ -1,5 +1,5 @@
 {*** 갤러리형 | goods/goods_list.php ***}
-<!--{ ? !id }--><? {id} = "es_".md5(crypt('')); ?><!--{ / }-->
+<!--{ ? !id }--><!--{ = this->assign( 'id', "es_"+md5(crypt('')) ) }--><!--{ / }-->
 <!-- 상품 리스트 -->
 <script type="text/javascript">
 function fnPreviewGoods_{id}(goodsno) {

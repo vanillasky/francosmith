@@ -3,9 +3,9 @@
 <!-- 상단이미지 || 현재위치 -->
 
 <!--{? _GET['disp_type'] == 'gallery'}-->
-<? {lstcfg.tpl} = "tpl_01"; ?>
+<!--{ = this->assign( 'lstcfg', array_merge(lstcfg, array_combine(array('tpl'),array('tpl_01'))) ) }-->
 <!--{: _GET['disp_type'] == 'list'}-->
-<? {lstcfg.tpl} = "tpl_02"; ?>
+<!--{ = this->assign( 'lstcfg', array_merge(lstcfg, array_combine(array('tpl'),array('tpl_02'))) ) }-->
 <!--{/}-->
 
 <style>

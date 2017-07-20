@@ -1,5 +1,5 @@
 {*** 선택강조형 | goods/goods_list.php ***}
-<!--{ ? !id }--><? {id} = "es_".md5(crypt('')); ?><!--{ / }-->
+<!--{ ? !id }--><!--{ = this->assign( 'id', "es_"+md5(crypt('')) ) }--><!--{ / }-->
 <style>
 img.alphablend_{id} { -moz-opacity:{dpCfg['alphaRate']/100}; filter:alpha(opacity={dpCfg['alphaRate']}); opacity:{dpCfg['alphaRate']/100};}
 </style>

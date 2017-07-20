@@ -57,6 +57,21 @@ function selectSkinCopy(tplSkin){
 	}
 }
 
+function selectSkinChange(tplSkin,useWork) {
+	var modeStr = '';
+	if (useWork == 'workSkin') {
+		modeStr = '[작업스킨]';
+		mode = 'skinChangeWork';
+	}
+	else {
+		modeStr = '[사용스킨]';
+		mode = 'skinChange';
+	}
+
+	if (confirm(tplSkin + " 스킨을 "+modeStr+"으로 변경 하시겠습니까?\n\n※스킨 내에 PHP태그가 존재할 경우,일부 함수 사용이 제한될 수 있습니다.\n기본설정>기타관리>디자인스킨 보안설정에서 사용 중인 PHP태그가 있는지 확인해주세요.")) {
+		location.href="./indb.skin.php?mode="+mode+"&"+useWork+"="+tplSkin;
+	}
+}
 //-->
 </script>
 
@@ -104,6 +119,8 @@ function selectSkinCopy(tplSkin){
 		echo"<td width=\"65\" style=\"padding:0px 3px 0px 3px\">";
 		if($sVal == $cfg['tplSkinMobileWork']){
 			echo"<img src=\"../img/codi/btn_work_skin_on.gif\" border=\"0\" align=\"absmiddle\" />";
+		}else if ($cfg['skinSecurityMode'] == 'y'){
+			echo"<a href=\"javascript:selectSkinChange('".$sVal."','workSkin')\"/><img src=\"../img/codi/btn_work_skin_off.gif\" border=\"0\" align=\"absmiddle\" /></a>";
 		}else{
 			echo"<a href=\"./indb.skin.php?mode=skinChangeWork&workSkin=".$sVal."\"><img src=\"../img/codi/btn_work_skin_off.gif\" border=\"0\" align=\"absmiddle\" /></a>";
 		}
@@ -113,6 +130,8 @@ function selectSkinCopy(tplSkin){
 		echo"<td width=\"65\" style=\"padding:0px 20px 0px 3px\">";
 		if($sVal == $cfg['tplSkinMobile']){
 			echo"<img src=\"../img/codi/btn_use_skin_on.gif\" border=\"0\" align=\"absmiddle\" />";
+		}else if ($cfg['skinSecurityMode'] == 'y'){
+			echo"<a href=\"javascript:selectSkinChange('".$sVal."','useSkin')\"/><img src=\"../img/codi/btn_use_skin_off.gif\" border=\"0\" align=\"absmiddle\" /></a>";
 		}else{
 			echo"<a href=\"./indb.skin.php?mode=skinChange&useSkin=".$sVal."\"><img src=\"../img/codi/btn_use_skin_off.gif\" border=\"0\" align=\"absmiddle\" /></a>";
 		}
@@ -158,6 +177,25 @@ function selectSkinCopy(tplSkin){
 	<a href="javascript:popup2('skin.upload.php',400,300,0);"><img src="../img/codi/btn_skin_upload.gif" align="absmiddle" /></a>
 	</td>
 </tr>
+
+<?if ($cfg['skinSecurityMode'] != 'y') {?>
+<tr>
+	<td colspan="2" style="padding:0px 25px 5px 25px;">
+	<table border=2 bordercolor=#dce1e1 style="margin-top:10px; border-collapse:collapse; width: 719px;">
+	<tr>
+		<tr>
+		<td style="padding:10px">
+			<font color="red">디자인스킨 보안 설정 안내</font><br><br>
+			쇼핑몰을보다 안전하게 운영할 수 있도록 디자인스킨의 보안을 강화할 수 있는 디자인스킨 보안모드 사용을 권장하고있습니다.<br>
+			<a href="../basic/adm_etc_design_security.php" target="_blank">[디자인스킨 보안설정 바로가기]</a>
+		</td>
+	</tr>
+	</tr>
+	</table>
+	</td>
+<tr>
+<?}?>
+
 <tr>
 	<td colspan="2" style="padding:0px 25px 5px 25px;">
 	<div id="MSG01">

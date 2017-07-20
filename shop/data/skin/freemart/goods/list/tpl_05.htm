@@ -1,5 +1,5 @@
 {*** 상품세로이동형 | goods/goods_list.php ***}
-<!--{ ? !id }--><? {id} = "es_".md5(crypt('')); ?><!--{ / }-->
+<!--{ ? !id }--><!--{ = this->assign( 'id', "es_"+md5(crypt('')) ) }--><!--{ / }-->
 <script>
 var {id} = new eScroll;
 {id}.id = "scrolling_{id}";

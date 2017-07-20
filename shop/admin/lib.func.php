@@ -1193,4 +1193,31 @@ function daum_goods_diff($goodsno,$ar_update,$class="U") {
 	}
 }
 
+// 모바일샵 적용버전 확인
+function isMobileV2() {
+	// 버전파일 존재 여부 확인
+	$version2_apply_file_name = ".htaccess";
+	$version2_apply_file_path = dirname(__FILE__)."/../../m/".$version2_apply_file_name;
+
+	$bCurrent_V2_htaccess = file_exists($version2_apply_file_path);
+	$bCurrent_V2_applied = false;
+
+	## 적용버전 확인
+	if ( $bCurrent_V2_htaccess ) {
+		$aFileContent = file(dirname(__FILE__)."/../../m/".$version2_apply_file_name);
+		for ($i=0; $i<count($aFileContent); $i++) {
+			if (preg_match("/RewriteRule/i", $aFileContent[$i])) {
+				break;
+			}
+		}
+		if ($i == count($aFileContent)) {
+			$bCurrent_V2_applied = false;
+		} else {
+			$bCurrent_V2_applied = true;
+		}
+	} else {
+		$bCurrent_V2_applied = false;
+	}
+	return $bCurrent_V2_applied;
+}
 ?>

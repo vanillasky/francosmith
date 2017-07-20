@@ -26,7 +26,7 @@ th,td {border:1px solid gray;}
 		<td class="left" colspan=4><!--{ cfg.compSerial }--></td>
 
 		<td rowspan=5 colspan=2 width="200px;" style="border-left-width: 3px; border-right-width: 3px;">
-			<div class="common" style="text-decoration:underline"><b>일자: <? echo date("Y년 m월 d일"); ?> </b></div></br>
+			<div class="common" style="text-decoration:underline"><b>일자: <!--{=date("Y년 m월 d일")}--> </b></div></br>
 			<input id="input" type='text' class="name" size="10" value={=memberName} >
 			<div class="common">아래와 같이 견적합니다.</div>
 		</td>
