@@ -110,7 +110,7 @@ $fb = new Facebook();
 			<td>
 				<div style="line-height:15px">
 					<b>페이지 주소</b><br/>
-					페이스북 페이지를 만들 때 주소를 지정할 수 있습니다. (예. Facebook.com/godomallnews)<br/>
+					페이스북 페이지를 만들 때 주소를 지정할 수 있습니다. (예. Facebook.com/<?= $fb->defaultAddr ?>)<br/>
 					초기설정은 사용되는 모습을 보여드리기 위해 고도의 페이지를 임시로 넣어드렸습니다. 수정하여 사용하세요.<br/><br/>
 					<br/>
 					<b>테두리 색상 조절 </b><br/>

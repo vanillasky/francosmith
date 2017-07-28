@@ -43,7 +43,7 @@ class Facebook
 		$this->customImgDir=$this->cfg['rootDir']."/data/sns";	//커스터마이징 버튼 이미지경ㄴ로
 		//디폴트 설정값
 		$this->defaultUseYn="y";
-		$this->defaultAddr="godomallnews";
+		$this->defaultAddr="nhngodo";
 		$this->defaultUrl=urlencode('http://facebook.com/').$this->defaultAddr;
 		$this->defaultWidth="690";
 		$this->defaultHeight="570";
@@ -52,10 +52,18 @@ class Facebook
 		$this->defaultStreamYn="true";
 		$this->defaultFacesYn="true";
 		$this->defaultCmtWidth="470";
+		$pastAddr = array(  // 이전 고도 페이스북 페이지
+			'godosoft'
+		);
 
 		$l = dirname(__FILE__)."/../conf/fbPage.cfg.php";
 		if(file_exists($l)){
 			require $l;
+			// PC Default Addr 변경
+			if (in_array($fbPageCfg['addr'], $pastAddr)) {
+				$fbPageCfg['addr'] = $this->defaultAddr;
+				$fbPageCfg['url'] = $this->defaultUrl;
+			}
 		}
 		else{
 			$fbPageCfg = array( 
@@ -99,6 +107,10 @@ class Facebook
 		$l = dirname(__FILE__)."/../conf/mfbPage.cfg.php";
 		if(file_exists($l)){
 			require $l;
+			// 모바일 Default addr 변경
+			if (in_array($mfbPageCfg['addr'], $pastAddr)) {
+				$mfbPageCfg['addr'] = $this->defaultAddr;
+			}
 		}
 		else{
 			$mfbPageCfg = array( 
