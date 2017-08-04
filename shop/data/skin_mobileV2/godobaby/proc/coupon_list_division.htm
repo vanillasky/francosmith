@@ -6,7 +6,22 @@ function calcuCoupon(obj)
 {
 	var chk = document.getElementsByName(obj.name);
 	var apply_coupon = document.getElementById('apply_coupon');
-
+	
+	// 쿠폰 사용제한
+	var cDouble = { ? _cfgCoupon.double == '1'}true{:}false{/};
+	if (obj.checked === true && cDouble === false) {
+		var cnt = 0;
+		for(i=0;i<chk.length;i++){
+			if(chk[i].checked){
+				if (++cnt > 1) {
+					obj.checked = false;
+					alert('한 주문에 한개 쿠폰만 사용할 수 있습니다.');
+					return false;
+				}
+			}
+		}
+	}
+	
 	var coupon_price = 0; var coupon_emoney = 0; var sno='';
 	var dc = 0; var abi = 0;
 	apply_coupon.innerHTML = '';

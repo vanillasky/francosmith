@@ -2463,6 +2463,26 @@ function checkCoupon($orderitems=array(),$coupon=0,$coupon_emoney=0,$apply_coupo
 
 	$_now = time();
 
+	$cfgCoupon = & $GLOBALS['cfgCoupon'];
+	if(!$cfgCoupon) @include SHOPROOT."/conf/coupon.php";
+	
+	// 쿠폰 사용제한
+	if ($cfgCoupon['double'] != '1') {
+		$cnt = 0;
+		foreach($apply_coupon as $_couponcd) {
+			// 오프라인 쿠폰
+			if (preg_match('/^off_([0-9]+)$/',$_couponcd,$_match)) {
+			}
+			// 그냥 쿠폰
+			else {
+				if (++$cnt > 1) {
+					msg('한 주문에 한개 쿠폰만 사용할 수 있습니다.',-1);
+					exit;
+				}
+			}
+		}
+	}
+	
 	$goods = Core::loader('Goods');
 
 	// 금액 단위 절삭 (getDcprice 함수 인용)
