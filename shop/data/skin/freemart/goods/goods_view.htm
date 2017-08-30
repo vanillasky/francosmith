@@ -884,15 +884,34 @@ var nsGodo_MultiOption = new GMultiOption( {?runout}true{:}false{/} );
 			<!-- 상품 공통 정보 종료 -->
 			
 			
-			<!-- 상품 사용기 -->
-			<div id="review-container" style="margin-top:20px; width:100%;">
-				<iframe id="inreview" src="./goods_review_list.php?goodsno={goodsno}" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="position:relative; width:100%"></iframe>
-			</div>
 			
+			<!--{ ? _checkoutReviewCfg['use'] === 'y' && _checkoutReviewCfg['priority'] === '1' }-->
+				<!--네이버 페이 상품 후기 우선 노출-->
+				<div id="review-container" style="margin-top:20px; width:100%;">
+					<iframe id="inreview2" src="./checkout_review_list.php?goodsno={goodsno}" frameborder="0" marginwidth="0" marginheight="0" width="100%" height="" scrolling="no"></iframe>
+				</div>
+				
+				<div id="review-container" style="margin-top:20px; width:100%;">
+					<iframe id="inreview" src="./goods_review_list.php?goodsno={goodsno}" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="position:relative; width:100%"></iframe>
+				</div>
+			<!--{ : }-->
+				<!-- 상품 사용기 -->
+				<div id="review-container" style="margin-top:20px; width:100%;">
+					<iframe id="inreview" src="./goods_review_list.php?goodsno={goodsno}" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="position:relative; width:100%"></iframe>
+				</div>
+				<!--{ ? _checkoutReviewCfg.use === 'y' }-->
+					<div id="review-container" style="margin-top:20px; width:100%;">
+						<iframe id="inreview2" src="./checkout_review_list.php?goodsno={goodsno}" frameborder="0" marginwidth="0" marginheight="0" width="100%" height="" scrolling="no"></iframe>
+					</div>
+				<!--{ / }-->
+			<!--{ / }-->
+			
+			<!-- 상품 질문과답변 -->
 			<div id="qna-container" style="margin-top:20px; width:100%;">
 			<!-- 상품 질문과답변 -->
 			<iframe id="inqna" src="./goods_qna_list.php?goodsno={goodsno}" frameborder="0" marginwidth="0" marginheight="0"  scrolling="no" style="position:relative; width:100%"></iframe>
 			</div>
+			
 		
 			
 			<div id="recent-view-goods-container">

@@ -18,6 +18,7 @@ require "../lib/plusCheese.class.php";
 include "../lib/cart.class.php";
 @include "../../shop/setGoods/data/config/setGoodsConfig.php";
 include '../lib/Lib_Robot.php';
+if (is_file("../conf/config.checkout_review.php")) include "../conf/config.checkout_review.php"; //상품후기 노출 순서
 
 if (is_file("../conf/config.related.goods.php")) include "../conf/config.related.goods.php";
 else {

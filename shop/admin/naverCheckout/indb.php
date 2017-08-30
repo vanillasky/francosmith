@@ -88,5 +88,24 @@ $configCheckoutAPI = array(
 );
 $config->save('checkoutapi',$configCheckoutAPI);
 
+// 네이버페이 상품후기 사용 초기화
+include '../../conf/config.checkout_review.php';
+if ($checkoutCfg['useYn'] != 'y' &&  $checkoutReviewCfg['use'] == 'y') {
+	// 네이버페이 설정 값 저장
+	$checkoutReviewCfg = array();
+	$checkoutReviewCfg['use'] = 'n';
+	$checkoutReviewCfg['priority'] = '0';
+
+	$checkoutCfgPath = '../../conf/config.checkout_review.php';
+	 
+	$qfile->open($checkoutCfgPath);
+	$qfile->write("<?php \n");
+	$qfile->write("\$checkoutReviewCfg = array ( \n");
+	foreach ($checkoutReviewCfg as $k=>$v) $qfile->write("'$k' => '$v', \n");
+	$qfile->write("); \n");
+	$qfile->write("?>");
+	$qfile->close();
+}
+
 msg('설정이 저장되었습니다.'.$checkMsg,'partner.php','parent');
 ?>

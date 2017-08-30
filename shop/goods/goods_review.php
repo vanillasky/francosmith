@@ -3,6 +3,8 @@
 include "../_header.php";
 include "../lib/page.class.php";
 
+if (is_file("../conf/config.checkout_review.php")) include "../conf/config.checkout_review.php"; //상품후기 노출 순서
+
 if(class_exists('validation') && method_exists('validation','xssCleanArray')){
 	$_GET = validation::xssCleanArray($_GET, array(
 		validation::DEFAULT_KEY => 'text',

@@ -6,6 +6,7 @@ body,table,input,textarea,select {
 font:12px Arial, dotum, µ¸¿ò;
 color:#333333;
 }
+	
 img	{border:0}
 form	{margin:0}
 
@@ -59,7 +60,7 @@ A.white:hover {text-decoration:none;color:#FFFFFF}
 
 #form input,textarea {border-width:1; border-style:solid; border-color:#DFDFDF ; background:#F7F7F7}
 #form .noline input {border:0; background:transparent}
-.select {font-family:µ¸¿ò;font-size:8pt;BACKGROUND-COLOR:#626262;color:ffffff;}
+.select {font-family:µ¸¿ò;font-size:8pt;}
 .null {border:0}
 
 #bottom div {float:left;}

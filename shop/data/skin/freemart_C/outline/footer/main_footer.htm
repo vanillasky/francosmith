@@ -1,20 +1,14 @@
 {*** 메인용 하단파일 | main/index.php ***}
-<div id="footer_wrapper" style="border2px solid red;" class="bottom_grey" align="center" >
+<div id="footer_wrapper" class="bottom_grey" align="center" >
 	<div style="width:{_cfg['shopSize']}px; padding:0; margin:0" > 
-		<div class="footer-block" style="width:220px;">
+		<div class="footer-block" style="width:260px;">
 			<div class="block-title">
-				<span>입금안내</span>
+				<span>Email Club News &amp; Offers</span>
 			</div>
 			<div class="content-wrapper">
-				<!--{ @ dataBank() }-->
-				<span class="footer-content">{.bank}</span>
-				<span class="footer-content">{.account}</span>
-				<span class="footer-content">예금주 {.name}</span>
-				<!--{ / }--> 
+				<script type="text/javascript" src="https://app.getresponse.com/view_webform_v2.js?u=hELl7&webforms_id=13768702"></script> 
 			</div>
-			
-		</div>
-		
+		</div>	
 		<div class="footer-block">
 			<div class="block-title">
 				<span>상담/문의</span>
@@ -29,8 +23,6 @@
 				</ul>
 			</div>
 		</div>
-		
-		
 		<div class="footer-block social-footer">
 			<div class="block-title">
 				<span style="padding-left:10px;">Keep In Touch</span>
@@ -44,15 +36,12 @@
 				<!--<li><a id="youtube" target="_blank" href="#""></a></li>-->
 			</ul>
 		</div>
-		
-		
 	</div>	
 	
 	<p style="clear:both; height:10px;padding:0; margin:0">&nbsp;</p>
-	<hr class="line-white">
-	
+	<hr class="line-white"/>
 	<div style="width:{_cfg['shopSize']}px; padding:0; margin:0;" > 	
-		<div class="footer-block" style="width:220px;">
+		<div class="footer-block" style="width:260px;">
 			<div class="block-title">
 				<span>YOUR ORDER</span>
 			</div>
@@ -93,13 +82,19 @@
 				</ul>
 			</div>
 		</div>
-		
 	</div>
+	
 </div>
 
 <div style="width:100%; padding:0; margin:0 auto;" align="center" >
-<div style="width:990px; background-color:#fff" > 	
-		
+	
+	<div style="width:{_cfg['shopSize']}px; padding:0; margin:0; position:relative; top:20px;" > 	
+		<div class="footer-block" style="width:220px; clear:left">
+			<div class="footer-biz-time">{=displaySSLSeal()}</div>
+		</div>
+	</div>
+	
+	<div style="width:990px; background-color:#fff" > 	
 		<div id="footer_company">
 			<p class="line_h20">
 				<span class="txt">회사:</span>{_cfg['compName']}<span class="bar"></span>
@@ -113,7 +108,7 @@
 					<span style="clear:both;">COPYRIGHT ⓒ <script type="text/javascript">document.write(new Date().getFullYear())</script> FRANCOSMITH.COM ALL RIGHTS RESERVED</span>
 				</p>
 			</p>
-			
 		</div>
+	</div>
 </div>
-</div>
+

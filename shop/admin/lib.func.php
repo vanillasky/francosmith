@@ -247,6 +247,7 @@ function chkAdmin(){
 		array('order' => 'board/member_qna_register.php'),
 		array('order' => 'board/member_qna_indb.php'),
 		array('member' => 'proc/indb.email.php'),
+		array('board' => 'order/checkout.view.php'),
 	);
 
 	if($data[level] != 100 && count($arr)>=1){

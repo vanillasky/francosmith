@@ -1,16 +1,33 @@
 {*** 이용후기 메인 | goods/goods_review.php ***}
 { # header }
 
-<!-- 상단이미지 || 현재위치 -->
-<TABLE width=100% cellpadding=0 cellspacing=0 border=0>
-<tr>
-	<td><img src="../img/common/title_review.gif" border=0></td>
-</tr>
+<div class="page_title_div">
+	<div class="page_title">이용후기</div>
+	<div class="page_path"><a href="/shop/">HOME</a> &gt; <span class='bold'>고객센터</span></div>
+</div>
+<div class="page_title_line"></div>
+
+<div style="width:100%; padding-top:20px;"></div>
+
+<!--{ ? _checkoutReviewCfg['use'] === 'y' }-->
+<table width="100%" style="padding:15px 0 0 15px;"> 
+	<tr>
+		<td><a href="/shop/goods/goods_review.php" value="0">
+			<img src="../img/common/tab_goods_review_off.png" border=0></a>
+			<a href="/shop/goods/checkout_review.php" value="0">
+			<img src="../img/common/tab_checkout_review_on.png" border=0></a>
+		</td>
+	</tr>
+</table>
+<div style="border-bottom:2px solid #626262; width:98%; margin : 0 0 20px 15px;"></div>
+<!--{ / }-->
+
+<!-- 
 <TR>
 	<td class="path">HOME > <B>이용후기</B></td>
 </TR>
 </TABLE>
-
+-->
 
 <div class="indiv"><!-- Start indiv -->
 
@@ -44,7 +61,9 @@
 			<option value="contents" {_selected.skey['contents']}> 후기 </option>
 			<option value="m_id" {_selected.skey['m_id']}> 작성자 </option>
 			<option value="goodnm" {_selected.skey['goodnm']}> 상품명 </option>
-			</select><input type="text" NAME="sword" value="{_GET['sword']}" size=47 class="linebg"><input type="image" src="../img/common/btn_search.gif" align=absmiddle>
+			</select>
+			<input type="text" NAME="sword" value="{_GET['sword']}" size=47 class="linebg">
+			<input type="image" src="../img/common/btn_search.gif" align=absmiddle>
 			</td>
 		</tr>
 		</table>

@@ -21,24 +21,20 @@ function act(mode, msg)
 
 function isChked(El,msg)
 {
-	var result  = false;
+	
 	if (!El) return;
 	if (typeof(El)!="object") El = document.getElementsByName(El);
 	
 	for (i=0;i<El.length;i++) {
 		if (El[i].checked) {
-			result = true;
-			break;
+			return true;
 		}
 	}
 	
-	if(!result) {
-		alert ("선택된 사항이 없습니다");
-		return false;
-	}
 	
-	alert(msg);
+	alert ("선택된 사항이 없습니다");
 	return false;
+		
 }
 
 </script>
@@ -100,7 +96,7 @@ function isChked(El,msg)
 	
 	<div class="std-div" style="text-align:center">
 		<button class="button-big button-dark" onclick="act('delItem', '정말 삭제하시겠습니까?')">선택삭제</button>
-		<button class="button-big button-dark" onclick="act('cart')">장바구니담기</button>
+		<button class="button-big button-dark" onclick="act('cart', '')">장바구니담기</button>
 	</div>
 	</form>
 	

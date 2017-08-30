@@ -142,7 +142,7 @@ include "../../conf/config.php";
 </tr>
 <tr>
 	<td style="line-height:17px;">상품정보<br />페이지별 게시글 개수</td>
-	<td><input type="text" name="reviewListCnt" value="<?=$cfg['reviewListCnt']?>" size="6" class="rline" onkeydown="onlynumber();" /> 개 <span class="extext">게시판 전체보기의 페이지별 게시글 노출 개수를 설정합니다.</span></td>
+	<td><input type="text" name="reviewListCnt" value="<?=$cfg['reviewListCnt']?>" size="6" class="rline" onkeydown="onlynumber();" /> 개 <span class="extext">상품정보 페이지별 게시글 노출 개수를 설정합니다.</span></td>
 </tr>
 <tr>
 	<td>글쓰기 권한</td>
