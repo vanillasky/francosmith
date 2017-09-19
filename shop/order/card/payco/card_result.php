@@ -3,27 +3,30 @@ include dirname(__FILE__) . '/../../../lib/library.php';
 @include dirname(__FILE__) . '/../../../conf/config.mobileShop.php';
 $payco = Core::loader('payco');
 
-if($_GET['isMobile'] == 'Y'){
+extract($_POST);
+extract($_GET, EXTR_SKIP);
+
+if($isMobile == 'Y'){
 	$orderDir = '../../../..' . $cfgMobileShop['mobileShopRootDir'] . '/ord/';
 }
 else {
 	$orderDir = '../../';
 }
 
-if($payco->screenType == 'MOBILE' || $_GET['isMobile'] == 'Y'){
+if($payco->screenType == 'MOBILE' || $isMobile == 'Y'){
 	$endLocateType = 'self';
 }
 else {
 	$endLocateType = 'parent';
 }
 
-if((int)$_GET['code'] == 0){
+if((int)$code == 0){
 	//성공
-	$orderFinalUrl = $orderDir . 'order_end.php?ordno=' . $_GET['ordno'];
+	$orderFinalUrl = $orderDir . 'order_end.php?ordno=' . $ordno;
 }
 else {
 	//실패
-	$orderFinalUrl = $orderDir . 'order_fail.php?ordno=' . $_GET['ordno'];
+	$orderFinalUrl = $orderDir . 'order_fail.php?ordno=' . $ordno;
 }
 ?>
 <html>
@@ -40,7 +43,7 @@ else {
 </head>
 <body>
 	<form name="paycoCardGateForm" method="get" action="<?php echo $orderFinalUrl; ?>">
-		<input type="hidden" name="ordno" value="<?php echo $_GET['ordno']; ?>">
+		<input type="hidden" name="ordno" value="<?php echo $ordno; ?>">
 	</form>
 	<div class="layout">
 		<div class="layoutTop"><img src="./img/payco_logo.gif"></div>

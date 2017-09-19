@@ -1123,7 +1123,9 @@ class payco {
 
 			$extraData['cancelMobileUrl'] = $cancelMobileUrl;
 		}
-
+		//return type[post] 전환 체크
+		$extraData['returnTypeChangeFlag'] = 'Y';
+		
 		return $extraData;
 	}
 
