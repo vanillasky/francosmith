@@ -4,7 +4,7 @@ include "../../conf/config.php";
 
 //header("Content-Type: text/html; charset=utf-8");
 
-$gf = Core::loader('goodsflow');
+$gf = Core::loader('goodsflow_v2');
 
 if (get_magic_quotes_gpc()) {
 	stripslashes_all($_POST); stripslashes_all($_GET); stripslashes_all($_COOKIE);

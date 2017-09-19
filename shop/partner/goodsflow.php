@@ -1,8 +1,8 @@
 <?php
 include "../lib/library.php";
-require_once('../lib/parsexmlstruc.class.php');
+include dirname(__FILE__).'/../lib/goodsflow_v2.class.php';
 
-header("Content-Type: text/html; charset=utf-8");
+header("Content-type:application/json; charset=utf-8; ");
 
 $_gf_delivery_company_map = array(
 	'KOREX' => '4',
@@ -24,53 +24,48 @@ $_gf_delivery_company_map = array(
 	'CHUNIL' => '19'
 );
 
-function __result($result, $msg='',$failed=null) {
+function __result($result, $msg, $failed=null) {
+	if ($result === true) {
+		$rs['success'] = true;
+		$rs['message'] = '';
+	}
+	else {
+		if (!$msg) {
+			$msg = '서버에서 요청을 처리할 수 없음';
+		}
+		$rs['success'] = false;
+		$rs['message'] = $msg;
+	}
 
-	$xml = '';
-	$xml .= '<?xml version="1.0" encoding="utf-8"?>'."\r\n";
-	$xml .= '<response>'."\r\n";
-	$xml .= '<result>'.$result.'</result>'."\r\n";
-
-	if ($msg)
-		$xml .= '<errorMsg>'.iconv('euc-kr','utf-8',$msg).'</errorMsg>'."\r\n";
-	else 
-		$xml .= '<errorMsg></errorMsg>'."\r\n";
-	$xml .= '</response>';
-
-
-	exit($xml);
+	goodsflow_v2::resultlog('RESPONSE=' . ($t = gd_json_encode($rs)), '송장번호 수신 결과');
+	$rs['message'] = iconv('EUC-KR', 'UTF-8', $rs['message']);
+	$response = gd_json_encode($rs);
+	exit($response);
 }
 
-
-$postdata = isset($_POST['orderListXml']) ? stripslashes($_POST['orderListXml']) : '';
-
-$xml = new StrucXMLParser();
-$xml ->parse($postdata);
-$res = $xml->parseOut();
-
-$result = (array)$res['ORDERLIST'][0]['child']['ORDER'];
-if (empty($result)) exit;
+$postdata = file_get_contents('php://input');
+goodsflow_v2::resultlog('POST DATA='.$postdata, '송장번호 수신');
+$postdata = gd_json_decode($postdata, true);
+$result = $postdata;
+if (empty($result)) __result(false, '서버에서 요청을 처리할 수 없음', false);
 
 $queues = array();
 
-foreach ($result as $dtnPrint) {
+foreach ($result['data'] as $dtnPrint) {
+	foreach ($dtnPrint as $_tmp){
+		// UniqueCd
+		$UniqueCd = $_tmp['uniqueCd'];
+		// 택배사 코드
+		$deliveryno = $_gf_delivery_company_map[strtoupper($_tmp['deliverCode'])];
+		// 송장 번호
+		$deliverycode = $_tmp['sheetNo'];
 
-	$_tmp = $dtnPrint['child'];
-
-	// UniqueCd
-	$UniqueCd = $_tmp['TRANSUNIQUECD'][0]['data'];
-
-	// 택배사 코드
-	$deliveryno = $_gf_delivery_company_map[strtoupper($_tmp['DELIVERCODE'][0]['data'])];
-
-	// 송장 번호
-	$deliverycode = $_tmp['SHEETNO'][0]['data'];
-
-	$queues[] = array(
-		'UniqueCd' => $_tmp['TRANSUNIQUECD'][0]['data'],
-		'deliveryno' => $_gf_delivery_company_map[strtoupper($_tmp['DELIVERCODE'][0]['data'])],
-		'deliverycode' => $_tmp['SHEETNO'][0]['data']
+		$queues[] = array(
+				'UniqueCd' => $UniqueCd,
+				'deliveryno' => $deliveryno,
+				'deliverycode' => $deliverycode
 		);
+	}
 }
 
 for ($i=0,$m=sizeof($queues);$i<$m;$i++) {
@@ -137,6 +132,5 @@ for ($i=0,$m=sizeof($queues);$i<$m;$i++) {
 
 } // for
 
-
-__result( (empty($queues) ? 'TRUE' : 'FALSE'),'',$queues);
+__result( (empty($queues) ? true : false),'',$queues);
 ?>

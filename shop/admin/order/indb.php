@@ -60,7 +60,7 @@ if (!empty($_REQUEST['referer'])) {
 $integrate_order = Core::loader('integrate_order');
 register_shutdown_function(array(&$integrate_order, 'reserveSync'));
 
-$goodsflow = Core::loader('goodsflow', false);
+$goodsflow = Core::loader('goodsflow_v2', false);
 
 switch ($mode) {
 

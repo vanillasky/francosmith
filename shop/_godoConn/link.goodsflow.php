@@ -20,9 +20,9 @@ switch ($_SERVER['HTTP_ACTION']) {
 		break;
 
 	case 'GF_TRACKING_RESULT' :
-		$raw_post = file_get_contents("php://input");
+		$goodsflow = Core::loader('goodsflow_v2');
+		
 		$datas = unserialize(base64_decode($raw_post));
-
 		$failed = array();
 
 		foreach ($datas as $UniqueCd => $data) {

@@ -4,7 +4,7 @@ include "../_header.php";
 include "../../lib/page.class.php";
 include "../../conf/config.pay.php";
 
-$gf = Core::loader('goodsflow');
+$gf = Core::loader('goodsflow_v2');
 
 if (get_magic_quotes_gpc()) {
 	stripslashes_all($_POST); stripslashes_all($_GET); stripslashes_all($_COOKIE);
