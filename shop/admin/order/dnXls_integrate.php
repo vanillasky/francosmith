@@ -76,6 +76,9 @@ $search = unserialize($_POST['search']);
 				else if ($k == 'todayshop') {
 					$arWhere[] = 'exists(SELECT * FROM '.GD_ORDER_ITEM.' AS oi JOIN '.GD_GOODS.' AS g ON oi.goodsno=g.goodsno WHERE oi.ordno=o.ordno AND g.todaygoods=\'y\')';
 				}
+				else if ($k == 'payco') {
+					$arWhere[] = " o.pg = '$k' ";
+				}
 				else {
 					$_tmp[] = " o.channel = '$k' ";
 				}

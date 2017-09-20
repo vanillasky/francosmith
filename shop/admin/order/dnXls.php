@@ -147,6 +147,9 @@ if ($search['todaygoods']) {
 if($search['cashreceipt']) {
 	$arWhere[] = 'o.cashreceipt != ""';
 }
+if($search['payco']) {
+	$arWhere[] = 'o.settleInflow = "payco"';
+}
 if($search['couponyn']) {
 	$arWhere[] = 'co.ordno is not null';
 	$join_GD_COUPON_ORDER='left join '.GD_COUPON_ORDER.' as co on o.ordno=co.ordno';
