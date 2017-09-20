@@ -72,12 +72,11 @@ switch($checkoutType){
 <head>
 	<style>
 	body				{ margin: 0px; padding: 0px; overflow: hidden;}
-	.layout				{ width: 100%; height: 600px; text-align: center; }
+	.layout				{ width: 100%; height: 600px; background: url("<?php echo $imgPath; ?>loading.gif") no-repeat 60% 200%; }
 	.layoutTop			{ width: 100%; text-align: left; padding: 20px 0px 20px 20px; }
 	.layoutSolid		{ width: 100%; height:4px; background-color: #ff0008; }
 	.progressImage		{ width: 100%; text-align: center; margin-top: 150px;}
-	.progressImageSub1	{ margin-top: 39px;}
-	.progressImageSub2	{ margin-top: 33px;}
+	.progressImageSub2	{ padding-top: 180px;}
 	</style>
 </head>
 <body>
@@ -88,11 +87,7 @@ switch($checkoutType){
 	</script>
 
 	<div class="layout">
-		<div class="layoutTop"><img src="<?php echo $imgPath; ?>payco_logo.gif"></div>
-		<div class="layoutSolid"></div>
 		<div class="progressImage">
-			<div><img src="<?php echo $imgPath; ?>payco_img.gif"></div>
-			<div class="progressImageSub1"><img src="<?php echo $imgPath; ?>payco_icon_loading.gif"></div>
 			<div class="progressImageSub2"><img src="<?php echo $imgPath; ?>payco_text_loading.gif"></div>
 		</div>
 	</div>
