@@ -43,15 +43,9 @@ switch($_POST['mode']) {
 ?>
 <script type="text/javascript">
 alert("정상적으로 저장되었습니다.");
-<?php if ($useyn === 'y') { ?>
-parent.window.enableService('payco');
-<?php } else { ?>
-parent.window.disableService('payco');
-<?php } ?>
 
 <?php if ($_POST['mode'] == 'getServiceCode') { ?>
-parent.snsifrm.location.reload();
-parent.closeLayer();
+parent.location.reload();
 <?php } else { ?>
 location.replace('./adm_member_social_login.payco.php');
 <?php } ?>

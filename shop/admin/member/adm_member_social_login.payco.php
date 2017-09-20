@@ -1,5 +1,7 @@
 <?php
 
+$location = '회원관리 > 페이코 아이디 로그인 설정';
+
 include '../_header.popup.php';
 include '../../lib/SocialMember/SocialMemberServiceLoader.php';
 
@@ -147,10 +149,16 @@ a.facebook-regist-guide {
 }
 .payco-guide {padding:10px; border:1px solid #ccc;}
 </style>
+
+<div class="title title_top">
+	페이코 아이디 로그인 설정 <span>페이코 아이디를 이용하여 쇼핑몰에 로그인할 수 있는 기능을 제공합니다.</span>
+	<a href="javascript:manual('<?php echo $guideUrl; ?>board/view.php?id=member&no=28')"><img src="../img/btn_q.gif" border="0" align="absmiddle"></a>
+</div>
+
 <form id="facebook-form" action="adm_member_social_login.payco.indb.php" method="post">
 <input type="hidden" name="mode" value="modifyAppID">
 	<div style="border:solid 4px #dce1e1; border-collapse:collapse; margin-bottom:20px; color:#666666; padding:10px 0 10px 10px;">
-		<div class="g9" style="color:#0074BA"><b>페이코 로그인이란?</b></div>
+		<div class="g9" style="color:#0074BA"><b>페이코 아이디 로그인이란?</b></div>
 		<div style="padding-top:7px;"><?=$socialMember->getPaycoContent()?></div>
 	</div>
 
@@ -204,4 +212,4 @@ a.facebook-regist-guide {
 	<?}?>
 </form>
 
-<?php include '../_footer.popup.php'; ?>
+<?php include '../_footer.php'; ?>
