@@ -27,6 +27,11 @@ button.btn {
 	height: 31px;
 	background: url('../img/login_sns_{=strtolower(SocialCode)}.gif') no-repeat;
 }
+#sns-confirm button.btn-payco {
+	width: 179px;
+	height: 31px;
+	background: url('../img/intro_auth_login_sns_{=strtolower(SocialCode)}.png') no-repeat;
+}
 #sns-confirm div.sns-confirm-description {
 	margin-top: 20px;
 }
@@ -53,7 +58,11 @@ button.btn {
 	<div id="sns-confirm">
 		<div class="outer-border">
 			<div class="inner-border">
+				<!--{ ? SocialCode == 'PAYCO' }-->
+				<button class="btn btn-payco" onclick="popup('{SocialConfirmMemberURL}', 630, 560);">페이코</button>
+				<!--{ : SocialCode == 'FACEBOOK' }-->
 				<button class="btn btn-facebook" onclick="popup('{SocialConfirmMemberURL}', 400, 300);">페이스북</button>
+				<!--{ / }-->
 				<div class="sns-confirm-description">
 					회원 계정의 재인증을 위하여 로그인 되어 있는 SNS를 클릭해 주세요.
 				</div>

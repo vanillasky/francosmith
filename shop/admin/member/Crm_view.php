@@ -133,7 +133,12 @@ $smsFailCheck = smsFailCheck('single', $data['mobile']);
 
 		<tr>
 			<td width="100" height="25" style="padding-right:8px;font:8pt Dotum;letter-spacing:-1px;color:535353;" bgcolor=f6f6f6 align=right><b>이름</b></td>
-			<td width="140" style="padding-left:8px;" class=def><?=$data['name']?></td>
+			<td width="140" style="padding-left:8px;" class=def>
+			<?=$data['name']?>
+			<?php if (strlen($data['connected_sns']) > 0) { foreach(explode(',', $data['connected_sns']) as $socialCode) { ?>
+			<img src="../img/ico_member_<?php echo strtolower($socialCode); ?>.gif" style="vertical-align: middle; margin: 0;"/>
+			<?php }} ?>
+			</td>
 			<td width="100" height="25" style="padding-right:8px;font:8pt Dotum;letter-spacing:-1px;color:535353;" bgcolor=f6f6f6 align=right><b>아이디</b></td>
 			<td width="200" style="padding-left:8px;" class=def><?=$data['m_id']?></td>
 			<td width="100" height="25" style="padding-right:8px;font:8pt Dotum;letter-spacing:-1px;color:535353;" bgcolor=f6f6f6 align=right><b>성별</b></td>

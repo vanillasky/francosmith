@@ -81,11 +81,12 @@ abstract class SocialMember
 	{
 		$db = Core::loader('db');
 		$db->query('UPDATE '.GD_MEMBER.' SET connected_sns = CONCAT_WS(",", IF(connected_sns = "", NULL, connected_sns), "'.$this->_code.'") WHERE m_no='.$memberNo);
-		$query = $db->_query_print('INSERT INTO '.GD_SNS_MEMBER.' SET social_code = [s], identifier = [s], m_no = [i], regdt = [s]',
-			$this->_code,
-			$this->getIdentifier(),
-			$memberNo,
-			date('Y-m-d H:i:s'));
+		$query = $db->_query_print('INSERT INTO '.GD_SNS_MEMBER.' SET social_code = [s], identifier = [s], access_token = [s], m_no = [i], regdt = [s]',
+				$this->_code,
+				$this->getIdentifier(),
+				($_SESSION['social_member_service_user_access_token'] ? $_SESSION['social_member_service_user_access_token'] : ''),
+				$memberNo,
+				date('Y-m-d H:i:s'));
 		$db->query($query);
 	}
 

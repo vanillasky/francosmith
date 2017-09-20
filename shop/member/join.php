@@ -56,6 +56,10 @@ if ($socialMemberService->isEnabled()) {
 			$facebookMember = SocialMemberService::getMember(SocialMemberService::FACEBOOK);
 			$tpl->assign('FacebookLoginURL', $facebookMember->getLoginURL());
 		}
+		if (in_array(SocialMemberService::PAYCO, $enabledSocialMemberServiceList)) {
+			$paycoMember = SocialMemberService::getMember(SocialMemberService::PAYCO);
+			$tpl->assign('PaycoLoginURL', $paycoMember->getLoginURL());
+		}
 		$tplfile = 'member/join_type.htm';
 	}
 	else if ($_MODE === 'social_member_join') {
@@ -73,14 +77,25 @@ if ($socialMemberService->isEnabled()) {
 			if (strlen($memberID) > 0) {
 				msg($email.'\r\n다른 계정에서 사용중인 이메일 입니다.\r\n이미 가입하신 경우 다른 로그인 수단을 통해 로그인 해 주시기 바랍니다.', './login.php');
 			}
-			else {
+		else {
+				if ($_SOCIAL_CODE == 'PAYCO') {
+					$_POST['mobile'] = $socialMember->getMobile();
+					$tplfile = 'member/social_member_join_payco.htm';
+				} else {
+					$tplfile = 'member/social_member_join.htm';
+				}
 				$tpl->assign('email', $email);
 				$tpl->assign('email_id', $emailID);
-				$tplfile = 'member/social_member_join.htm';
 			}
 		}
 		else {
-			$tplfile = 'member/social_member_join.htm';
+		if ($_SOCIAL_CODE == 'PAYCO') {
+				$mobileID = $_POST['mobile'] = $socialMember->getMobile();
+				$tpl->assign('email_id', $mobileID);
+				$tplfile = 'member/social_member_join_payco.htm';
+			} else {
+				$tplfile = 'member/social_member_join.htm';
+			}
 		}
 
 		// 생년월일 생일정의
@@ -94,6 +109,7 @@ if ($socialMemberService->isEnabled()) {
 		}
 
 		$tpl->assign('name', $name);
+		$tpl->assign('sex', $socialMember->getSex());
 		$tpl->assign('MODE', $_MODE);
 		$tpl->assign('SOCIAL_CODE', $_SOCIAL_CODE);
 	}
@@ -160,7 +176,7 @@ $ipinyn = (empty($ipin['id']) ? 'n' : empty($ipin['useyn']) ? 'n': $ipin['useyn'
 $niceipinyn = (empty($ipin['code']) ? 'n' : empty($ipin['nice_useyn'])? 'n': $ipin['nice_useyn']);
 $ipinStatus = ($ipinyn == 'y' || $niceipinyn == 'y') ? 'y' : 'n';
 
-if($tplfile == 'member/agreement.htm' || $tplfile == 'member/social_member_join.htm'){
+if($tplfile == 'member/agreement.htm' || $tplfile == 'member/social_member_join.htm' || $tplfile == 'member/social_member_join_payco.htm'){
 	//이용약관
 	$termsAgreement = getTermsGuideContents('terms', 'termsAgreement', 'Y');
 	$tpl->assign('termsAgreement', $termsAgreement);

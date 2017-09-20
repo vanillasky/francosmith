@@ -109,8 +109,17 @@ function chk_hackfm(  ){
 		return false;
 	}
 
-	if ( !confirm ( '회원탈퇴를 하시면 회원님의 모든 데이타( 개인정보, 포인트 등 )가 삭제 되어집니다. \n 그래도 회원을 탈퇴하시겠습니까?' ) ){
+	var confirm_msg = '회원탈퇴를 하시면 회원님의 모든 데이터(개인정보, 포인트 등)가 삭제됩니다. 탈퇴하시겠습니까?';
+	<!--{ ? PaycoSocialMemberYn == 'Y' }-->
+	confirm_msg += '\n(페이코와 연동된 아이디는 페이코 로그인 인증 후 탈퇴가 가능합니다.)';
+	<!--{ / }-->
+	if ( !confirm ( confirm_msg ) ){
 		return false;
+	} else {
+		<!--{ ? PaycoSocialMemberHackURL }-->
+			popup('{PaycoSocialMemberHackURL}', 630, 560);
+			return false;
+		<!--{ / }-->
 	}
 
 	return true;

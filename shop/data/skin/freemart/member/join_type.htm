@@ -94,6 +94,12 @@ div.join-sns div.join-sns-select div.sns-btn-group button.btn-facebook {
 	height: 31px;
 	background: url('../img/login_sns_facebook.gif') no-repeat;
 }
+
+div.join-sns div.join-sns-select div.sns-btn-group button.btn-payco {
+	width: 125px;
+	height: 31px;
+	background: url('../img/login_sns_payco.png') no-repeat;
+}
 div.join-sns div.join-sns-select div.join-sns-description {
 	margin-top: 10px;
 	font: 11px dotum;
@@ -125,7 +131,10 @@ div.join-sns div.join-sns-select div.join-sns-description {
 			<div class="join-sns-select">
 				<div class="sns-btn-group">
 					{ ? FacebookLoginURL }
-					<button class="btn btn-facebook" onclick="popup('{FacebookLoginURL}', 400, 300);">其捞胶合</button>
+					<div class="sns-btn-group"><button class="btn btn-facebook" onclick="popup('{FacebookLoginURL}', 400, 300);">其捞胶合</button></div>
+					{ / }
+					{ ? PaycoLoginURL }
+					<div class="sns-btn-group" style="margin-top:12px;"><button class="btn btn-payco" onclick="popup('{PaycoLoginURL}', 630, 560);">其捞内</button></div>
 					{ / }
 				</div>
 				<div class="join-sns-description">

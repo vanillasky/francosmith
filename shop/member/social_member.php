@@ -5,9 +5,19 @@ include dirname(__FILE__).'/../lib/SocialMember/SocialMemberServiceLoader.php';
 
 $_MODE = $_REQUEST['MODE'];
 $_SOCIAL_CODE = $_REQUEST['SOCIAL_CODE'];
+$_CODE = $_REQUEST['code'];
+$_STATE = $_REQUEST['state'];
 
 if (isset($_REQUEST['user_identifier'])) {
 	SocialMemberService::setPersistentData('user_identifier', $_REQUEST['user_identifier']);
+	SocialMemberService::setPersistentData('user_identifier_'.$_SOCIAL_CODE, $_REQUEST['user_identifier']);
+}
+
+if ($_SOCIAL_CODE == 'PAYCO' && isset($_CODE)) {
+	$_PAYCO_DATA = PaycoMember::tokenAvailable($_CODE, $_STATE);
+	SocialMemberService::setPersistentData('user_access_token', $_PAYCO_DATA[0]);
+	SocialMemberService::setPersistentData('user_identifier', $_PAYCO_DATA[1]);
+	SocialMemberService::setPersistentData('user_identifier_'.$_SOCIAL_CODE, $_PAYCO_DATA[1]);
 }
 
 $socialMember = SocialMemberService::getMember($_SOCIAL_CODE);
@@ -18,10 +28,10 @@ switch ($_MODE) {
 			msg('시스템 장애가 발생하였습니다.\r\n고객센터로 문의하여주시기 바랍니다.', 'close');
 		}
 		if (isset($_REQUEST['error'])) {
-			msg('페이스북 앱에서 사용자 정보에대한 사용권한을\r\n획득하지 못하여 로그인 할 수 없습니다.', 'close');
+			msg(SocialMemberService::getServiceName($_SOCIAL_CODE).' 앱에서 사용자 정보에대한 사용권한을\r\n획득하지 못하여 로그인 할 수 없습니다.', 'close');
 		}
 		if (isset($_REQUEST['error_code'])) {
-			msg('페이스북 앱에서 사용자 정보에대한 사용권한을\r\n획득하지 못하여 로그인 할 수 없습니다.', 'close');
+			msg(SocialMemberService::getServiceName($_SOCIAL_CODE).' 앱에서 사용자 정보에대한 사용권한을\r\n획득하지 못하여 로그인 할 수 없습니다.', 'close');
 		}
 
 		SocialMemberService::updateIdentifierIfChanged($socialMember);
@@ -38,19 +48,21 @@ switch ($_MODE) {
 			msg('시스템 장애가 발생하였습니다.\r\n고객센터로 문의하여주시기 바랍니다.', 'close');
 		}
 		if (isset($_REQUEST['error'])) {
-			msg('페이스북 앱에서 사용자 정보에대한 사용권한을\r\n획득하지 못하여 연결 할 수 없습니다.', 'close');
+			msg(SocialMemberService::getServiceName($_SOCIAL_CODE).' 앱에서 사용자 정보에대한 사용권한을\r\n획득하지 못하여 연결 할 수 없습니다.', 'close');
 		}
 		if (isset($_REQUEST['error_code'])) {
-			msg('페이스북 앱에서 사용자 정보에대한 사용권한을\r\n획득하지 못하여 로그인 할 수 없습니다.', 'close');
+			msg(SocialMemberService::getServiceName($_SOCIAL_CODE).' 앱에서 사용자 정보에대한 사용권한을\r\n획득하지 못하여 로그인 할 수 없습니다.', 'close');
 		}
 
 		SocialMemberService::updateIdentifierIfChanged($socialMember);
 		if ($socialMember->isConnected()) {
-			echo '<script type="text/javascript">window.opener.socialMemberConnectCallback("FACEBOOK", "ERR_ALREADY_EXISTS");self.close();</script>';
+			SocialMemberService::expirePersistentData('user_identifier_'.$_SOCIAL_CODE);
+			echo '<script type="text/javascript">window.opener.focus();window.opener.socialMemberConnectCallback("'.$_SOCIAL_CODE.'", "ERR_ALREADY_EXISTS");self.close();</script>';
 		}
 		else {
 			$socialMember->connect($sess['m_no']);
-			echo '<script type="text/javascript">window.opener.socialMemberConnectCallback("'.$_SOCIAL_CODE.'");self.close();</script>';
+			if ($_SOCIAL_CODE == 'PAYCO') $socialMember->login('LINK');
+			echo '<script type="text/javascript">window.opener.focus();window.opener.socialMemberConnectCallback("'.$_SOCIAL_CODE.'");self.close();</script>';
 		}
 		break;
 
@@ -65,8 +77,9 @@ switch ($_MODE) {
 		}
 		else if ($socialMember) {
 			$disconnectResult = $socialMember->disconnect($sess['m_no']);
-			if ($disconnectResult) {
+		if ($disconnectResult) {
 				if (SocialMemberService::getPersistentData('social_code') === $_SOCIAL_CODE) SocialMemberService::expirePersistentData('social_code');
+				SocialMemberService::expirePersistentData('user_identifier_'.$_SOCIAL_CODE);
 				$result = 'SUCCESS';
 			}
 			else {
@@ -179,6 +192,7 @@ switch ($_MODE) {
 		$column['level'] = $joinset['grp'];
 		$column['LPINFO'] = $_COOKIE['LPINFO'];
 		$column['regdt'] = date('Y-m-d H:i:s');
+		$column['sns_member'] = '1';
 		$column['calendar'] = ($_POST['calendar'] == 'l' ? 'l' : 's');
 		if (strlen($_POST['birthday']) === 8) {
 			$column['birth_year'] = substr($_POST['birthday'], 0, 4);
@@ -275,6 +289,8 @@ switch ($_MODE) {
 			}
 		}
 
+		if ($_SOCIAL_CODE == 'PAYCO') $socialMember->login('JOIN');
+		
 		// 승인 후 가입 처리
 		if ($joinset['status']=='0') {
 			msg("관리자 승인후 가입처리됩니다");
@@ -297,10 +313,10 @@ switch ($_MODE) {
 			msg('시스템 장애가 발생하였습니다.\r\n고객센터로 문의하여주시기 바랍니다.', 'close');
 		}
 		if (isset($_REQUEST['error'])) {
-			msg('페이스북 앱에서 사용자 정보에대한 사용권한을\r\n획득하지 못하여 진행 할 수 없습니다.', 'close');
+			msg(SocialMemberService::getServiceName($_SOCIAL_CODE).' 앱에서 사용자 정보에대한 사용권한을\r\n획득하지 못하여 진행 할 수 없습니다.', 'close');
 		}
 		if (isset($_REQUEST['error_code'])) {
-			msg('페이스북 앱에서 사용자 정보에대한 사용권한을\r\n획득하지 못하여 로그인 할 수 없습니다.', 'close');
+			msg(SocialMemberService::getServiceName($_SOCIAL_CODE).' 앱에서 사용자 정보에대한 사용권한을\r\n획득하지 못하여 로그인 할 수 없습니다.', 'close');
 		}
 
 		SocialMemberService::updateIdentifierIfChanged($socialMember);
@@ -311,7 +327,35 @@ switch ($_MODE) {
 		else {
 			unset($_SESSION['sess'][$_GET['session_status_key']]);
 			msg('인증에 실패하였습니다.');
+			if ($_SOCIAL_CODE == 'PAYCO') PaycoMember::serviceOff(SocialMemberService::getPersistentData('user_access_token'));
 			echo '<script type="text/javascript">opener.location.reload();self.close();</script>';
 		}
 		break;
+		
+		case 'hack':
+			if (!$socialMember || $socialMember->hasError()) {
+				msg('시스템 장애가 발생하였습니다.\r\n고객센터로 문의하여주시기 바랍니다.', 'close');
+			}
+			if (isset($_REQUEST['error'])) {
+				msg(SocialMemberService::getServiceName($_SOCIAL_CODE).' 앱에서 사용자 정보에대한 사용권한을\r\n획득하지 못하여 진행 할 수 없습니다.', 'close');
+			}
+			if (isset($_REQUEST['error_code'])) {
+				msg(SocialMemberService::getServiceName($_SOCIAL_CODE).' 앱에서 사용자 정보에대한 사용권한을\r\n획득하지 못하여 로그인 할 수 없습니다.', 'close');
+			}
+		
+			SocialMemberService::updateIdentifierIfChanged($socialMember);
+			if ($socialMember->getLoginStatus() === true && $socialMember->isSameMember()) {
+				$_SESSION['sess'][$_GET['session_status_key']] = 1;
+				SocialMemberService::setPersistentData('social_code', $_SOCIAL_CODE);
+				echo '<script type="text/javascript">opener.document.getElementById("form").submit();self.close();</script>';
+			}
+			else {
+				unset($_SESSION['sess'][$_GET['session_status_key']]);
+				msg('인증에 실패하였습니다.');
+				if ($_SOCIAL_CODE == 'PAYCO') {
+					PaycoMember::serviceOff(SocialMemberService::getPersistentData('user_access_token'));
+				}
+				echo '<script type="text/javascript">self.close();</script>';
+			}
+			break;
 }

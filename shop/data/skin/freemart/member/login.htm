@@ -69,11 +69,15 @@ window.onload = function(){ document.form.m_id.focus(); }
 						<hr style="display: none;"/>
 					</div>
 					<div style="margin-left: 40px; margin-top: 20px; background: url('../img/login_10.gif') no-repeat; height: 12px; font-size: 0; text-indent: -9999px; display: block;">SNS 계정 로그인</div>
-					<div style="padding: 20px 60px;">
-					<!--{ ? FacebookLoginURL }-->
-						<button style="background: url('../img/login_sns_facebook_wide.gif') no-repeat; border: none; width: 239px; height: 31px; font-size: 0; cursor: pointer; text-indent: -9999px; display: block;" onclick="popup('{FacebookLoginURL}', 400, 300);">FACEBOOK</button>
-					<!--{ / }-->
-					</div>
+						<div style="padding:20px 60px;">
+						<!--{ ? FacebookLoginURL }-->
+							<button style="background: url('../img/login_sns_facebook_wide.gif') no-repeat; border: none; width: 239px; height: 31px; font-size: 0; cursor: pointer; text-indent: -9999px; display: block;" onclick="popup('{FacebookLoginURL}', 400, 300);">FACEBOOK</button>
+						<!--{ / }-->
+						<!--{ ? PaycoLoginURL }-->
+							<button style="margin-top:12px; background: url('../img/login_sns_payco_wide.png') no-repeat; border: none; width: 239px; height: 31px; font-size: 0; cursor: pointer; text-indent: -9999px; display: block;" onclick="popup('{PaycoLoginURL}', 630, 560);">PAYCO</button>
+						<!--{ / }-->
+						
+						</div>
 				</div>
 				<!--{ / }-->
 			</td>

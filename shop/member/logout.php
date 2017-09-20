@@ -6,6 +6,10 @@ include '../lib/SocialMember/SocialMemberServiceLoader.php';
 $referer = ($_POST[referer]) ? $_POST[referer] : $_GET[referer];
 
 if (SocialMemberService::getPersistentData('social_code')) {
+	if ($_SESSION['social_member_service_user_access_token']) {
+		PaycoMember::serviceOff(SocialMemberService::getPersistentData('user_access_token'));
+	}
+
 	$session = Core::loader('session');
 	$session->socialLogout(SocialMemberService::getPersistentData('social_code'));
 }

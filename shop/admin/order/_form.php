@@ -484,7 +484,14 @@ $selected[deliveryno][$order[deliveryno]] = "selected";
 		</td>
 		<td align="right">
 		<?if($order[step2] >= 50){?>
-		<span><a href="indb.php?mode=faileRcy&ordno=<?=$ordno?>&returnUrl=<?=urlencode($referer)?>&popup=<?=$popup?>" onclick="return confirm('이 기능은 결제시도(실패) 주문서를 입금확인 상태로 변경하는 기능입니다. 반드시 주문자의 입금내역 및 쿠폰복원 여부를 확인하신 후 진행해 주시기 바랍니다.(원상복구 불가)\n\n선택하신 주문[<?=$ordno?>]을 정말로 입금확인으로 변경하시겠습니까?')"><img src="../img/btn_order_try_return.gif"></a></span>
+		<?
+		if ($order['settleInflow'] != 'payco') {
+			$alertMsg = "return confirm('이 기능은 결제시도(실패) 주문서를 입금확인 상태로 변경하는 기능입니다. 반드시 주문자의 입금내역 및 쿠폰복원 여부를 확인하신 후 진행해 주시기 바랍니다.(원상복구 불가)\\n\\n선택하신 주문[".$ordno."]을 정말로 입금확인으로 변경하시겠습니까?')";
+		} else {
+			$alertMsg = "alert('페이코 주문건의 주문상태는 페이코의 주문상태를 가져오기 때문에 솔루션에서 임의로 변경하실 수 없습니다.'); return false; void(0);";
+		}
+		?>
+		<span><a href="indb.php?mode=faileRcy&ordno=<?=$ordno?>&returnUrl=<?=urlencode($referer)?>&popup=<?=$popup?>" onclick="<?=$alertMsg?>"><img src="../img/btn_order_try_return.gif"></a></span>
 		<?}?>
 		<?if($order['step'] == 1 && $order['step2'] == 0 && $order['pgcancel'] != 'r' && $order['settleInflow'] == 'payco') {?>
 			<?if($order['settlekind'] == 'h' && $order['cdt'] >= date('Y-m-d h:i:s',strtotime("-2 day"))) {?>

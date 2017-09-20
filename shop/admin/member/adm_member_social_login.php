@@ -79,8 +79,9 @@ function disableService(name)
 		<td colspan="10" align="center" style="padding: 10px 0px 10px 12px; color: #627dce">소셜로그인에 사용할 SNS를 선택해 주세요</td>
 	</tr>
 	<tr align="center" height="40" id="pgtab">
-		<td id="tab-intro" width="50%" onclick="chgifrm('intro');">소셜로그인이란?<span id="use-intro" class="use-sign"></span></td>
-		<td id="tab-facebook" width="50%" onclick="chgifrm('facebook');">페이스북<span id="use-facebook" class="use-sign"></span></td>
+		<td id="tab-intro" width="34%" onclick="chgifrm('intro');">소셜로그인이란?<span id="use-intro" class="use-sign"></span></td>
+		<td id="tab-payco" width="33%" onclick="chgifrm('payco');">페이코<span id="use-payco" class="use-sign"></span></td>
+		<td id="tab-facebook" width="33%" onclick="chgifrm('facebook');">페이스북<span id="use-facebook" class="use-sign"></span></td>
 	</tr>
 </table>
 
@@ -89,7 +90,7 @@ function disableService(name)
 <table width="100%" cellpadding="0" cellspacing="0" border="0">
 	<tr>
 		<td>
-			<iframe id="snsifrm" width="100%" frameborder="0" marginwidth="0" marginheight="0" width="100%" height="10" scrolling="no"></iframe>
+			<iframe name="snsifrm" id="snsifrm" width="100%" frameborder="0" marginwidth="0" marginheight="0" width="100%" height="10" scrolling="no"></iframe>
 		</td>
 	</tr>
 </table>

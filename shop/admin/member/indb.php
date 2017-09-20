@@ -981,8 +981,17 @@ switch ($mode){
 			endif;
 
 			// Å»Åð·Î±× ÀúÀå
-			list( $m_no, $m_id, $name ) = $db->fetch("select m_no, m_id, name from ".GD_MEMBER." where m_no='$v'");
+			list( $m_no, $m_id, $name, $connected_sns ) = $db->fetch("select m_no, m_id, name, connected_sns from ".GD_MEMBER." where m_no='$v'");
 			$db->query("insert into ".GD_LOG_HACK." ( m_id, name, actor, ip, regdt ) values ( '$m_id', '$name', '0', '" . $_SERVER['REMOTE_ADDR'] . "', now() )" );
+			// ÆäÀÌÄÚ µ¿ÀÇ Ã¶È¸
+			if (strstr($connected_sns, 'PAYCO') > -1) {
+				list($access_token) = $db->fetch("SELECT access_token FROM gd_sns_member where m_no='$v'");
+				if ($access_token) {
+					if (!$socialMember) include dirname(__FILE__).'/../../lib/SocialMember/SocialMemberServiceLoader.php';
+					$socialMember = SocialMemberService::getMember('PAYCO');
+					$socialMember->removeServiceOff($access_token);
+				}
+			}
 
 			$db->query("delete from ".GD_MEMBER." WHERE m_no='$v'");
 			$db->query("delete from ".GD_LOG_EMONEY." WHERE m_no='$v'");

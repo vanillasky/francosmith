@@ -405,7 +405,7 @@ var nsGodo_MultiOption = new GMultiOption( {?runout}true{:}false{/} );
 								<span class="price-sale-ratio" id="discount_ratio">SALE {=coupon/price * 100}%↓</span><span class="sale-txt">(쿠폰적용시)</span>
 								<span class="slash"></span>
 								<!--{ @ a_coupon }-->
-								<span class="price-sale"><button onclick="ifrmHidden.location.href='../proc/dn_coupon_goods.php?goodsno={goodsno}&couponcd={.couponcd}'"  class="medium button-dark">쿠폰받기</button></span>
+								<span class="price-sale"><button onclick="ifrmHidden.location.href='../proc/dn_coupon_goods.php?goodsno={goodsno}&couponcd={.couponcd}'" class="button-medium button-dark">쿠폰받기</button></span>
 								<!-- {/} -->
 								<!-- 
 								<span id=obj_coupon style="font-weight:bold;color:#EF1C21">{=number_format(couponprice)}원&nbsp;(-{=number_format(coupon)}원)</span>
@@ -757,6 +757,8 @@ var nsGodo_MultiOption = new GMultiOption( {?runout}true{:}false{/} );
 				</div>
 
 				<div id="naver-pay">{naverCheckout}</div>
+				<div id="payco-pay">{Payco}</div>
+				
 				<div>{auctionIpayBtn}</div>
 				{plusCheeseBtn}
 				</form>

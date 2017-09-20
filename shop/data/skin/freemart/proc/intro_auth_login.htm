@@ -16,6 +16,11 @@
 				<tr>
 					<td style="vertical-align:top"><input type=password class="fld" name=password size=20 placeholder="비밀번호를 입력하세요." tabindex=6></td>
 				</tr>
+				{ ? PaycoLoginURL }
+				<tr>
+					<td colspan="2" style="vertical-align:top"><a class="btn btn-payco" onclick="popup('{PaycoLoginURL}', 630, 560);"></a></td>
+				</tr>
+				{ / }
 			</table>
 		</div>
 	</div>
@@ -25,4 +30,5 @@
 div.body div.forms-wrap {width:360px;}
 div#auth input.fld {font-family:'Malgun Gothic';font-size:15px;color:#000000;width:214px;height:44px;    float: left;cursor:pointer;display:table-cell;vertical-align:middle;margin-right:10px;border:1px solid #d3d3d3;padding-left:10px;padding-right:10px;}
 button.btn-login {font-weight:bold;font-family:'Malgun Gothic';font-size:15px;color:#ffffff;width:110px;height:110px;    float: left;background:#a3a3a3;cursor:pointer;display:table-cell;vertical-align:middle;margin-bottom:10px;margin-right:10px;border:0;}
+a.btn-payco {display:block; width:360px; height:50px; background: url('../img/intro_login_sns_payco.png') no-repeat; cursor:pointer;}
 </style>

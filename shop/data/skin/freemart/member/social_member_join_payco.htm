@@ -1,4 +1,4 @@
-{*** SNS회원가입 | member/social_member_join.php ***}
+{*** SNS회원가입 | main/html.php?htmid=member/social_member_join_payco.htm ***}
 { # header }
 
 <style type="text/css">
@@ -59,6 +59,28 @@ var checkSubmit = function()
 		if (!socialMemberJoinForm.m_id.value.match(/^[\xa1-\xfea-zA-Z0-9_-]{4,20}$/)) {
 			alert('아이디 입력 형식 오류입니다');
 			return;
+		}
+		<!--{ ? realnameyn !== 'y' &&  ipinyn !== 'y' && niceipinyn !== 'y' && hpauthDreamyn !== 'y' }-->
+		if (socialMemberJoinForm.name.value == "") {
+			alert("이름을 입력해주세요");
+			return;
+		}
+		<!--{ / }-->
+
+		// 만14세 미만 회원가입 가능여부 생년월일로 체크
+		var under14Code = '{under14Code}';
+		var under14Status = '{under14Status}';
+		if (under14Code == 'needBirthCheck') {
+			var birthDay = '';
+			if (typeof(socialMemberJoinForm['birth_year']) != 'undefined' && typeof(socialMemberJoinForm['birth[]'][0]) != 'undefined' && typeof(socialMemberJoinForm['birth[]'][0]) != 'undefined') {
+				bY = '0000' + socialMemberJoinForm['birth_year'].value;
+				bM = '00' + socialMemberJoinForm['birth[]'][0].value;
+				bD = '00' + socialMemberJoinForm['birth[]'][1].value;
+				birthDay = bY.substring(bY.length-4) + bM.substring(bM.length-2) + bD.substring(bD.length-2);
+			}
+			if (chkUnder14(birthDay, under14Status, under14Code) === false) {
+				return;
+			}
 		}
 	}
 	
@@ -147,19 +169,34 @@ var chkForm2 = function(fm)
 		}
 	}
 
-	return chkForm(fm);
+	return chkagreement(fm);
 };
 var chkagreement = function(fm)
 {
 	if (chkRadioSelect(fm, "agree", "y", "[회원가입 이용약관]에 동의를 하셔야 회원가입이 가능합니다.") === false) {
 		return false;
 	}
-	if (chkRadioSelect(fm, "private1", "y", "[개인정보보호를 위한 이용자 동의사항]에 동의를 하셔야 회원가입이 가능합니다.") === false) {
+	if (chkRadioSelect(fm, "private1", "y", "[개인정보취급방침]에 동의를 하셔야 회원가입이 가능합니다.") === false) {
 		return false;
 	}
 
+	<!--{ @ consentData }-->
+	<!--{ ? .requiredyn == 'y' }-->
+	if (chkRadioSelect(fm, "consent[{=.sno}]", "y", "[{=.title}]에 동의를 하셔야 회원가입이 가능합니다.") === false) {
+		return false;
+	}
+	<!--{ / }-->
+	<!--{ / }-->
+
 	return true;
 };
+var chkEmail = function()
+{
+var form = document.frmMember;
+if (!chkText(form.email,form.email.value,"이메일을 입력해주세요")) return;
+if (!chkPatten(form.email,form.email.getAttribute('option'),"정상적인 이메일 주소를 입력해주세요")) return;
+ifrmHidden.location.href = "indb.php?mode=chkEmail&email=" + form.email.value + "&m_id=" + form.m_id.value;
+}
 </script>
 
 <!-- 상단이미지 || 현재위치 -->
@@ -179,15 +216,15 @@ var chkagreement = function(fm)
 		<input type="hidden" name="MODE" value="join">
 		<input type="hidden" name="SOCIAL_CODE" value="{SOCIAL_CODE}"/>
 		<input type="hidden" name="chk_id" value=""/>
-		<input type="hidden" name="email" value="{email}"/>
 		<input type="hidden" name="mode" value="chkRealName">
 		<input type="hidden" name="rncheck" value="none">
 		<input type="hidden" name="nice_nm" value="">
 		<input type="hidden" name="pakey" value="">
-		<input type="hidden" name="mobile" value="">
 		<input type="hidden" name="dupeinfo" value="">
+		<!--{ ? realnameyn == 'y' ||  ipinyn == 'y' || niceipinyn == 'y' || hpauthDreamyn == 'y' }-->
 		<input type="hidden" name="birthday" value="">
-		<input type="hidden" name="sex" value="">
+		<!--{ / }-->
+		<input type="hidden" name="sex" value="{sex}">
 		<input type="hidden" name="foreigner" value="">
 		<input type="hidden" name="type">
 		<!--{ ? realnameyn == 'y' ||  ipinyn == 'y' || niceipinyn == 'y' || hpauthDreamyn == 'y' }-->
@@ -195,61 +232,65 @@ var chkagreement = function(fm)
 		<!--{ / }-->
 
 		<!-- 이용약관 -->
-		<div><img src="../img/common/join_txt_01.gif" border="0"></div>
-		<div style="background-color: #f1f1f1; text-align: center; padding: 10px 10px 0 10px;">
-			<textarea style="width: 100%; height: 190px; padding: 10px; background-color: #ffffff;" class="scroll" readonly>{termsAgreement}</textarea>
-			<div align="center" class="noline" style="height: 30px; margin-top: 10px;">
-				<input type="radio" name="agree" value="y"> 동의합니다 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				<input type="radio" name="agree" value="n"> 동의하지 않습니다
-			</div>
-		</div>
-		<p/>
+		<div style="margin-bottom:10px;"><strong>이용약관</strong></div>
+		<table width="100%" height="160" cellpadding="0" cellspacing="0" border="0" style="border:1px solid #ccc; margin-bottom:25px;">
+		<tr>
+			<td><div style="height:160px; padding:20px; overflow-y:scroll;">{=nl2br(termsAgreement)}</div></td>
+			<td width="130" style="padding:17px; background:#f1f1f1; border-left:1px solid #ccc;">
+				<input type="radio" name="agree" value="y" style="border:0; background:;"> 동의합니다<br />
+				<input type="radio" name="agree" value="n" style="border:0; background:;"> 동의하지 않습니다
+			</td>
+		</tr>
+		</table>
 		<!-- 개인정보취급방침 -->
-		<div style="padding-left: 7px;"><strong style="color: #f7443f;">개인정보취급방침</strong></div>
-		<div style="padding-top: 10px; background-color: #f1f1f1; text-align: center;">
-			<div align="left" style="height: 26px; padding: 3px 0 0 10px;">
-				<strong>● 개인정보보호를 위한 이용자 동의사항</strong> (자세한 내용은 “<a href="../service/private.php">개인정보취급방침</a>”을 확인하시기 바랍니다)
-			</div>
-			<div id="boxScroll" class="scroll">
-				{termsPolicyCollection2}
-			</div>
-			<div align="center" class=noline style="height: 30px; margin-top: 10px;">
-				<input type="radio" name="private1" value="y"> 동의합니다 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				<input type="radio" name="private1" value="n"> 동의하지 않습니다
-			</div>
-		</div>
-
-		<p/>
+		<div style="margin-bottom:10px;"><strong><span style="color:#ff0000;">[필수]</span> 개인정보취급방침</strong> <span style="font-size:.9em; color:#858585;">(자세한 내용은 “<a href="../service/private.php" style="color:#858585;">개인정보취급방침</a>”을 확인하시기 바랍니다)</span></div>
+		<table width="100%" height="160" cellpadding="0" cellspacing="0" border="0" style="border:1px solid #ccc; margin-bottom:25px;">
+		<tr>
+			<td><div style="height:160px; padding:20px; overflow-y:scroll;">{termsPolicyCollection2}</div></td>
+			<td width="130" style="padding:17px; background:#f1f1f1; border-left:1px solid #ccc;">
+				<input type="radio" name="private1" value="y" style="border:0; background:;"> 동의합니다<br />
+				<input type="radio" name="private1" value="n" style="border:0; background:;"> 동의하지 않습니다
+			</td>
+		</tr>
+		</table>
 
 		<!--{ ? _cfg['private2YN'] == 'Y' // 개인정보 제3자 제공 관련 사용여부 }-->
-		<div style="padding-top: 10px; background-color: #f1f1f1; text-align: center;">
-			<div align="left" style="height:26;padding:3px 0 0 10px;">
-				<strong>● 개인정보 제3자 제공 관련</strong>
-			</div>
-			<div id="boxScroll" class="scroll">
-			{termsThirdPerson}
-			</div>
-			<div align=center class=noline style="height:30;margin-top:10px;" >
-			<input type="radio" name="private2" value="y" required fld_esssential label="개인정보 제3자 제공 관련" msgR="동의 여부를 체크해주세요."> 동의합니다 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			<input type="radio" name="private2" value="n" required fld_esssential label="개인정보 제3자 제공 관련" msgR="동의 여부를 체크해주세요."> 동의하지 않습니다
-			</div>
-		</div>
-		<p/>
+		<div style="margin-bottom:10px;"><strong><span style="color:#ff0000;">[선택]</span> 개인정보 제3자 제공 관련</strong></div>
+		<table width="100%" height="160" cellpadding="0" cellspacing="0" border="0" style="border:1px solid #ccc; margin-bottom:25px;">
+		<tr>
+			<td><div style="height:160px; padding:20px; overflow-y:scroll;">{termsThirdPerson}</div></td>
+			<td width="130" style="padding:17px; background:#f1f1f1; border-left:1px solid #ccc;">
+				<input type="radio" name="private2" value="y" style="border:0; background:;" label="개인정보 제3자 제공 관련" msgR="동의 여부를 체크해주세요."> 동의합니다<br />
+				<input type="radio" name="private2" value="n" style="border:0; background:;" label="개인정보 제3자 제공 관련" msgR="동의 여부를 체크해주세요."> 동의하지 않습니다
+			</td>
+		</tr>
+		</table>
 		<!--{ / }-->
 
 		<!--{ ? _cfg['private3YN'] == 'Y' // 개인정보취급 위탁 관련 사용여부 }-->
-		<div style="padding-top: 10px; background-color: #f1f1f1; text-align: center;">
-			<div align="left" style="height: 26px; padding: 3px 0 0 10px;">
-				<strong>● 개인정보취급 위탁 관련</strong>
-			</div>
-			<div id="boxScroll" class="scroll">
-			{termsEntrust}
-			</div>
-			<div align=center class=noline style="height:30;margin-top:10px;" >
-				<input type="radio" name="private3" value="y" required fld_esssential label="개인정보취급 위탁 관련" msgR="동의 여부를 체크해주세요."> 동의합니다 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				<input type="radio" name="private3" value="n" required fld_esssential label="개인정보취급 위탁 관련" msgR="동의 여부를 체크해주세요."> 동의하지 않습니다
-			</div>
-		</div>
+		<div style="margin-bottom:10px;"><strong><span style="color:#ff0000;">[선택]</span> 개인정보취급 위탁 관련</strong></div>
+		<table width="100%" height="160" cellpadding="0" cellspacing="0" border="0" style="border:1px solid #ccc; margin-bottom:25px;">
+		<tr>
+			<td><div style="height:160px; padding:20px; overflow-y:scroll;">{termsEntrust}</div></td>
+			<td width="130" style="padding:17px; background:#f1f1f1; border-left:1px solid #ccc;">
+				<input type="radio" name="private3" value="y" style="border:0; background:;" label="개인정보취급 위탁 관련" msgR="동의 여부를 체크해주세요."> 동의합니다<br />
+				<input type="radio" name="private3" value="n" style="border:0; background:;" label="개인정보취급 위탁 관련" msgR="동의 여부를 체크해주세요."> 동의하지 않습니다
+			</td>
+		</tr>
+		</table>
+		<!--{ / }-->
+
+		<!--{ @ consentData // 추가동의항목 }-->
+		<div style="margin-bottom:10px;"><strong><span style="color:#ff0000;">[{=.requiredyn_text}]</span> {=.title}</strong></div>
+		<table width="100%" height="160" cellpadding="0" cellspacing="0" border="0" style="border:1px solid #ccc; margin-bottom:25px;">
+		<tr>
+			<td><div style="height:160px; padding:20px; overflow-y:scroll;">{=nl2br(.termsContent)}</div></td>
+			<td width="130" style="padding:17px; background:#f1f1f1; border-left:1px solid #ccc;">
+				<input type="radio" name="consent[{=.sno}]" value="y" style="border:0; background:;" label="{=.title}" msgR="동의 여부를 체크해주세요."> 동의합니다<br />
+				<input type="radio" name="consent[{=.sno}]" value="n" style="border:0; background:;" label="{=.title}" msgR="동의 여부를 체크해주세요."> 동의하지 않습니다
+			</td>
+		</tr>
+		</table>
 		<!--{ / }-->
 
 		<div style="padding-left: 7px; color: #f7443f; font-weight: bold; margin-top: 20px; margin-bottom: 10px;">필수등록정보확인</div>
@@ -257,7 +298,7 @@ var chkagreement = function(fm)
 			<div style="border: 5px solid #f3f3f3; padding: 10px;">
 				<table>
 					<tr>
-						<td>아이디</td>
+						<td><font color="FF6000">*</font> 아이디</td>
 						<td>
 							<input type="text" name="m_id" maxlength=16 value="{email_id}" label="아이디" fld_esssential/>
 							<button id="check-id-duplicate" type="button" style="width: 79px; height: 17px; vertical-align: middle; background: url('../img/common/btn_idcheck.gif') no-repeat; border: none; font-size: 0; text-indent: -9999px; display: inline-block;">중복체크</button>
@@ -265,12 +306,51 @@ var chkagreement = function(fm)
 					</tr>
 					<!--{ ? realnameyn !== 'y' &&  ipinyn !== 'y' && niceipinyn !== 'y' && hpauthDreamyn !== 'y' }-->
 					<tr>
-						<td>이름</td>
+						<td><font color="FF6000">*</font> 이름</td>
 						<td>
 							<input type="text" name="name" value="{name}" label="이름" fld_esssential/>
 						</td>
 					</tr>
 					<!--{ / }-->
+					<!--{ ? _checked.useField.birth && realnameyn !== 'y' &&  ipinyn !== 'y' && niceipinyn !== 'y' && hpauthDreamyn !== 'y' }-->
+					<tr>
+						<td>생년월일</td>
+						<td>
+						<input type=text name=birth_year value="{birth_year}" {_required.birth} label="생년월일" size=4 maxlength=4>년
+						<input type=text name=birth[] value="{birth[0]}" {_required.birth} label="생년월일" size=2 maxlength=2>월
+						<input type=text name=birth[] value="{birth[1]}" {_required.birth} label="생년월일" size=2 maxlength=2>일
+
+						<!--{ ? _checked.useField.calendar }-->
+						<span class=noline style="padding-left:10px">
+						<input type=radio name=calendar value="s" checked> 양력
+						<input type=radio name=calendar value="l" {_checked.calendar.l}> 음력
+						</span>
+						<!--{ / }-->
+						</td>
+					</tr>
+					<!--{ / }-->
+					<tr>
+						<td class=memberCols1>이메일</td>
+						<td class=memberCols2>
+						<input type=text name=email value="{email}" size=30 option=regEmail label="이메일">
+						<!--{ ? !_sess }--><input type=hidden name=chk_email label="이메일중복체크"><!--{ / }-->
+						<a href="javascript:void(0)" onClick="chkEmail()"><img src="../img/common/btn_mailcheck.gif" border=0 align=absmiddle></a>
+						<!--{ ? _checked.useField.mailling }-->
+						<span class=noline style="padding-left:10px"><input type=checkbox name=mailling {_checked.mailling}><span style="font:8pt 돋움;color:#007FC8" >광고성 정보,이벤트메일수신</span></span>
+						<div style="letter-spacing:-1;color:#FF6000">※ <span style="font-size:8pt;">주문 관련 정보, 주요 공지사항 및 이벤트 당첨 안내 등은 수신 동의 여부에 관계없이 자동 발송됩니다.</span></div>
+						<!--{ / }-->
+						</td>
+					</tr>
+					<tr>
+						<td class=memberCols1>핸드폰</td>
+						<td class=memberCols2>
+						<input type=text name=mobile id="mobile" value="{mobile}" size=12 maxlength=12 option=regNum label="핸드폰" {=mobileReadonly}>
+						<!--{ ? _checked.useField.sms }-->
+						<span class=noline style="padding-left:10px"><input type=checkbox name=sms {_checked.sms}><span style="font:8pt 돋움;color:#007FC8" >광고성 정보,이벤트SMS수신</span></span>
+						<div style="letter-spacing:-1;color:#FF6000">※ <span style="font-size:8pt;">주문 관련 정보 등 주요 안내 사항은 수신 동의 여부에 관계없이 자동 발송됩니다.</span></div>
+						<!--{ / }-->
+						</td>
+					</tr>
 				</table>
 			</div>
 		</div>

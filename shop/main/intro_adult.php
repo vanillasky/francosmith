@@ -9,6 +9,14 @@ if( Clib_Application::session()->isAdult() ){
 	msg("°í°´´ÔÀº ÀÌ¹Ì ¼ºÀÎÀÎÁõ ÇÏ¼Ì½À´Ï´Ù.", -1 );
 }
 
+if ($socialMemberService->isEnabled()) {
+	$enabledSocialMemberServiceList = $socialMemberService->getEnabledServiceList();
+	if (in_array(SocialMemberService::PAYCO, $enabledSocialMemberServiceList)) {
+		$paycoMember = SocialMemberService::getMember(SocialMemberService::PAYCO);
+		$tpl->assign('PaycoLoginURL', $paycoMember->getLoginURL());
+	}
+}
+
 if (!$_GET['returnUrl']) $returnUrl = 'http://'.$_SERVER['HTTP_HOST'];
 else $returnUrl = $_GET['returnUrl'];
 

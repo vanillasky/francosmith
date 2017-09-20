@@ -250,7 +250,7 @@ while ($data=$db->fetch($res)){
 	<span id="navig" name="navig" m_id="<?=$data['m_id']?>" m_no="<?=$data['m_no']?>"><font class="small1" color="#0074ba"><b><?=$data['name']?></b></font></span>
 	<div>
 		<?php if (strlen($data['connected_sns']) > 0) { foreach(explode(',', $data['connected_sns']) as $socialCode) { ?>
-		<img src="../img/ico_member_<?php echo strtolower($socialCode); ?>.gif" style="vertical-align: middle; margin: 0 5px;"/>
+		<img src="../img/ico_member_<?php echo strtolower($socialCode); ?>.gif" style="vertical-align: middle; margin: 0;"/>
 		<?php }} ?>
 	</div>
 	</td>

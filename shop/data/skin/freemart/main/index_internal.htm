@@ -1,0 +1,295 @@
+{*** 쇼핑몰 메인본문 | index_internal.php ***}
+{ # header } 
+
+<script>
+    localStorage["analytics"] = 'no';
+</script>
+
+<!-- 메인팝업창 --> 
+<!--{ @ dataPopup() }--> 
+
+<!--{ ? .type == 'layer' && isset(_COOKIE['blnCookie_' + .code]) === false }-->
+<div id="{'blnCookie_' + .code}" STYLE="position:absolute; width:{.width}px; height:{.height}px; left:{.left}px; top:{.top}px; z-index:200;"> 
+	<!--{ = eval("\$_GET[code]='blnCookie_" + .code + "';") }--> 
+	<!--{ = include_file( .file ) }--> 
+</div>
+<!--{ / }--> 
+
+<!--{ ? .type == 'layerMove' && isset(_COOKIE['blnCookie_' + .code]) === false }--> 
+<!-- 이동레이어 팝업창 시작 -->
+<div id="{'blnCookie_' + .code}" STYLE="position:absolute; width:{.width}px; height:{.height}px; left:{.left}px; top:{.top}px; z-index:200;">
+	<div onmousedown="Start_move(event,'{'blnCookie_' + .code}');" onmouseup="Moveing_stop();" style='cursor:move;'>
+		<table>
+			<tr>
+				<td> 
+					<!--{ = eval("\$_GET[code]='blnCookie_" + .code + "';") }--> 
+					<!--{ = include_file( .file ) }--> 
+				</td>
+			</tr>
+		</table>
+	</div>
+</div>
+<!-- 이동레이어 팝업창 끝 --> 
+<!--{ / }--> 
+
+<!--{ / }--> 
+
+<script type="text/JavaScript"><!--
+<!--{ @ dataPopup() }-->
+<!--{ ? .type == '' }-->
+if ( !getCookie( "blnCookie_{.code}" ) ) { // {.name} 팝업호출
+var property = 'width={.width}, height={.height}, top={.top}, left={.left}, scrollbars=no, toolbar=no';
+var win=window.open( './html.php?htmid={.file}&code=blnCookie_{.code}', '{.code}', property );
+if(win) win.focus();
+}
+<!--{ / }-->
+<!--{ / }-->
+//--></script> 
+
+<!-- 메인 상단 배너 영역 -->
+<!-- 메인 상단 3종배너 (배너관리에서 수정가능) -->
+<div id="main-banner-container">
+	<div class="main-banner" id="main-banner-wrapper"> 
+		
+		
+		<div class="banner-item" style="display:none;">
+			<div class="img-holder">
+				<img class="main-banner-img" src="http://francosmith.godohosting.com/event/ctl_26_event_main.jpg">
+			</div>
+			<div class="bar">
+				<div class="text-holder">
+					<h1>2017/05/12 ~ 2017/06/09</h1>
+					<p class="last">준비된 수량 소진시 조기 마감될 수 있습니다.</p>
+					
+					<div class="button-holder">
+						<button class="button-big button-red" onclick="location.href='/shop/goods/goods_view.php?goodsno=953'">Find out more</button>
+					</div>
+					
+				</div>
+			</div>
+		</div>
+		
+		<div class="banner-item" style="display:none;">
+			<div class="img-holder">
+				<img class="main-banner-img" src="http://francosmith.godohosting.com/banner/main/kijima_saw.jpg">
+			</div>
+			<div class="bar">
+				<div class="text-holder">
+					<h1>KIJIMA Hand Saws</h1>
+					<p class="last">전문가를 위한 정교한 톱, 키지마 입고</p>
+					
+					<div class="button-holder">
+						<button class="button-big button-red" onclick="location.href='/shop/goods/goods_brand.php?&brand=124'">Find out more</button>
+					</div>
+					
+				</div>
+			</div>
+		</div>
+		
+		
+		<div class="banner-item" style="display:none;">
+			<div class="img-holder">
+				<img class="main-banner-img" src="http://francosmith.godohosting.com/banner/main/fisch_main.jpg">
+			</div>
+			<div class="bar">
+				<div class="text-holder">
+					<div class="button-holder">
+						<button class="button-big button-red" onclick="location.href='/shop/goods/goods_brand.php?brand=121'">Find out more</button>
+					</div>
+					
+				</div>
+			</div>
+		</div>
+		
+		
+		
+		
+		<div class="banner-item" style="display:none;">
+			<div class="img-holder">
+				<img class="main-banner-img" src="http://francosmith.godohosting.com/banner/main/plano_clamp.jpg">
+			</div>
+			<div class="bar">
+				<div class="text-holder">
+					<h1>집성 클램프의 최강자</h1>
+					<p class="last">전문가를 위한 집성 클램프 PLANO SYSTEM AB</p>
+					
+					<div class="button-holder">
+						<button class="button-big button-red" onclick="location.href='/shop/goods/goods_view.php?goodsno=627&category=035003001'">Find out more</button>
+					</div>
+					
+				</div>
+			</div>
+		</div>
+		
+		<!-- 
+		<div class="banner-item" style="display:none;">
+			<div class="img-holder">
+				<img class="main-banner-img" src="http://francosmith.godohosting.com/event/festool_df700_event_main.jpg">
+			</div>
+			<div class="bar">
+				<div class="text-holder">
+					<h1>FESTOOL Summer Festival II.</h1>
+					<p class="last">XL DF 700 도미노 조인터 구입시 44만원 상당의 악세서리 증정!</p>
+					
+					<div class="button-holder">
+						<button class="button-big button-red" onclick="location.href='/shop/goods/goods_view.php?goodsno=614&category=031003001'">Find out more</button>
+					</div>
+					
+				</div>
+			</div>
+		</div>
+		 -->
+		 
+		 
+		<div class="banner-item" style="display:none;">
+			<div class="img-holder">
+				<img class="main-banner-img" src="http://francosmith.godohosting.com/main/vicmarc_main_vl300.jpg">
+			</div>
+			<div class="bar">
+				<div class="text-holder">
+					<h1>전문가를 위한 High-End 목공선반 VICMARC</h1>
+					<p class="last">묵직함과 강력한 토크의 고급 목선반</p>
+					
+					<div class="button-holder">
+						<button class="button-big button-red" onclick="location.href='/shop/goods/goods_view.php?goodsno=443&category=017013001'">Find out more</button>
+					</div>
+				</div>
+				
+			</div>
+		</div>
+		
+		
+		<div class="banner-item" style="display:none;">
+			<div class="img-holder">
+				<img class="main-banner-img" src="http://francosmith.godohosting.com/banner/main/easy_wood_tools.jpg">
+			</div>
+			<div class="bar">
+				<div class="text-holder">
+					<h1>The Next Step in Woodturning</h1>
+					<p class="last">가우지 연마, 터닝 각도로부터 자유로운 터닝툴 Easy Wood Tools!</p>
+					
+					<div class="button-holder">
+						<button class="button-big button-red" onclick="location.href='/shop/goods/goods_brand.php?&brand=82'">Find out more</button>
+					</div>
+					
+				</div>
+			</div>
+		</div>
+		<!-- 
+		<div class="banner-item" style="display:none;">
+			<div class="img-holder">
+				<a href="/shop/goods/goods_view.php?goodsno=211&category=033003"><img class="main-banner-img" src="http://francosmith.godohosting.com/main/kreg_k5_main.jpg"></a>
+			</div>
+			<div class="bar">
+				<div class="text-holder">
+					<h1>Kreg&reg; PRESISION TABLE SYSTEM</h1>
+					<p class="last">How good would it feel to get your furniture back into shape?</p>
+					
+					<div class="button-holder">
+						<button class="button-big button-red" onclick="location.href='/shop/goods/goods_brand.php?&brand=82'">Find out more</button>
+					</div>
+					
+				</div>
+			</div>
+		</div>
+		-->
+		
+	</div>
+	
+	<div class="main-banner-prev">
+		<a id="prev_banner" href="javascript:;" ><img border="0" src="../img/main/prev_btn.png" onmouseover="this.src='../img/main/prev_btn_over.png'" onmouseout="this.src='../img/main/prev_btn.png'" ></a>
+	</div>
+	<div class="main-banner-fwd">
+		<a id="next_banner" href="javascript:;" ><img border="0" src="../img/main/fwd_btn.png" onmouseover="this.src='../img/main/fwd_btn_over.png'" onmouseout="this.src='../img/main/fwd_btn.png'"></a>
+	</div>
+	
+	<script src="../../../../lib/js/ierotator.js" type="text/javascript"></script> 
+		<script>
+		function bannerController(iter) {
+				var $j = jQuery.noConflict();	
+				$j("#prev_banner").bind("click", function() {
+					iter.prevDiv();
+				});
+				
+				$j("#next_banner").bind("click", function() {
+					iter.nextDiv();
+				});
+		}
+		
+		var fwidth = screen.availWidth;	
+		var config = {
+		'id':'main-banner-wrapper',
+		'effect':'FILTER: progid:DXImageTransform.Microsoft.Fade(Overlap=0.25,Duration=0.7)',
+		'width':'100%',
+		'height':'auto',
+		'wait':5000,
+		'numDisplay':'block',
+		'numimg':[
+		['../img/main/main_rolling_on.png','../img/main/main_rolling_off.png'],
+		['../img/main/main_rolling_on.png','../img/main/main_rolling_off.png'],
+		['../img/main/main_rolling_on.png','../img/main/main_rolling_off.png'],
+		['../img/main/main_rolling_on.png','../img/main/main_rolling_off.png'],
+		['../img/main/main_rolling_on.png','../img/main/main_rolling_off.png'],
+		['../img/main/main_rolling_on.png','../img/main/main_rolling_off.png'],
+		['../img/main/main_rolling_on.png','../img/main/main_rolling_off.png'],
+		['../img/main/main_rolling_on.png','../img/main/main_rolling_off.png'],
+		['../img/main/main_rolling_on.png','../img/main/main_rolling_off.png'],
+		['../img/main/main_rolling_on.png','../img/main/main_rolling_off.png'],
+		['../img/main/main_rolling_on.png','../img/main/main_rolling_off.png'],
+		]
+		}
+		ier = new ierotator(config);
+		var banner_navi = new bannerController(ier);
+		
+		</script> 
+		
+</div>
+	
+
+<div id="main_contents" style="width:{_cfg['shopSize']}px">
+	<div id="three_banner">
+		<div><!--{ @ dataBanner( 11 ) }-->{.tag}<!--{ / }--></div>
+		<div><!--{ @ dataBanner( 12 ) }-->{.tag}<!--{ / }--></div>
+		<div><!--{ @ dataBanner( 13 ) }-->{.tag}<!--{ / }--></div>
+	</div>
+	
+	<div id="new_arrival">
+		<div class="title-block">
+			<div class="title"><a href="../goods/goods_grp_01.php"><h2><span style="color:#C9242B">NEW</span> PRODUCTS</h2></a></div>
+			<div class="more_link"><a href="../goods/goods_grp_01.php"><img src="../img/main/icon_more.gif"></a></div>
+		</div>
+		<div class="contents-box">
+			<!--{ ? _cfg_step[0].chk  }--> 
+			<!--{ = this->assign( 'loop', dataDisplayGoods( 0, _cfg_step[0].img, _cfg_step[0].page_num ) ) // 데이타 호출 }--> 
+			<!--{ = this->assign( 'cols', _cfg_step[0].cols ) // 행당 컬럼수 }--> 
+			<!--{ = this->assign( 'size', _cfg[_cfg_step[0].img] ) // 이미지 사이즈 }--> 
+			<!--{ = this->assign( 'id', "main_list_01" ) // 고유 ID }--> 
+			<!--{ = this->assign( 'dpCfg', _cfg_step[0] ) // 설정 }--> 
+			<!--{ = include_file( "goods/list/" + _cfg_step[0].tpl + ".htm" ) }--> 
+		<!--{ / }--> 
+		</div>
+	</div>
+	
+	
+	<div id="best_item">
+		<div class="title-block">
+			<div class="title"><a href="../goods/goods_grp_02.php"><h2><span style="color:#C9242B">BEST</span> SELLERS</h2></a></div>
+			<div class="more_link"><a href="../goods/goods_grp_02.php"><img src="../img/main/icon_more.gif"></a></div>
+		</div>
+		<div class="contents-box">
+			<!--{ ? _cfg_step[1].chk  }--> 
+			<!--{ = this->assign( 'loop', dataDisplayGoods( 1, _cfg_step[1].img, _cfg_step[1].page_num ) ) // 데이타 호출 }--> 
+			<!--{ = this->assign( 'cols', _cfg_step[1].cols ) // 행당 컬럼수 }--> 
+			<!--{ = this->assign( 'size', _cfg[_cfg_step[1].img] ) // 이미지 사이즈 }--> 
+			<!--{ = this->assign( 'id', "main_list_02" ) // 고유 ID }--> 
+			<!--{ = this->assign( 'dpCfg', _cfg_step[1] ) // 설정 }--> 
+			<!--{ = include_file( "goods/list/" + _cfg_step[1].tpl + ".htm" ) }--> 
+			<!--{ / }--> 
+		</div>
+	</div>
+	
+</div>
+
+
+
+{ # footer }

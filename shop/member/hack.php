@@ -15,6 +15,19 @@ if (class_exists('validation') && method_exists('validation', 'xssCleanArray')) 
 	));
 }
 
+//페이코 멤버 확인
+list($connected_sns) = $db->fetch("SELECT connected_sns FROM ".GD_MEMBER." WHERE m_no = '".$sess['m_no']."'");
+if ($socialMemberService->isEnabled() && !SocialMemberService::getPersistentData('social_code')) {
+	if (strpos($connected_sns, 'PAYCO') > -1) {
+		$socialMember = SocialMemberService::getMember('PAYCO');
+		$paycoMember = $socialMemberService->getMember(SocialMemberService::PAYCO);
+
+		$tpl->assign('PaycoSocialMemberHackURL', $paycoMember->getHackURL());
+	}
+}
+
+if (strpos($connected_sns, 'PAYCO') > -1) $tpl->assign('PaycoSocialMemberYn', 'Y');
+
 if( $_POST['act'] == 'Y' && $sess && $_POST[password] ){
 
 	extract($_POST);
@@ -44,6 +57,12 @@ if( $_POST['act'] == 'Y' && $sess && $_POST[password] ){
 		$outComplain = @array_sum($outComplain);
 	}
 
+	//페이코 개인정보 제공 동의 철회
+	if ($socialMemberService->isEnabled() && SocialMemberService::getPersistentData('social_code') == 'PAYCO') {
+		$socialMember = SocialMemberService::getMember(SocialMemberService::getPersistentData('social_code'));
+		if ($socialMember->isSameMember()) $socialMember->removeServiceOff();
+	}
+	
 	// 탈퇴로그 저장
 	list( $dupeinfo ) = $db->fetch("select dupeinfo from ".GD_MEMBER." where m_no='" . $sess['m_no'] . "'");
 	$db->query("insert into ".GD_LOG_HACK." ( m_id, name, actor, itemcd, reason, ip, dupeinfo, regdt ) values ( '$sess[m_id]', '$member[name]', '1', '$outComplain', '$outComplain_text', '" . $_SERVER[REMOTE_ADDR] . "', '$dupeinfo', now() )" );

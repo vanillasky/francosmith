@@ -8,7 +8,7 @@ $hpauthRequestData = $hpauth->getAuthRequestData();
 
 if ($socialMemberService->isEnabled() && $_SESSION['sess']['confirm_password']) {
 	$socialMemberServiceList = $socialMemberService->getEnabledServiceList();
-	$socialMember = SocialMemberService::getMember();
+	$socialMember = SocialMemberService::getMember('FACEBOOK');
 	$facebookMember = $socialMemberService->getMember(SocialMemberService::FACEBOOK);
 
 	if ($socialMember) {
@@ -18,12 +18,22 @@ if ($socialMemberService->isEnabled() && $_SESSION['sess']['confirm_password']) 
 	$tpl->assign('FacebookSocialMemberConnected', $facebookMember->isConnected() && $facebookMember->getMemberNo() == $sess['m_no']);
 	$tpl->assign('FacebookSocialMemberConnectURL', $facebookMember->getConnectURL());
 
+	$socialMember = SocialMemberService::getMember('PAYCO');
+	$paycoMember = $socialMemberService->getMember(SocialMemberService::PAYCO);
+
+	$tpl->assign('PaycoSocialMemberEnabled', in_array(SocialMemberService::PAYCO, $socialMemberServiceList));
+	$tpl->assign('PaycoSocialMemberConnected', $paycoMember->isConnected() && $paycoMember->getMemberNo() == $sess['m_no']);
+	$tpl->assign('PaycoSocialMemberConnectURL', $paycoMember->getConnectURL());
+
 	$tpl->assign('memberSocialStatus', true);
 	$tpl->define('memberSocialStatus', 'proc/member_social_status.htm');
 }
 
 $mode = "modMember";
 $data = $db->fetch("select MB.*, SC.category from ".GD_MEMBER." AS MB LEFT JOIN ".GD_TODAYSHOP_SUBSCRIBE." AS SC ON MB.m_id = SC.m_id where MB.m_id='$sess[m_id]'");
+
+// SNS 계정 연결정보
+$tpl->assign('SocialCode', $data['connected_sns']);
 
 if (class_exists('validation') && method_exists('validation', 'xssCleanArray')) {
 	$data = validation::xssCleanArray($data, array(

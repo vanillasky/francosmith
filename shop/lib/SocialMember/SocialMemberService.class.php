@@ -25,11 +25,15 @@ class SocialMemberService
 {
 
 	const FACEBOOK = 'FACEBOOK';
-
+	const PAYCO = 'PAYCO';
+	
 	public static function getMember($serviceCode = null)
 	{
 		if ($serviceCode === self::FACEBOOK) {
 			return new FacebookMember();
+		}
+		else if ($serviceCode === self::PAYCO) {
+			return new PaycoMember();
 		}
 		else if ($serviceCode === null) {
 			$db = Core::loader('db');
@@ -51,6 +55,9 @@ class SocialMemberService
 		switch ($serviceCode) {
 			case self::FACEBOOK:
 				return '其捞胶合';
+				break;
+			case self::PAYCO:
+				return '其捞内';
 				break;
 			default:
 				return false;
@@ -121,11 +128,16 @@ class SocialMemberService
 	public function __construct()
 	{
 		$facebookConfig = $this->loadFacebookConfig();
+		$paycoConfig = $this->loadPaycoConfig();
 		if ($facebookConfig['useyn'] === 'y') {
 			$this->_enabledServiceList[] = self::FACEBOOK;
 		}
-
+		if ($paycoConfig['useyn'] === 'y') {
+			$this->_enabledServiceList[] = self::PAYCO;
+		}
+		
 		$this->_isEnabled = (count($this->_enabledServiceList) > 0);
+		
 	}
 
 	public function isEnabled()
@@ -142,7 +154,12 @@ class SocialMemberService
 	{
 		file_put_contents(dirname(__FILE__).'/../../conf/socialMember.facebook.php', serialize($facebookConfig), LOCK_EX);
 	}
-
+	
+	public function savePaycoConfig($paycoConfig)
+	{
+		file_put_contents(dirname(__FILE__).'/../../conf/socialMember.payco.php', serialize($paycoConfig), LOCK_EX);
+	}
+	
 	public function loadFacebookConfig()
 	{
 		$configFile = file_get_contents(dirname(__FILE__).'/../../conf/socialMember.facebook.php');
@@ -157,5 +174,18 @@ class SocialMemberService
 			);
 		}
 	}
-
+	
+	public function loadPaycoConfig()
+	{
+		$configFile = file_get_contents(dirname(__FILE__).'/../../conf/socialMember.payco.php');
+		$paycoMember = unserialize($configFile);
+		if (strlen($configFile) > 0 && $paycoMember) {
+			return $paycoMember;
+		}
+		else {
+			return array(
+					'useyn' => 'n',
+			);
+		}
+	}
 }

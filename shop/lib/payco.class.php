@@ -1208,9 +1208,25 @@ class payco {
 			';
 		}
 		else {
+			@include './SocialMember/SocialMemberServiceLoader.php';
+			$socialMember = SocialMemberService::getMember('PAYCO');
+			$paycoData = $socialMember->getServiceCode();
+			if ($paycoData['clientId'] && SocialMemberService::getPersistentData('user_access_token')) {
+				$param = array(
+					'm' => 'bridgeForPay',
+					'client_id' => $paycoData['clientId'],
+					'access_token' => SocialMemberService::getPersistentData('user_access_token'),
+					'nextUrl' => $url,
+				);
+
+				$bridgeUrl = "https://id.payco.com/login.nhn?".http_build_query($param);
+			} else {
+				$bridgeUrl = $url;
+			}
+
 			echo '
 			<script type="text/javascript">
-				window.location.replace("'.$url.'");
+				window.location.replace("'.$bridgeUrl.'");
 			</script>
 			';
 		}

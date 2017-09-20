@@ -7,6 +7,9 @@ var socialMemberConnect = function(socialCode)
 		case "FACEBOOK":
 			popup("{FacebookSocialMemberConnectURL}", 350, 200);
 			break;
+		case "PAYCO":
+			popup("{PaycoSocialMemberConnectURL}", 630, 560);
+			break;
 		default:
 			return false;
 	}
@@ -17,6 +20,9 @@ var socialMemberConnectCallback = function(socialCode, errorCode)
 	switch (socialCode) {
 		case "FACEBOOK":
 			socialName = "페이스북";
+			break;
+		case "PAYCO":
+			socialName = "페이코";
 			break;
 		default:
 			return false;
@@ -36,6 +42,9 @@ var socialMemberDisconnect = function(socialCode)
 	switch (socialCode) {
 		case "FACEBOOK":
 			socialName = "페이스북";
+			break;
+		case "PAYCO":
+			socialName = "페이코";
 			break;
 		default:
 			return false;
@@ -99,47 +108,63 @@ div.connected-sns span.connect-status {
 	color: #666666;
 	margin-left: 6px;
 }
-div.connected-facebook button.btn-facebook-disconnect {
-	margin-left: 20px;
-	background: url('../img/meminfor_btn_sns_clear.gif') no-repeat;
-	width: 47px;
-	height: 18px;
+div.connected-sns button.btn-facebook-disconnect {
+	background: url('../img/meminfo_btn_sns_clear_facebook.png') no-repeat;
+	width: 200px;
+	height: 26px;
 	vertical-align: middle;
 }
-div.disconnected-sns button.btn-facebook-connect {
-	background: url('../img/meminfor_sns_facebook.gif') no-repeat;
-	width: 37px;
-	height: 37px;
+div.connected-sns button.btn-payco-disconnect {
+	background: url('../img/meminfo_btn_sns_clear_payco.png') no-repeat;
+	width: 200px;
+	height: 26px;
+	vertical-align: middle;
 }
+div.connected-sns {
+	display:inline;
+}
+div.connected-sns button.btn-facebook-connect {
+	background: url('../img/meminfo_sns_facebook.png') no-repeat;
+	width: 200px;
+	height: 26px;
+	vertical-align: middle;
+}
+div.connected-sns button.btn-payco-connect {
+	background: url('../img/meminfo_sns_payco.png') no-repeat;
+	width: 200px;
+	height: 26px;
+	vertical-align: middle;
+}
+#sns-txt-FACEBOOK {color:#3b579d; font-weight:bold;}
+#sns-txt-PAYCO {color:#fa1414; font-weight:bold;}
+.sns-info {margin-top:10px; color:#959595;}
 </style>
-<div class="sns-connect-status-title">SNS연결정보</div>
-<div class="outer-border hundred">
+<div class="inner-border">
 <table width="100%" cellpadding="0" cellspacing="0" border="0">
 <tr>
-	<td class="inner-border">
-		<div class="sns-connect-ststus">
-			<!--{ ? SocialProfileImage }-->
-			<div class="sns-profile-image">
-				<img src="{SocialProfileImage}"/>
-			</div>
-			<!--{ / }-->
-			<div class="sns-connect-controll">
-				<div class="connected-sns">
-					<!--{ ? FacebookSocialMemberConnected }-->
-					<div class="connected-facebook">
-						<img src="../img/meminfor_sns_ico_facebook.gif" alt="페이스북"/>
-						<span class="connect-status">연결됨</span>
-						<button onclick="socialMemberDisconnect('FACEBOOK');" class="btn btn-facebook-disconnect">연결해제</button>
-					</div>
-					<!--{ / }-->
-				</div>
-				<div class="disconnected-sns">
-				<!--{ ? !FacebookSocialMemberConnected && FacebookSocialMemberEnabled }-->
-					<button onclick="socialMemberConnect('FACEBOOK');" class="btn btn-facebook-connect">페이스북 연결</button>
-				<!--{ / }-->
-				</div>
-			</div>
+	<td class=memberCols1>계정 연결정보</td>
+	<td class=memberCols2>
+		<!--{ ? sns_member == 1 }-->
+		<span id="sns-txt-{=SocialCode}">{=SocialCode}</span>
+		<!--{ : }-->
+		<div class="connected-sns">
+		<!--{ ? PaycoSocialMemberConnected }-->
+			<button onclick="socialMemberDisconnect('PAYCO');" class="btn btn-payco-disconnect"></button>
+		<!--{ / }-->
+		<!--{ ? !PaycoSocialMemberConnected && PaycoSocialMemberEnabled }-->
+			<button onclick="socialMemberConnect('PAYCO');" class="btn btn-payco-connect">페이코 연결</button>
+		<!--{ / }-->
 		</div>
+		<div class="connected-sns">
+		<!--{ ? FacebookSocialMemberConnected }-->
+			<button onclick="socialMemberDisconnect('FACEBOOK');" class="btn btn-facebook-disconnect"></button>
+		<!--{ / }-->
+		<!--{ ? !FacebookSocialMemberConnected && FacebookSocialMemberEnabled }-->
+			<button onclick="socialMemberConnect('FACEBOOK');" class="btn btn-facebook-connect">페이스북 연결</button>
+		<!--{ / }-->
+		</div>
+		<div class="sns-info">※ 계정 연결 시 해당 아이디로 쇼핑몰 이용이 가능합니다.</div>
+		<!--{ / }-->
 	</td>
 </tr>
 </table>

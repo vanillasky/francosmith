@@ -111,6 +111,12 @@ else { // 회원 로그인 부분
 	## 로그인 내역 기록
 	member_log( $session->m_id );
 
+	//페이코 access_token 삭제 & 업데이트
+	if (!$socialMember) include dirname(__FILE__).'/../lib/SocialMember/SocialMemberServiceLoader.php';
+	list($prevToken) = $db->fetch("SELECT access_token FROM ".GD_SNS_MEMBER." WHERE m_no = '".$session->m_no."' AND social_code = 'PAYCO'");
+	if ($prevToken) PaycoMember::serviceOff($prevToken);
+	$db->query("UPDATE ".GD_SNS_MEMBER." SET access_token = '".$_SESSION['social_member_service_user_access_token']."' WHERE m_no = '".$session->m_no."'");
+	
 	## 운영 체크
 	if ($session->level > 80) {
 		include(SHOPROOT.'/proc/shop_warning_msg.php');

@@ -60,7 +60,7 @@ function chkFormMember( fobj ){
 		<b><?=$data['m_id']?></b>
 		<?=$memIcon_inflow?>
 		<?php if (strlen($data['connected_sns']) > 0) { foreach(explode(',', $data['connected_sns']) as $socialCode) { ?>
-		<img src="../img/ico_member_<?php echo strtolower($socialCode); ?>.gif" style="vertical-align: middle; margin: 0 5px;"/>
+		<img src="../img/ico_member_<?php echo strtolower($socialCode); ?>.gif" style="vertical-align: middle; margin: 0;"/>
 		<?php }} ?>
 	</td>
 	<td>½ÂÀÎ</td>

@@ -608,6 +608,10 @@ if ($socialMemberService->isEnabled()) {
 			$facebookMember = SocialMemberService::getMember(SocialMemberService::FACEBOOK);
 			$tpl->assign('FacebookLoginURL', $facebookMember->getLoginURL($returnURL));
 		}
+		if (in_array(SocialMemberService::PAYCO, $socialMemberServiceList)) {
+			$paycoMember = SocialMemberService::getMember(SocialMemberService::PAYCO);
+			$tpl->assign('PaycoLoginURL', $paycoMember->getLoginURL($returnURL));
+		}
 	}
 }
 

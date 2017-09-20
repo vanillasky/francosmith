@@ -20,6 +20,7 @@ div.body div.forms-wrap div.forms div.sns-login {float: right; width: 270px; mar
 div.body div.forms-wrap div.forms div.sns-login div.sns-login-title {margin-top: 5px; margin-bottom: 10px; background: url('../img/login_10.gif') no-repeat; height: 12px; font-size: 0; text-indent: -9999px; display: block;}
 div.body div.forms-wrap div.forms div.sns-login div.sns-btn-group button.sns-btn {cursor: pointer; border: none; font-size: 0; text-indent: -9999px; display: block;}
 div.body div.forms-wrap div.forms div.sns-login div.sns-btn-group button.btn-facebook {width: 125px; height: 31px; background: url('../img/login_sns_facebook.gif') no-repeat; }
+div.body div.forms-wrap div.forms div.sns-login div.sns-btn-group button.btn-payco {width: 125px; height: 31px; background: url('../img/login_sns_payco.png') no-repeat; }
 
 div.body div.forms-wrap div.forms div.form table {}
 div.body div.forms-wrap div.forms div.form table th {font-weight:bold;color:#5D5D5D;font-size:11px;letter-spacing:-1px;width:60px;text-align:left;}
@@ -137,6 +138,9 @@ div.foot p.copyright {text-align:center;}
 		<div class="sns-login">
 			<div class="sns-login-title">SNS 계정로그인</div>
 			<div class="sns-btn-group">
+				<!--{ ? PaycoLoginURL }-->
+				<button onclick="popup('{PaycoLoginURL}', 630, 560);" class="sns-btn btn-payco">PAYCO</button>
+				<!--{ / }-->
 				<!--{ ? FacebookLoginURL }-->
 				<button onclick="popup('{FacebookLoginURL}', 400, 300);" class="sns-btn btn-facebook">FACEBOOK</button>
 				<!--{ / }-->
