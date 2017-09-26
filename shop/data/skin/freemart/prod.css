@@ -51,6 +51,15 @@
 	
 }
 
+/** cart 네이버페이/페이코 */
+.cart-pay-gate {
+	position:relative; 
+ 	max-width:600px; 
+ 	height:90px; 
+	text-align:center; 
+ 	margin:12px auto;	
+}
+
 /* 제품 상세정보 */
 .prod-detail-img { width:830px; }
 
@@ -470,6 +479,13 @@ ul.sort_list li a:hover { text-decoration:none;}
 	padding-left:10px;
 }
 
+/** 페이코 결제 */
+#payco-pay {
+	float:left;	
+	padding-left:10px;
+}
+
+
 /* 장바구니, 위시리스트 버튼(상품 상세화면용) */
 .shop_buttons { 
 	margin-top:10px;
@@ -649,6 +665,7 @@ table.extra-information td {width:35%;color:#666666;}
   margin-bottom: 1.875rem;
   padding-bottom: .5rem;
   position: relative;
+  
 }
 
 .specification-container {
@@ -657,6 +674,7 @@ table.extra-information td {width:35%;color:#666666;}
   	margin-bottom: 1.875rem;
   	padding-bottom: .5rem;
   	position: relative;
+  	
 }
 
 
@@ -698,20 +716,19 @@ table.extra-information td {width:35%;color:#666666;}
 }
 
 @media only all and (min-width:769px) {
-  .description-container .description,.description-container .features {
-    width: 48%;
-  }
-
+  
   .description-container .description {
     float: left;
     padding-right: .625rem;
-	
+    width: 48%;
+    min-width:440px;
   }
 
   .description-container .features {
-    float: right;
+  	float: right;
     padding-left: .625rem;
-	
+	width: 48%;
+	min-width:440px;
   }
 }
 
@@ -795,6 +812,8 @@ table.extra-information td {width:35%;color:#666666;}
 	width:100%;
 }
 
+
+
 .video-container h4{
 	margin-top:0;
 	font-size:14px;
@@ -807,15 +826,29 @@ table.extra-information td {width:35%;color:#666666;}
 
 .video-container .video-content {
 	text-align:center;
-	margin:0 auto;
+	position:relative;
+	padding-bottom:56.25%;
+	padding-top:30px;
+	height:0;
+	overflow:hidden;
+	clear:both;
+	
 }
 
+.video-content iframe, .video-content object, .video-content embed{
+	position: absolute;
+	top:0;
+	left:0;
+	width:100%;
+	height:100%;
+}
 
+/**
 .video-content iframe {
 	width:854px;
 	height:480px;
 }
-
+*/
 
 #recent-view-goods-container {
 	text-align:left;
@@ -864,6 +897,16 @@ ul.no-indent {
 	padding-left:20px;
 	
 }
+
+.prod_detail_img_div {
+	width:95%; margin:10px auto; text-align:center;
+}
+
+.prod_detail_img_div h1{
+	text-align:center;
+	font-size: 18px; padding-top:5px; font-weight:bold;
+}
+
 
 /** 제품 상세설명 END */
 
