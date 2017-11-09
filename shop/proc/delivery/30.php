@@ -1,6 +1,10 @@
 <?
-# 우체국 EMS http://service.epost.go.kr/trace.RetrieveEmsTraceTibco.postal?ems_gubun=E&POST_CODE=
-$out = str_replace("/images/iservice","http://service.epost.go.kr/images/iservice",$out);
-echo ($out);
-exit();
+# 우체국 EMS https://service.epost.go.kr/trace.RetrieveEmsRigiTraceList.comm?displayHeader=N&POST_CODE=
+$url .= $deliverycode;
 ?>
+<script language="javascript">
+window.onload = function () {
+	location.replace("<?=$url?>");
+}
+</script>
+<br><b>Now Loading...</b><br>

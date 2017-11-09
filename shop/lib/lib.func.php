@@ -3675,6 +3675,10 @@ function displayDelivery($deliveryno,$deliverycode){
 			$tail = '?billno1='.$tmp[0].'&billno2='.$tmp[1].'&billno3='.$tmp[2];
 			break;
 		case "40" : ### 현대국제택배
+		case "9" : ### 우체국택배
+		case "30" : ### 우체국 EMS
+		case "18" : ### 우체국등기
+		case "100" : ### 우체국택배(연동)
 			$tail = '';//post로 송장번호를 넘겨야 해서 tail 빈값처리
 			break;
 		case "8" : ### 앨로우캡택배
