@@ -332,7 +332,12 @@ class Partner
 		if ($cfgCoupon['double'] == '1') $mobileCoupon += $coupon;
 		if (strpos($coupo,'%') === false) $coupo = $coupo.'원';
 		if (strpos($mcoupon,'%') === false) $mcoupon = $mcoupon.'원';
-
+		
+		// 절사
+		$coupon = $this->cut($coupon);
+		$mobileCoupon = $this->cut($mobileCoupon);
+		$couponReserve = $this->cut($couponReserve);
+		
 		$return = array($coupon,$mobileCoupon,$couponReserve,$coupo,$mcoupon);
 
 		return $return;

@@ -81,9 +81,6 @@ class DaumCpcList
 			else if (!$goodsDiscount) {	//쿠폰 할인만 있을 시
 				$mobilePrice = $v['goods_price'] - $dcprice - $mobileCoupon;
 			}
-			else if ($goodsDiscount) {	//상품 할인만 있을 시
-				$mobilePrice = $v['goods_price'] - $dcprice - $goodsDiscount;
-			}
 			else {}
 
 			// 배송비
@@ -92,7 +89,7 @@ class DaumCpcList
 			// 이미지
 			$img_url = '';
 			$img_url = $partner->getGoodsImg($v['img_m'],$url);
-
+			
 			// 적립금
 			$point = 0;
 			if($v['use_emoney']=='0')
@@ -137,7 +134,7 @@ class DaumCpcList
 			if($v['brandnm'])echo('<<<brand>>>'.$v['brandnm'].chr(10));
 			if($v['maker'])echo('<<<maker>>>'.$v['maker'].chr(10));
 			if ($coupon)echo('<<<coupo>>>'.$coupo.chr(10));
-			if ($mcoupon)echo('<<<mcoupon>>>'.$mcoupon.chr(10));
+			if ($mobileCoupon)echo('<<<mcoupon>>>'.$mcoupon.chr(10));
 			if($daumCpc['nv_pcard'])echo('<<<pcard>>>'.$daumCpc['nv_pcard'].chr(10));
 			if($point)echo('<<<point>>>'.$point.chr(10));
 			echo('<<<deliv>>>'.$deliv.chr(10));
