@@ -26,6 +26,7 @@ function reviewWrite($reviewData,$handle,$status) {
 }
 
 global $db;
+$total = $_GET['total'];
 $partner = new Partner();
 $temp = array();
 $tocnt = 0;
@@ -35,8 +36,8 @@ $interval = 200000;
 $goodsno = array( 'a.goodsno' );
 $query = $partner->getGoodsSqlNew($goodsno);
 
-// 상품평EP 첫 수집시 모든 상품평 수집 아니면 업데이트 된 것 수집
-if ($daumCpc['try'] === 'Y') {
+// 전체 수집, 요약 수집 분기
+if ($total != 'y') {
 	$where = 'sno=parent and regdt>curdate()-1';
 }
 else {
@@ -77,8 +78,8 @@ if ($arrCnt < $interval) {
 }
 unset($temp);
 
-// 첫 수집시에는 삭제된 상품평을 수집할 필요가 없음
-if ($daumCpc['try'] === 'Y') {
+// 전체 수집시에는 삭제된 상품평을 수집할 필요가 없음
+if ($total != 'y') {
 	daum_goods_review_check();
 
 	$query = "select sno,goodsno,subject,contents,point,date_format(regdt,'%Y%m%d%H%i%s') regdt,name from ".GD_GOODS_UPDATE_REVIEW_DAUM;
@@ -104,28 +105,4 @@ while (!feof($handle)) {
 
 fclose($handle);
 unlink($tmpFile);
-
-// 상품평EP 첫 수집시
-if ($daumCpc['try'] != 'Y') {
-	$daumCpc['try'] = 'Y';
-	$qfile = new qfile();
-	$qfile->open('../conf/daumCpc.cfg.tmp');
-	$qfile->write('<?php'.PHP_EOL);
-	$qfile->write('$daumCpc = array('.PHP_EOL);
-	foreach ($daumCpc as $name => $value) {
-		$qfile->write("'".$name."' => '".$value."',".PHP_EOL);
-	}
-	$qfile->write(');'.PHP_EOL);
-	$qfile->write('?>');
-	$qfile->close();
-
-	// 임시파일을 실제파일로 복사
-	$copyResult = @copy('../conf/daumCpc.cfg.tmp', '../conf/daumCpc.cfg.php');
-
-	// 복사에 성공했으면 임시파일 삭제하고 권한설정
-	if ($copyResult === true) {
-		@unlink('../conf/daumCpc.cfg.tmp');
-		@chmod('../conf/daumCpc.cfg.php', 0707);
-	}
-}
 ?>

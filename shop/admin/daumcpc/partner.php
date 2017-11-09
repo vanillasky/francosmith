@@ -112,8 +112,13 @@ $reviewUrl = "http://".$_SERVER['HTTP_HOST'].$cfg['rootDir']."/partner/daum_revi
 		<div class="ver8" style="float:left;"><a href="../../partner/daum_some.php" target=_blank><img src="../img/btn_naver_view.gif" align="absmiddle"></a></div>
 	</div>
 	<div style="clear:both">
-		<div style="color:#57a300;float:left;">[상품평]</div>
-		<div class="ver8" style="float:left;width:512px;padding:2"><?php echo $reviewUrl;?></div>
+		<div style="color:#57a300;float:left;">[전체상품평]</div>
+		<div class="ver8" style="float:left;width:488px;padding:2"><?php echo $reviewUrl.'?total=y';?></div>
+		<div class="ver8" style="float:left;"><a href="../../partner/daum_review.php?total=y" target=_blank><img src="../img/btn_naver_view.gif" align="absmiddle"></a></div>
+	</div>
+	<div style="clear:both">
+		<div style="color:#57a300;float:left;">[요약상품평]</div>
+		<div class="ver8" style="float:left;width:488px;padding:2"><?php echo $reviewUrl;?></div>
 		<div class="ver8" style="float:left;"><a href="../../partner/daum_review.php" target=_blank><img src="../img/btn_naver_view.gif" align="absmiddle"></a></div>
 	</div>
 	</td>
