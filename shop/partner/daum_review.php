@@ -1,20 +1,114 @@
 <?
+set_time_limit(0);
 include "../lib/library.php";
 include "../lib/partner.class.php";
 include "../conf/daumCpc.cfg.php";
+include "../lib/qfile.class.php";
 
 if ($daumCpc['useYN']!= 'Y') exit;
 
-// 닉네임 자르기
-function sub_string($string,$length) {
-	$string = mb_substr($string,0,$length,'euc-kr').'**';
-	return $string;
+function reviewWrite($reviewData,$handle,$status) {
+	fwrite($handle,'<<<begin>>>'.chr(10));
+	fwrite($handle,'<<<mapid>>>'.$reviewData['goodsno'].chr(10));
+	fwrite($handle,'<<<reviewid>>>'.$reviewData['goodsno'].$reviewData['sno'].chr(10));
+	fwrite($handle,'<<<status>>>'.$status.chr(10));
+	fwrite($handle,'<<<title>>>'.strip_tags($reviewData['subject']).chr(10));
+	fwrite($handle,'<<<content>>>'.strip_tags($reviewData['contents']).chr(10));
+	if (mb_strlen($reviewData['name'],'euc-kr') < 3) {
+		fwrite($handle,'<<<writer>>>'.$reviewData['name'].'**'.chr(10));
+	}
+	else {
+		fwrite($handle,'<<<writer>>>'.mb_substr($reviewData['name'],0,mb_strlen($reviewData['name'],'euc-kr')-2,'euc-kr').'**'.chr(10));
+	}
+	fwrite($handle,'<<<cdate>>>'.$reviewData['regdt'].chr(10));
+	fwrite($handle,'<<<rating>>>'.$reviewData['point'].'/5'.chr(10));
+	fwrite($handle,'<<<ftend>>>'.chr(10));
 }
+
+global $db;
+$partner = new Partner();
+$temp = array();
+$tocnt = 0;
+$arrCnt = 0;
+$interval = 200000;
+
+$goodsno = array( 'a.goodsno' );
+$query = $partner->getGoodsSqlNew($goodsno);
+
+// 상품평EP 첫 수집시 모든 상품평 수집 아니면 업데이트 된 것 수집
+if ($daumCpc['try'] === 'Y') {
+	$where = 'sno=parent and regdt>curdate()-1';
+}
+else {
+	$where = 'sno=parent';
+}
+
+$tmpFile = dirname(__FILE__).'/../conf/reviewTemp.php';
+if (file_exists($tmpFile)) unlink($tmpFile);
+$handle = fopen($tmpFile,'a');
+
+$res = $db->query($query);
+while ($data = $db->fetch($res,1)) {
+	if ($arrCnt > $interval) {
+		$interval += 200000;
+		$temp = array();
+	}
+
+	if ($arrCnt <= $interval) $temp[] = $data['goodsno'];
+
+	if ($arrCnt == $interval) {
+		$query = "select sno,goodsno,subject,contents,point,date_format(regdt,'%Y%m%d%H%i%s') regdt,name from gd_goods_review where ".$where." and goodsno in (".implode(',',$temp).")";
+		$review = $db->query($query);
+		while ($reviewData = $db->fetch($review,1)) {
+			reviewWrite($reviewData,$handle,'S');
+			$tocnt++;
+		}
+	}
+	$arrCnt++;
+}
+
+if ($arrCnt < $interval) {
+	$query = "select sno,goodsno,subject,contents,point,date_format(regdt,'%Y%m%d%H%i%s') regdt,name from gd_goods_review where ".$where." and goodsno in (".implode(',',$temp).")";
+	$review = $db->query($query);
+	while ($reviewData = $db->fetch($review,1)) {
+		reviewWrite($reviewData,$handle,'S');
+		$tocnt++;
+	}
+}
+unset($temp);
+
+// 첫 수집시에는 삭제된 상품평을 수집할 필요가 없음
+if ($daumCpc['try'] === 'Y') {
+	daum_goods_review_check();
+
+	$query = "select sno,goodsno,subject,contents,point,date_format(regdt,'%Y%m%d%H%i%s') regdt,name from ".GD_GOODS_UPDATE_REVIEW_DAUM;
+	$deleteReview = $db->query($query);
+
+	while ($deleteData = $db->fetch($deleteReview,1)) {
+		reviewWrite($deleteData,$handle,'D');
+		$tocnt++;
+	}
+}
+
+fclose($handle);
+
+$handle = fopen($tmpFile,'r');
+
+header("Cache-Control: no-cache, must-revalidate");
+header("Content-Type: text/plain; charset=euc-kr");
+
+echo '<<<tocnt>>>'.$tocnt.chr(10);
+while (!feof($handle)) {
+	echo fgets($handle, 16384);
+}
+
+fclose($handle);
+unlink($tmpFile);
 
 // 상품평EP 첫 수집시
 if ($daumCpc['try'] != 'Y') {
 	$daumCpc['try'] = 'Y';
-	$qfile = Core::loader('qfile');
+	$qfile = new qfile();
 	$qfile->open('../conf/daumCpc.cfg.tmp');
 	$qfile->write('<?php'.PHP_EOL);
 	$qfile->write('$daumCpc = array('.PHP_EOL);
@@ -32,75 +126,6 @@ if ($daumCpc['try'] != 'Y') {
 	if ($copyResult === true) {
 		@unlink('../conf/daumCpc.cfg.tmp');
 		@chmod('../conf/daumCpc.cfg.php', 0707);
-	}
-}
-
-$partner = new Partner();
-global $db;
-$godo = $partner->getGodoCfg();
-$query = $partner->getGoodsSql();
-$res = $db->query($query);
-
-$ep = array();
-$delEp = array();
-$tocnt = 0;	// 상품평 총 개수
-
-// 상품평EP 첫 수집시 모든 상품평 수집 아니면 업데이트 된 것 수집
-if ($daumCpc['try'] === 'Y') {
-	$where = 'sno=parent and regdt>curdate()-1 and';
-}
-else {
-	$where = 'sno=parent and';
-}
-
-while ($data = $db->fetch($res,1)) {
-
-	$query = "select goodsno,sno,subject,contents,point,date_format(regdt,'%Y%m%d%H%i%s') regdt,name from gd_goods_review where ".$where." goodsno='".$data['goodsno']."'";
-	$review = $db->query($query);
-	$tocnt += mysql_num_rows($review);
-
-	while ($reviewData = $db->fetch($review,1)) {
-		$ep[] = $reviewData;
-	}
-}
-
-// 첫 수집시에는 삭제된 상품평을 수집할 필요가 없음
-if ($daumCpc['try'] === 'Y') {
-	daum_goods_review_check();
-
-	$query = "select sno,goodsno,subject,contents,point,date_format(regdt,'%Y%m%d%H%i%s') regdt,name from ".GD_GOODS_UPDATE_REVIEW_DAUM;
-	$deleteReview = $db->query($query);
-	$tocnt += mysql_num_rows($deleteReview);
-
-	while ($deleteData = $db->fetch($deleteReview,1)) {
-		$deleteData['status'] = 'D';
-		$ep[] = $deleteData;
-	}
-}
-
-header("Cache-Control: no-cache, must-revalidate");
-header("Content-Type: text/plain; charset=euc-kr");
-if ($tocnt > 0) {
-	echo('<<<tocnt>>>'.$tocnt.chr(10));
-	for ($i=0; $i<count($ep); $i++) {
-		echo('<<<begin>>>'.chr(10));
-		echo('<<<mapid>>>'.$ep[$i]['goodsno'].chr(10));
-		echo('<<<reviewid>>>'.$godo['sno'].$ep[$i]['goodsno'].$ep[$i]['sno'].chr(10));
-		if ($ep[$i]['status'] === 'D') { echo('<<<status>>>D'.chr(10)); } else { echo('<<<status>>>S'.chr(10)); }
-		echo('<<<title>>>'.strip_tags($ep[$i]['subject']).chr(10));
-		echo('<<<contents>>>'.strip_tags($ep[$i]['contents']).chr(10));
-		if (mb_strlen($ep[$i]['name'],'euc-kr') === 2) {
-			echo('<<<writer>>>'.mb_substr($ep[$i]['name'],0,mb_strlen($ep[$i]['name'],'euc-kr')-1,'euc-kr').'*'.chr(10));
-		}
-		else if (mb_strlen($ep[$i]['name'],'euc-kr') === 1) {
-			echo('<<<writer>>>'.$ep[$i]['name'].chr(10));
-		}
-		else {
-			echo('<<<writer>>>'.mb_substr($ep[$i]['name'],0,mb_strlen($ep[$i]['name'],'euc-kr')-2,'euc-kr').'**'.chr(10));
-		}
-		echo('<<<cdate>>>'.$ep[$i]['regdt'].chr(10));
-		echo('<<<rating>>>'.$ep[$i]['point'].'/5'.chr(10));
-		echo('<<<ftend>>>'.chr(10));
 	}
 }
 ?>

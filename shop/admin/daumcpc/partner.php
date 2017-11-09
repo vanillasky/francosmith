@@ -24,6 +24,11 @@ function check_use(){
 		obj.value='N';
 	}
 }
+function review_init(){
+	document.form.mode.value = 'review_init';
+	document.form.submit();
+	document.form.mode.value = 'daumCpc';
+}
 window.onload = function(){
 	check_use();
 }
@@ -116,6 +121,18 @@ $reviewUrl = "http://".$_SERVER['HTTP_HOST'].$cfg['rootDir']."/partner/daum_revi
 <tr><td colspan=12 class=rndline></td></tr>
 </table>
 </div>
+
+<table class="tb" border="0">
+<col class="cellC"><col class="cellL">
+<tr>
+	<td>상품평 수집 초기화</td>
+	<td class="noline">
+		<div><a href="javascript:review_init();"><img src="../img/btn_review_init.png" align="absmiddle"></a></div>
+		<div class="extext" style="padding:5 0 0 0">기존에 등록되었던 상품평이 다음쇼핑하우에 노출되지 않을 때 상품평 수집 초기화를 시켜보시기 바랍니다.</div>
+		<div class="extext" style="padding:5 0 0 0">상품평 수집 초기화 시 익일 새벽에 전체 상품평이 업데이트 됩니다.</div>
+	</td>
+</tr>
+</table>
 
 <div style="padding-top:10px;">
 <div class="red" style="border: solid #dce1e1 4px; padding: 10px;">※ 주의!: gif포맷으로 된 상품이미지는 다음 쇼핑하우(쇼핑하우 정책에 의해)에 전송이 되지 않습니다.

@@ -122,5 +122,10 @@ switch($mode){
 		$daumCpc -> configration();
 		msg("설정 되었습니다.",0);
 		break;
+	case "review_init":
+		$daumCpc -> daumCpc['try'] = '';
+		$daumCpc -> configration();
+		msg("상품평 설정 초기화 성공",0);
+		break;
 }
 ?>
