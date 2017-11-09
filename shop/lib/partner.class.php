@@ -184,6 +184,9 @@ class Partner
 				else
 					$deliv = $set['delivery']['default'];
 			}
+			else if($price <= $set['delivery']['free'] && $set['delivery']['deliveryType'] == "ÈÄºÒ"){
+				$deliv = -1;
+			}
 		}else if($v['delivery_type'] == 1){
 			$deliv = 0;
 		}
