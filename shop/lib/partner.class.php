@@ -342,5 +342,24 @@ class Partner
 
 		return $return;
 	}
+	
+	// ÄíÆù Àý»ç
+	function cut($price)
+	{
+		global $set;
+	
+		if ($set['emoney']['cut'] != 0) {
+			$multi = 0;
+			$multi = pow(10, $set['emoney']['cut']);
+			$price = $price / $multi;
+			$price = floor($price);
+			$price = $price * $multi;
+		}
+		else {
+			$price = floor($price);
+		}
+	
+		return $price;
+	}
 }
 ?>
