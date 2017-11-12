@@ -76,7 +76,7 @@ class Partner
 	function getGoodsImg($img,$url){
 		global $cfg;
 		list($img) = explode("|",$img);
-		if(preg_match('/http:\/\//',$img))$img_url = $img;
+		if(preg_match('/http(s)?:\/\//',$img))$img_url = $img;
 		else $img_url = $url.'/data/goods/'.$img;
 		return $img_url;
 	}
@@ -150,25 +150,35 @@ class Partner
 		return $result;
 	}
 
-	// 쿠폰
+// 쿠폰 데이터 조회
 	function getCouponInfo()
 	{
 		global $db;
-		$couponPrice = array();
 		$result = array();
-
 		$today = date("Y-m-d H:i:s");
 
-		$query = "select gc.price,gc.ability,gc.goodstype,gc.c_screen,gcc.category,gcg.goodsno from gd_coupon gc
+		// 모든 상품에 적용된 쿠폰과 특정 상품에 적용된 쿠폰 조회
+		$query = "select gc.couponcd,gc.price,gc.ability,gc.goodstype,gc.c_screen,gc.dncnt,gc.excPrice,gc.payMethod,gcg.goodsno from gd_coupon gc
 		left join gd_coupon_goodsno gcg on gc.couponcd=gcg.couponcd
-		left join gd_coupon_category gcc on gcc.couponcd=gc.couponcd
 		where gc.coupontype = '1'
 		and ((gc.sdate <= '$today' AND gc.edate >= '$today' AND gc.priodtype='0') or (gc.priodtype='1' and (gc.edate = '' or gc.edate >= '$today')))";
 
-		$res = $db->query($query);
-		while ($couponData = $db->fetch($res,1)) {
+		$res1 = $db->query($query);
+		while ($couponData = $db->fetch($res1,1)) {
 			$result[] = $couponData;
 		}
+
+		// 특정 카테고리에 적용된 쿠폰만 조회
+		$query = "select gc.couponcd,gc.price,gc.ability,gc.goodstype,gc.c_screen,gc.dncnt,gc.excPrice,gc.payMethod,gcc.category from gd_coupon gc
+		inner join gd_coupon_category gcc on gc.couponcd=gcc.couponcd
+		where gc.coupontype = '1'
+		and ((gc.sdate <= '$today' AND gc.edate >= '$today' AND gc.priodtype='0') or (gc.priodtype='1' and (gc.edate = '' or gc.edate >= '$today')))";
+
+		$res2 = $db->query($query);
+		while ($couponData2 = $db->fetch($res2,1)) {
+			$result[] = $couponData2;
+		}
+
 		return $result;
 	}
 
@@ -182,7 +192,7 @@ class Partner
 				if ($price >= $set['delivery']['free'])
 					$deliv = 0;
 				else
-					$deliv = $set['delivery']['default'];
+					$deliv = $set['delivery']['default'] ? $set['delivery']['default'] : '0';
 			}
 			else if($price <= $set['delivery']['free'] && $set['delivery']['deliveryType'] == "후불"){
 				$deliv = -1;
@@ -193,13 +203,13 @@ class Partner
 		else if($v['delivery_type'] == 3){
 			$deliv = -1;
 		}
-		else if($v['delivery_type'] == 4 || $v['delivery_type'] == 5){
-			$deliv = $v['goods_delivery'];
+		else if($v['delivery_type'] == 2 || $v['delivery_type'] == 4 || $v['delivery_type'] == 5){
+			$deliv = $v['goods_delivery'] ? $v['goods_delivery'] : '0';
 		}
 		return $deliv;
 	}
 
-	// 상품 할인 계산
+// 상품 할인 계산
 	function getDiscountPrice($discountData,$goodsno,$price)
 	{
 		$time = time();
@@ -209,7 +219,8 @@ class Partner
 		if ($discountData[$goodsno]['gd_start_date'] > 0 && $discountData[$goodsno]['gd_start_date'] > $time) return 0;
 		if ($discountData[$goodsno]['gd_end_date'] > 0 && $discountData[$goodsno]['gd_end_date'] < $time) return 0;
 
-		if ($discountData[$goodsno]['gd_level'] != '0' && $discountData[$goodsno]['gd_level'] != '*') return 0;
+		// 할인대상이 회원 및 비회원 인지 체크
+		if ($discountData[$goodsno]['gd_level'] != '0') return 0;
 
 		switch ($discountData[$goodsno]['gd_unit']) {
 			case '%' :
@@ -252,11 +263,12 @@ class Partner
 		return $goodsDiscount;
 	}
 
-	// 쿠폰 할인 계산
+// 쿠폰 할인 계산
 	function getCouponPrice($couponData,$category,$goodsno,$price,$open)
 	{
 		global $cfgCoupon;
 		$arCategory = array();
+		$couponcd = array();
 		$coupon = 0;
 		$mobileCoupon = 0;
 		$couponOri = 0;
@@ -267,9 +279,30 @@ class Partner
 		}
 
 		for ($i=0; $i<count($couponData); $i++) {
+			// 한번 계산된 쿠폰이면 제외
+			if (in_array($couponData[$i]['couponcd'],$couponcd)) {
+				continue;
+			}
+			// 다운로드 횟수 제한 쿠폰 제외
+			else if ($couponData[$i]['dncnt'] > 0) {
+				continue;
+			}
+			// 금액 제한 쿠폰 제외
+			else if ($couponData[$i]['excPrice'] > 0) {
+				continue;
+			}
+			// 결제수단 제한 쿠폰 제외
+			else if ($couponData[$i]['payMethod'] > 0) {
+				continue;
+			}
+
 			$couponTemp = 0;
 			$reserveTemp = 0;
-			if ($couponData[$i]['goodstype'] == '0' || $goodsno == $couponData[$i]['goodsno'] || in_array($couponData[$i]['category'],$arCategory)) {
+			if ($couponData[$i]['goodstype'] == '0' ||	// 전체상품 발급 쿠폰일때
+				($couponData[$i]['goodstype'] == '1' && $couponData[$i]['goodsno'] != '' && $goodsno == $couponData[$i]['goodsno']) ||	// 특정 상품 발급 쿠폰일때
+				($couponData[$i]['goodstype'] == '1' && $couponData[$i]['category'] != '' && in_array($couponData[$i]['category'],$arCategory))) {	// 특정 카테고리 발급 쿠폰일때
+				$couponcd[] = $couponData[$i]['couponcd'];	// 계산할 쿠폰번호 배열에 저장
+
 				// 적립금 쿠폰
 				if ($couponData[$i]['ability'] == '1') {
 					if (strpos($couponData[$i]['price'],'%') == true) {
@@ -277,21 +310,14 @@ class Partner
 						$reserveTemp = $reserveTemp/100*$price;
 					}
 					else $reserveTemp = $couponData[$i]['price'];
+					$reserveTemp = $this->cut($reserveTemp);	// 절사
 
 					// 쿠폰 사용 중복 가능
 					if ($cfgCoupon['double'] == '1' && $couponData[$i]['c_screen'] != 'm') {
 						$couponReserve += $reserveTemp;
 					}
-					// 쿠폰 사용 중복 가능 && 모바일 전용 쿠폰
-					else if ($cfgCoupon['double'] == '1' && $couponData[$i]['c_screen'] == 'm' && $open == '1') {
-						$couponReserve += $reserveTemp;
-					}
 					// 쿠폰 중복 사용 불가
 					else if ($reserveTemp > $couponReserve && $couponData[$i]['c_screen'] != 'm') {
-						$couponReserve = $reserveTemp;
-					}
-					// 쿠폰 중복 사용 불가 && 모바일 전용 쿠폰
-					else if ($reserveTemp > $couponReserve && $couponData[$i]['c_screen'] == 'm' && $open == '1') {
 						$couponReserve = $reserveTemp;
 					}
 				}
@@ -302,10 +328,12 @@ class Partner
 						$couponTemp = $couponTemp/100*$price;
 					}
 					else $couponTemp = $couponData[$i]['price'];
+					$couponTemp = $this->cut($couponTemp);	// 절사
 
 					// 쿠폰 사용 중복 가능
 					if ($cfgCoupon['double'] == '1' && $couponData[$i]['c_screen'] != 'm') {
 						$coupon += $couponTemp;
+						// 할인율이 큰 쿠폰을 coupo필드에 저장
 						if ($couponTemp > $couponOri) {
 							$couponOri = $couponTemp;
 							$coupo = $couponData[$i]['price'];
@@ -332,15 +360,9 @@ class Partner
 				}
 			}
 		}
-		if ($cfgCoupon['double'] == '1') $mobileCoupon += $coupon;
-		if (strpos($coupo,'%') === false) $coupo = $coupo.'원';
-		if (strpos($mcoupon,'%') === false) $mcoupon = $mcoupon.'원';
-		
-		// 절사
-		$coupon = $this->cut($coupon);
-		$mobileCoupon = $this->cut($mobileCoupon);
-		$couponReserve = $this->cut($couponReserve);
-		
+
+		if (strpos($coupo,'%') === false && $coupo) $coupo = $coupo.'원';
+		if (strpos($mcoupon,'%') === false && $mcoupon) $mcoupon = $mcoupon.'원';
 		$return = array($coupon,$mobileCoupon,$couponReserve,$coupo,$mcoupon);
 
 		return $return;
@@ -350,7 +372,7 @@ class Partner
 	function cut($price)
 	{
 		global $set;
-	
+
 		if ($set['emoney']['cut'] != 0) {
 			$multi = 0;
 			$multi = pow(10, $set['emoney']['cut']);
@@ -361,7 +383,7 @@ class Partner
 		else {
 			$price = floor($price);
 		}
-	
+
 		return $price;
 	}
 }

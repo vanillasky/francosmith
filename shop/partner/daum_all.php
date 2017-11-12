@@ -42,7 +42,9 @@ class DaumCpcList
 			$coupo = '';	// 쿠폰
 			$mcoupon = '';	// 모바일 쿠폰
 			$couponReserve = 0;	// 적립 쿠폰
-			list($coupon,$mobileCoupon,$couponReserve,$coupo,$mcoupon) = $partner->getCouponPrice($couponData, $v['category'], $v['goodsno'], $v['goods_price'], $v['open_mobile']);
+			if ($cfgCoupon['use_yn'] == 1) {
+				list($coupon,$mobileCoupon,$couponReserve,$coupo,$mcoupon) = $partner->getCouponPrice($couponData, $v['category'], $v['goodsno'], $v['goods_price'], $v['open_mobile']);
+			}
 
 			// 회원할인
 			$dcprice = 0;
@@ -63,29 +65,27 @@ class DaumCpcList
 			// 상품별 할인과 쿠폰 할인에 대한 가격 계산
 			$price = 0;
 			$mobilePrice = 0;
-			if ($goodsDiscount && $coupon) {	// 상품별 할인과 쿠폰할인
-				$price = $v['goods_price'] - $coupon - $dcprice - $goodsDiscount;
+			
+			if ($v['goods_price'] > $coupon + $dcprice + $goodsDiscount) $price = $v['goods_price'] - $coupon - $dcprice - $goodsDiscount;
+			else $price = 0;
+			
+			if ($couponVersion === true && $coupon > $v['goods_price'] - $dcprice - $goodsDiscount) {
+				$coupon = $v['goods_price'] - $dcprice - $goodsDiscount;
+				$coupo = $coupon.'원';
 			}
-			else if (!$goodsDiscount) {	//쿠폰 할인만 있을 시
-				$price = $v['goods_price'] - $dcprice - $coupon;
-			}
-			else if ($goodsDiscount) {	//상품 할인만 있을 시
-				$price = $v['goods_price'] - $dcprice - $goodsDiscount;
-			}
-			else {}
-
+			
 			// 모바일 쿠폰 가격 계산
-			if ($goodsDiscount && $mobileCoupon) {	// 상품별 할인과 쿠폰할인
-				$mobilePrice = $v['goods_price'] - $mobileCoupon - $dcprice - $goodsDiscount;
+			if ($v['goods_price'] > $mobileCoupon + $dcprice + $goodsDiscount && $mobileCoupon) $mobilePrice = $v['goods_price'] - $mobileCoupon - $dcprice - $goodsDiscount;
+			else $mobilePrice = 0;
+			
+			if ($couponVersion === true && $mobileCoupon > $v['goods_price'] - $dcprice - $goodsDiscount) {
+				$mcoupon = $v['goods_price'] - $dcprice - $goodsDiscount;
+				$mcoupon = $mcoupon.'원';
 			}
-			else if (!$goodsDiscount) {	//쿠폰 할인만 있을 시
-				$mobilePrice = $v['goods_price'] - $dcprice - $mobileCoupon;
-			}
-			else {}
-
+			
 			// 배송비
 			$deliv = $partner->getDeliveryPrice($v,$price);
-
+			
 			// 이미지
 			$img_url = '';
 			$img_url = $partner->getGoodsImg($v['img_m'],$url);

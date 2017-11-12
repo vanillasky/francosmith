@@ -65,7 +65,12 @@ $reviewUrl = "http://".$_SERVER['HTTP_HOST'].$cfg['rootDir']."/partner/daum_revi
 	<td class="noline">
 	<div><b><?=$grpnm?></b> 할인율은 <b><?=number_format($grpdc)?>%</b>가 상품가격에 적용되어 쇼핑하우에 노출 됩니다.</div>
 	<div class="extext" style="padding:5 0 0 0">쇼핑하우에에 노출되는 상품가격은 적용된 쿠폰과 가입시 회원그룹의 할인율이 적용된 가격이 됩니다.</div>
-	<div class="extext" style="padding:1 0 0 0">가입시 회원그룹 설정은 <a href="../member/fieldset.php" class="extext" style="font-weight:bold">회원관리 > 회원가입관리</a>에서 변경 가능합니다.</div>
+	<div class="extext" style="padding:5 0 0 0">다음 쇼핑하우 정책에 따라 다음 유형의 쿠폰은 <b>상품가격에 적용되지 않습니다.</b></div>
+	<div class="extext" style="padding:1 0 0 0">- 신규가입회원대상 쿠폰</div>
+	<div class="extext" style="padding:1 0 0 0">- 사용 금액 제한 쿠폰 (5만원 이상 구매 시에만 사용할 수 있는 쿠폰 등)</div>
+	<div class="extext" style="padding:1 0 0 0">- 결제 수단 제한 쿠폰 (무통장 입금에서만 사용할 수 있는 쿠폰 등)</div>
+	<div class="extext" style="padding:1 0 0 0">- 다운로드 횟수 제한 쿠폰 (1회만 다운받아 사용할 수 있는 쿠폰 등, 다운로드 횟수 제한이 있는 쿠폰)</div>
+	<div class="extext" style="padding:5 0 0 0">가입시 회원그룹 설정은 <a href="../member/fieldset.php" class="extext" style="font-weight:bold">회원관리 > 회원가입관리</a>에서 변경 가능합니다.</div>
 	<div class="extext" style="padding:1 0 0 0">회원그룹의 할인율 변경은 <a href="../member/group.php" class="extext" style="font-weight:bold">회원관리 > 회원그룹관리 </a>에서 변경 가능합니다.</div>
 	</td>
 </tr>
