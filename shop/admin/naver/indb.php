@@ -31,6 +31,8 @@ switch ($_POST[mode]){
 		$_POST['partner']['useYn'] = $_POST['useYn'];
 		$_POST['partner']['naver_event_common'] = $_POST['naver_event_common'];
 		$_POST['partner']['naver_event_goods'] = $_POST['naver_event_goods'];
+		$_POST['partner']['auto_create_use'] = $_POST['auto_create_use'];
+		$_POST['partner']['auto_excute_time'] = $_POST['auto_excute_time'];
 
 		// ¿˙¿Â
 		$partner = array();

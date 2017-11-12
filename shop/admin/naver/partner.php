@@ -12,6 +12,7 @@ $naver_version = $partner['naver_version'];
 $useYn = $partner['useYn'];
 $naver_event_common = ($partner['naver_event_common'] === 'Y' ? 'Y' : 'N');
 $naver_event_goods = ($partner['naver_event_goods'] === 'Y' ? 'Y' : 'N');
+$auto_create_use = ($partner['auto_create_use'] === 'Y' ? 'Y' : 'N');
 $checked['cpaAgreement'][$partner['cpaAgreement']] = "checked";
 $checked['inmemberdc'][$inmemberdc] = "checked";
 $checked['incoupon'][$incoupon] = "checked";
@@ -19,6 +20,13 @@ $checked['naver_version'][$naver_version] = "checked";
 $checked['useYn'][$useYn] = "checked";
 $checked['naver_event_common'][$naver_event_common] = "checked";
 $checked['naver_event_goods'][$naver_event_goods] = "checked";
+$checked['auto_create_use'][$auto_create_use] = "checked";
+
+//서버호스팅, 외부호스팅
+$outsideServer = false;
+if($godo['webCode'] == 'webhost_outside' || $godo['webCode'] == 'webhost_server'){
+	$outsideServer = true;
+}
 
 if(isset($partner['cpaAgreementTime'])===false && $partner['cpaAgreement']==='true')
 {
@@ -204,8 +212,34 @@ list($grpnm,$grpdc) = $db->fetch("select grpnm,dc from ".GD_MEMBER_GRP." where l
 </tr>
 <tr>
 	<td>네이버 쇼핑<br/>버전설정</td>
-	<td class="noline"><input type="radio" name="naver_version" value="1" <?=$checked['naver_version']['1']?> <?=$checked['naver_version']['']?>>기존(v1.0)&nbsp;&nbsp;<input type="radio" name="naver_version" value="2" <?=$checked['naver_version']['2']?>>신규(v2.0) &nbsp; <span class="extext" style="font-weight:bold">버전설정 안내문구를 반드시 읽어주시기 바랍니다.</span></td>
+	<td class="noline"><input type="radio" name="naver_version" value="1" <?=$checked['naver_version']['1']?> <?=$checked['naver_version']['']?> onclick="version();">기존(v1.0)&nbsp;&nbsp;<input type="radio" name="naver_version" value="2" <?=$checked['naver_version']['2']?> onclick="version();">신규(v2.0) &nbsp; <span class="extext" style="font-weight:bold">버전설정 안내문구를 반드시 읽어주시기 바랍니다.</span></td>
 </tr>
+<? if ($outsideServer === false) { ?>
+<tr id="auto_create">
+	<td>상품 EP<br/>자동 생성 설정</td>
+	<td class="noline">
+		● 자동 생성 기능 사용 여부 :
+		<label><input type="radio" name="auto_create_use" value="Y" <?php echo $checked['auto_create_use']['Y'];?>/>사용</label><label><input type="radio" name="auto_create_use" value="N" <?php echo $checked['auto_create_use']['N'];?> />사용안함</label><br/>
+		<div style="padding:3px 0px 5px 25px;">
+			<span class="extext">네이버 쇼핑에서 스크랩하는 정보를 1일 1회, 자동으로 생성합니다.</span><br>
+			<span class="extext" style="font-weight:bold"> - 상품이 매우 많을 경우 사용으로 설정 시 더 안정적으로 전송할 수 있습니다.</span>
+		</div>
+		● 실행 시간대 설정 :
+		<select name="auto_excute_time" style="width:80px;">
+			<option value="00" <?=($partner['auto_excute_time'] === '00') ? 'selected' : ''?> <?=(!$partner['auto_excute_time']) ? 'selected' : ''?>>00시</option>
+			<option value="01" <?=($partner['auto_excute_time'] === '01') ? 'selected' : ''?>>01시</option>
+			<option value="02" <?=($partner['auto_excute_time'] === '02') ? 'selected' : ''?>>02시</option>
+			<option value="03" <?=($partner['auto_excute_time'] === '03') ? 'selected' : ''?>>03시</option>
+			<option value="04" <?=($partner['auto_excute_time'] === '04') ? 'selected' : ''?>>04시</option>
+			<option value="05" <?=($partner['auto_excute_time'] === '05') ? 'selected' : ''?>>05시</option>
+		</select><br/>
+		<div style="padding:3px 0px 5px 25px;">
+			<span class="extext">선택한 시간에 네이버 쇼핑에 보낼 상품 DB 정보를 자동으로 생성합니다.</span><br>
+			<span class="extext">전체상품 DB 업데이트 주기를 확인하여 업데이트 시간대를 제외하고 선택하시기 바랍니다.</span>
+		</div>
+	</td>
+</tr>
+<?}?>
 <tr>
 	<td>상품가격 설정</td>
 	<td class="noline">
@@ -416,5 +450,26 @@ list($grpnm,$grpdc) = $db->fetch("select grpnm,dc from ".GD_MEMBER_GRP." where l
 <a href="http://marketing.godo.co.kr/board.php?id=notice&mode=view&postNo=178" target="_blank"><img src="../img/btn_naver_dbUrl.gif" border="0"></a>
 <a href="https://adcenter.shopping.naver.com" target="_blank"><img src="../img/btn_naver_go.gif" border="0"></a>
 </div>
+<script>
+var outsideServer = '<?=$outsideServer?>';
+window.onload = function(){
+	if (outsideServer == false) {
+		version();
+	}
+	else {}
+}
 
+function version() {
+	if (outsideServer == true) {
+		return;
+	}
+	var f = document.form;
+	if (f.naver_version[0].checked) {
+		document.getElementById('auto_create').style.display = "none";
+	}
+	else if (f.naver_version[1].checked) {
+		document.getElementById('auto_create').style.display = "";
+	}
+}
+</script>
 <? include "../_footer.php"; ?>

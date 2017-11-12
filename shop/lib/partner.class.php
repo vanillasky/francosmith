@@ -40,10 +40,10 @@ class Partner
 		$query .= "OR (a.sales_range_start < UNIX_TIMESTAMP() AND a.sales_range_end = '') ";
 		$query .= "OR (UNIX_TIMESTAMP() < a.sales_range_end AND a.sales_range_start = '') ";
 		$query .= "OR (a.sales_range_start = '' AND a.sales_range_end = '') )";
-		
+
 		return $query;
 	}
-	
+
 	// 다음 EP 업데이트 이후
 	function getGoodsSqlNew($columns){
 		// 상품 데이타
@@ -59,7 +59,7 @@ class Partner
 
 		return $query;
 	}
-	
+
 	function getGoodsOption($goodsno){
 		global $db;
 		$query ="select price,reserve from ".GD_GOODS_OPTION." where goodsno='".$goodsno."' and link  and go_is_deleted <> '1' and go_is_display = '1' limit 1";
@@ -76,7 +76,7 @@ class Partner
 	function getGoodsImg($img,$url){
 		global $cfg;
 		list($img) = explode("|",$img);
-		if(preg_match('/http(s)?:\/\//',$img))$img_url = $img;
+		if(preg_match('/^http(s)?:\/\//',$img))$img_url = $img;
 		else $img_url = $url.'/data/goods/'.$img;
 		return $img_url;
 	}
@@ -95,7 +95,7 @@ class Partner
 		$ret = $db->fetch($query);
 		return $ret;
 	}
-	
+
 	// 브랜드명
 	function getBrand()
 	{
@@ -150,7 +150,7 @@ class Partner
 		return $result;
 	}
 
-// 쿠폰 데이터 조회
+	// 쿠폰 데이터 조회
 	function getCouponInfo()
 	{
 		global $db;
@@ -209,7 +209,7 @@ class Partner
 		return $deliv;
 	}
 
-// 상품 할인 계산
+	// 상품 할인 계산
 	function getDiscountPrice($discountData,$goodsno,$price)
 	{
 		$time = time();
@@ -263,7 +263,7 @@ class Partner
 		return $goodsDiscount;
 	}
 
-// 쿠폰 할인 계산
+	// 쿠폰 할인 계산
 	function getCouponPrice($couponData,$category,$goodsno,$price,$open)
 	{
 		global $cfgCoupon;
@@ -367,7 +367,7 @@ class Partner
 
 		return $return;
 	}
-	
+
 	// 쿠폰 절사
 	function cut($price)
 	{
