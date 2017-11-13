@@ -202,6 +202,9 @@ if($cart_reminder_no > 0) {
             <td>발송 방법</td>
             <td>
                 <input type="radio" name="cart_reminder_type" value="M" <?=$checked['cart_reminder_type']['M']?> onclick="javascript:chg_send_type();" required="required" fld_esssential="fld_esssential" msgR="반드시 하나는 선택하셔야 합니다."/> 수동발송
+				<?php if($godo['webCode'] != 'webhost_outside' && $godo['webCode'] != 'webhost_server'){ ?>
+                <input type="radio" name="cart_reminder_type" value="A" <?=$checked['cart_reminder_type']['A']?> onclick="javascript:chg_send_type();" required="required" fld_esssential="fld_esssential" msgR="반드시 하나는 선택하셔야 합니다."/> 시스템에서 자동으로 발송
+				<?php } ?>
             </td>
         </tr>
         <tr id="tr_M_period" class="<?=$display['M_period']?>">

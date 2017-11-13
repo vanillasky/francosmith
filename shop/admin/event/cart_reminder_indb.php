@@ -13,6 +13,10 @@ if(!$_POST['returnUrl']) $_POST['returnUrl'] = $_SERVER['HTTP_REFERER'];
 
 switch($_POST['mode']) {
     case "insert" :
+    	if(($godo['webCode'] == 'webhost_outside' || $godo['webCode'] == 'webhost_server') && $_POST['cart_reminder_type'] == 'A'){
+    		msg('서버호스팅, 외부호스팅을 사용하는 솔루션에서는 자동 발송을 사용 할 수 없습니다.', -1);
+    		exit;
+    	}	
         $_POST['cart_reminder_stock_ea_updown'] = strtoupper($_POST['cart_reminder_stock_ea_updown']);
         $_POST['cart_reminder_send_type'] = strtoupper($_POST['cart_reminder_send_type']);
         $_POST['cart_reminder_member_grp'] = implode(G_STR_DIVISION, $_POST['cart_reminder_member_grp']);

@@ -75,6 +75,7 @@ $cartReminderList = $cartReminder->cartReminderList();
         font-size: 16px;
         font-weight: bold;
         background: #3ba3ec;
+        border-top: #CACACA solid 2px;
     }
 
     .cart-reminder-btn span {
