@@ -60,8 +60,12 @@
 			(개별배송 : {=number_format(.goods_delivery)}원 )
 			<!--{ : .delivery_type == 5 && .goods_delivery > 0 }-->
 			(수량별배송 : {=number_format(.goods_delivery * .ea)}원 )
-			<!--{ : .delivery_type == 3 && .goods_delivery > 0 }-->
-			<div>(착불배송 : {=number_format(.goods_delivery)}원 )</div>
+			<!--{ : .delivery_type == 3 }-->
+			(착불배송
+				<!--{ ? .goods_delivery }-->
+			 : {=number_format(.goods_delivery)}원
+				<!--{ / }-->
+			 )
 			<!--{ / }-->
 		</div>
 		<!--{ / }-->

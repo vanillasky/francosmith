@@ -86,9 +86,11 @@ table.orderitem-list tfoot tr td table td {border:none;}
 		<!--{ : .delivery_type == 2 && .goods_delivery }-->
 		개별배송
 		<div>({=number_format(.goods_delivery)}원)</div>
-		<!--{ : .delivery_type == 3 && .goods_delivery }-->
+		<!--{ : .delivery_type == 3 }-->
 		착불배송
+			<!--{ ? .goods_delivery > 0}-->
 		<div>({=number_format(.goods_delivery)}원)</div>
+			<!--{/}-->
 		<!--{ : .delivery_type == 4 && .goods_delivery }-->
 		고정배송
 		<div>({=number_format(.goods_delivery)}원)</div>

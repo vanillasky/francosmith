@@ -2152,12 +2152,10 @@ function getDeliveryMode($param){
 		$delivery['free_criteria'] = $set['delivery']['deliveryOrder'] ? 'order' : 'pay';
 
 		if($delivery['type'] == '후불'){
-			// 기본 배송비 정책 상품만 있는 경우
-			if ($ctype_cnt === $item_cnt) {
-				$delivery['msg']	= $default_delivery_policy[3];
-			}
+			$delivery['msg']	= $default_delivery_policy[3];
 			$delivery['price']		= 0;
 			$extra_fee['basic']		= 0;						// 후불 이므로 배송시 지역별 추가 배송비 받지 않음
+			$delivery['default_type_conditional_after'] = 1;//기본배송 착불
 		}
 
 		// 조건부 무료(~이상 무료배송. 기본 배송 상품에 한함)
@@ -2349,8 +2347,11 @@ function getDeliveryMode($param){
 			elseif (empty($delivery['type'])) {
 				$delivery['type'] = '후불';
 				$delivery['price'] = 0;
+			} else if($delivery['type'] == '무료') {
+				$delivery['type'] = '후불';
+				$delivery['price'] = 0;
 			}
-
+			
 			$delivery['order_delivery_item'][3] = $r_goods['after_each'];
 		}
 	}
@@ -2368,13 +2369,17 @@ function getDeliveryMode($param){
 			$delivery['type']			= '무료';
 			$tmp_extra_price			= array_sum($extra_fee);					// 무료 배송이라도 지역별 추가 배송비는 설정에 따라 부과
 			$tmp_delivery_price			= $delivery['price'] + $tmp_extra_price;	// 지역별 추가 배송비를 더한 금액이 총 배송비
-			$delivery['msg']			= number_format($tmp_delivery_price).' 원';	// 화면 출력용 배송비 내역 (실제 배송비는 아래에서 처리함)
-			if (sizeof($r_goods['basic']) > 0) $delivery['default_type_conditional_free'] = 1;
-
+			
+			if($delivery['default_type'] == '후불') {
+				$delivery['msg']			= $default_delivery_policy[3];	// 화면 출력용 배송비 내역 (실제 배송비는 아래에서 처리함)
+			} else {
+				$delivery['msg']			= number_format($tmp_delivery_price).' 원';	// 화면 출력용 배송비 내역 (실제 배송비는 아래에서 처리함)
+			}
+			
 			if(isset($delivery['order_delivery_item'])) {
 				$free_set_data = $delivery['order_delivery_item'];
 				$free_set_data[1] = $r_goods['free_each'];
-
+			
 				unset($delivery['order_delivery_item']);
 				foreach($free_set_data as $free_set_delivery_type => $tmp_delivery) {
 					foreach($tmp_delivery as $tmp_goodsno => $arr_optno) {

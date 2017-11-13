@@ -176,17 +176,17 @@ foreach($item as $key => $goods){
 }
 
 ### 배송비 계산하기
-//marketingType > getDeliveryMode function
-$param = array(
-'mode' => '0',
-'deliPoli' => 0,
-'marketingType' => 'naverCheckout'
-);
+$param['mode'] = '0';
+$param['deliPoli'] = 0;
 
 
 $tmp = getDeliveryMode($param);
 
-if ($onDeliveryShippingPrice > 0 && $tmp['price'] == '0' && ($tmp['type'] === '후불' || $tmp['type'] === '무료')) {
+if(isset($tmp['_price']) === false) {
+	$tmp['_price'] = 0;
+}
+
+if ($onDeliveryShippingPrice > 0 && $tmp['price'] == '0' && $tmp['type'] === '후불') {
 	$tmp['_price'] = $onDeliveryShippingPrice;
 	$tmp['type'] = '후불';
 }
@@ -206,11 +206,20 @@ else if ($tmp['type'] == '후불') {
 
 	if ($tmp['_price'] > 0) {
 		$shippingType = 'ONDELIVERY';
-		$shippingPrice = $tmp['_price'];
+		if($tmp['default_type'] == '후불') {
+			//기본배송비도 착불인 경우
+			$shippingPrice = $tmp['_price'] + $checkoutCfg['collect'];
+		} else {
+			$shippingPrice = $tmp['_price'];
+		}
 	}
 	else {
 
-		if ($tmp['on_delivery_each_goods'] === 1 || $tmp['free_each_goods'] === 1 ) {
+		if ($tmp['on_delivery_each_goods'] === 1) {
+			$shippingType = 'ONDELIVERY';
+			$shippingPrice = $tmp['_price'];
+		}
+		else if ($tmp['free_each_goods'] === 1 ) {
 			$shippingType = 'FREE';
 			$shippingPrice = 0;
 		}
@@ -245,10 +254,12 @@ foreach($item as $goods){
 		if ($tmp['default_type_conditional_free'] === 1) {
 			$goods['options'] .= ' (조건부무료)';
 		}
-		elseif ($tmp['default_type'] === '후불' && ($tmp['free_each_goods'] === 1 || $tmp['on_delivery_each_goods'] === 1 )) {
+		elseif ($tmp['default_type'] === '후불' && ($tmp['free_each_goods'] === 1 || $tmp['on_delivery_each_goods'] === 1 || $tmp['default_type_conditional_after'] === 1)) {
 			$goods['options'] .= ' (착불';
 			$goods['options'] .= ' '.number_format($checkoutCfg['collect']).'원';
 			$goods['options'] .= ')';
+		} else if($tmp['default_type'] === '선불'){
+			$goods['options'] .= '(기본배송 '.number_format($tmp['default_price']).'원)';
 		}
 	}
 
