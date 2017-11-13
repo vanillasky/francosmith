@@ -54,32 +54,16 @@ if(isset($partner['cpaAgreementTime'])===false && $partner['cpaAgreement']==='tr
 <table border=4 bordercolor=#dce1e1 style="border-collapse:collapse; width: 800px;">
 <tr><td style="padding:7 0 10 10">
 <div style="padding-top:5"><b><font color="#bf0000">*필독*</font> 네이버 쇼핑 버전설정 안내입니다.</b></div>
-<div style="padding-top:7"><font class=g9 color=666666>네이버 쇼핑 상품DB URL 버전이 업그레이드(1.0 → 2.0) 되었습니다.</font></div>
-<div style="padding-top:5"><font class=g9 color=666666>업그레이드된 버전 변경관련 유의사항 입니다. 반드시 확인하신 후 변경해 주시길 바랍니다.</font></div>
-<div style="padding-top:5"><font class=g9 color=666666>1) 네이버 쇼핑 1.0 사용 상점이 버전 변경을 원하지 않는 경우</font></div>
-<div style="padding-top:5"><font class=g9 color=666666>&nbsp;&nbsp;&nbsp;&nbsp;- 기존의 사용하시던 1.0버전으로도 네이버 쇼핑 서비스를 이용하실 수 있습니다.</font></div>
-<div style="padding-top:5"></div>
-<div style="padding-top:5"><font class=g9 color=666666>2) 네이버 쇼핑 1.0 고객이 2.0으로 변경하고자 하는 경우</font></div>
-<div style="padding-top:5"><font class=g9 color=666666>&nbsp;&nbsp;&nbsp;&nbsp;- 네이버 쇼핑 2.0 으로 변경이 가능합니다.</font></div>
-<div style="padding-top:5"><font class=g9 color=666666>&nbsp;&nbsp;&nbsp;&nbsp;단, 상점의 네이버 쇼핑 버전과 네이버 쇼핑에 설정된 EP버전이 동일해야 합니다. </font><font color="#bf0000"><U>동일하게 설정되지 않은 경우 상품 Data가 모두 삭제됩니다.</U></font></div>
+<div style="padding-top:7"><font class=g9 color=666666>네이버 쇼핑 상품DB URL 버전이 업그레이드(2.0 → 3.0) 되었습니다.</font></div>
+<div style="padding-top:5"><font class=g9 color=666666>업그레이드된 버전 변경관련 유의사항 입니다. 반드시 확인하신 후 변경해 주시길 바랍니다.</font></div><br>
+<div style="padding-top:5"><b>1) 기존 버전(v1.0, v2.0) 이용 고객의 경우 2017년 8월 18일까지 정상적으로 이용하실 수 있습니다.</b></font></div>
+<div style="padding-top:5"><font class=g9 color=666666>&nbsp;&nbsp;&nbsp;&nbsp;- 2017년 8월 18일까지는 기존의 사용하시던 1.0, 2.0 버전으로도 네이버 쇼핑 서비스를 정상적으로 이용하실 수 있습니다.</font></div><br>
+<div style="padding-top:5"><b>2) 단, 2017년 8월 18일 이후에는 기존 버전 (v1.0, v2.0)의 서비스가 종료되므로 해당 일자 이전에 v3.0으로 버전을 변경하여야 합니다.</b></font></div>
 <div style="padding-top:5"><font class=g9 color=666666>&nbsp;&nbsp;&nbsp;&nbsp;*버전 변경 방법*&nbsp;</font></div>
-<div style="padding-top:5"><font class=g9 color=666666>&nbsp;&nbsp;&nbsp;&nbsp;먼저 네이버 쇼핑파트너존 > 상품관리 > 업데이트 현황 > 쇼핑몰 상품DB(EP) URL에서 2.0 으로 직접 설정할 수 있습니다.<a href="http://adadmin.shopping.naver.com/login/login_start" target="_blank">[설정하기]</a></font></div>
-<div style="padding-top:5"><font class=g9 color=666666>&nbsp;&nbsp;&nbsp;&nbsp;네이버에서 2.0 으로 변경한 후 고도 솔루션 관리자 페이지에서도 2.0 으로 변경을 해주셔야 합니다. 관련문의 : 고도 마케팅팀 02-567-3719</font></div>
-<div style="padding-top:5"><font class=g9 color=666666>3) 네이버 쇼핑 2.0 버전 사용 시 상품 이미지 전송</font></div>
-<div style="padding-top:5"><font class=g9 color=666666>
-	&nbsp;&nbsp;&nbsp;&nbsp;- 전송 이미지 : 등록된 상품의 "확대(원본)이미지"를 전송함.(단, "확대(원본)이미지"가 없는 경우 "상세이미지"로 대체하여 전송.<br/>
-	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"상세이미지"도 없는 경우 네이버 쇼핑 상품등록이 되지 않습니다.)
-</font></div>
-<div style="padding-top:5"><font class=g9 color=666666>
-	&nbsp;&nbsp;&nbsp;&nbsp;- 이미지 사이즈 : 최소 300 * 300 pixels 이상(권장 500 * 500 pixels 이상), 최대 1200 * 1200 pixels 이하(1MB 미만)
-</font></div>
-<div style="padding-top:5"><font class=g9 color=666666>&nbsp;&nbsp;&nbsp;&nbsp;- 이미지 타입 : JPEG</font></div>
-<div style="padding-top:5"><font class=g9 color=666666>&nbsp;&nbsp;&nbsp;&nbsp;- 확대(원본)이미지와 상세이미지가 등록되지 않은 상품은 네이버 쇼핑에 전달되지 않습니다.</font></div>
-<div style="padding-top:5"><font class=g9 color=666666>&nbsp;&nbsp;&nbsp;&nbsp;- 추가사항 : 여백 최소화 및 이미지 중앙 정렬하여 생성</font></div>
-<div style="padding-top:5"><font class=g9 color=666666>
-	&nbsp;&nbsp;&nbsp;&nbsp;※ 위에서 제시한 이미지 사이즈, 용량, 타입이 맞지 않거나 주목 효과를 위해 상품의 이미지와 관련이 없는 외곽라인, 도형삽입,<br/>
-	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;인위적인 마크, 텍스트 등이 포함되어 있는 이미지는 허용하지 않으며, 네이버 쇼핑에서 삭제 처리 될 수 있으니 주의하여 주시기 바랍니다.
-</font></div>
+<div style="padding-top:5"><font class=g9 color=666666>&nbsp;&nbsp;&nbsp;&nbsp;먼저 네이버 쇼핑파트너존 > 상품관리 > 업데이트 현황 > 쇼핑몰 상품DB(EP) URL에서 3.0 으로 직접 설정합니다.<a href="https://adcenter.shopping.naver.com/member/login/form.nhn" target="_blank"><font color=blue>[설정하기]</font></a></font></div>
+<div style="padding-top:5"><font class=g9 color=666666>&nbsp;&nbsp;&nbsp;&nbsp;네이버에서 3.0 으로 변경한 후 고도 솔루션 관리자 페이지에서도 3.0 으로 변경을 해주셔야 합니다. 관련문의 : 고도 마케팅팀 02-567-3719</font></div>
+<div style="padding-top:5"><font class=g9 color=666666>&nbsp;&nbsp;&nbsp;&nbsp;※ 상점의 네이버 쇼핑 버전과 네이버 쇼핑에 설정된 EP버전이 동일해야 합니다. <font color=red><u>동일하게 설정되지 않은 경우 상품 Data 수신에 오류가 발생합니다.</u></font></font></div><br>
+<div style="padding-top:5"><b>3) 신규 가입자는 v3.0(신규)로 설정하여 주시기 바랍니다.</b></font></div>
 </td></tr>
 </table>
 
@@ -215,7 +199,7 @@ list($grpnm,$grpdc) = $db->fetch("select grpnm,dc from ".GD_MEMBER_GRP." where l
 </tr>
 <tr>
 	<td>네이버 쇼핑<br/>버전설정</td>
-	<td class="noline"><input type="radio" name="naver_version" value="1" <?=$checked['naver_version']['1']?> <?=$checked['naver_version']['']?> onclick="version();">기존(v1.0)&nbsp;&nbsp;<input type="radio" name="naver_version" value="2" <?=$checked['naver_version']['2']?> onclick="version();">신규(v2.0) &nbsp; <span class="extext" style="font-weight:bold">버전설정 안내문구를 반드시 읽어주시기 바랍니다.</span></td>
+	<td class="noline"><input type="radio" name="naver_version" value="1" <?=$checked['naver_version']['1']?> onclick="version();">v1.0(기존)&nbsp;&nbsp;<input type="radio" name="naver_version" value="2" <?=$checked['naver_version']['2']?> onclick="version();">v2.0(기존)&nbsp;&nbsp;<input type="radio" name="naver_version" value="3" <?=$checked['naver_version']['3']?> <?=$checked['naver_version']['']?> onclick="version();">v3.0(신규) &nbsp; <span class="extext" style="font-weight:bold">버전설정 안내문구를 반드시 읽어주시기 바랍니다.</span></td>
 </tr>
 <? if ($outsideServer === false) { ?>
 <tr id="auto_create">
@@ -268,7 +252,8 @@ list($grpnm,$grpdc) = $db->fetch("select grpnm,dc from ".GD_MEMBER_GRP." where l
 </tr>
 <tr>
 	<td>네이버 쇼핑<br />무이자할부정보</td>
-	<td><input type=text name=partner[nv_pcard] value="<?=$partner[nv_pcard]?>" class=lline></td>
+	<td><input type=text name=partner[nv_pcard] value="<?=$partner[nv_pcard]?>" class=lline>
+	<div class="extext">예) 기존 버전(v1.0, 2.0) : 삼성3/현대3/국민6<br/>&nbsp;&nbsp;&nbsp;신규 버전(v3 . 0) : 삼성카드^2~3|현대카드^2~3|KB국민카드^2~6</div></td>
 </tr>
 <tr>
 	<td>네이버 쇼핑<br />상품명 머릿말 설정</td>
@@ -468,7 +453,8 @@ list($grpnm,$grpdc) = $db->fetch("select grpnm,dc from ".GD_MEMBER_GRP." where l
 	<img src="../img/btn_naver_view.gif" align=absmiddle></a><br>
 	<font color="57a300">[요약상품]</font> <a href="../../partner/naver.php?mode=summary" target=_blank>
 	<font class=ver8>http://<?=$_SERVER['HTTP_HOST'].$cfg[rootDir]?>/partner/naver.php?mode=summary</font>
-	<img src="../img/btn_naver_view.gif" align=absmiddle></a>
+	<img src="../img/btn_naver_view.gif" align=absmiddle></a><br><br>
+	<div class="extext">[요약상품]의 경우 기존 EP 버전(v1.0,v2.0)에서만 사용하는 기능으로 ‘v3.0(신규)’ 설정 시 사용하지 않습니다.</span>
 	</td>
 </tr>
 <tr><td colspan=12 class=rndline></td></tr>
@@ -531,7 +517,7 @@ function version() {
 	if (f.naver_version[0].checked) {
 		document.getElementById('auto_create').style.display = "none";
 	}
-	else if (f.naver_version[1].checked) {
+	else {
 		document.getElementById('auto_create').style.display = "";
 	}
 }

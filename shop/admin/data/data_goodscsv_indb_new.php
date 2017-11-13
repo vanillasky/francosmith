@@ -53,6 +53,23 @@ else { // 화일이 있으면
 		'optnm2',
 		'memo',
 		'naver_event',
+		'use_mobile_img',
+		'img_w',
+		'img_x',
+		'img_y',
+		'img_z',
+		'img_pc_w',
+		'img_pc_x',
+		'img_pc_y',
+		'img_pc_z',
+		'naver_import_flag',
+		'naver_product_flag',
+		'naver_age_group',
+		'naver_gender',
+		'naver_attribute',
+		'naver_search_tag',
+		'naver_category',
+		'naver_product_id',
 	);
 
 	$columns = array_intersect( array_keys($header), $availableColumns);

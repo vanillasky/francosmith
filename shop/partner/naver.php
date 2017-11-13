@@ -17,6 +17,12 @@ if($partner['naver_version'] == '2'){
 	}
 	exit;
 }
+else if ($partner['naver_version'] == '3') {
+	if(!headers_sent()){
+		header("Location:./naver3_".$_GET['mode'].".php");exit;
+	}
+	exit;
+}
 if($_GET[mode] != "new"){
 	if(is_file("../conf/engine/naver_".$_GET[mode].".php")){
 		$handle = fopen("../conf/engine/naver_".$_GET[mode].".php", "r");

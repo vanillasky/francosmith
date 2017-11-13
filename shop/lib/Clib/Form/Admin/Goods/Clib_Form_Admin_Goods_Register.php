@@ -35,8 +35,11 @@ class Clib_Form_Admin_Goods_Register extends Clib_Form_Abstract
 			'default_value' => 'N',
 			'value' => array(
 				'신상품' => 'N',
-				'중고상품' => 'U',
-				'반품/재고상품' => 'R'
+				'중고' => 'U',
+				'리퍼' => 'P',
+				'전시' => 'E',
+				'반품' => 'R',
+				'스크래치' => 'S'
 			)
 		));
 
@@ -298,6 +301,60 @@ class Clib_Form_Admin_Goods_Register extends Clib_Form_Abstract
 		));
 
 		$this->input('naver_event');
+		$this->input('hashtag', array(
+				'style' => 'width:150px; border: none; height: 16px;',
+				'maxlength' => '20',
+				'class' => 'hashtagInputListSearch',
+		));
+		
+		$this->select('naver_import_flag', array(
+				'default_value' => '',
+				'value' => array(
+						'- 목록보기 -'=> '',
+						'해외구매대행' => '1',
+						'병행수입' => '2',
+						'주문제작' => '3'
+				)
+		));
+		
+		$this->select('naver_product_flag', array(
+				'default_value' => '',
+				'value' => array(
+						'- 목록보기 -'=> '',
+						'도매' => '1',
+						'렌탈' => '2',
+						'대여' => '3',
+						'할부' => '4',
+						'예약판매' => '5',
+						'구매대행' => '6'
+				)
+		));
+		
+		$this->radio('naver_age_group', array(
+				'default_value' => '0',
+				'value' => array(
+						'성인' => '0',
+						'청소년' => '1',
+						'아동' => '2',
+						'유아' => '3'
+				)
+		));
+		
+		$this->select('naver_gender', array(
+				'default_value' => '',
+				'value' => array(
+						'- 목록보기 -'=> '',
+						'남성' => '1',
+						'여성' => '2',
+						'남여공용' => '3'
+				)
+		));
+		
+		$this->input('naver_attribute');
+		$this->input('naver_search_tag');
+		$this->input('naver_category');
+		$this->input('naver_product_id');
 	}
-
+		
 }
+		

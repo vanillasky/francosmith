@@ -25,17 +25,25 @@ class naverPartner extends Partner
 			chmod($dirPath,0707);
 		}
 
-		$this->tmp_filename = $dirPath.'/naver2_tmp.txt';
-		$this->new_filename = $dirPath.'/naver2_new.txt';
-		$this->old_filename = $dirPath.'/naver2_old.txt';
-		$this->offset = 200000;
-		$this->goods_cnt = 0;
-		$this->page_cnt = 1;
-
 		if (!$partner) {
 			@include dirname(__FILE__) . "/../conf/partner.php";
 		}
 		$this->partner = $partner;
+		
+		if ($this->partner['naver_version'] == '2') {
+			$this->tmp_filename = $dirPath.'/naver2_tmp.txt';
+			$this->new_filename = $dirPath.'/naver2_new.txt';
+			$this->old_filename = $dirPath.'/naver2_old.txt';
+		}
+		else if ($this->partner['naver_version'] == '3') {
+			$this->tmp_filename = $dirPath.'/naver3_tmp.txt';
+			$this->new_filename = $dirPath.'/naver3_new.txt';
+			$this->old_filename = $dirPath.'/naver3_old.txt';
+		}
+		
+		$this->offset = 200000;
+		$this->goods_cnt = 0;
+		$this->page_cnt = 1;
 	}
 
 	/*
@@ -317,7 +325,7 @@ class naverPartner extends Partner
 		global $db;
 		$columns = array();
 		$naverColumns = array (
-			'goodsno', 'goodsnm','goods_price','goods_reserve', 'origin','maker', 'brandno', 'delivery_type', 'goods_delivery', 'img_l', 'img_m', 'use_emoney', 'open_mobile', 'use_goods_discount', 'extra_info', 'naver_event'
+			'goodsno', 'goodsnm','goods_price','goods_reserve', 'origin','maker', 'brandno', 'delivery_type', 'goods_delivery', 'img_l', 'img_m', 'use_emoney', 'open_mobile', 'use_goods_discount', 'extra_info', 'naver_event', 'goods_status', 'min_ea', 'sales_unit', 'strprice','use_only_adult','exclude_member_discount', 'naver_import_flag', 'naver_product_flag', 'naver_age_group', 'naver_gender', 'naver_attribute', 'naver_search_tag', 'naver_category', 'naver_product_id'
 			);
 
 		$query = "desc gd_goods";
@@ -531,8 +539,13 @@ class naverPartner extends Partner
 	 */
 	function epCreatePrint()
 	{
-		// EP 파일 생성
-		$result = $this->allEp();
+	// EP 파일 생성
+		if ($this->partner['naver_version'] == '2') {
+			$result = $this->allEp();
+		}
+		else if ($this->partner['naver_version'] == '3') {
+			$result = $this->allEp3();
+		}
 
 		// 파일쓰기 도중 종료시 old파일 출력
 		if ($result === false) {
@@ -906,6 +919,413 @@ class naverPartner extends Partner
 		}
 
 		return $categoryList;
+	}
+	
+	/*
+	 * 전체 EP 3.0 구성
+	 * @return bool
+	 */
+	function allEp3()
+	{
+		global $db,$cfg,$cfgCoupon,$set,$cfgMobileShop;
+	
+		if (!$cfgCoupon) {
+			@include dirname(__FILE__) . "/../conf/coupon.php";
+		}
+		if (!$set) {
+			@include dirname(__FILE__) . "/../conf/config.pay.php";
+		}
+		if (!$cfgMobileShop) {
+			@include dirname(__FILE__) . "/../conf/config.mobileShop.php";
+		}
+	
+		$domain = '';
+		if ($_SERVER['HTTP_HOST'] != '') {
+			$domain = $_SERVER['HTTP_HOST'];
+		}
+		else if($cfg['shopUrl']){
+			$domain = preg_replace('/http(s)?:\/\//' , '', $cfg['shopUrl']);
+		}
+		else {
+			return false;
+		}
+	
+		$url = "http://".$domain.$cfg['rootDir'];
+	
+		$columns = $this->checkColumnNaver();		// EP 생성에 필요한 컬럼 확인
+		$couponData = $this->getCouponInfo();		// 쿠폰
+		$memberdc = $this->getBasicDc();			// 회원할인
+		$catnm = $this->getCatnm();					// 카테고리명
+		$brandnm = $this->getBrand();				// 브랜드명
+		$discountData = $this->getDiscount();		// 상품할인
+		$review = $this->getReview();				// 리뷰 개수
+		$query = $this->getGoodsSql($columns);		// 상품 출력
+		$res = $db->query($query);
+	
+		//파일 초기화
+		$this->naverFileDrop("",'',"w");
+	
+		while ($v = $db->fetch($res,1)){
+			// 499000개 상품수 제한
+			if ($this->goods_cnt == 499000) break;
+	
+			// 탭문자 공백으로 치환
+			$v = str_replace(chr(9),' ',$v);
+			$this->partner['nv_pcard'] = str_replace(chr(9),' ',$this->partner['nv_pcard']);
+			$this->partner['goodshead'] = str_replace(chr(9),' ',$this->partner['goodshead']);
+			$this->partner['eventCommonText'] = str_replace(chr(9),' ',$this->partner['eventCommonText']);
+	
+			// 가격대체문구 체크
+			if ($v['strprice']) continue;
+	
+			// 이미지
+			$img_url = '';
+			$img_name = '';
+			if (!$v['img_l'] || $v['img_l'] == '' || $v['img_l'] == '확대(원본)이미지') {
+				if (!$v['img_m'] || $v['img_m'] == '' || $v['img_m'] == '상세이미지') {
+					continue;
+				}
+				else {
+					$img_name = $v['img_m'];
+				}
+			}
+			else {
+				$img_name = $v['img_l'];
+			}
+			$img_url = $this->getGoodsImg($img_name,$url);
+	
+			// 카테고리
+			$length = strlen($v['category'])/3;
+			for ($i=1;$i<=4;$i++) {
+				$tmp=substr($v['category'],0,$i*3);
+				$v['cate'.$i]=($i<=$length) ? strip_tags($catnm[$tmp]) : '';
+			}
+	
+			// 상품별 할인
+			$goodsDiscount = 0;
+			if ($v['use_goods_discount'] == '1') {
+				$goodsDiscount = $this->getDiscountPrice($discountData,$v['goodsno'],$v['goods_price']);
+			}
+	
+			$couponVersion = false; // 쿠폰 버전
+			if ($cfgCoupon['coupon'] && is_file(dirname(__FILE__).'/../data/skin/'.$cfg['tplSkin'].'/proc/popup_coupon_division.htm')) {
+				$couponVersion = true;
+			}
+	
+			// 회원할인
+			$dcprice = 0;
+			if ($this->partner['unmemberdc'] == 'N' && $v['exclude_member_discount'] != 1) {	// 회원할인적용여부
+				if (is_array($memberdc) === true) {
+					$mdc_exc = chk_memberdc_exc($memberdc,$v['goodsno']); // 회원할인 제외상품 체크
+					if ($mdc_exc === false) $dcprice = getDcprice($v['goods_price'],$memberdc['dc'].'%');
+				}
+			}
+	
+			// 쿠폰 할인 적용 여부
+			$coupon = 0;		// 쿠폰 할인 금액
+			$couponReserve = 0;	// 적립 쿠폰
+	
+			if ($cfgCoupon['use_yn'] && $this->partner['uncoupon'] == 'N') {
+				list($coupon,$couponReserve) = $this->getCouponPrice($couponData, $v['category'], $v['goodsno'], $v['goods_price']);
+				if ($coupon > $v['goods_price'] - $dcprice - $goodsDiscount && $couponVersion === true) $coupon = $v['goods_price'] - $dcprice - $goodsDiscount;
+			}
+	
+			// 쿠폰 회원할인 중복 할인 체크
+			if ($coupon > 0 && $dcprice > 0) {
+				if ($cfgCoupon['range'] == 2) $dcprice = 0;
+				if ($cfgCoupon['range'] == 1) {
+					$coupon = 0;
+				}
+			}
+	
+			// 노출 가격
+			$price = 0;
+			$price = $v['goods_price'] - $dcprice - $goodsDiscount;
+	
+			// 최소구매수량 * 단위 가격
+			if ($v['min_ea'] > 0) {
+				$price = $price * $v['min_ea'];
+			}
+			else if ($v['min_ea'] == 0 && $v['sales_unit'] > 0) {
+				$price = $price * $v['sales_unit'];
+			}
+	
+			$price = $price - $coupon;
+			if ($price < 1) continue;
+	
+			// 배송비
+			$deliv = $this->getDeliveryPrice($v,$price);
+	
+			// 추가 이미지 URL
+			$addImgUrl = '';
+			if ($v['img_m']) {
+				$addImgUrl = explode('|',$v['img_m']);
+				for ($i=0; $i<count($addImgUrl); $i++) {
+					if(!preg_match('/^http(s)?:\/\//',$addImgUrl[$i])) $addImgUrl[$i] = $url.'/data/goods/'.$addImgUrl[$i];
+				}
+				$addImgUrl = implode('|',$addImgUrl);
+			}
+	
+			// 적립금
+			$point = 0;
+			if ($v['use_emoney']=='0') {
+				if (!$set['emoney']['chk_goods_emoney']) {
+					if ($set['emoney']['goods_emoney']) {
+						$dc=$set['emoney']['goods_emoney']."%";
+						$tmp_price = $v['goods_price'];
+						if ($set['emoney']['cut']) $po = pow(10,$set['emoney']['cut']);
+						else $po = 100;
+						$tmp_price = (substr($dc,-1)=="%") ? $tmp_price * substr($dc,0,-1) / 100 : $dc;
+						$point =  floor($tmp_price / $po) * $po;
+	
+					}
+				}
+				else {
+					$point = $set['emoney']['goods_emoney'];
+				}
+			}
+			else {
+				$point = $v['goods_reserve'];
+			}
+			$point += $couponReserve;
+	
+			// 상품 필수 정보
+			$extra_info = gd_json_decode(stripslashes($v['extra_info']));
+			$dlvDesc = '';
+			$addPrice = '';
+			if (is_array($extra_info)) {
+				foreach($extra_info as $key=>$val) {
+					if($val['title'] == '배송 · 설치비용'){
+						$dlvDesc = $val['desc'];
+					}
+					if($val['title'] == '추가설치비용'){
+						$addPrice = $val['desc'];
+					}
+				}
+			}
+	
+			// 브랜드명 가져오기
+			$v['brandnm'] = $brandnm[$v['brandno']];
+	
+			// 상품명에 머릿말 조합
+			$v['goodsnm'] = $this->getGoodsnm($this->partner,$v);
+	
+			// 이벤트
+			$event = '';
+			if ($this->partner['naver_event_common'] === 'Y' && empty($this->partner['eventCommonText']) === false) {	// 공통 문구
+				$event = $this->partner['eventCommonText'];
+			}
+	
+			if ($this->partner['naver_event_goods'] === 'Y' && empty($v['naver_event']) === false) {	// 상품별 문구
+				if (empty($event) === false) $event .= ' , ';
+				$event .= $v['naver_event'];
+			}
+			$v['event'] = strip_tags($event);
+	
+			// 상품상태
+			switch ($v['goods_status']) {
+				case 'N':
+					$v['goods_status'] = '신상품';
+					break;
+				case 'U':
+					$v['goods_status'] = '중고';
+					break;
+				case 'P':
+					$v['goods_status'] = '리퍼';
+					break;
+				case 'E':
+					$v['goods_status'] = '전시';
+					break;
+				case 'R':
+					$v['goods_status'] = '반품';
+					break;
+				case 'S':
+					$v['goods_status'] = '스크래치';
+					break;
+				default :
+					$v['goods_status'] = '';
+					break;
+			}
+	
+			// 수입 및 제작 여부
+			$import_flag = '';
+			$parallel_import = '';
+			$naver_order_made = '';
+			switch ($v['naver_import_flag']) {
+				case '1':
+					$import_flag = 'Y';
+					break;
+				case '2':
+					$parallel_import = 'Y';
+					break;
+				case '3':
+					$naver_order_made = 'Y';
+					break;
+				default :
+					break;
+			}
+	
+			// 판매방식 구분
+			switch ($v['naver_product_flag']) {
+				case '1':
+					$v['naver_product_flag'] = '도매';
+					break;
+				case '2':
+					$v['naver_product_flag'] = '렌탈';
+					break;
+				case '3':
+					$v['naver_product_flag'] = '대여';
+					break;
+				case '4':
+					$v['naver_product_flag'] = '할부';
+					break;
+				case '5':
+					$v['naver_product_flag'] = '예약판매';
+					break;
+				case '6':
+					$v['naver_product_flag'] = '구매대행';
+					break;
+				default :
+					$v['naver_product_flag'] = '';
+					break;
+			}
+	
+			// 주요 사용 연령대
+			switch ($v['naver_age_group']) {
+				case '1':
+					$v['naver_age_group'] = '청소년';
+					break;
+				case '2':
+					$v['naver_age_group'] = '아동';
+					break;
+				case '3':
+					$v['naver_age_group'] = '유아';
+					break;
+				default :
+					$v['naver_age_group'] = '성인';
+					break;
+			}
+	
+			// 주요 사용 성별
+			switch ($v['naver_gender']) {
+				case '1':
+					$v['naver_gender'] = '남성';
+					break;
+				case '2':
+					$v['naver_gender'] = '여성';
+					break;
+				case '3':
+					$v['naver_gender'] = '남여공용';
+					break;
+				default :
+					$v['naver_gender'] = '';
+					break;
+			}
+	
+			// 검색 태그 공백 제거
+			$v['naver_search_tag'] = str_replace(' ','',$v['naver_search_tag']);
+	
+			$mobile_url = '';
+			if (isset($cfgMobileShop) && $cfgMobileShop['useMobileShop'] == '1' && $domain) {
+				$mobile_url = 'http://'.$domain.'/m/goods/view.php?goodsno='.$v['goodsno'] .'&inflow=naver';
+			}
+	
+			// 첫줄 헤더 생성
+			if ($this->goods_cnt == 0) {
+				$epArray = array(
+						'id',							// 상품번호
+						'title',						// 상품명
+						'price_pc',						// 상품가격
+						'link',							// 상품 상세 페이지 URL
+						'image_link',					// 상품 이미지 URL
+						'mobile_link',					// 모바일 상세 페이지 URL
+						'add_image_link',				// 추가 이미지 URL (상세이미지)
+						'category_name1',				// 카테고리명 대분류
+						'category_name2',				// 카테고리명 중분휴
+						'category_name3',				// 카테고리명 소분류
+						'category_name4',				// 카테고리명 세분류
+						'naver_category',				// 네이버 카테고리 ID
+						'naver_product_id',				// 네이버 가격비교 페이지 ID
+						'condition',					// 상품상태
+						'import_flag',					// 해외구매대행 여부
+						'parallel_import',				// 병행수입 여부
+						'order_made',					// 주문제작상품
+						'product_flag',					// 판매방식 구분
+						'adult',						// 미성년자 구매불가 상품 여부
+						'brand',						// 브랜드
+						'maker',						// 제조사
+						'origin',						// 원산지
+						'event_words',					// 이벤트
+						'coupon',						// 쿠폰 할인 금액
+						'partner_coupon_download',		// 쿠폰 다운로드 필요 여부
+						'interest_free_event',			// 카드 무이자 할부 정보
+						'point',						// 적립금
+						'installation_costs',			// 별도 설치비 유무
+						'search_tag',					// 검색태그
+						'minimum_purchase_quantity',	// 최소구매수량
+						'review_count',					// 상품평 개수
+						'shipping',						// 배송비
+						'delivery_grade',				// 차등배송비 여부
+						'delivery_detail',				// 차등배송비 내용
+						'attribute',					// 상품속성
+						'age_group',					// 주 이용 고객층
+						'gender'						// 성별
+				);
+				if ($mobile_url == '') {
+					unset($epArray[5]);
+				}
+				$line_data = implode(chr(9),$epArray).chr(10);
+			}
+	
+			$line_data .= $v['goodsno'].chr(9);
+			$line_data .= $v['goodsnm'].chr(9);
+			$line_data .= $price.chr(9);
+			$line_data .= $url.'/goods/goods_view.php?goodsno='.$v['goodsno'].'&inflow=naver'.chr(9);
+			$line_data .= $img_url.chr(9);
+			$line_data .= ($mobile_url ? $mobile_url.chr(9) : '');
+			$line_data .= $addImgUrl.chr(9);							// 추가 이미지 URL
+			$line_data .= $v['cate1'].chr(9);							// 카테고리명 대분류
+			$line_data .= $v['cate2'].chr(9);							// 카테고리명 중분류
+			$line_data .= $v['cate3'].chr(9);							// 카테고리명 소분류
+			$line_data .= $v['cate4'].chr(9);							// 카테고리명 세분류
+			$line_data .= $v['naver_category'].chr(9);					// 네이버 카테고리 ID
+			$line_data .= $v['naver_product_id'].chr(9);				// 가격비교 페이지 ID
+			$line_data .= $v['goods_status'].chr(9);					// 상품상태
+			$line_data .= $import_flag.chr(9);							// 해외구매대행 여부
+			$line_data .= $parallel_import.chr(9);						// 병행수입 여부
+			$line_data .= $naver_order_made.chr(9);						// 주문제작상품
+			$line_data .= $v['naver_product_flag'].chr(9);				// 판매방식 구분
+			$line_data .= ($v['use_only_adult'] ? 'Y' : '').chr(9);		// 미성년자 구매불가 상품 여부
+			$line_data .= $v['brandnm'].chr(9);							// 브랜드
+			$line_data .= $v['maker'].chr(9);							// 제조사
+			$line_data .= $v['origin'].chr(9);							// 원산지
+			$line_data .= $v['event'].chr(9);							// 이벤트
+			$line_data .= (($coupon == 0)? '':$coupon).chr(9);			// 쿠폰 할인 금액
+			$line_data .= ($coupon > 0 ? 'Y' : '').chr(9);				// 쿠폰 다운로드 필요 여부
+			$line_data .= $this->partner['nv_pcard'].chr(9);			// 카드 무이자 할부 정보
+			$line_data .= ($point > 0 ? '쇼핑몰자체포인트^'.$point : '').chr(9);		// 적립금
+			$line_data .= ($addPrice ? 'Y' : '').chr(9);				// 별도 설치비 유무
+			$line_data .= $v['naver_search_tag'].chr(9);				// 검색태그
+			$line_data .= $v['min_ea'].chr(9);							// 최소구매수량
+			$line_data .= ($review[$v['goodsno']]?$review[$v['goodsno']]:0).chr(9);	// 상품평 개수
+			$line_data .= $deliv.chr(9);								// 배송비
+			$line_data .= ($dlvDesc ? 'Y' : '').chr(9);					// 차등배송비 여부
+			$line_data .= ($dlvDesc ? $dlvDesc : '').chr(9);			// 차등배송비 내용
+			$line_data .= $v['naver_attribute'].chr(9);					// 상품 속성
+			$line_data .= $v['naver_age_group'].chr(9);					// 주 이용 고객층
+			$line_data .= $v['naver_gender']		;					// 성별
+			$line_data .= chr(10);
+	
+			$fw = '';
+			$fw = $this->naverFileDrop($line_data,$this->goods_cnt);
+			unset($v);
+			unset($line_data);
+			if ($fw === false) return false;
+			$this->goods_cnt++;
+		}
+	
+		$this->naverFileMerge($this->page_cnt);
+		return true;
 	}
 }
 ?>
