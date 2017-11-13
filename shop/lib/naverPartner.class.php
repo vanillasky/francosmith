@@ -326,7 +326,7 @@ class naverPartner extends Partner
 		$columns = array();
 		$naverColumns = array (
 			'goodsno', 'goodsnm','goods_price','goods_reserve', 'origin','maker', 'brandno', 'delivery_type', 'goods_delivery', 'img_l', 'img_m', 'use_emoney', 'open_mobile', 'use_goods_discount', 'extra_info', 'naver_event', 'goods_status', 'min_ea', 'sales_unit', 'strprice','use_only_adult','exclude_member_discount', 'naver_import_flag', 'naver_product_flag', 'naver_age_group', 'naver_gender', 'naver_attribute', 'naver_search_tag', 'naver_category', 'naver_product_id'
-			);
+		);
 
 		$query = "desc gd_goods";
 		$column_name = array();
@@ -1277,13 +1277,16 @@ class naverPartner extends Partner
 				$line_data = implode(chr(9),$epArray).chr(10);
 			}
 	
+			// 변수 공백 제거
+			$v = array_map('trim',$v);
+			
 			$line_data .= $v['goodsno'].chr(9);
 			$line_data .= $v['goodsnm'].chr(9);
-			$line_data .= $price.chr(9);
-			$line_data .= $url.'/goods/goods_view.php?goodsno='.$v['goodsno'].'&inflow=naver'.chr(9);
-			$line_data .= $img_url.chr(9);
-			$line_data .= ($mobile_url ? $mobile_url.chr(9) : '');
-			$line_data .= $addImgUrl.chr(9);							// 추가 이미지 URL
+			$line_data .= trim($price).chr(9);
+			$line_data .= trim($url).'/goods/goods_view.php?goodsno='.$v['goodsno'].'&inflow=naver'.chr(9);
+			$line_data .= trim($img_url).chr(9);
+			$line_data .= ($mobile_url ? trim($mobile_url).chr(9) : '');
+			$line_data .= trim($addImgUrl).chr(9);						// 추가 이미지 URL
 			$line_data .= $v['cate1'].chr(9);							// 카테고리명 대분류
 			$line_data .= $v['cate2'].chr(9);							// 카테고리명 중분류
 			$line_data .= $v['cate3'].chr(9);							// 카테고리명 소분류
@@ -1291,29 +1294,29 @@ class naverPartner extends Partner
 			$line_data .= $v['naver_category'].chr(9);					// 네이버 카테고리 ID
 			$line_data .= $v['naver_product_id'].chr(9);				// 가격비교 페이지 ID
 			$line_data .= $v['goods_status'].chr(9);					// 상품상태
-			$line_data .= $import_flag.chr(9);							// 해외구매대행 여부
-			$line_data .= $parallel_import.chr(9);						// 병행수입 여부
-			$line_data .= $naver_order_made.chr(9);						// 주문제작상품
+			$line_data .= trim($import_flag).chr(9);					// 해외구매대행 여부
+			$line_data .= trim($parallel_import).chr(9);				// 병행수입 여부
+			$line_data .= trim($naver_order_made).chr(9);				// 주문제작상품
 			$line_data .= $v['naver_product_flag'].chr(9);				// 판매방식 구분
 			$line_data .= ($v['use_only_adult'] ? 'Y' : '').chr(9);		// 미성년자 구매불가 상품 여부
 			$line_data .= $v['brandnm'].chr(9);							// 브랜드
 			$line_data .= $v['maker'].chr(9);							// 제조사
 			$line_data .= $v['origin'].chr(9);							// 원산지
 			$line_data .= $v['event'].chr(9);							// 이벤트
-			$line_data .= (($coupon == 0)? '':$coupon).chr(9);			// 쿠폰 할인 금액
+			$line_data .= (($coupon == 0)? '':trim($coupon)).chr(9);	// 쿠폰 할인 금액
 			$line_data .= ($coupon > 0 ? 'Y' : '').chr(9);				// 쿠폰 다운로드 필요 여부
-			$line_data .= $this->partner['nv_pcard'].chr(9);			// 카드 무이자 할부 정보
-			$line_data .= ($point > 0 ? '쇼핑몰자체포인트^'.$point : '').chr(9);		// 적립금
+			$line_data .= trim($this->partner['nv_pcard']).chr(9);		// 카드 무이자 할부 정보
+			$line_data .= ($point > 0 ? '쇼핑몰자체포인트^'.trim($point) : '').chr(9);		// 적립금
 			$line_data .= ($addPrice ? 'Y' : '').chr(9);				// 별도 설치비 유무
 			$line_data .= $v['naver_search_tag'].chr(9);				// 검색태그
 			$line_data .= $v['min_ea'].chr(9);							// 최소구매수량
-			$line_data .= ($review[$v['goodsno']]?$review[$v['goodsno']]:0).chr(9);	// 상품평 개수
-			$line_data .= $deliv.chr(9);								// 배송비
+			$line_data .= ($review[$v['goodsno']]?trim($review[$v['goodsno']]):0).chr(9);	// 상품평 개수
+			$line_data .= trim($deliv).chr(9);							// 배송비
 			$line_data .= ($dlvDesc ? 'Y' : '').chr(9);					// 차등배송비 여부
-			$line_data .= ($dlvDesc ? $dlvDesc : '').chr(9);			// 차등배송비 내용
+			$line_data .= ($dlvDesc ? trim($dlvDesc) : '').chr(9);		// 차등배송비 내용
 			$line_data .= $v['naver_attribute'].chr(9);					// 상품 속성
 			$line_data .= $v['naver_age_group'].chr(9);					// 주 이용 고객층
-			$line_data .= $v['naver_gender']		;					// 성별
+			$line_data .= $v['naver_gender'];							// 성별
 			$line_data .= chr(10);
 	
 			$fw = '';
