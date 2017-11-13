@@ -111,7 +111,10 @@ if($_POST[idxs] == 'all'){
 		}
 	}
 }
-$cart->setOrder($_POST[idxs]);	// $_POST[idxs] 는 , 로 구분된 0 이상의 정수 또는 'all'
+
+if (preg_match('/\/order\/settle.php/',$_SERVER['HTTP_REFERER']) != 1) { // 결제하기 페이지에서 '이전으로' 버튼 클릭한 경우 setOrder 미실행 처리
+	$cart->setOrder($_POST[idxs]);	// $_POST[idxs] 는 , 로 구분된 0 이상의 정수 또는 'all'
+}
 
 if($_POST['mode'] != 'addItem' && is_array($_POST['goodsno']) == false){	//장바구니 주문하기에서 진열여부,판매종료 체크
 	chkOpenYn($cart,"D",-1);
