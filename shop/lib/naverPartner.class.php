@@ -482,6 +482,7 @@ class naverPartner extends Partner
 				WHERE
 					a.OPEN=1
 					AND !( a.runout = 1 OR ( a.usestock = 'o' AND a.usestock IS NOT NULL AND a.totstock < 1) )
+					AND a.naver_shopping_yn='Y'
 				ORDER BY
 					a.goodsno DESC ";
 		}
@@ -691,8 +692,13 @@ class naverPartner extends Partner
 
 		while($row = $db->fetch($result,1))
 		{
-			$query = "select a.goodsnm, b.price, a.maker, c.brandnm, a.sales_range_start, a.sales_range_end, d.category from ".GD_GOODS." as a left join ".GD_GOODS_OPTION." as b on a.goodsno=b.goodsno and go_is_deleted <> '1' and go_is_display = '1' left join ".GD_GOODS_BRAND." as c on a.brandno=c.sno left join ".GD_GOODS_LINK." as d on a.goodsno=d.goodsno where b.link=1 and a.goodsno='$row[mapid]'";
+			$query = "select a.goodsnm, b.price, a.maker, c.brandnm, a.sales_range_start, a.sales_range_end, a.naver_shopping_yn, d.category from ".GD_GOODS." as a left join ".GD_GOODS_OPTION." as b on a.goodsno=b.goodsno and go_is_deleted <> '1' and go_is_display = '1' left join ".GD_GOODS_BRAND." as c on a.brandno=c.sno left join ".GD_GOODS_LINK." as d on a.goodsno=d.goodsno where b.link=1 and a.goodsno='$row[mapid]'";
 			$_row = $db->fetch($query);
+
+			// 네이버 노출 설정
+			if ($_row['naver_shopping_yn'] != 'Y') {
+				continue;
+			}
 
 			// 판매 중지(기간 외 포함)인 경우 제외
 			if (($_row['sales_range_start'] > time() && time() > $_row['sales_range_end']) ||
@@ -1432,6 +1438,124 @@ class naverPartner extends Partner
 			$logMessage = ' [' . date('Y-m-d H:i:s') . '] ' . $message . PHP_EOL;
 			@error_log($logMessage, 3, $saveLogFileName);
 		}
+	}
+	
+	/*
+	 * 마이그레이션 여부 확인
+	 * @param void
+	 * @return Bool
+	 */
+	function migrationCheck()
+	{
+		global $db;
+	
+		$shoppingCategory = $this->checkNaverShoppingCategoryCount();
+		$naver_shopping_yn = $db->fetch("SHOW COLUMNS FROM ".GD_GOODS." LIKE 'naver_shopping_yn'",1);
+	
+		if ($shoppingCategory == false && $naver_shopping_yn) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+	
+	/*
+	 * 마이그레이션 naver_shopping_chk 세팅
+	 * @param int category : 카테고리 번호 , cnt : 리미트 카운터
+	 * @return String
+	 */
+	function naverShoppingChkSetting($category,$cnt)
+	{
+		global $db;
+		$limit = 5000;
+		$limitCount = $limit*$cnt;
+	
+		$this->runLog('Category No : '.$category.' Limit Start : '.$limitCount);
+	
+		$res = $db->query("select distinct goodsno from ".GD_GOODS_LINK." where category like '".$category."%' limit ".$limitCount.",".$limit);
+		while ($data=$db->fetch($res,1)) {
+			$db->query("update ".GD_GOODS." set naver_shopping_chk = 'I' where goodsno='".$data['goodsno']."'");
+		}
+	
+		// 더이상 변경할 상품이 없음.
+		if ($limit > $db->count_($res)) {
+			return false;
+		}
+	
+		return true;
+	}
+	
+	/*
+	 * 마이그레이션
+	 * @param int cnt : 리미트 카운터
+	 * @return bool
+	 */
+	function migration($cnt)
+	{
+		global $db;
+		$limit = 5000;
+		$limitCount = $limit*$cnt;
+	
+		$this->runLog('Limit Start : '.$limitCount);
+	
+		$res = $db->query("select goodsno from ".GD_GOODS." where naver_shopping_chk='N' limit ".$limitCount.",".$limit);
+		while ($data=$db->fetch($res,1)) {
+			$db->query("update ".GD_GOODS." set naver_shopping_yn = 'N' where goodsno='".$data['goodsno']."'");
+		}
+	
+		// 더이상 변경할 상품이 없음.
+		if ($limit > $db->count_($res)) {
+			$db->query("DELETE FROM gd_navershopping_category");
+			$this->runLog('NaverShopping_Migration_End');
+			return false;
+		}
+	
+		return true;
+	}
+	
+	/*
+	 * 노출 여부 설정
+	 * @param String goodsno : 상품 번호 , $Yn : naver_shopping_yn 값
+	 */
+	function shoppingGoodsSetting($goodsno,$Yn)
+	{
+		global $db;
+		$db->query("update ".GD_GOODS." set naver_shopping_yn = '".$Yn."' where goodsno='".$goodsno."'");
+	}
+	
+	/*
+	 * 카테고리 노출 현황 상품수
+	 * @param String category : 카테고리 번호 , naver_shopping_yn  : 상품 노출 조건
+	 * @return int
+	 */
+	function statusCategoryGoodsCount($category,$naver_shopping_yn)
+	{
+		global $db;
+		if ($naver_shopping_yn) {
+			$naver_shopping_yn = ' AND a.naver_shopping_yn="Y"';
+		}
+		$query= $this->getGoodsCount($category).$naver_shopping_yn;
+		list($data) = $db->fetch($query);
+	
+		return $data;
+	}
+	
+	/*
+	 * 카테고리 노출 현황 합계 상품수
+	 * @param naver_shopping_yn  : 상품 노출 조건
+	 * @return int
+	 */
+	function statusGoodsCount($naver_shopping_yn)
+	{
+		global $db;
+		if ($naver_shopping_yn) {
+			$naver_shopping_yn = ' AND a.naver_shopping_yn="Y"';
+		}
+		$query= $this->getGoodsAllCount().$naver_shopping_yn;
+		list($data) = $db->fetch($query);
+	
+		return $data;
 	}
 }
 ?>

@@ -70,6 +70,8 @@ else { // 화일이 있으면
 		'naver_search_tag',
 		'naver_category',
 		'naver_product_id',
+		'goods_delivery',
+		'naver_shopping_yn',
 	);
 
 	$columns = array_intersect( array_keys($header), $availableColumns);

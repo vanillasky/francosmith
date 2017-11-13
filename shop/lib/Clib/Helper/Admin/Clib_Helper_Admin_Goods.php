@@ -28,7 +28,8 @@ class Clib_Helper_Admin_Goods extends Clib_Helper_Front_Goods
 		else if ($params['indicate'] == 'event') {
 			// 이벤트
 
-			$collection->setEventFilter($params['sevent']);
+			if($params['gevent']) $collection->setEventGroupFilter($params['gevent']);
+			else $collection->setEventFilter($params['sevent']);
 		}
 		else {
 			// 기본 (검색)
@@ -98,6 +99,11 @@ class Clib_Helper_Admin_Goods extends Clib_Helper_Front_Goods
 				$collection->setBrandUnlinkedFilter();
 			}
 
+			//해시태그
+			if($params['hashtag']){
+				$collection->setHashtagFilter($params['hashtag']);
+			}
+
 			// 판매재고 검색
 			$collection->setStockFilter($params['stock_amount'], $params['stock_type']);
 
@@ -107,7 +113,8 @@ class Clib_Helper_Admin_Goods extends Clib_Helper_Front_Goods
 			// 아이콘
 			$collection->setIconFilter((array)$params['sicon']);
 
-
+			// 네이버 쇼핑 노출 여부
+			$collection->setNaverShoppingFilter($params['naver_shopping_yn']);
 
 		}
 

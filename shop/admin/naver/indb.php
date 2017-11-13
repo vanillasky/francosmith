@@ -69,18 +69,64 @@ switch ($_POST[mode]){
 			msg($message, -1);
 			exit;
 		}
-		
-		$saveResult = false;
-		$saveResult = $naver->saveDisplayCategory($_POST['category']);
-		if($saveResult === false){
+
+		if ($_POST['naver_shopping_yn'] == 1) {	// 검색된 상품
+			$_POST['param']['sword'] = iconv("UTF-8","EUC-KR",$_POST['param']['sword']);
+			$goodsHelper = Clib_Application::getHelperClass('admin_goods');
+			$goodsList = $goodsHelper->getGoodsCollection($_POST['param']);
+			$pg = $goodsList->getPaging();
+
+			foreach ($goodsList as $goods) {
+				$naver->shoppingGoodsSetting($goods['goodsno'],$_POST['searched']);
+			}
+
+			if ($pg->page['total'] == 1) {
+				echo 'end';
+				exit;
+			}
+
+			echo 'ok';
+			exit;
+		}
+		else {	// 체크된 상품
+			foreach($_POST['chk'] as $goods) {
+				$naver->shoppingGoodsSetting($goods,$_POST['checked']);
+			}
+			echo 'end';
+			exit;
+		}
+
+		break;
+
+	//네이버 쇼핑 마이그레이션
+	case 'naverShoppingMigration' :
+		$message = "마이그레이션을 실패하였습니다. 고객센터에 문의하여 주세요.";
+		$naver = new naverPartner();
+		if(!is_object($naver)){
 			msg($message, -1);
 			exit;
 		}
-		
+
+		if ($_POST['category']) {
+			$res = $naver->naverShoppingChkSetting($_POST['category'],$_POST['cnt']);
+		}
+		else {
+			$res = $naver->migration($_POST['cnt']);
+		}
+
+		if ($res == false) {
+			echo 'end';
+			exit;
+		}
+		else {
+			echo 'ok';
+			exit;
+		}
+
 		break;
 }
-		
+
 msg("정상적으로 저장되었습니다.");
-	
+
 ?>
 				

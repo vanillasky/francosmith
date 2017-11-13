@@ -317,6 +317,8 @@ while($rdopt = $db ->fetch($res)){
 <script type="text/javascript" src="../js/adm_tab.js?ts=<?=date('Ym')?>"></script>
 <script type="text/javascript" src="../proc/warning_disk_js.php?ts=<?=date('Ym')?>"></script><!-- don't delete -->
 <script type="text/javascript" src="../../lib/meditor/mini_editor.js?ts=<?=date('Ym')?>"></script>
+<link href="<?php echo $cfg['rootDir']; ?>/lib/js/jquery-ui-1.10.4.custom.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="<?php echo $cfg['rootDir']; ?>/proc/hashtag/hashtagControl.js?actTime=<?php echo time(); ?>"></script>
 
 <div id="enamoo-anchor-helper" style="display:none;"></div>
 
@@ -540,6 +542,28 @@ while($rdopt = $db ->fetch($res)){
 	</table>
 <!-- E: 상품기본정보 -->
 
+<!-- 상품 해시태그 -->
+	<h2 class="title">상품 해시태그 <span>상품에 해시태그를 넣어 같은 해시태그로 설정된 상품들을 구매자에게 보여줄 수 있습니다. <a href="javascript:manual('<?=$guideUrl?>board/view.php?id=product&no=3');"><img src="../img/btn_q.gif" border="0" align="absmiddle" hspace="2" /></a></span>
+	<a href="javascript:popup('http://guide.godo.co.kr/guide/php/ex_infoadd.html',650,610)"><img src="../img/icon_sample.gif" border="0" align=absmiddle hspace=2 /></a></h2>
+
+	<table class="admin-form-table">
+	<tr>
+		<th>해시태그</th>
+		<td colspan="3">
+			<div>
+				<div>
+					<div style="border: 1px #BDBDBD solid; width: 170px; float: left; height: 19px;">#<?php echo $form->getTag('hashtag'); ?></div>
+					<img src="../img/btn_add3.png" border="0" class="hand" id="hashtagAddBtn" alt="추가" align="absmiddle" style="margin-left: 3px;" />
+					<span class="extext">해시태그를 추가해주세요. (최대 20자, 최대 10개까지 등록 가능)</span>
+				</div>
+				<div id="hashtagListBox" style="height: 50px; overflow-y: auto; margin: 10px 0 10px 0; background-color: #f8f8f8; border: 1px solid #ccc; padding: 5px;"></div>
+			</div>
+			<p class="help">키보드 상하이동키 ↓↑ 해시태그 순서를 정렬할 수 있습니다. 정렬된 순서는 <a href="./adm_goods_hashtag_config.php" target="_blank">[해시태그 > 해시태그 관련 설정]</a> 페이지에서 ‘사용자설정’ 으로 설정 시 반영 됩니다.</p>
+		</td>
+	</tr>
+	</table>
+<!-- 상품 해시태그 -->
+
 <!-- S: 상품추가정보 -->
 	<h2 class="title">상품별 추가정보 <span>상품특성에 맞게 항목을 추가할 수 있습니다 (예. 감독, 저자, 출판사, 유통사, 상품영문명 등) <a href="javascript:manual('<?=$guideUrl?>board/view.php?id=product&no=3');"><img src="../img/btn_q.gif" border="0" align="absmiddle" hspace="2" /></a></span>
 	<a href="javascript:popup('http://guide.godo.co.kr/guide/php/ex_infoadd.html',650,610)"><img src="../img/icon_sample.gif" border="0" align=absmiddle hspace=2 /></a></h2>
@@ -617,7 +641,8 @@ while($rdopt = $db ->fetch($res)){
 			<label><?=$tags['과세']?>과세</label>
 			<label><?=$tags['비과세']?>면세</label>
 			<p class="help">
-			과세로 설정시에 세금계산서 신청/발행 됨
+			과세로 설정시에 세금계산서 신청/발행 됨<br>
+			<font style="color:#E6008D">주의! 설정 전, PG사에 비과세 신청 혹은 복합결제 신청 필수</font>
 			</p>
 		</td>
 		<th>소비자가격</th>
@@ -1461,7 +1486,7 @@ while($rdopt = $db ->fetch($res)){
 			<?php
 			$tags = $form->getTag('relationis');
 			?>
-			<label><?=$tags['자동']?>자동 <span class="help">(같은 분류 상품이 무작위로 보여짐)</span></label>
+			<label><?=$tags['자동']?>자동 <span class="help">(같은 분류 상품들 중에서 인기상품, 신상품 우선으로 추출되어 보여짐)</span></label>
 			<label><?=$tags['수동']?>수동 <span class="help">(아래 직접 선택등록)</span></label>
 		</td>
 	</tr>
@@ -1569,9 +1594,8 @@ while($rdopt = $db ->fetch($res)){
 	</tr>
 	</table>
 
-	<div id="image_attach_method_upload_wrap">
 	<!-- 이미지 직접 업로드 -->
-	<div class="boxed-help">
+	<div class="boxed-help" id="image_attach_method_upload_wrap_help">
 		<p>
 		처음 상품이미지를 등록하신다면, 반드시 <a href="../goods/imgsize.php" target=_blank><img src="../img/i_imgsize.gif" border=0 align=absmiddle /></a> 먼저 설정하세요!&nbsp;&nbsp;그리고 <a href="javascript:manual('<?=$guideUrl?>board/view.php?id=product&no=16')"><img src="../img/btn_resize_knowhow.gif" border=0 align=absmiddle /></a> 을 꼭 필독하세요!</font></a><br />
 		<span class="specialchar">※</span> 자동리사이즈는 확대(원본)이미지만 등록하면 나머지 이미지들은 자동으로 리사이징 되는 간편한 기능입니다. <br />
@@ -1579,6 +1603,19 @@ while($rdopt = $db ->fetch($res)){
 		</p>
 	</div>
 
+	<div class="boxed-help" id="image_attach_method_link_wrap_help">
+		<p>
+		이미지 호스팅에 등록된 이미지의 웹 주소를 복사하여 붙여 넣기 하시면 상품 이미지가 등록됩니다.<br />
+		ex) http://godohosting.com/img/img.jpg<br />
+		이미지의 파일명을 한글로 작성 시 일부 서비스(네이버쇼핑 등)를 정상적으로 이용하실 수 없습니다.
+		</p>
+		<p>
+		전체 URL 입력 제한은 1000자입니다. 쇼핑몰 운영에 참고하여 주시기 바랍니다.<br />
+		ex) 40자 URL 이미지 24개 이상 등록 시, 24개까지만 정상 등록됩니다.
+		</p>
+	</div>
+
+	<div id="image_attach_method_upload_wrap">
 	<table class="admin-form-table">
 	<?
 		foreach ($imgs as $imageType=>$v) {
@@ -1624,6 +1661,48 @@ while($rdopt = $db ->fetch($res)){
 	</tr>
 	<? } ?>
 	</table>
+	</div>
+
+	<div id="image_attach_method_link_wrap">
+	<table class="admin-form-table">
+		<? foreach ($urls as $k=>$v) { ?>
+		<tr>
+			<?php if($k == 'l') {?>
+			<th rowspan="5">PC 이미지</th>
+			<?php } ?>
+			<th>
+			<?=$str_img[$k]?>
+			</th>
+			<td>
+
+			<table id="tbl_<?=$k?>" class="nude">
+			<col valign=top span=2>
+			<? for ($i=0;$i<count($v);$i++){ ?>
+			<?
+				if ($v[$i] && ! preg_match('/^http:\/\//',$v[$i])) $v[$i] = 'http://'.$_SERVER['SERVER_NAME'].'/shop/data/goods/'.$v[$i];
+				?>
+			<tr>
+				<td>
+				<? if (!in_array($k,array("i","s","mobile"))){ if (!$i){ ?>
+				<a href="javascript:nsAdminGoodsForm.imageUpload.addfld('tbl_<?=$k?>')"><img src="../img/i_add.gif" align=absmiddle /></a>
+				<? } else { ?><font color=white>.........</font>
+				<? }} else { ?><font color=white>.........</font>
+				<? } ?>
+				<span><input type="text" name=url_<?=$k?>[] style="width:430px" onChange="nsAdminGoodsForm.imageUpload.preview(this)" value="<?=$v[$i]?>"></span>
+				</td>
+				<td>
+				<?=goodsimg($v[$i],20,"style='border:1 solid #ccc' onclick=popupImg('$v[$i]','../') class=hand",2)?>
+				</td>
+			</tr>
+			<? } ?>
+			</table>
+
+			</td>
+		</tr>
+
+		<? } ?>
+	</table>
+	</div>
 
 	<table class="admin-form-table" style="margin-top:5px">
 	<tr>
@@ -1642,7 +1721,7 @@ while($rdopt = $db ->fetch($res)){
 			$t = array_map("toThumb",$v);
 			$selected = $goods->getData('img_pc_' . $imageType);
 	?>
-	<tr>
+	<tr class="image_file">
 		<th>
 			<?=$str_mobile_img[$imageType]?>
 
@@ -1695,97 +1774,37 @@ while($rdopt = $db ->fetch($res)){
 		</td>
 	</tr>
 	<? } ?>
-	</table>
-	<!-- //이미지 직접 업로드 -->
-	</div>
-
-	<div id="image_attach_method_link_wrap">
-	<!-- 이미지 호스팅 URL 입력 -->
-		<div class="boxed-help">
-			<p>
-			이미지 호스팅에 등록된 이미지의 웹 주소를 복사하여 붙여 넣기 하시면 상품 이미지가 등록됩니다.<br />
-			ex) http://godohosting.com/img/img.jpg<br />
-			이미지의 파일명을 한글로 작성 시 일부 서비스(네이버쇼핑 등)를 정상적으로 이용하실 수 없습니다.
-			</p>
-		</div>
-
-		<table class="admin-form-table">
-		<? foreach ($urls as $k=>$v) { ?>
-		<tr>
-			<?php if($k == 'l') {?>
-			<th rowspan="5">PC 이미지</th>
-			<?php } ?>
-			<th>
-			<?=$str_img[$k]?>
-			</th>
-			<td>
-
-			<table id="tbl_<?=$k?>" class="nude">
-			<col valign=top span=2>
-			<? for ($i=0;$i<count($v);$i++){ ?>
-			<?
-				if ($v[$i] && ! preg_match('/^http:\/\//',$v[$i])) $v[$i] = 'http://'.$_SERVER['SERVER_NAME'].'/shop/data/goods/'.$v[$i];
-				?>
-			<tr>
-				<td>
-				<? if (!in_array($k,array("i","s","mobile"))){ if (!$i){ ?>
-				<a href="javascript:nsAdminGoodsForm.imageUpload.addfld('tbl_<?=$k?>')"><img src="../img/i_add.gif" align=absmiddle /></a>
-				<? } else { ?><font color=white>.........</font>
-				<? }} else { ?><font color=white>.........</font>
-				<? } ?>
-				<span><input type="text" name=url_<?=$k?>[] style="width:430px" onChange="nsAdminGoodsForm.imageUpload.preview(this)" value="<?=$v[$i]?>"></span>
-				</td>
-				<td>
-				<?=goodsimg($v[$i],20,"style='border:1 solid #ccc' onclick=popupImg('$v[$i]','../') class=hand",2)?>
-				</td>
-			</tr>
-			<? } ?>
-			</table>
-
-			</td>
-		</tr>
-
-		<? } ?>
-		</table>
-	
-		<table class="admin-form-table" style="margin-top:5px;">
-		<? foreach ($mobile_urls as $k=>$v) { ?>
-		<tr>
-			<?php if($k == 'z') {?>
-			<th rowspan="5">모바일 이미지</th>
-			<?php } ?>
-			<th>
+	<? foreach ($mobile_urls as $k=>$v) { ?>
+	<tr class="image_url">
+		<th>
 			<?=$str_mobile_img[$k]?>
-			</th>
+		</th>
+		<td>
+		<table id="tbl_mobile_<?=$k?>" class="nude">
+		<col valign=top span=2>
+		<? for ($i=0;$i<count($v);$i++){ ?>
+		<?
+			if ($v[$i] && ! preg_match('/^http:\/\//',$v[$i])) $v[$i] = 'http://'.$_SERVER['SERVER_NAME'].'/shop/data/goods/'.$v[$i];
+			?>
+		<tr>
 			<td>
-
-			<table id="tbl_mobile_<?=$k?>" class="nude">
-			<col valign=top span=2>
-			<? for ($i=0;$i<count($v);$i++){ ?>
-			<?
-				if ($v[$i] && ! preg_match('/^http:\/\//',$v[$i])) $v[$i] = 'http://'.$_SERVER['SERVER_NAME'].'/shop/data/goods/'.$v[$i];
-				?>
-			<tr>
-				<td>
-				<? if (!in_array($k,array("w","x"))){ if (!$i){ ?>
-				<a href="javascript:nsAdminGoodsForm.imageUpload.addfld('tbl_mobile_<?=$k?>')"><img src="../img/i_add.gif" align=absmiddle /></a>
-				<? } else { ?><font color=white>.........</font>
-				<? }} else { ?><font color=white>.........</font>
-				<? } ?>
-				<span><input type="text" name=url_<?=$k?>[] style="width:430px" onChange="nsAdminGoodsForm.imageUpload.preview(this)" value="<?=$v[$i]?>"></span>
-				</td>
-				<td>
-				<?=goodsimg($v[$i],20,"style='border:1 solid #ccc' onclick=popupImg('$v[$i]','../') class=hand",2)?>
-				</td>
-			</tr>
+			<? if (!in_array($k,array("w","x"))){ if (!$i){ ?>
+			<a href="javascript:nsAdminGoodsForm.imageUpload.addfld('tbl_mobile_<?=$k?>')"><img src="../img/i_add.gif" align=absmiddle /></a>
+			<? } else { ?><font color=white>.........</font>
+			<? }} else { ?><font color=white>.........</font>
 			<? } ?>
-			</table>
-
+			<span><input type="text" name=url_<?=$k?>[] style="width:430px" onChange="nsAdminGoodsForm.imageUpload.preview(this)" value="<?=$v[$i]?>"></span>
+			</td>
+			<td>
+			<?=goodsimg($v[$i],20,"style='border:1 solid #ccc' onclick=popupImg('$v[$i]','../') class=hand",2)?>
 			</td>
 		</tr>
 		<? } ?>
 		</table>
-	<!-- //이미지 호스팅 URL 입력 -->
+		</td>
+	</tr>
+	<? } ?>
+	</table>
 	</div>
 	<!--// 이미지 등록방식 선택 -->
 <!-- E: 상품 이미지 -->
@@ -2060,7 +2079,7 @@ while($rdopt = $db ->fetch($res)){
 				<td><label class="noline"><input type="radio" name="delivery_type" value="1" onclick="nsAdminGoodsForm.setDeliveryType();" <?=($goods->getData('delivery_type') == '1') ? 'checked' : ''?>> 무료배송</label> <span class="help">해당 상품의 배송비를 청구하지 않습니다.</span></td>
 			</tr>
 			<tr>
-				<td><label class="noline"><input type="radio" name="delivery_type" value="3" onclick="nsAdminGoodsForm.setDeliveryType();" <?=($goods->getData('delivery_type') == '3') ? 'checked' : ''?>> 착불 배송비</label> <span style="display:none;" id="gdi3">&nbsp;<input type="text" name="goods_delivery3" value="<?=$goods['goods_delivery']?>" size="8" onkeydown="onlynumber()">원 <span class="help">해당 상품의 배송비를 결제시 청구하지 않고, 상품 수취시 별도지급 하도록 합니다.</span></span></td>
+				<td><label class="noline"><input type="radio" name="delivery_type" value="3" onclick="nsAdminGoodsForm.setDeliveryType();" <?=($goods->getData('delivery_type') == '3') ? 'checked' : ''?>> 착불 배송비</label> <span style="display:none;" id="gdi3">&nbsp;<input type="text" name="goods_delivery3" value="<?=$goods['goods_delivery']?>" size="8" onkeydown="onlynumber()">원</span> <span class="help">해당 상품의 배송비를 결제시 청구하지 않고, 상품 수취시 별도지급 하도록 합니다. (배송비를 산정할 수 없는 경우를 제외하고, 착불 배송비를 1원 이상으로 입력하여 주시기 바랍니다.)</span></td>
 			</tr>
 			<tr>
 				<td><label class="noline"><input type="radio" name="delivery_type" value="4" onclick="nsAdminGoodsForm.setDeliveryType();" <?=($goods->getData('delivery_type') == '4') ? 'checked' : ''?>> 고정 배송비</label> <span style="display:none;" id="gdi4">&nbsp;<input type="text" name="goods_delivery4" value="<?=$goods['goods_delivery']?>" size="8" onkeydown="onlynumber()">원</span> <span class="help">해당 상품의 수량 및 주문금액이 늘어나도 하나의 배송비로 묶어서 청구됩니다.</span></td>
@@ -2117,6 +2136,20 @@ while($rdopt = $db ->fetch($res)){
 	<h2 class="title">네이버쇼핑 3.0 설정 <a href="javascript:manual('<?=$guideUrl?>board/view.php?id=product&no=3');"><img src="../img/btn_q.gif" border="0" align="absmiddle" hspace="2" /></a></h2>
 
 	<table class="admin-form-table" style="border:2px solid green;">
+	<tr>
+		<th>네이버쇼핑 노출 여부</th>
+		<td colspan="3">
+			<?
+			foreach ($form->getTag('naver_shopping_yn') as $label => $tag) {
+				echo sprintf('<label>%s%s</label> ',$tag, $label);
+			}
+			?>
+			<p class="help">
+			기존 네이버 쇼핑 설정 > 네이버 쇼핑 상품 노출 설정에서 노출 카테고리를 설정하였던 고객님들은 <a href="../naver/naver_shopping_setting.php" target="_blank">[네이버 쇼핑 상품 설정]</a>에서<br>
+			마이그레이션 후 해당 설정이 가능합니다.
+			</p>
+		</td>
+	</tr>
 	<tr>
 		<th>수입 및 제작 여부 <img src="../img/icons/icon_qmark.gif" style="vertical-align:middle;cursor:pointer;" class="godo-tooltip" tooltip="<p><span class=&quot;blue&quot;>해당 상품 필수 항목으로, 누락 시 네이버 클린프로그램이 적용되어 패널티 처리됩니다.</p>"></th>
 		<td>
@@ -2256,6 +2289,7 @@ while($rdopt = $db ->fetch($res)){
 </div>
 
 <script type="text/javascript">
+jQuery(document).ready(HashtagGoodsViewController);
 // onload events
 Event.observe(document, 'dom:loaded', function(){
 

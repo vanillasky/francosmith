@@ -70,6 +70,21 @@ class Clib_Form_Admin_Goods_Search extends Clib_Form_Abstract
 		));
 
 		$this->input('stock', array('style'=>'width:50px'));
+		
+		$this->input('hashtag', array(
+				'style' => 'width:150px; border: none; height: 16px;',
+				'maxlength' => '20',
+				'class' => 'hashtagInputListSearch',
+		));
+		
+		$this->radio('naver_shopping_yn', array(
+				'default_value' => '',
+				'value' => array(
+						'전체' => '',
+						'노출상품' => 'Y',
+						'미노출상품' => 'N'
+				)
+		));
 	}
 
 }

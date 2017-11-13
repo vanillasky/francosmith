@@ -209,6 +209,16 @@ class Clib_Collection_Admin_Goods extends Clib_Collection_Goods_Abstract
 
 	/**
 	 *
+	 * @param object $value
+	 * @return
+	 */
+	public function setEventGroupFilter($value)
+	{
+		$this->addFilter('goods_display.mode', 'eg' . $value);
+	}
+
+	/**
+	 *
 	 * @return
 	 */
 	public function setBrandUnlinkedFilter()
@@ -333,6 +343,20 @@ class Clib_Collection_Admin_Goods extends Clib_Collection_Goods_Abstract
 
 		$this->addExpressionFilter( implode(' OR ', $expression) );
 
+	}
+
+	//해시태그 검색
+	public function setHashtagFilter($hashtag)
+	{
+		$this->addFilter('goods_hashtag.hashtag', $hashtag, '=');
+	}
+
+	// 네이버 쇼핑 노출 여부
+	public function setNaverShoppingFilter($value)
+	{
+		if ($value != '') {
+			$this->addFilter('goods.naver_shopping_yn', $value);
+		}
 	}
 
 }

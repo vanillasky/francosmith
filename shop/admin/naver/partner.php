@@ -290,8 +290,9 @@ list($grpnm,$grpdc) = $db->fetch("select grpnm,dc from ".GD_MEMBER_GRP." where l
 </div>
 </form>
 
-<div class="title title_top">네이버 쇼핑 상품 노출 설정<span> 네이버 쇼핑에 노출할 상품을 설정합니다. <a href="javascript:manual('<?=$guideUrl?>board/view.php?id=marketing&no=2')"><img src="../img/btn_q.gif" border=0 align=absmiddle hspace=2></a></span></div>
-
+<div id="shoppingGoodsDiv" style="width:800px;">
+<div class="title title_top">네이버 쇼핑 상품 노출 설정<span> 네이버 쇼핑에 노출할 상품을 설정합니다. <a href="javascript:manual('<?=$guideUrl?>board/view.php?id=marketing&no=35')"><img src="../img/btn_q.gif" border=0 align=absmiddle hspace=2></a></span></div>
+<? if ($naver->migrationCheck() == false) { ?>
 <table border=4 bordercolor=#dce1e1 style="border-collapse:collapse; width: 800px;">
 <tr><td style="padding:7 0 10 10">
 <div style="padding-top:5"><b><font color="#bf0000">*필독*</div>
@@ -342,7 +343,15 @@ list($grpnm,$grpdc) = $db->fetch("select grpnm,dc from ".GD_MEMBER_GRP." where l
 	<a href="javascript:check();"><img src="../img/btn_naver_install.gif" align=”absmiddle”></a>
 </div>
 </form>
-
+<div id="overlayDiv" style="filter:alpha(opacity=80); opacity:0.95; background:#44515b; position:absolute; text-align:center; display:table;">
+<span style="display:table-cell; vertical-align:middle; color:white; font-size:12pt;"><b>네이버 쇼핑 EP파일 생성 방식을 개선하였습니다.<br>마이그레이션을 하시면 기존에 비해 더욱 안정적으로 네이버 쇼핑 EP파일을 생성할 수 있습니다.<br>아래 마이그레이션 버튼을 클릭하시어 마이그레이션을 실행해주시기 바랍니다.<br>※ 마이그레이션 작업에는 일정 시간이 소요됩니다.<br>※ 마이그레이션 후에는 네이버 쇼핑 상품 설정 메뉴에서 해당 기능을 사용하실 수 있습니다.<br></b>
+<a href="javascript:migration();"><img style="margin-top:20px;" src="../img/btn_naver_shopping_migration.png"></a>
+</span>
+</div>
+</div>
+<?}else{?>
+<div class="extext" style="margin-bottom:50px;">해당 설정은 <a href="naver_shopping_setting.php" style="color:#627dce"><b><u>[네이버 쇼핑 상품 설정]</u></b></a> 메뉴에서 가능합니다.</div>
+<?}?>
 <div id=MSG02>
 <table cellpadding=1 cellspacing=0 border=0 class=small_ex>
 <tr><td><img src="../img/icon_list.gif" align=absmiddle>네이버 쇼핑 무이자할부정보란?: 각 카드사별 무이자정보를 입력하실 수 있습니다. 예) 삼성3/현대6/국민12</td></tr>
@@ -505,8 +514,7 @@ window.onload = function(){
 	}
 	else {}
 
-	viewCategory();
-	goodsCalc();
+	<? if ($naver->migrationCheck() == false) { ?>overlay(); <?}?>
 }
 
 function version() {
@@ -741,7 +749,7 @@ function categoryCalc() {
 	}
 }
 
-// 선택한 카테고리 전체 삭제
+//선택한 카테고리 전체 삭제
 function deleteAll() {
 	if (confirm('선택한 카테고리를 초기화 하시겠습니까?') != true) {
 		return;
@@ -756,6 +764,27 @@ function deleteAll() {
 	selectedGoodsCount = duplicateGoodsCount = 0;
 	document.getElementById("goodsCount").innerHTML = selectedGoodsCount;
 	document.getElementById("duplicateGoodsCount").innerHTML = duplicateGoodsCount;
+}
+
+function overlay() {
+	var left = document.getElementById("shoppingGoodsDiv").offsetleft;
+	var top = document.getElementById("shoppingGoodsDiv").offsetTop;
+	var width = document.getElementById("shoppingGoodsDiv").offsetWidth;
+	var height = document.getElementById("shoppingGoodsDiv").offsetHeight;
+
+	document.getElementById("overlayDiv").style.left = left+200;
+	document.getElementById("overlayDiv").style.top = top+130;
+	document.getElementById("overlayDiv").style.width = width
+	document.getElementById("overlayDiv").style.height = height;
+}
+
+function migration() {
+	if (confirm('마이그레이션은 작업 시간이 다소 소요됩니다. 계속하시겠습니까?')) {
+		popupLayer('naver_shopping_migration.php',1000,800);
+	}
+	else {
+		return false;
+	}
 }
 </script>
 <? include "../_footer.php"; ?>

@@ -350,11 +350,18 @@ class Clib_Form_Admin_Goods_Register extends Clib_Form_Abstract
 				)
 		));
 		
-		$this->input('naver_attribute');
+	$this->input('naver_attribute');
 		$this->input('naver_search_tag');
 		$this->input('naver_category');
 		$this->input('naver_product_id');
+
+		$this->radio('naver_shopping_yn', array(
+			'default_value' => 'Y',
+			'value' => array(
+				'노출함' => 'Y',
+				'노출안함' => 'N',
+			)
+		));
 	}
-		
+
 }
-		

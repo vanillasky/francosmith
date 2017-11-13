@@ -95,6 +95,16 @@ $addFields = array(
 		'down' => 'Y',
 		'desc' => "네이버 가격비교 페이지 ID를 입력할 경우 네이버 가격비교 추천에 반영. 최대 50자<br><i>ex) http://shopping.naver.com/detail/detail.nhn?nv_mid=<u style='color:#bf0000;'>8535546055</u>&cat_id=50000151</i>"
 		),
+	'goods_delivery' =>	array(
+			'text' => '상품별 배송비',
+			'down' => 'Y',
+			'desc' => '배송정책(delivery_type)에 설정에 따라 상품별로 지정할 배송비를 입력, 단 배송정책 옵션값이 3~5인 착불, 고정, 수량별 배송인 경우에만 입력한 배송비가 정상적으로 설정됨'
+	),
+	'naver_shopping_yn' =>	array(
+			'text' => '네이버쇼핑 노출 설정',
+			'down' => 'Y',
+			'desc' => '네이버 쇼핑 노출 여부 입력. 노출함(Y), 노출안함(N) 중 택일 입력.'
+	),
 );
 
 	$fields = parse_ini_file($ddlpath, true);
