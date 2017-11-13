@@ -207,22 +207,33 @@ list($grpnm,$grpdc) = $db->fetch("select grpnm,dc from ".GD_MEMBER_GRP." where l
 	<td class="noline">
 		● 자동 생성 기능 사용 여부 :
 		<label><input type="radio" name="auto_create_use" value="Y" <?php echo $checked['auto_create_use']['Y'];?>/>사용</label><label><input type="radio" name="auto_create_use" value="N" <?php echo $checked['auto_create_use']['N'];?> />사용안함</label><br/>
-		<div style="padding:3px 0px 5px 25px;">
-			<span class="extext">네이버 쇼핑에서 스크랩하는 정보를 1일 1회, 자동으로 생성합니다.</span><br>
-			<span class="extext" style="font-weight:bold"> - 상품이 매우 많을 경우 사용으로 설정 시 더 안정적으로 전송할 수 있습니다.</span>
+		<div id="auto_create_v1">
+			<div style="padding:3px 0px 5px 25px;">
+				<span class="extext">네이버 쇼핑에서 스크랩하는 정보를 1일 1회, 자동으로 생성합니다.</span><br>
+				<span class="extext" style="font-weight:bold"> - 상품이 매우 많을 경우 사용으로 설정 시 더 안정적으로 전송할 수 있습니다.</span>
+			</div>
+			● 실행 시간대 설정 :
+			<select name="auto_excute_time" style="width:80px;">
+				<option value="00" <?=($partner['auto_excute_time'] === '00') ? 'selected' : ''?> <?=(!$partner['auto_excute_time']) ? 'selected' : ''?>>00시</option>
+				<option value="01" <?=($partner['auto_excute_time'] === '01') ? 'selected' : ''?>>01시</option>
+				<option value="02" <?=($partner['auto_excute_time'] === '02') ? 'selected' : ''?>>02시</option>
+				<option value="03" <?=($partner['auto_excute_time'] === '03') ? 'selected' : ''?>>03시</option>
+				<option value="04" <?=($partner['auto_excute_time'] === '04') ? 'selected' : ''?>>04시</option>
+				<option value="05" <?=($partner['auto_excute_time'] === '05') ? 'selected' : ''?>>05시</option>
+			</select><br/>
+			<div style="padding:5px 0px 5px 25px;">
+				<span class="extext">선택한 시간에 네이버 쇼핑에 보낼 상품 DB 정보를 자동으로 생성합니다.</span><br>
+				<span class="extext">전체상품 DB 업데이트 주기를 확인하여 업데이트 시간대를 제외하고 선택하시기 바랍니다.</span>
+			</div>
+			<div id="auto_create_comment" style="padding:5px 0px 5px 25px; display:none;">
+				<span style="font: 11px dotum; letter-spacing: -1px; color:red;">
+					네이버 쇼핑 상품 데이터 EP 생성 주기를 증가시키고자 하시면, 하단의 네이버 쇼핑 노출 상품 설정을 개선된 방식으로 마이그레이션을 하셔야합니다.<br>
+					독립형 쇼핑몰의 경우에는 ‘네이버쇼핑 등록상품 EP파일 생성 방식 개선’ 패치를 먼저 적용하셔야만 해당 기능의 마이그레이션을 실행하실 수 있습니다.
+				</span>
+			</div>
 		</div>
-		● 실행 시간대 설정 :
-		<select name="auto_excute_time" style="width:80px;">
-			<option value="00" <?=($partner['auto_excute_time'] === '00') ? 'selected' : ''?> <?=(!$partner['auto_excute_time']) ? 'selected' : ''?>>00시</option>
-			<option value="01" <?=($partner['auto_excute_time'] === '01') ? 'selected' : ''?>>01시</option>
-			<option value="02" <?=($partner['auto_excute_time'] === '02') ? 'selected' : ''?>>02시</option>
-			<option value="03" <?=($partner['auto_excute_time'] === '03') ? 'selected' : ''?>>03시</option>
-			<option value="04" <?=($partner['auto_excute_time'] === '04') ? 'selected' : ''?>>04시</option>
-			<option value="05" <?=($partner['auto_excute_time'] === '05') ? 'selected' : ''?>>05시</option>
-		</select><br/>
-		<div style="padding:3px 0px 5px 25px;">
-			<span class="extext">선택한 시간에 네이버 쇼핑에 보낼 상품 DB 정보를 자동으로 생성합니다.</span><br>
-			<span class="extext">전체상품 DB 업데이트 주기를 확인하여 업데이트 시간대를 제외하고 선택하시기 바랍니다.</span>
+		<div id="auto_create_v2" style="padding:3px 0px 5px 11px;">
+			<span class="extext">네이버 쇼핑 v3.0의 자동 생성 기능 설정 시 네이버 쇼핑 상품 데이터 EP 생성은 네이버 쇼핑 상품 수집 주기 1시간 전에 자동 생성됩니다.</span><br>
 		</div>
 	</td>
 </tr>
@@ -508,6 +519,8 @@ var duplicateGoodsCount = 0;	// 중복된 상품 수 계산용
 var goodsCountCheck = 0;		// 노출될 상품수 확인 체크
 var cateValues = new Array();	// 선택 되어있는 카테고리 번호
 var outsideServer = '<?=$outsideServer?>';
+var migrationChk = '<?=$naver->migrationCheck()?>';
+
 window.onload = function(){
 	if (outsideServer == false) {
 		version();
@@ -527,6 +540,19 @@ function version() {
 	}
 	else {
 		document.getElementById('auto_create').style.display = "";
+		if (migrationChk == true && f.naver_version[2].checked) {
+			document.getElementById('auto_create_v1').style.display = "none";
+			document.getElementById('auto_create_v2').style.display = "";
+			document.getElementById('auto_create_comment').style.display = "none";
+		}
+		else if (migrationChk == false && f.naver_version[2].checked) {
+			document.getElementById('auto_create_comment').style.display = "";
+		}
+		else {
+			document.getElementById('auto_create_v1').style.display = "";
+			document.getElementById('auto_create_v2').style.display = "none";
+			document.getElementById('auto_create_comment').style.display = "none";
+		}
 	}
 }
 
