@@ -5,6 +5,13 @@ header ("Pragma: no-cache");
 
 include "../lib/library.php";
 
+if ($_GET['mode'] == 'naver') {
+	@include "../lib/naverPartner.class.php";
+	$naver = new naverPartner();
+	$temp = explode(',',$_GET['category']);
+	$_GET['category'] = $temp[0];
+}
+
 $category = array();
 
 $val = $_GET[val];
@@ -54,11 +61,19 @@ for ($i=0;$i<count($category);$i++){
 	}
 	if ($category[$i]) $where[] = "category like '$category[$i]%'";
 	$where[] = "length(category)=".(strlen($category[$i])+3);
+	if ($_GET[mode] == 'naver') $where[] = "hidden = '0'";
 	if ($where) $where = "where ".implode(" and ",$where);
 	$query = "select * from ".GD_CATEGORY." $where order by sort";
 	$res = $db->query($query);
 	while ($data=$db->fetch($res))
 	{
+		if ($_GET[mode] == 'naver') {
+			$count = '';
+			$query = $naver->getGoodsCount($data[category]);
+			list($count) = $db->fetch($query);
+			$data[category] = $data[category].','.$count.','.$data[catnm];
+			$data[catnm] = $data[catnm].' ('.number_format($count).'°³)';
+		}
 		$ret[] = array($data[catnm] , $data[category]);
 	}
 	$ret = addslashes(gd_json_encode($ret));

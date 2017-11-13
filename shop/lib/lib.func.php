@@ -233,6 +233,18 @@ $r_table = array(
 	
 	// 컴백쿠폰/SMS
 	'gd_comeback_coupon',
+	
+	// 배송지목록
+	'gd_member_delivery',
+	
+	// 이벤트(그룹형)
+	'gd_event_group',
+	
+	// 080 서비스 수신거부 리스트
+	'gd_sms080list',
+	
+	// naver shopping display category
+	'gd_navershopping_category',
 
 );
 

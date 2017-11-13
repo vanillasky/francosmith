@@ -78,13 +78,14 @@ class naverPartner extends Partner
 		$review = $this->getReview();				// 리뷰 개수
 		$query = $this->getGoodsSql($columns);		// 상품 출력
 		$res = $db->query($query);
-		$goodsCnt = mysql_num_rows($res);	// 전체 상품 개수
-
+	
 		//파일 초기화
 		$this->naverFileDrop("",'',"w");
 
 		while ($v = $db->fetch($res,1)){
-
+			// 499000개 상품수 제한
+			if ($this->goods_cnt == 499000) break;
+			
 			//카테고리
 			$length = strlen($v['category'])/3;
 			for ($i=1;$i<=4;$i++) {
@@ -336,19 +337,64 @@ class naverPartner extends Partner
 	 * @param Array $columns (checkColumnNaver 리턴값)
 	 * @return string
 	 */
-	function getGoodsSql($columns){
-		// 상품 데이타
-		$query = "SELECT ".implode(',',$columns)." , b.category FROM ".GD_GOODS." a ,";
-		$query .= "(SELECT c.goodsno, ".getCategoryLinkQuery('c.category', null, 'max')." FROM ".GD_GOODS_LINK." c left join gd_category gc on gc.category=left(c.category,3) WHERE c.category!='' and gc.category is not null and c.hidden='0' GROUP BY c.goodsno) b ";
-		$query .= "WHERE a.goodsno=b.goodsno ";
-		$query .= "AND a.open=1 ";
-		$query .= "AND !( a.runout = 1 OR (a.usestock = 'o' AND a.usestock IS NOT NULL AND a.totstock < 1) ) ";
-		$query .= "AND ( (a.sales_range_start < UNIX_TIMESTAMP() AND UNIX_TIMESTAMP() < a.sales_range_end) ";
-		$query .= "OR (a.sales_range_start < UNIX_TIMESTAMP() AND a.sales_range_end = '') ";
-		$query .= "OR (UNIX_TIMESTAMP() < a.sales_range_end AND a.sales_range_start = '') ";
-		$query .= "OR (a.sales_range_start = '' AND a.sales_range_end = '') )";
+	function getGoodsSql($columns)
+	{
+		$checkNaverShoppingCategoryCount = false;
+		$checkNaverShoppingCategoryCount = $this->checkNaverShoppingCategoryCount();
+		if ($checkNaverShoppingCategoryCount === true) {
+			$query = "
+				SELECT 
+					".implode(',',$columns).", b.category 
+				FROM 
+					".GD_GOODS_LINK." AS b
+				INNER JOIN
+					".GD_GOODS." AS a
+				ON
+					b.goodsno=a.goodsno
+					AND a.open=1
+					AND !( a.runout = 1 OR (a.usestock = 'o' AND a.usestock IS NOT NULL AND a.totstock < 1) )
+					AND ( (a.sales_range_start < UNIX_TIMESTAMP() AND UNIX_TIMESTAMP() < a.sales_range_end)
+					OR (a.sales_range_start < UNIX_TIMESTAMP() AND a.sales_range_end = '0')
+					OR (UNIX_TIMESTAMP() < a.sales_range_end AND a.sales_range_start = '0')
+					OR (a.sales_range_start = '0' AND a.sales_range_end = '0') )
+				WHERE 
+					EXISTS (SELECT c.category FROM ".GD_CATEGORY." AS c INNER JOIN ".GD_NAVERSHOPPING_CATEGORY." AS d ON LEFT(c.category,LENGTH(d.category))=d.category WHERE c.hidden=0 and c.category=b.category )
+				GROUP BY 
+					a.goodsno
+				ORDER BY 
+					a.goodsno DESC
+				LIMIT 
+					500000
+			";
+		}
+		else {
+			$query = "SELECT ".implode(',',$columns)." , b.category FROM ".GD_GOODS." a inner join ";
+			$query .= "(SELECT c.goodsno,c.category FROM ".GD_GOODS_LINK." c inner join ".GD_CATEGORY." gc on gc.category=c.category WHERE gc.category!='' AND gc.category IS NOT NULL AND c.hidden='0' GROUP BY c.goodsno) b ";
+			$query .= "WHERE a.goodsno=b.goodsno ";
+			$query .= "AND a.open=1 ";
+			$query .= "AND !( a.runout = 1 OR (a.usestock = 'o' AND a.usestock IS NOT NULL AND a.totstock < 1) ) ";
+			$query .= "AND ( (a.sales_range_start < UNIX_TIMESTAMP() AND UNIX_TIMESTAMP() < a.sales_range_end) ";
+			$query .= "OR (a.sales_range_start < UNIX_TIMESTAMP() AND a.sales_range_end = '0') ";
+			$query .= "OR (UNIX_TIMESTAMP() < a.sales_range_end AND a.sales_range_start = '0') ";
+			$query .= "OR (a.sales_range_start = '0' AND a.sales_range_end = '0') ) ";
+			$query .= "ORDER BY a.goodsno DESC LIMIT 500000";
+		}
 
 		return $query;
+	}
+
+	function checkNaverShoppingCategoryCount()
+	{
+		global $db;
+
+		$cnt = 0;
+		$result = false;
+		list($cnt) = $db->fetch("SELECT COUNT(*) FROM ".GD_NAVERSHOPPING_CATEGORY);
+		if($cnt > 0){
+			$result = true;
+		}
+
+		return $result;
 	}
 
 	/*
@@ -639,6 +685,227 @@ class naverPartner extends Partner
 			echo '<<<utime>>>'.$utime."\n";
 			echo "<<<ftend>>>\n";
 		}
+	}
+
+	/*
+	 * 네이버 쇼핑 디스플레이 카테고리 저장
+	 * @param array $postData
+	 * @return boolean
+	 */
+	function saveDisplayCategory($postData)
+	{
+		global $db;
+
+		$processStop = false;
+
+		//백업테이블명
+		$backupTableName = GD_NAVERSHOPPING_CATEGORY . "_backup_".date("YmdHis");
+
+		//백업
+		$res = $db->query("CREATE TABLE ".$backupTableName." SELECT * FROM ".GD_NAVERSHOPPING_CATEGORY);
+		if(!$res) return false;
+
+		//내용 리셋
+		$res = $db->query("TRUNCATE TABLE ".GD_NAVERSHOPPING_CATEGORY);
+		if(!$res) return false;
+
+		//삽입
+		$insertCategoryArray = array();
+		$insertCategoryArray = @array_chunk($postData, 100);
+		if(count($insertCategoryArray) > 0){
+			foreach($insertCategoryArray as $categoryArray){
+				$query = "INSERT INTO ".GD_NAVERSHOPPING_CATEGORY." (category) VALUES ('".implode("'),('", $categoryArray)."')";
+				$result = $db->query($query);
+				if(!$result){
+					$processStop = true;
+					break;
+				}
+			}
+		}
+
+		//복구
+		if($processStop === true){
+			$res = $db->query("TRUNCATE TABLE ".GD_NAVERSHOPPING_CATEGORY);
+			if(!$res) return false;
+
+			$res = $db->query("INSERT INTO ".GD_NAVERSHOPPING_CATEGORY." SELECT * FROM ".$backupTableName);
+			if(!$res) return false;
+
+			return false;
+		}
+		else {
+			$db->query("DROP TABLE ".$backupTableName);
+		}
+
+		return true;
+	}
+
+	/*
+	 * 선택된 카테고리 상품 개수 쿼리
+	 * @param Array $category
+	 * @return string
+	 */
+	function getSelectGoodsCount($category='')
+	{
+		$categoryList = array();
+		$categoryArray = array();
+		$categoryIn = array();
+		$where = '';
+		$temp = '';
+
+		if ($category) {
+			$categoryArray = explode(',',$category);
+			for ($i=0; $i<count($categoryArray); $i++) {
+				$categoryList[] = $this->getLowCategoryNumber($categoryArray[$i]);
+			}
+
+			$categoryIn = implode("','",$categoryList);
+			if ($categoryIn) {
+				$where = "c.category IN ('".$categoryIn."') AND ";
+			}
+		}
+
+		$query = "SELECT count(*) FROM ".GD_GOODS." a ,";
+		$query .= "(SELECT c.goodsno FROM ".GD_GOODS_LINK." c left join ".GD_CATEGORY." gc on gc.category=c.category WHERE ".$where." c.hidden='0' GROUP BY c.goodsno) b ";
+		$query .= "WHERE a.goodsno=b.goodsno ";
+		$query .= "AND a.open=1 ";
+		$query .= "AND !( a.runout = 1 OR (a.usestock = 'o' AND a.usestock IS NOT NULL AND a.totstock < 1) ) ";
+		$query .= "AND ( (a.sales_range_start < UNIX_TIMESTAMP() AND UNIX_TIMESTAMP() < a.sales_range_end) ";
+		$query .= "OR (a.sales_range_start < UNIX_TIMESTAMP() AND a.sales_range_end = '0') ";
+		$query .= "OR (UNIX_TIMESTAMP() < a.sales_range_end AND a.sales_range_start = '0') ";
+		$query .= "OR (a.sales_range_start = '0' AND a.sales_range_end = '0') )";
+
+		return $query;
+	}
+
+	/*
+	 * 총 상품 개수 쿼리
+	 * @return string
+	 */
+	function getGoodsAllCount()
+	{
+		$query = "SELECT count(a.goodsno) FROM gd_goods a ";
+		$query .= "where exists (SELECT c.goodsno FROM gd_goods_link c inner join ".GD_CATEGORY." gc on gc.category=c.category WHERE gc.category!='' AND gc.category IS NOT NULL AND c.hidden='0' AND a.goodsno=c.goodsno ";
+		$query .= "AND a.open=1 ";
+		$query .= "AND !( a.runout = 1 OR (a.usestock = 'o' AND a.usestock IS NOT NULL AND a.totstock < 1) ) ";
+		$query .= "AND ( (a.sales_range_start < UNIX_TIMESTAMP() AND UNIX_TIMESTAMP() < a.sales_range_end) ";
+		$query .= "OR (a.sales_range_start < UNIX_TIMESTAMP() AND a.sales_range_end = '0') ";
+		$query .= "OR (UNIX_TIMESTAMP() < a.sales_range_end AND a.sales_range_start = '0') ";
+		$query .= "OR (a.sales_range_start = '0' AND a.sales_range_end = '0') ) GROUP BY c.goodsno)";
+
+		return $query;
+	}
+
+	/*
+	 * 카테고리별 상품 개수 쿼리
+	 * @param Array $category
+	 * @return string
+	 */
+	function getGoodsCount($category='')
+	{
+		$query = "SELECT count(a.goodsno) FROM ".GD_GOODS." a inner join ";
+		$query .= "(SELECT c.goodsno FROM ".GD_GOODS_LINK." c inner join ".GD_CATEGORY." gc on gc.category=c.category WHERE c.category like '".$category."%' AND gc.category!='' AND gc.category IS NOT NULL AND c.hidden='0' GROUP BY c.goodsno) b ";
+		$query .= "WHERE a.goodsno=b.goodsno ";
+		$query .= "AND a.open=1 ";
+		$query .= "AND !( a.runout = 1 OR (a.usestock = 'o' AND a.usestock IS NOT NULL AND a.totstock < 1) ) ";
+		$query .= "AND ( (a.sales_range_start < UNIX_TIMESTAMP() AND UNIX_TIMESTAMP() < a.sales_range_end) ";
+		$query .= "OR (a.sales_range_start < UNIX_TIMESTAMP() AND a.sales_range_end = '0') ";
+		$query .= "OR (UNIX_TIMESTAMP() < a.sales_range_end AND a.sales_range_start = '0') ";
+		$query .= "OR (a.sales_range_start = '0' AND a.sales_range_end = '0') )";
+
+		return $query;
+	}
+
+	/*
+	 * 하위 카테고리 번호 반환
+	 * @param $category
+	 * @return array
+	 */
+	function getLowCategoryNumber($category)
+	{
+		global $db;
+
+		$categoryList = array();
+		$res = $db->query("select category from ".GD_CATEGORY." where category like '".$category."%'");
+		while ($data = $db->fetch($res,1)) {
+			$categoryList[] = $data['category'];
+		}
+
+		return implode("','",$categoryList);
+	}
+
+	/*
+	 * 디스플레이 카테고리 반환
+	 * @param void
+	 * @return array
+	 */
+	function getCategoryList()
+	{
+		global $db;
+
+		$categoryList = array();
+		$res = $db->query("SELECT category FROM gd_navershopping_category");
+		while ($data = $db->fetch($res,1)) {
+			$categoryList[] = $this->getLowCategoryNumber($data['category']);
+		}
+
+		return $categoryList;
+	}
+
+	/*
+	 * 디스플레이 카테고리 개수 및 이름 반환
+	 * @param void
+	 * @return array
+	 */
+	function getCategoryDetailed()
+	{
+		global $db;
+
+		$categoryList = array();
+		$query = "
+			SELECT a.category, b.catnm FROM
+				".GD_NAVERSHOPPING_CATEGORY." AS a
+			INNER JOIN 
+				".GD_CATEGORY." AS b
+			ON
+				a.category=b.category AND hidden=0
+		";
+
+		$res = $db->query($query);
+		if($res){
+			$i=0;
+			while($category = $db->fetch($res, 1)){
+
+				//카테고리 번호
+				$categoryList[$i]['category'] = $category['category'];
+				//카티고리 명
+				$categoryList[$i]['catnm'] = $category['catnm'];
+		
+				$query = "
+					SELECT COUNT(DISTINCT a.goodsno) AS cnt FROM 
+						".GD_GOODS_LINK." AS a
+					INNER JOIN
+						".GD_GOODS." AS b
+					ON 
+						a.goodsno=b.goodsno 
+						AND 
+						b.open=1 
+						AND 
+						!( b.runout = 1 OR (b.usestock = 'o' AND b.usestock IS NOT NULL AND b.totstock < 1) ) 
+						AND 
+						( (b.sales_range_start < UNIX_TIMESTAMP() AND UNIX_TIMESTAMP() < b.sales_range_end) OR (b.sales_range_start < UNIX_TIMESTAMP() AND b.sales_range_end = '0') OR (UNIX_TIMESTAMP() < b.sales_range_end AND b.sales_range_start = '0') OR (b.sales_range_start = '0' AND b.sales_range_end = '0') ) 
+					WHERE
+						a.category LIKE '".$category['category']."%'
+				";
+
+				//카운트
+				list($categoryList[$i]['count']) = $db->fetch($query);
+
+				$i++;
+			}
+		}
+
+		return $categoryList;
 	}
 }
 ?>

@@ -4,6 +4,9 @@
 
 $location = "네이버 쇼핑 > 네이버 쇼핑 설정";
 include "../_header.php";
+include "../../lib/naverPartner.class.php";
+
+$naver = new naverPartner();
 
 // 상품가격 설정
 $inmemberdc = ($partner['unmemberdc'] == 'Y' ? 'N' : 'Y');
@@ -302,6 +305,59 @@ list($grpnm,$grpdc) = $db->fetch("select grpnm,dc from ".GD_MEMBER_GRP." where l
 </div>
 </form>
 
+<div class="title title_top">네이버 쇼핑 상품 노출 설정<span> 네이버 쇼핑에 노출할 상품을 설정합니다. <a href="javascript:manual('<?=$guideUrl?>board/view.php?id=marketing&no=2')"><img src="../img/btn_q.gif" border=0 align=absmiddle hspace=2></a></span></div>
+
+<table border=4 bordercolor=#dce1e1 style="border-collapse:collapse; width: 800px;">
+<tr><td style="padding:7 0 10 10">
+<div style="padding-top:5"><b><font color="#bf0000">*필독*</div>
+<div style="padding-top:7"><font class=g9 color=666666>네이버 쇼핑 기준에 따라, 노출이 가능한 상품은 최대 50만개 입니다.</font></div>
+<div style="padding-top:5"><font class=g9 color=666666>따라서, 아래에 설정에 따라 <b>네이버 쇼핑 상품 DB를 499,000개 이하로 생성하는 기능을 제공하고 있습니다.</b></font></div>
+<div style="padding-top:5"><font class=g9 color=666666>(50만개가 초과하면 네이버 쇼핑 서비스가 중지되어 안전한 사용을 위하여 499,000개 까지 등록하실 수 있습니다.)</font></div>
+<div style="padding-top:5"><font size=2 color=#627dce><b><br>※ 총 상품수가 499,000개를 넘지 않는 경우에는 별도 설정 없이도 정상적으로 네이버 쇼핑을 이용하실 수 있습니다.</b></font></div>
+</td></tr>
+</table>
+
+<div style="padding-top:10"></div>
+
+<form name=frm method=post action="indb.php" target="ifrmHidden">
+<input type=hidden name=mode value="naverShopingGoods">
+<table style="border:1px solid #d5d5d5; border-collapse:collapse; width: 800px;">
+<col class=cellC><col class=cellL>
+<tr>
+	<td style="border:1px solid #d5d5d5; width:130px;">노출 카테고리 설정</td>
+	<td>
+		<div style="padding:5 5 5 5">● 노출 카테고리 선택</div>
+		<table style="border:1px solid #d5d5d5; margin-left:5px; margin-right: px; width:650px;">
+			<tr>
+				<td>
+					<div class="extext" style="padding-top:5">2차 분류까지 선택할 수 있으며 선택한 카테고리에 속한 상품이 499,000개를 초과할 수 없습니다.</div>
+					<div class="extext">선택한 카테고리의 상품이 499,000만개 초과 시 <b>최근 상품 등록일자순으로</b> 499,000개 이하로 노출 상품이 조정됩니다.</div>
+					<div class="extext">노출 카테고리를 설정하지 않은 경우, 전체 상품에서 <b>최근 상품 등록일자를 기준</b>으로 상품을 노출합니다.</div>
+				</td>
+			</tr>
+		</table>
+		<div style="padding:5 5 5 5"><font size="4">총 상품수 : <span id="goodsAllCount"><font color=red><b>로딩중...</font></b></span> 개</font> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:red;">** 총 상품수는 품절상품과 미진열상품을 제외한 개수입니다.</span></div>
+		<div style="margin-left: 5px; margin-right: 5px; margin-bottom: 5px;">
+		<div valign="top"><script type="text/javascript">new categoryBox('cate[]',2,'','naver','frm');</script></div>
+		</div>
+		<div class="extext" style="text-align: right; padding:5 5 5 5;"> - 상품별로 다수의 카테고리를 등록할 수 있기 때문에, 카테고리별 상품수의 총합이 총 상품수보다 많을 수 있습니다.</div>
+		<div style="text-align: center;"><a href="javascript:categoryAdd();"><img src='../img/btn_naver_category.gif' align=absmiddle></a></div>
+		<div style="text-align: right;"><a href="javascript:deleteAll();"><img src='../img/btn_naver_delete.gif' align=absmiddle></a></div>
+		<div id="selectCategory" style="border:1px solid #d5d5d5; padding:5; height: auto; min-height: 100px; margin-top:10px; margin-left:5px; margin-right:5px; margin-bottom:5px;"><font size=4 color=red><b>로딩중...</font></b></div>
+		<div style="text-align: center;"><a href="javascript:categoryCalc();"><img src='../img/btn_naver_count.gif' align=absmiddle></a></div>
+		<div style="padding:5 5 5 5">● 선택한 카테고리 ( 노출될 상품수 : <span id="goodsCount">-</span> / 499,000 선택된 카테고리 중 중복된 상품수 : <span id="duplicateGoodsCount">-</span> 개)</div>
+		<div style="padding:5 5 5 5; color:red;">** 선택한 카테고리 중 중복된 상품은 제외합니다. </div>
+		<div style="padding:0 5 5 5; color:red;">** 초과 시 최근 상품등록일자순으로 499,000개 이하로 조정합니다.</div>
+		<div style="padding:0 5 5 5;"><font size=2 color=#627dce>※ 노출될 상품수 확인 후 설정정보를 저장해 주세요.</font></div>
+	</td>
+</tr>
+
+</table>
+<div class="noline" style="text-align: center; padding: 10px; width: 800px;">
+	<a href="javascript:check();"><img src="../img/btn_naver_install.gif" align=”absmiddle”></a>
+</div>
+</form>
+
 <div id=MSG02>
 <table cellpadding=1 cellspacing=0 border=0 class=small_ex>
 <tr><td><img src="../img/icon_list.gif" align=absmiddle>네이버 쇼핑 무이자할부정보란?: 각 카드사별 무이자정보를 입력하실 수 있습니다. 예) 삼성3/현대6/국민12</td></tr>
@@ -450,13 +506,21 @@ list($grpnm,$grpdc) = $db->fetch("select grpnm,dc from ".GD_MEMBER_GRP." where l
 <a href="http://marketing.godo.co.kr/board.php?id=notice&mode=view&postNo=178" target="_blank"><img src="../img/btn_naver_dbUrl.gif" border="0"></a>
 <a href="https://adcenter.shopping.naver.com" target="_blank"><img src="../img/btn_naver_go.gif" border="0"></a>
 </div>
+<script type="text/javascript" src="../godo.loading.indicator.js"></script>
 <script>
+var selectedGoodsCount = 0;		// 노출될 상품 수
+var duplicateGoodsCount = 0;	// 중복된 상품 수 계산용
+var goodsCountCheck = 0;		// 노출될 상품수 확인 체크
+var cateValues = new Array();	// 선택 되어있는 카테고리 번호
 var outsideServer = '<?=$outsideServer?>';
 window.onload = function(){
 	if (outsideServer == false) {
 		version();
 	}
 	else {}
+
+	viewCategory();
+	goodsCalc();
 }
 
 function version() {
@@ -470,6 +534,242 @@ function version() {
 	else if (f.naver_version[1].checked) {
 		document.getElementById('auto_create').style.display = "";
 	}
+}
+
+// 노출될 상품수 확인 여부 체크
+function check() {
+	if (goodsCountCheck == 0) {
+		alert('노출될 상품수 확인 후 해당 설정으로 저장이 가능합니다.');
+		return;
+	}
+	else {
+		document.frm.submit();
+	}
+}
+
+// 등록된 상품수 출력
+function goodsCalc() {
+	var ajax = new Ajax.Request('../naver/naver_category_calc.php',
+	{
+		method: 'POST',
+		parameters: 'mode=goods',
+		onComplete: function () {
+			var req = ajax.transport;
+			if (req.status !== 200 || req.responseText === '' || req.responseText === 'fail') {
+				alert("통신을 실패하였습니다.\n고객센터에 문의하여 주세요.");
+				return;
+			}
+
+			document.getElementById('goodsAllCount').innerHTML = comma(req.responseText);
+			document.getElementById('goodsAllCount').style.color = 'red';
+		},
+		onFailure : function() {
+			alert("통신을 실패하였습니다.\n고객센터에 문의하여 주세요.");
+			return;
+		}
+	});
+}
+
+// 저장된 카테고리 목록 출력
+function viewCategory() {
+	var str = Array();
+	var temp = Array();
+	var categoryList = Array();
+
+	var ajax = new Ajax.Request('../naver/naver_category_calc.php',
+	{
+		method: 'POST',
+		datatype: 'array',
+		onComplete: function () {
+			var req = ajax.transport;
+			if (req.status !== 200 || req.responseText === '' || req.responseText === 'fail') {
+				alert("통신을 실패하였습니다.\n고객센터에 문의하여 주세요.");
+				return;
+			}
+			var parent = document.getElementById("selectCategory");
+			parent.removeChild(parent.firstChild);
+			categoryList = JSON.parse(req.responseText);
+
+			for (i=0; i<categoryList.length; i++) {
+				temp[i] = categoryList[i].split(',');
+				str[i] = temp[i][1] + ' (' + comma(temp[i][2]) + '개)';
+
+				duplicateGoodsCount += Number(temp[i][2]);
+				cateValues[cateValues.length] = temp[i][0];
+			}
+
+			// 노출될 상품수 계산 및 선택한 카테고리 노출
+			for (i=0; i<temp.length; i++) {
+				categoryText = "<span id='" + temp[i][0] + "' style='display:inline-block; background-color:d5d5d5; padding:5 5 5 5; margin-top:3px; margin-bottom:3px; margin-right:5px;'>" + str[i];
+				categoryText += "<input type=hidden name=category[] value='" + temp[i][0] + "' style='display:none'> ";
+				categoryText += "<input type=hidden name=category_" + temp[i][0] + " value='" + temp[i][2] + "' style='display:none'> ";
+				categoryText += "<a href='javascript:void(0)' onClick='categoryDelete(\"" + temp[i][0] + "\",\"" + temp[i][2] + "\")'><img src='../img/i_del.gif' align=absmiddle></a></span>";
+
+				var selected = document.getElementById('selectCategory');
+				selected.innerHTML += categoryText;
+			}
+		},
+		onFailure : function() {
+			alert("통신을 실패하였습니다.\n고객센터에 문의하여 주세요.");
+			return;
+		}
+	});
+}
+
+// 노출될 카테고리 추가
+function categoryAdd() {
+	var selCate;						// 선택한 카테고리 번호
+	var str = new Array();				// 선택한 카테고리 이름
+	var obj = document.frm['cate[]'];	// 선택한 카테고리
+	var valueTemp = new Array();
+	var cnt;
+
+	goodsCountCheck = 0;
+	for (i=0;i<obj.length;i++) {
+		if (obj[i].value) {
+			valueTemp = obj[i].value.split(',');
+			str[str.length] = valueTemp[2];
+			selCate = valueTemp[0];
+			cnt = valueTemp[1];
+		}
+	}
+
+	if (!selCate) {
+		alert('카테고리를 선택해주세요');
+		return;
+	}
+
+	// 중복 카테고리 체크
+	for (i=0;i<cateValues.length;i++) {
+		if (cateValues[i]) {
+			var cateValue = cateValues[i];
+
+			// 같은 카테고리를 선택했거나 선택되어 있는 카테고리의 하위 카테고리를 선택 했을경우
+			if (selCate == cateValue) {
+				alert('해당 카테고리는 이미 추가되어 있습니다.');
+				return;
+			}
+			else if (selCate.length > 3 && selCate.substr(0,selCate.length-3) == cateValue) {
+				alert('해당 카테고리보다 상위 카테고리가 이미 추가되어 있습니다.');
+				return;
+			}
+			// 선택된 카테고리보다 상위 카테고리를 선택 했을경우
+			else if (cateValue.substr(0,selCate.length) == selCate) {
+				if (confirm("현재 추가된 카테고리보다 상위 카테고리를 선택하셨습니다.\n하위 카테고리를 삭제하고 상위 카테고리를 추가하시겠습니까?") == true) {
+					// 하위 카테고리가 여러개 일수 있으니 찾아서 삭제
+					var tempCate = cateValues.slice();	// 배열 복사
+					for (j=0; j<tempCate.length; j++) {
+						if (tempCate[j].substr(0,selCate.length) == selCate) {
+							duplicateGoodsCount -= Number(document.getElementsByName("category_"+tempCate[j])[0].value);
+							var parent = document.getElementById("selectCategory");
+							var delCate = document.getElementById(tempCate[j]);
+							parent.removeChild(delCate);
+							cateValues.splice(cateValues.indexOf(tempCate[j]), 1);
+						}
+					}
+					break;
+				}
+				else {
+					return;
+				}
+			}
+		}
+	}
+
+	// 카테고리명 (00개) 처럼 구성
+	str = str.join(" > ");
+	str += ' ('+comma(cnt)+'개)';
+
+	// 노출될 상품수 계산 및 선택한 카테고리 노출
+	cateValues[cateValues.length] = selCate;
+	duplicateGoodsCount += Number(cnt);
+
+	categoryText = "<span id='" + selCate + "' style='display:inline-block; background-color:d5d5d5; padding:5 5 5 5; margin-top:3px; margin-bottom:3px; margin-right:5px;'>" + str;
+	categoryText += "<input type=hidden name=category[] value='" + selCate + "' style='display:none'> ";
+	categoryText += "<input type=hidden name=category_" + selCate + " value='" + cnt + "' style='display:none'> ";
+	categoryText += "<a href='javascript:void(0)' onClick='categoryDelete(\"" + selCate + "\",\"" + cnt + "\")'><img src='../img/i_del.gif' align=absmiddle></a></span>";
+
+	var selected = document.getElementById('selectCategory');
+	selected.innerHTML += categoryText;
+}
+
+// 선택한 카테고리 삭제
+function categoryDelete(selCate,cnt) {
+	goodsCountCheck = 0;
+	cateValues.splice(cateValues.indexOf(selCate), 1);
+	duplicateGoodsCount -= cnt;
+
+	// 선택 상품 수 계산
+	var parent = document.getElementById("selectCategory");
+	var delCate = document.getElementById(selCate);
+	parent.removeChild(delCate);
+}
+
+//노출될 상품수 계산
+function categoryCalc() {
+	if (cateValues.length > 0) {
+		// 로딩 처리
+		nsGodoLoadingIndicator.init({});
+		nsGodoLoadingIndicator.show();
+		var ajax = new Ajax.Request('../naver/naver_category_calc.php',
+		{
+			method: 'POST',
+			parameters: 'mode=category&category='+cateValues,
+			onComplete: function () {
+				nsGodoLoadingIndicator.hide();	// 로딩끝
+				var req = ajax.transport;
+				if (req.status !== 200 || req.responseText === '' || req.responseText === 'fail') {
+					alert("통신을 실패하였습니다.\n고객센터에 문의하여 주세요.");
+					return;
+				}
+
+				selectedGoodsCount = req.responseText;
+				document.getElementById('goodsCount').innerHTML = comma(selectedGoodsCount);
+
+				if (selectedGoodsCount > 499000) {
+					document.getElementById('goodsCount').style.color = 'red';
+					document.getElementById('goodsCount').style.fontWeight = 'bold';
+					alert("선택한 상품수가 제한 개수를 넘었습니다.\n(선택된 상품 수 : "+selectedGoodsCount+" 개)\n수정하여 주시기 바랍니다.");
+				}
+
+				// 중복된 상품 개수 계산
+				document.getElementById("duplicateGoodsCount").innerHTML = comma(duplicateGoodsCount - selectedGoodsCount);
+				goodsCountCheck = 1;
+			},
+			onFailure : function() {
+				nsGodoLoadingIndicator.hide();	// 로딩끝
+				alert("통신을 실패하였습니다.\n고객센터에 문의하여 주세요.");
+				return;
+			}
+		});
+	}
+	// 선택된 카테고리를 모두 삭제 했을시 초기화
+	else {
+		goodsCountCheck = 1;
+		selectedGoodsCount = duplicateGoodsCount = 0;
+		document.getElementById("goodsCount").innerHTML = selectedGoodsCount;
+		document.getElementById("duplicateGoodsCount").innerHTML = duplicateGoodsCount;
+
+		alert("노출 카테고리를 선택해 주세요.");
+		return;
+	}
+}
+
+// 선택한 카테고리 전체 삭제
+function deleteAll() {
+	if (confirm('선택한 카테고리를 초기화 하시겠습니까?') != true) {
+		return;
+	}
+
+	goodsCountCheck = 1;
+	var parent = document.getElementById("selectCategory");
+	while(parent.firstChild) {
+		parent.removeChild(parent.firstChild);
+	}
+	cateValues = Array();
+	selectedGoodsCount = duplicateGoodsCount = 0;
+	document.getElementById("goodsCount").innerHTML = selectedGoodsCount;
+	document.getElementById("duplicateGoodsCount").innerHTML = duplicateGoodsCount;
 }
 </script>
 <? include "../_footer.php"; ?>

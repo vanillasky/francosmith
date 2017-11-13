@@ -994,6 +994,7 @@ function categoryBox(name,idx,val,type,formnm)
 {
 	if (!idx) idx = 1;
 	if (type=="multiple") type = "multiple style='width:160px;height:96px'";
+	if (type=="naver") type = "multiple style='width:325px;height:160px'";
 	for (i=0;i<idx;i++) document.write("<select " + type + " idx=" + i + " name='" + name + "' onchange='categoryBox_request(this)' class='select'></select>");
 
 	oForm = eval("document.forms['" + formnm + "']");
@@ -1031,6 +1032,9 @@ function categoryBox_request(obj,val)
 
 	if ( document.location.href.indexOf("/admin") == -1 ){
 		exec_script("../lib/_categoryBox.script.php?mode=user&idx=" + idx + "&obj=" + obj.name + "&formnm=" + obj.form.name + "&val=" + val + "&category=" + obj.value);
+	}
+	else if (document.location.href.indexOf("/naver/partner") > 0) {
+		exec_script("../../lib/_categoryBox.script.php?mode=naver&idx=" + idx + "&obj=" + obj.name + "&formnm=" + obj.form.name + "&val=" + val + "&category=" + obj.value);
 	}
 	else {
 		exec_script("../../lib/_categoryBox.script.php?mode=admin&idx=" + idx + "&obj=" + obj.name + "&formnm=" + obj.form.name + "&val=" + val + "&category=" + obj.value);

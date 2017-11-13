@@ -5,6 +5,16 @@ include "../conf/config.php";
 @include "../conf/partner.php";
 @include "../conf/coupon.php";
 @include dirname(__FILE__).'/../conf/config.mobileShop.php';
+@include "../lib/naverPartner.class.php";
+
+// 네이버 쇼핑 상품 499000개 제한
+$naver = new naverPartner();
+$count = 0;
+$where = '';
+$categoryList = $naver->getCategoryList();
+if ($categoryList) {
+	$where = "c.category IN ('".implode("','",$categoryList)."') ";
+}
 
 $LF = chr(10);	// line feed.
 
@@ -36,11 +46,11 @@ $query = "select *,category
 		from gd_goods a left join gd_goods_brand d on a.brandno=d.sno
 		left join (select _grv.goodsno, count(_grv.sno) as review_count from ".GD_GOODS_REVIEW." as _grv group by _grv.goodsno) as grv on a.goodsno=grv.goodsno,
 			gd_goods_option b,
-			(select goodsno, ".getCategoryLinkQuery('category', null, 'max')." from ".GD_GOODS_LINK." c group by c.goodsno) e
+			(select goodsno, ".getCategoryLinkQuery('category', null, 'max')." from ".GD_GOODS_LINK." c where ".$where." group by c.goodsno) e
 		where a.goodsno=b.goodsno
 		  and a.goodsno=e.goodsno
 			and b.link and go_is_deleted <> '1' and go_is_display = '1'
-			and a.open=1 and a.runout=0";
+			and a.open=1 and a.runout=0 order by a.goodsno desc limit 500000";
 
 $res = $db->query($query);
 
@@ -60,8 +70,14 @@ fwrite($fp,'?>'.$LF);
 fclose($fp);
 
 $goodsModel = Clib_Application::getModelClass('goods');
+$couponVersion = false;
+if($cfgCoupon['coupon'] && is_file(dirname(__FILE__).'/../data/skin/'.$cfg['tplSkin'].'/proc/popup_coupon_division.htm')) {
+	$couponVersion = true;
+}
 
 while ($v=$db->fetch($res)){
+
+	if ($count == 499000) break;
 
 	// 판매 중지(기간 외 포함)인 경우 제외
 	if (! $goodsModel->setData($v)->canSales()) continue;
@@ -95,6 +111,12 @@ while ($v=$db->fetch($res)){
 	$coupon += 0;
 	$dcprice += 0;
 	$price = $v['price'] - $coupon - $dcprice;
+	if ($couponVersion === true) {
+		if ($v[price] < $coupon + $dcprice) {
+			$price = 0;
+		$coupon = $v[price] - $dcprice;
+		}
+	}
 
 	### 배송료
 	$param = array(
@@ -112,7 +134,7 @@ while ($v=$db->fetch($res)){
 	} else {
 		$deli = $tmp['price'] ? $tmp['price'] : '0';
 	}
-
+	
 	$v['goodsnm'] = strip_tags($v['goodsnm']);
 
 	// 이벤트
@@ -207,6 +229,7 @@ while ($v=$db->fetch($res)){
 	if($tmp != $per) echo("<script>parent.document.getElementById('progressbar').style.width='".$per."%';</script>\n");
 	$tmp = $per;
 	flush();
+	$count++;
 }
 echo("<script>parent.document.getElementById('progressbar').style.width='100%';</script>\n");
 msg("업데이트 완료!");

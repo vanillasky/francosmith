@@ -1,6 +1,7 @@
 <?
 
 include "../lib.php";
+@include '../../lib/naverPartner.class.php';
 
 if(class_exists('NaverCommonInflowScript', false)===false) include dirname(__FILE__).'/../../lib/naverCommonInflowScript.class.php';
 $naverCommonInflowScript = new NaverCommonInflowScript();
@@ -59,8 +60,27 @@ switch ($_POST[mode]){
 		$qfile->close();
 
 		break;
+		
+		//네이버 쇼핑 상품 노출 설정
+	case 'naverShopingGoods' :
+		$message = "저장을 실패하였습니다. 고객센터에 문의하여 주세요.";
+		$naver = new naverPartner();
+		if(!is_object($naver)){
+			msg($message, -1);
+			exit;
+		}
+		
+		$saveResult = false;
+		$saveResult = $naver->saveDisplayCategory($_POST['category']);
+		if($saveResult === false){
+			msg($message, -1);
+			exit;
+		}
+		
+		break;
 }
-
+		
 msg("정상적으로 저장되었습니다.");
-
+	
 ?>
+				
