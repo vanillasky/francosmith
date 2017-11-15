@@ -1,0 +1,106 @@
+{*** 네이버페이 상품후기 메인 | main/html.php?htmid=goods/checkout_review.htm ***}
+{ # header }
+
+
+<div class="page_title_div">
+	<div class="page_title">이용후기</div>
+	<div class="page_path"><a href="/shop/">HOME</a> &gt; <span class='bold'>고객센터</span></div>
+</div>
+<div class="page_title_line"></div>
+
+<div style="width:100%; padding-top:20px;"></div>
+
+<table style="padding:15px 0 0 15px; width:100%">
+	<tr>
+		<td><a href="/shop/goods/goods_review.php" value="0">
+			<img src="../img/common/tab_goods_review_on.png" border=0></a><a href="/shop/goods/checkout_review.php" value="0"><img src="../img/common/tab_checkout_review_off.png" border=0></a></td>
+	</tr>
+</table>
+
+<div class="indiv"><!-- Start indiv -->
+<form name=frmList>
+<input type=hidden name=sort value="{_GET['sort']}">
+<input type=hidden name=page_num value="{_GET['page_num']}">
+
+	<!-- 검색 : Start -->
+	<div style="border:1px solid #DEDEDE; margin-top:20px;" class="hundred">
+	<table class="fullwidth">
+	<tr>
+		<td class="search_box">
+			<table width="100%">
+			<tr>
+				<td><img src="../img/common/search.gif" border=0></td>
+				<td style="padding-left:10">
+					<table cellpadding="2">
+					<tr>
+						<td class=input_txt>상품분류</td>
+						<td>
+						<div id="dynamic"></div>
+							<script src="../../../../lib/js/categoryBox.js"></script>
+							<script>new categoryBox('cate[]',{=cateStep()},'{_category}','','frmList');</script>
+						</td>
+					</tr>
+					<tr>
+						<td class=input_txt>검색어</td>
+						<td><select name="skey" class=select>
+							<option value="all" {_selected.skey['all']}> 통합검색 </option>
+							<option value="contents" {_selected.skey['contents']}> 후기 </option>
+							<option value="goodnm" {_selected.skey['goodnm']}> 상품명 </option>
+							</select>
+							<input type="text" NAME="sword" value="{_GET['sword']}" size=47 class="linebg">
+							<input type="image" src="../img/common/btn_search.gif" align=absmiddle>
+						</td>
+					</tr>
+					</table>
+				</td>
+			</tr>
+			</table>
+		</td>
+	</tr>
+	</table>
+	</div>
+
+<div style="float:right; padding-top:15">
+	<select onchange="this.form.sort.value=this.value;this.form.submit()" style="font:8pt 돋움"><!--{ @ lstcfg.sort }--><option value="{.key_}" {_selected.sort[.key_]}>{.value_}<!--{ / }--></select>
+	<select onchange="this.form.page_num.value=this.value;this.form.submit()" style="font:8pt 돋움"><!--{ @ lstcfg.page_num }--><option value="{.value_}" {_selected.page_num[.value_]}>{.value_}개씩 정렬<!--{ / }--></select>
+</div>
+
+<table width="100%" border="0" cellspacing="0" cellpadding="5" style="clear:both;margin-top:5px;border-top-style:solid;border-top-color:#303030;border-top-width:2;border-bottom-style:solid;border-bottom-color:#D6D6D6;border-bottom-width:1;">
+<tr height="23" bgcolor="#F0F0F0" class=input_txt>
+	<th width=50>번호</th>
+	<th width=60>이미지</th>
+	<th>상품명/후기</th>
+	<th width=80>작성자</th>
+	<th width=80>작성일</th>
+	<th width=80>평점</th>
+</tr>
+</table>
+
+<!--{ @ _loop }-->
+<div>
+<table width=100% cellpadding=3 cellspacing=0 style="border-bottom-style:solid;border-bottom-color:#E6E6E6;border-bottom-width:1;">
+<tr height=25 onmouseover=this.style.background="#F7F7F7" onmouseout=this.style.background="">
+	<td width=50 align="center">{.idx}</td>
+	<td width=60 align="center"><!--{? .ProductID }--><a href="goods_view.php?goodsno={.ProductID}">{=goodsimg(.img_s,lstcfg.size)}</a><!--{/}--></td>
+	<td>
+		<TABLE cellpadding=0 cellspacing=0 border=0>
+			<TR>
+				<TD style="padding-top:5"><!--{? .ProductID}--><span style="font-weight:bold;">{.ProductName}</span><a href="goods_view.php?goodsno={.ProductID}"><img src="../img/common/btn_goodview2.gif" align=absmiddle></a><!--{/}--></TD>
+			</TR>
+			<tr><td style="padding-top:5; padding-bottom:5; height:45px; word-break:break-all;" class=stxt>{.Title}</td></tr>
+		</TABLE>
+	</td>
+	<td width=120 align="center"><img src="../img/common/npay_img.png"/>&nbsp;네이버 페이 구매자</td>
+	<td width=80 align="center">{=substr(.CreateYmdt,0,10)}</td>
+	<td width=80 align="center">{.PurchaseReviewScore}</td>
+</tr>
+</table>
+<!--{ / }-->
+
+<div class="pagediv">{pg->page['navi']}</div>
+
+</form>
+
+</div><!-- End indiv -->
+
+{ # footer }

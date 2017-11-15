@@ -344,6 +344,9 @@ if( $_GET['searched'] == 'Y' ){
 				}
 			}
 			
+			//해시태그
+			$data['hashtag'] = $hashtag->getHashtagList('goodsList', array('goodsno' => $data['goodsno']));
+			
 			// 출력 제어
 			$loop[] = setGoodsOuputVar($data);
 		}

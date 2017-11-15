@@ -12,9 +12,11 @@ if ($todayshop->cfg['shopMode'] == 'todayshop') header('location:'.dirname($_SER
 include "../conf/design.main.php";
 @include "../conf/design_main.$cfg[tplSkin].php";
 
+$hashtag = Core::loader('hashtag');
+
 function dataDisplayTabGoods( $mode, $img='img_s', $limit=0 ){
 
-	global $db, $cfg;
+	global $db, $cfg, $hashtag;
 	include dirname(__FILE__) . "/../conf/config.pay.php";
 
 	if (is_file(dirname(__FILE__) . "/../conf/config.soldout.php"))
@@ -104,6 +106,8 @@ function dataDisplayTabGoods( $mode, $img='img_s', $limit=0 ){
 			}
 		}
 		
+		$data['hashtag'] = $hashtag->getHashtagList('goodsList', array('goodsno'=>$data['goodsno']));
+		
 		// 출력 제어
 		$goods[] = setGoodsOuputVar($data);
 	}
@@ -183,6 +187,11 @@ if($criteo->begin()) {
 	$tpl->assign('systemHeadTagEnd',$systemHeadTagEnd);
 }
 #################
+
+$hashtagHtml = '';
+$hashtagHtml = $hashtag->getHashtagList('main');
+$tpl->assign('hashtagHtml', $hashtagHtml);
+
 
 $tpl->print_('tpl');
 

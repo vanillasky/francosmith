@@ -1,0 +1,212 @@
+{*** 거래명세표 | mypage/mypage_particular.php ***}
+
+<link rel="styleSheet" href="../style.css">
+<style type = "text/css">
+@media print { .notprint {display: none;} } /* 인쇄시 불필요한 부분 비활성화 */
+td, th { font-family: 돋움; font-size: 9pt; color: 333333;}
+
+#cssblue { width: 604px; border: solid 2px #364F9E;  }
+#cssblue strong { font:18pt 굴림; color:#364F9E; font-weight:bold; }
+#cssblue table { border-collapse: collapse; }
+#cssblue td, #cssblue table { border-color: #364F9E; border-style: solid; border-width: 0; }
+
+#cssblue #head { border-width: 1px 1px 0 1px; }
+#cssblue #box td { border-width: 1px; padding-top: 3px; }
+</style>
+
+<DIV class="notprint">
+<div style="padding-left:63px; padding-top:20px"><font color=#007fc8>※ <font class=small>인쇄시 직인(도장이미지)도 인쇄되려면 아래와 같이 설정되어 있어야 합니다.</div>
+<div style="padding-top:3px"></div>
+<div style="padding-left:80px">1) 인터넷 익스플로러 : 브라우저의 [도구 메뉴] - [인터넷옵션] - [고급] - [인쇄] 에서 [배경색 및 이미지 인쇄] 체크</div>
+<div style="padding-top:3px"></div>
+<div style="padding-left:80px">2) 크롬 : 인쇄 미리보기 창에서 [설정 더보기] - [옵션] 에서 [배경 그래픽] 체크</div>
+<div style="padding-top:10px"></div>
+<div align=center><a href="javascript:window.print();"><img src="../../../../admin/img/btn_print.gif" border="0" align="absmiddle"></a></div>
+<div style="padding-top:10px"></div></font></font>
+</div>
+
+<center>
+<div id="cssblue">
+	<table id="head" width="100%" border="0" cellspacing="0" cellpadding="0">
+		<tr>
+			<td>
+			<table width="100%" border="0" cellspacing="0" cellpadding="0">
+			<tr>
+				<td width="50%" align="right"><strong>거 래 명 세 표</strong></td>
+				<td width="50%" style="padding-left:6px">(공급받는자보관용)</td>
+			</tr>
+			</table>
+			</td>
+			<td width="60" style="border-right-width: 3px;">
+			<table width="100%" border="0" cellspacing="0" cellpadding="0">
+			<tr>
+				<td height="28" align="center">책&nbsp;번&nbsp;호</td>
+			</tr>
+			<tr>
+				<td height="24" align="center">일련번호</td>
+			</tr>
+			</table>
+			</td>
+			<td width="150">
+			<table width="100%" border="0" cellspacing="0" cellpadding="4">
+			<tr height="26">
+				<td width="50%" align="right" style="border-right-width: 1px; border-bottom-width: 1px;"> 권</td>
+				<td width="50%" align="right" style="border-bottom-width: 1px;"> 호</td>
+			</tr>
+			<tr height="26">
+				<td align="center" style="border-right-width: 1px;">&nbsp;</td>
+				<td align="center">&nbsp;</td>
+			</tr>
+			</table>
+			</td>
+		</tr>
+	</table>
+
+	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+		<col width=50%><col width=3%>
+		<tr>
+			<!-- 합계금액 -->
+			<td valign="top" height="100%" style="border-width: 3px 1px 0 1px;">
+			<table cellSpacing="0" cellPadding="2" width="100%" border="0">
+			<tr>
+				<td colspan="2">&nbsp;&nbsp;{=substr(orddt,0,4)} 년&nbsp; {=substr(orddt,5,2)} 월&nbsp; {=substr(orddt,8,2)} 일</td>
+				<td style="font-weight: normal; font-family: times new roman" width="30%"><I>No.</I></td>
+			</tr>
+			<tr>
+				<td style="padding-right: 10px; border-bottom: thin solid"></td>
+				<td style="padding-right: 10px; border-bottom: thin solid" vAlign="bottom" align="right" colspan="2">&nbsp;<font size=3>{=nameOrder}</font>&nbsp; <font size="3">귀하</font></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td valign="bottom" colspan="2">아래와 같이 계산합니다.</td>
+			</tr>
+			<tr>
+				<td align="middle" width="20%">합계금액</td>
+				<td style="padding-right: 10px" align="right" colspan="2">&nbsp;<font size="3">{=number_format(totalAmount)}</font>&nbsp;<font size="3">원정</font></td>
+			</tr>
+			</table>
+			</td>
+			<!-- 공급자 -->
+			<td align="center" style="border-top-width: 3px; border-right-width: 1px; line-height: 36px; padding-left: 2px">공<br>급<br>자</td>
+			<td valign="top" height="100%" style="border-top-width: 3px; background: url({=sealpath}) no-repeat; background-position: 207px 0px;">
+			<table width="100%" border="0" cellspacing="0" cellpadding="0">
+			<col width=53><col width=100><col width=26>
+			<tr height="38" align="center">
+				<td style="border-width: 0 1px 1px 2px;">등록번호</td>
+				<td colspan="3" style="border-bottom-width: 1px; padding-left:6px;"><!--{ cfg.compSerial }--></td>
+			</tr>
+			<tr height="38" align="center">
+				<td style="border-width: 0 1px 3px 2px;">상&nbsp;&nbsp;&nbsp;&nbsp;호<br>(법인명) </td>
+				<td style="padding:0 6px; border-bottom-width:3px;"><!--{ cfg.compName }--></td>
+				<td style="border-width: 0 1px 3px 1px;">성명</td>
+				<td style="border-bottom-width: 3px; padding-right:10px;"><!--{ cfg.ceoName }--></td>
+			</tr>
+			<tr height="38" align="center">
+				<td style="border-width: 0 1px 1px 0px;">사 업 장<br>소 재 지 </td>
+				<td colspan="3" style="padding: 0 6px; border-bottom-width: 1px;" align=left>{=address}</td>
+			</tr>
+			<tr height="38" align="center">
+				<td style="border-right-width: 1px;">업&nbsp;&nbsp;&nbsp;&nbsp;태</td>
+				<td style="padding:0 6px;"><!--{ cfg.service }--></td>
+				<td style="border-width: 0 1px; padding-left:4px">종<br>목 </td>
+				<td style="padding: 0 6px;"><!--{ cfg.item }--></td>
+			</tr>
+			</table>
+			</td>
+		</tr>
+	</table>
+
+	<!-- 주문list -->
+	<table id="box" width="100%" border="0" cellspacing="0" cellpadding="0" style="border-top-width:2px;">
+		<colgroup span="2" width="3%"></colgroup><col><colgroup span="2" width="6%"></colgroup><col width="10%"><col width="14%"><col width="10%">
+		<tr height="24" align="center">
+			<td>월</td>
+			<td>일</td>
+			<td>품&nbsp;목&nbsp; / &nbsp;규&nbsp;격</td>
+			<td>단&nbsp;위</td>
+			<td>수&nbsp;량</td>
+			<td>단&nbsp;가</td>
+			<td>공&nbsp;급&nbsp;가&nbsp;액</td>
+			<td>세&nbsp;액</td>
+		</tr>
+
+		<!--{ @item }-->
+		<tr height="25">
+			<td align="middle">{=substr(orddt,5,2)}</td>
+			<td align="middle">{=substr(orddt,8,2)}</td>
+			<td>
+			{.goodsnm}
+			<!--{ ? .addopt }-->
+				<div>{.addopt}</div>
+			<!--{/}-->
+			</td>
+			<td>&nbsp;</td>
+			<td align="middle">{.ea}</td>
+			<td align="right" style="padding-right:6px">{=number_format(.price)}</td>
+			<td align="right" style="padding-right:6px">{=number_format(.supply)}</td>
+			<td align="right" style="padding-right:6px">{=number_format(.tax)}</td>
+		</tr>
+		<!--{/}-->
+
+		<!--{ ? total.etc }-->
+		<tr height="25">
+			<td align="middle">{=substr(orddt,5,2)}</td>
+			<td align="middle">{=substr(orddt,8,2)}</td>
+			<td>기타 추가 (배송비, 환불 수수료 등)</td>
+			<td>&nbsp;</td>
+			<td align="middle">1</td>
+			<td align="right" style="padding-right:6px">{=number_format(total.etcAddPrice)}</td>
+			<td align="right" style="padding-right:6px">{=number_format(total.etcAddPriceSupply)}</td>
+			<td align="right" style="padding-right:6px">{=number_format(total.etcAddPriceSurtax)}</td>
+		</tr>
+		<tr height="25">
+			<td align="middle">{=substr(orddt,5,2)}</td>
+			<td align="middle">{=substr(orddt,8,2)}</td>
+			<td>기타 (할인 등)</td>
+			<td>&nbsp;</td>
+			<td align="middle">1</td>
+			<td align="right" style="padding-right:6px">{=number_format(total.discount*-1)}</td>
+			<td align="right" style="padding-right:6px">{=number_format(total.discountSupply*-1)}</td>
+			<td align="right" style="padding-right:6px">{=number_format(total.discountSurtax*-1)}</td>
+		</tr>
+		<!--{/}-->
+
+		<tr height="25">
+			<td align=middle colspan=8>*** 이 하 여 백 *** </td>
+		</tr>
+		<!--{@ range(rowCount, 4) }-->
+		<tr height="25">
+			<td>&nbsp;</td>
+			<td>&nbsp;</td>
+			<td>&nbsp;</td>
+			<td>&nbsp;</td>
+			<td>&nbsp;</td>
+			<td>&nbsp;</td>
+			<td>&nbsp;</td>
+			<td>&nbsp;</td>
+		</tr>
+		<!--{/}-->
+	</table>
+
+	<table id="box" width="100%" border="0" cellspacing="0" cellpadding="0">
+		<col width="10%"><col width="20%"><col width="10%"><col width="20%"><col width="16%"><col width="14%"><col width="10%">
+		<tr align="center">
+			<td style="border-top-width: 0;" colspan="5">소 계</td>
+			<td style="border-top-width: 0; padding-right:6px" align="right">{=number_format(total.supply)}</td>
+			<td style="border-top-width: 0; padding-right:6px" align="right">{=number_format(total.tax)}</td>
+		</tr>
+		<tr height="25" align="center">
+			<td>미수금</td>
+			<td>&nbsp;</td>
+			<td>합&nbsp;계</td>
+			<td>{=number_format(totalAmount)}</td>
+			<td>인수자</td>
+			<td colspan="2" align="right" style="padding-right:6px;">{=nameOrder}</td>
+		</tr>
+	</table>
+</div>
+</center>
+
+<DIV class="notprint">
+<div style="padding-left:80px; padding-top:20px"><font class=small>거래명세표는 세금계산서 등 증빙서류로 활용할 수 없습니다.</font></div>
+</div>

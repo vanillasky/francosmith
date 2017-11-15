@@ -47,6 +47,24 @@ if(win) win.focus();
 <div id="main-banner-container">
 	<div class="main-banner" id="main-banner-wrapper"> 
 		
+		
+		<div class="banner-item" style="display:none;">
+			<div class="img-holder">
+				<img class="main-banner-img" src="http://francosmith.godohosting.com/banner/main/kreg_accu_cut_kma_2700.jpg">
+			</div>
+			<div class="bar">
+				<div class="text-holder">
+					<h1>Kreg Accu-Cut&trade; - 원형톱 가이드 트랙 시스템</h1>
+					<p class="last">최대 1220mm 한 번에 가공 가능</p>
+					
+					<div class="button-holder">
+						<button class="button-big button-red" onclick="location.href='/shop/goods/goods_view.php?goodsno=1090&category=032004002'">Find out more</button>
+					</div>
+					
+				</div>
+			</div>
+		</div>
+		
 		<div class="banner-item" style="display:none;">
 			<div class="img-holder">
 				<img class="main-banner-img" src="http://francosmith.godohosting.com/main/hybro_main.jpg">
@@ -72,7 +90,7 @@ if(win) win.focus();
 			<div class="bar">
 				<div class="text-holder">
 					<h1>KIJIMA Hand Saws</h1>
-					<p class="last">전문가를 위한 정교한 톱, 키지마 입고</p>
+					<p class="last">전문가를 위한 정교한 톱, 키지마</p>
 					
 					<div class="button-holder">
 						<button class="button-big button-red" onclick="location.href='/shop/goods/goods_brand.php?&brand=124'">Find out more</button>
@@ -136,7 +154,7 @@ if(win) win.focus();
 		</div>
 		 -->
 		 
-		 
+		  
 		<div class="banner-item" style="display:none;">
 			<div class="img-holder">
 				<img class="main-banner-img" src="http://francosmith.godohosting.com/main/vicmarc_main_vl300.jpg">
@@ -171,6 +189,7 @@ if(win) win.focus();
 				</div>
 			</div>
 		</div>
+		
 		<!-- 
 		<div class="banner-item" style="display:none;">
 			<div class="img-holder">
@@ -218,7 +237,7 @@ if(win) win.focus();
 		'effect':'FILTER: progid:DXImageTransform.Microsoft.Fade(Overlap=0.25,Duration=0.7)',
 		'width':'100%',
 		'height':'auto',
-		'wait':5000,
+		'wait':9000,
 		'numDisplay':'block',
 		'numimg':[
 		['../img/main/main_rolling_on.png','../img/main/main_rolling_off.png'],
@@ -243,6 +262,14 @@ if(win) win.focus();
 	
 
 <div id="main_contents" style="width:{_cfg['shopSize']}px">
+	
+	<!--{? hashtagHtml}-->
+	<div style='width: 100%; display: inline-block; margin: 20px 0px 20px 0px; padding: 0 0 10px 0; background-color: #EAEAEA; min-height: 50px;'>
+		<div style="float: left; width: 10%; font-size:16px; font-family: Dotum; font-weight: bold; color: #363636; margin: 0 20px 0 30px; line-height: 50px; ">추천태그</div>
+		<div style="float: left; width: 80%; word-break: break-all; text-align: left; margin-top: 12px; ">{hashtagHtml}</div>
+	</div>
+	<!--{ / }-->
+
 	<div id="three_banner">
 		<div><!--{ @ dataBanner( 11 ) }-->{.tag}<!--{ / }--></div>
 		<div><!--{ @ dataBanner( 12 ) }-->{.tag}<!--{ / }--></div>

@@ -245,6 +245,10 @@ $r_table = array(
 	
 	// naver shopping display category
 	'gd_navershopping_category',
+	
+	//hashtag
+	'gd_hashtag',
+	'gd_hashtag_statistics',
 
 );
 

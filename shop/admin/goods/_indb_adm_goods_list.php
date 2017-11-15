@@ -3,6 +3,7 @@ include "../lib.php";
 
 // @todo : 함수 삭제 및 모델 내부에서 처리 가능하도록 수정
 $Goods = Core::loader('Goods');
+$hashtag = Core::loader('hashtag');
 
 function delGoodsImg($str)
 {
@@ -19,7 +20,7 @@ function delGoodsImg($str)
 }
 
 function delGoods($goodsno){
-	global $db;
+	global $db, $hashtag;
 	$data = $db->fetch("select * from ".GD_GOODS." where goodsno='{$goodsno}'");
 
 	foreach (array('img_i','img_l','img_m','img_s','img_mobile','img_w','img_x','img_y','img_z') as $key) {
@@ -42,6 +43,10 @@ function delGoods($goodsno){
 	$db->query("delete from ".GD_MEMBER_WISHLIST." where goodsno='{$goodsno}'");
 	$db->query("delete from ".GD_SHOPTOUCH_GOODS." where goodsno='{$goodsno}'");
 
+	//해시태그 삭제
+	if(!is_object($hashtag)) $hashtag = Core::loader('hashtag');
+	$hashtag->deleteGoods($goodsno);
+	
 	### 네이버 지식쇼핑 상품엔진
 	naver_goods_runout($goodsno);
 
@@ -239,6 +244,10 @@ function copyGoods($goodsno){
 	}
 	foreach (array_keys($maxSortIncrease) as $category) $goodsSort->increaseSortMax($category);
 
+	//해시태그 복사
+	if(!is_object($hashtag)) $hashtag = Core::loader('hashtag');
+	$hashtag->copyGoods($goodsno, $cGoodsno);
+	
 	### 계정용량 계산
 	setDu('goods');
 

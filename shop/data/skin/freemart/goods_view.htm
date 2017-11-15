@@ -3,7 +3,7 @@
 
 <script src="../../../../lib/js/countdown.js"></script>
 <script src="../js/option-handler.js" type="text/javascript"></script>
-<script src="../js/goods_view.js" type="text/javascript"></script>
+<script src="../js/view_goods.js" type="text/javascript"></script>
 	
 <style>
 
@@ -498,7 +498,7 @@ var nsGodo_MultiOption = new GMultiOption( {?runout}true{:}false{/} );
 							<!-- <th>개별배송비 :</th>-->
 							<td class="goods-view-delivery">
 								<div class="delivery-info">
-									<span class="price-title f14">개별배송비:</span>{=number_format(goods_delivery)}원
+									<span class="price-title f14">개별배송비:{=number_format(goods_delivery)}원</span>
 									<span>/</span>
 									<span class="price-title"><!-- {? delivery_method} --> {delivery_method} <!-- {:} -->1~3일<!-- {/} --></span>
 								</div>
@@ -521,7 +521,7 @@ var nsGodo_MultiOption = new GMultiOption( {?runout}true{:}false{/} );
 							<!-- <th>고정배송비 :</th>-->
 							<td class="goods-view-delivery">
 								<div class="delivery-info">
-									<span class="price-title f14">고정배송비:</span>{=number_format(goods_delivery)}원
+									<span class="price-title f14">고정배송비:{=number_format(goods_delivery)}원</span>
 									<span>/</span>
 									<span class="price-title"><!-- {? delivery_method} --> {delivery_method} <!-- {:} -->1~3일<!-- {/} --></span>
 								</div>
@@ -865,11 +865,21 @@ var nsGodo_MultiOption = new GMultiOption( {?runout}true{:}false{/} );
 				
 			<div id="el-godo-tooltip-related" style="z-index:1000;display:none;position:absolute;top:0;left:0;width:{=_cfg_related.size}px;padding:10px; -moz-opacity:.70; filter:alpha(opacity=70); opacity:.70;line-height:140%;" class="godo-tooltip-related">
 			</div>
+			
+			<div style="margin-top:15px;"></div>
+			<!-- 상품 공통 정보 시작 -->
+			<!--{ @commoninfo() }-->
+			<div style="width:100%;padding:10 10 10 10;overflow:hidden;" class="bottom_grey">
+				{=.info}
+			</div>
+			<div style="margin-bottom:20px;"></div>
+			<!--{ / }-->
+			<!-- 상품 공통 정보 종료 -->
 					
 			<!-- 상세 설명 -->
 			<div id="goods-desc-contents"">
 			{longdesc}
-			<script>setViewMoreFrom('view-more-catetory', '{=currPosition(category)}');</script>
+			<script>setViewMoreFrom('View More From', 'view-more-catetory', "{=currPosition(category)}");</script>
 			</div>
 			
 			<!--{? use_external_video }-->
@@ -877,26 +887,6 @@ var nsGodo_MultiOption = new GMultiOption( {?runout}true{:}false{/} );
 				{=youtubePlayer(external_video_url, external_video_size_type, external_video_width, external_video_height)}
 			</div>
 			<!--{/}-->
-			
-			<!-- 상품 공통 정보 시작 -->
-			<!--{ @commoninfo() }-->
-			<table border=0 cellpadding=0 cellspacing=0>
-			<tr>
-				<TD style="background: URL(../img/common/bar_detail_l.gif) no-repeat;" nowrap width="10" height="24"></TD>
-				<TD style="background: URL(../img/common/bar_detail_c.gif) repeat-x; font-weight:bold;" width='100%'>{=.title}2</TD>
-				<TD style="background: URL(../img/common/bar_detail_r.gif) no-repeat;" nowrap width="10" height="24">3</TD>
-			</tr>
-			</table>
-			<div style="width:100%;padding:10 10 10 10;overflow:hidden">
-				<table cellspacing=0 cellpadding=0>
-				<tr>
-					<td>{=.info}</td>
-				</tr>
-				</table>
-			</div>
-			<div style="margin-bottom:20px;"></div>
-			<!--{ / }-->
-			<!-- 상품 공통 정보 종료 -->
 			
 			<!-- 배송안내 -->		
 			<!--{ ? strpos(this->template_dir, '/easy') && is_file(this->template_dir+'/proc/_goods_guide.htm') }-->

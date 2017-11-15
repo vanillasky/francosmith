@@ -41,6 +41,13 @@ class Clib_Model_Goods_Goods extends Clib_Model_Goods_Abstract
 			'foreignColumn' => 'sno',
 			'primaryColumn' => 'brandno',
 		),
+		'hashtag' => array(
+				'modelName' => 'goods_hashtag',
+				'deleteCascade' => false,
+				'joinType' => 'left',
+				'isCollection' => false,
+				'foreignColumn' => 'goodsno',
+		),
 	);
 
 	/**
@@ -498,6 +505,27 @@ class Clib_Model_Goods_Goods extends Clib_Model_Goods_Abstract
 	{
 		// $path : /shop/goods/ 기준 이므로, 경로를 잡아 줘야 함.
 		return setIcon($this['icon'], $this['regdt'], $path);
+	}
+	
+	public function getHashtag($type)
+	{
+		$goodsno = $this->getId();
+	
+		$hashtagData = array();
+		$mobile = false;
+		$hashtag = Core::loader("hashtag");
+	
+		if(Clib_Application::isMobile()){
+			$mobile = true;
+		}
+	
+		$param = array(
+				'goodsno' => $goodsno,
+				'mobile' => $mobile,
+		);
+		$hashtagData = $hashtag->getHashtagList($type, $param);
+	
+		return $hashtagData;
 	}
 
 }

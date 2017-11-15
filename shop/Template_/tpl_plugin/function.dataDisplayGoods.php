@@ -15,6 +15,7 @@ function dataDisplayGoods( $mode, $img='img_s', $limit=0 ){
 	$goods = array();
 
 	$mainAutoSort = Core::loader('mainAutoSort');
+	$hashtag = Core::loader('hashtag');
 	
 	if ($GLOBALS['tpl']->var_['']['connInterpark']) $where .= "and b.inpk_prdno!=''";
 	if (isset($GLOBALS['tpl']->var_['']['id'])) $GLOBALS['tpl']->var_['']['id'] = '';
@@ -147,6 +148,8 @@ function dataDisplayGoods( $mode, $img='img_s', $limit=0 ){
 					$data['goodsDiscountPrice'] = $data['price'];
 				}
 			}
+			
+			$data['hashtag'] = $hashtag->getHashtagList('goodsList', array('goodsno' => $data['goodsno']));
 			
 			// 출력 제어
 			$goods[] = setGoodsOuputVar($data);

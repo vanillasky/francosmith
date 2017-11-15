@@ -36,6 +36,7 @@ try {
 		$pg = $goodsCollection->getPaging();
 	} else {
 		$mainAutoSort = Core::loader('mainAutoSort');
+		$hashtag = Core::loader('hashtag');
 		$sortNum = "sort".$cfg_step[1]['sort_type']."_".$cfg_step[1]['select_date'];
 		list($add_table, $add_where, $add_order) = $mainAutoSort->getSortTerms($cfg_step[1]['categoods'], $cfg_step[1]['price'], $cfg_step[1]['stock_type'], $cfg_step[1]['stock_amount'], $cfg_step[1]['regdt'], $sortNum);
 
@@ -85,6 +86,9 @@ try {
 					$data['goodsDiscountPrice'] = $data['price'];
 				}
 			}
+			
+			$data['hashtag'] = $hashtag->getHashtagList('goodsList', array('goodsno' => $data['goodsno']));
+			
 			$_loop[] = $data;
 		}
 		$loop = $_loop;

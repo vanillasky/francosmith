@@ -23,6 +23,8 @@
 	<!--{ ? .goodsnm }--><div style="padding:5px 0;text-align:left;"><a href="{.goods_view_url}">{.goodsnm}</a></div><!--{ / }-->
 	<!--{ ? .shortdesc }--><div style="padding-bottom:5px" class=stxt>{=nl2br(.shortdesc)}</div><!--{ / }-->
 	
+	<!--{ ? .hashtag }--><div>{.hashtag}</div><!--{ / }-->
+	
 	<!--{ ? .soldout_icon }--><div style="padding:3px">{? .soldout_icon == 'custom'}<img src="../data/goods/icon/custom/soldout_icon">{:}<img src="../../img/icon/good_icon_soldout.gif">{/}</div><!--{ / }-->
 	<!--{ ? .icon }-->{.icon}<!--{ / }-->
 	</td>

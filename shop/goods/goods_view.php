@@ -18,6 +18,12 @@ require "../lib/plusCheese.class.php";
 include "../lib/cart.class.php";
 @include "../../shop/setGoods/data/config/setGoodsConfig.php";
 include '../lib/Lib_Robot.php';
+
+$jQueryPath = $cfg['rootDir'] . '/lib/js/jquery-1.11.3.min.js';
+$jQueryUiCssPath =  $cfg['rootDir'] . '/lib/js/jquery-ui-1.10.4.custom.css';
+$jQueryUiPath =  $cfg['rootDir'] . '/lib/js/jquery-ui.js';
+$jQueryHashtagJsPath = $cfg['rootDir'] . '/proc/hashtag/hashtagControl.js?actTime='.time();
+
 if (is_file("../conf/config.checkout_review.php")) include "../conf/config.checkout_review.php"; //상품후기 노출 순서
 
 if (is_file("../conf/config.related.goods.php")) include "../conf/config.related.goods.php";
@@ -130,6 +136,19 @@ if (Lib_Robot::isRobotAccess() === false) {
 
 	$tpl->assign('review_count', $review_count);
 	$tpl->assign('qna_count', $qna_count);
+	
+	$jQueryUse = false;
+	if($data['hashtag']){
+		$tpl->assign('jQueryHashtagJsPath', $jQueryHashtagJsPath);
+		$jQueryUse = true;
+	}
+	
+	$tpl->assign('jQueryUse', $jQueryUse);
+	if($jQueryUse === true){
+		$tpl->assign('jQueryPath', $jQueryPath);
+		$tpl->assign('jQueryUiPath', $jQueryUiPath);
+		$tpl->assign('jQueryUiCssPath', $jQueryUiCssPath);
+	}
 
 	if (Clib_Application::request()->get('preview') == 'y' && is_file($tpl->template_dir.'/'.'goods/goods_preview.htm')) {
 		$tpl->define('tpl','goods/goods_preview.htm');

@@ -772,6 +772,16 @@ var nsGodo_MultiOption = new GMultiOption( {?runout}true{:}false{/} );
 		<div id="in-detail-wrapper">	
 			<div class="dot-line"></div>
 			
+			<!--{ ? hashtag }-->
+			<div style="position: relative; height: 24px; overflow: hidden; background: url(../img/common/bar_detail_01_bg.gif) repeat-x;">
+				<div style="background: url(../img/common/bar_detail_00.png) no-repeat; float: left; width: 120px; height: 24px;"></div>
+				<div style="background: url(../img/common/bar_detail_01_right.gif) no-repeat; float: right; width: 10px; height: 24px;"></div>
+			</div>
+			
+			<div style="width: 100%; min-height: 30px; padding: 5px;">{hashtag}</div>
+			<!--{ / }-->
+			
+			
 			<!--{ ? coupon || coupon_emoney }-->
 			<!-- 할인쿠폰 다운받기 -->
 			<div style="clear:both; width:100%; margin:0 auto; display:inline-block;height:70px; padding-top:10px;">
@@ -977,5 +987,18 @@ var nsGodo_MultiOption = new GMultiOption( {?runout}true{:}false{/} );
 		<!--{/}-->
 		<!--디테일뷰수정-->
 </div><!--  END page-wrapper -->	
+
+<!--{ ? jQueryUse }-->
+<script type="text/javascript" src="{jQueryPath}"></script>
+<script type="text/javascript" src="{jQueryUiPath}"></script>
+<script type="text/javascript">jQuery.noConflict();</script>
+<link href="{jQueryUiCssPath}" rel="stylesheet" type="text/css"/>
+	<!--{ ? hashtag }-->
+	<script type="text/javascript" src="{jQueryHashtagJsPath}"></script>
+	<script type="text/javascript">
+	jQuery(document).ready(HashtagUserViewController(false));
+	</script>
+	<!--{ / }-->
+<!--{ / }-->
 	
 { # footer }

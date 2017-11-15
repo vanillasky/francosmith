@@ -12,6 +12,9 @@ class Clib_Application
 	 */
 	private static $_mobile = false;
 
+	//해시태그 페이지 여부
+	private static $hashtagPage = false;
+	
 	/**
 	 * 형식화된 클래스 이름을 리턴
 	 * @param string $type 형식
@@ -388,5 +391,13 @@ class Clib_Application
 		return self::$_mobile;
 	}
 
-
+	public static function setHashtagPage($bool = true)
+	{
+		self::$hashtagPage = $bool;
+	}
+	
+	public static function isHashtagPage()
+	{
+		return self::$hashtagPage;
+	}
 }

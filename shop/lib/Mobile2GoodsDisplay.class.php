@@ -207,7 +207,8 @@ class Mobile2GoodsDisplay
 		$config = Core::loader('config');
 		$cfg = $config->load('config');
 		$mainAutoSort = Core::loader('mainAutoSort');
-
+		$hashtag = Core::loader('hashtag');
+		
 		// 상품할인
 		$goodsDiscountModel = Clib_Application::getModelClass('goods_discount');
 
@@ -374,7 +375,9 @@ class Mobile2GoodsDisplay
 				if($row['coupon'] > 0 || $row['coupon_emoney'] > 0){
 					$coupon_discount = true;
 				}
-
+				//해시태그
+				$hashtagHtml = $hashtag->getHashtagList('goodsList', array('goodsno' => $row['goodsno']));
+				
 				$displayGoods[] = array(
 					'goods_img' => $goodsImg,
 					'goods_price' => $goodsPrice,
@@ -386,6 +389,9 @@ class Mobile2GoodsDisplay
 					'coupon_discount' => $coupon_discount,
 					'coupon' => $row['coupon'],
 					'css_selector' => $css_selector,
+					'oriPrice' => $oriPrice,
+					'goodsDiscountPrice' => $goodsDiscountPrice,
+					'hashtag' => $hashtagHtml,
 				);
 			}
 			if ($dbCache) { $dbCache->setCache($goodsDisplayQuery, $displayGoods); }
@@ -444,7 +450,8 @@ class Mobile2GoodsDisplay
 		$config = Core::loader('config');
 		$cfg = $config->load('config');
 		$mainAutoSort = Core::loader('mainAutoSort');
-
+		$hashtag = Core::loader('hashtag');
+		
 		if (is_file(dirname(__FILE__). "/../../shop/conf/config.soldout.php"))
 			include dirname(__FILE__). "/../../shop/conf/config.soldout.php";
 
@@ -580,6 +587,9 @@ class Mobile2GoodsDisplay
 								if($tmp_arr['coupon'] > 0 || $tmp_arr['coupon_emoney'] > 0){
 									$tmp_arr['coupon_discount'] = true;
 								}
+								
+								//해시태그
+								$tmp_arr['hashtag'] = $hashtag->getHashtagList('goodsList', array('goodsno' => $row_display['goodsno']));
 
 								$res_display[] = $tmp_arr;
 							}
@@ -678,7 +688,10 @@ class Mobile2GoodsDisplay
 							if($tmp_arr['coupon'] > 0 || $tmp_arr['coupon_emoney'] > 0){
 								$tmp_arr['coupon_discount'] = true;
 							}
-
+							
+							//해시태그
+							$tmp_arr['hashtag'] = $hashtag->getHashtagList('goodsList', array('goodsno' => $row_display['goodsno']));
+							
 							$res_display[] = $tmp_arr;
 						}
 					}
@@ -825,6 +838,9 @@ class Mobile2GoodsDisplay
 									if($tmp_arr['coupon'] > 0 || $tmp_arr['coupon_emoney'] > 0){
 										$tmp_arr['coupon_discount'] = true;
 									}
+									
+									//해시태그
+									$tmp_arr['hashtag'] = $hashtag->getHashtagList('goodsList', array('goodsno' => $row_display['goodsno']));
 
 									$tmp_res[] = $tmp_arr;
 								}
@@ -979,6 +995,9 @@ class Mobile2GoodsDisplay
 						if($tmp_arr['coupon'] > 0 || $tmp_arr['coupon_emoney'] > 0){
 							$tmp_arr['coupon_discount'] = true;
 						}
+						
+						//해시태그
+						$tmp_arr['hashtag'] = $hashtag->getHashtagList('goodsList', array('goodsno' => $row_display['goodsno']));
 
 						$res_display[] = $tmp_arr;
 					}
@@ -1001,7 +1020,8 @@ class Mobile2GoodsDisplay
 
 		$config = Core::loader('config');
 		$cfg = $config->load('config');
-
+		$hashtag = Core::loader('hashtag');
+		
 		if (is_file(dirname(__FILE__). "/../../shop/conf/config.soldout.php"))
 			include dirname(__FILE__). "/../../shop/conf/config.soldout.php";
 
@@ -1096,7 +1116,8 @@ class Mobile2GoodsDisplay
 								if($tmp_arr['coupon'] > 0 || $tmp_arr['coupon_emoney'] > 0){
 									$tmp_arr['coupon_discount'] = true;
 								}
-
+								//해시태그
+								$tmp_arr['hashtag'] = $hashtag->getHashtagList('goodsList', array('goodsno' => $row_display['goodsno']));
 								$tmp_arr['goods_price'] = number_format($row_display['price']).' 원';
 								$tmp_res[] = $tmp_arr;
 							}
@@ -1173,7 +1194,9 @@ class Mobile2GoodsDisplay
 						if($tmp_arr['coupon'] > 0 || $tmp_arr['coupon_emoney'] > 0){
 							$tmp_arr['coupon_discount'] = true;
 						}
-
+						
+						//해시태그
+						$tmp_arr['hashtag'] = $hashtag->getHashtagList('goodsList', array('goodsno' => $row_display['goodsno']));
 						$tmp_arr['goods_price'] = number_format($row_display['price']).' 원';
 						$res_display[] = $tmp_arr;
 					}
@@ -1251,6 +1274,8 @@ class Mobile2GoodsDisplay
 				'keyword' => $kw,
 				'sort' => $order_by,
 				'item_cnt' => $item_cnt,
+				'hashtagPage' => $hashtagPage,
+				'hashtag' => $hashtag,
 			);
 
 			// GROUP BY 처리를 위해서 기존의 객체를 변경함
@@ -1272,6 +1297,8 @@ class Mobile2GoodsDisplay
 				'sort' => $order_by,
 				'category' => $category,
 				'item_cnt' => $item_cnt,
+				'hashtagPage' => $hashtagPage,
+				'hashtag' => $hashtag,
 			);
 		}
 

@@ -1,0 +1,93 @@
+{*** 해시태그 위젯리스트 | proc/hashtag_widget_list.php ***}
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=euc-kr">
+<title>hashtag widget list</title>
+<script type="text/javascript" src="{jQueryPath}"></script>
+<link rel="styleSheet" href="../style.css">
+<style>
+html, body { overflow-x: hidden; left:0; right: 0; }
+.hashtagWidgetList { left:0; right: 0; padding: 5px; height: 100%; }
+.hashtagWidgetList .hashtagWidgetList-goods { margin-left: 5px; }
+.hashtagWidgetList .hashtagWidgetList-goods:first-child { margin-left: 0px; }
+.hashtagWidgetList .hashtagWidgetList-information { padding: 14px 0 0 6px; text-align: left; }
+</style>
+
+<!-- LIST -->
+<div id="hashtagWidgetList" class="hashtagWidgetList" style="width:{hashtagIframeWidth}px;">
+<input type="hidden" name="hashtagWidgetID" id="hashtagWidgetID" value="{hashtagWidgetID}" />
+
+	<!--{ @ hashtagList }-->
+	<div class="hashtagWidgetList-goods" style="width: {size}px; <!--{ ? .index_ && .index_%hashtagWidth==0 }-->clear: both;<!--{ / }-->float: left;" >
+		<div class="hashtagGoodsImage"><a href="javascript:;" onclick="javascript:parent.location.href='{.goods_view_url}'" data-goodsno='{.goodsno}'>{=goodsimg(.img_s, size)}</a></div>
+		<div class="hashtagWidgetList-information">
+			<!--{ ? .soldout_icon }-->
+			<div style="padding:3px 0;">
+				<!--{? .soldout_icon == 'custom' }-->
+					<img src="./data/goods/icon/custom/soldout_icon" / >
+				<!--{ : }-->
+					<img src="../img/icon/good_icon_soldout.gif" />
+					<!--{ / }-->
+			</div>
+			<!--{ / }-->
+
+			<!--{ ? .goodsnm }--><div class="pname"><a href="javascript:;" onclick="javascript:parent.location.href='{.goods_view_url}'" data-goodsno='{.goodsno}'>{.goodsnm}</a></div><!--{ / }-->
+			<!--{ ? .shortdesc }--><div class="pname2"><a href="javascript:;" onclick="javascript:parent.location.href='{.goods_view_url}'" data-goodsno='{.goodsno}'>{.shortdesc}</a></div><!--{ / }-->
+
+			<!--{ ? !.strprice }-->
+				<!--{ ? .goodsDiscountPrice}-->
+					<!--{ ? .oriPrice }--><a href="javascript:;" onclick="javascript:parent.location.href='{.goods_view_url}'" class="pname" data-goodsno='{.goodsno}'><strike style="font-size:11px;">{=number_format(.oriPrice)}</strike>↓</a><!--{ / }-->
+					<div style="padding-bottom:3px;">
+						<a href="javascript:;" onclick="javascript:parent.location.href='{.goods_view_url}'" class="pprice" data-goodsno='{.goodsno}'><strong>{=number_format(.goodsDiscountPrice)}</strong></a>
+						<!--{? .special_discount_amount}--><img src="../img/icon/goods_special_discount.gif" /><!--{/}-->
+					</div>
+				<!--{ : }-->
+					<!--{ ? .price}-->
+						<!--{ ? .consumer }--><a href="javascript:;" onclick="javascript:parent.location.href='{.goods_view_url}'" class="pname" data-goodsno='{.goodsno}'><strike style="font-size:11px;">{=number_format(.consumer)}</strike>↓</a><!--{ / }-->
+						<div style="padding-bottom:3px;">
+							<a href="javascript:;" onclick="javascript:parent.location.href='{.goods_view_url}'" class="pprice" data-goodsno='{.goodsno}'><strong>{=number_format(.price)}</strong></a>
+							<!--{? .special_discount_amount}--><img src="../img/icon/goods_special_discount.gif"><!--{/}-->
+						</div>
+					<!--{ / }-->
+				<!--{ / }-->
+				<!--{? .soldout_price_string}-->{.soldout_price_string}<!--{/}-->
+				<!--{? .soldout_price_image}-->{.soldout_price_image}<!--{/}-->
+			<!--{ : }-->
+				{.strprice}
+			<!--{ / }-->
+
+			<!--{ ? .icon }--><div>{.icon}</div><!--{ / }-->
+			<!--{ ? .coupon }--><div class="eng"><strong style="color:red;">{.coupon}<font class="small">원</font></strong> <img src="../img/icon/good_icon_coupon.gif" align="absmiddle"></div><!--{ / }-->
+			<!--{ ? .hashtag }--><div>{.hashtag}</div><!--{ / }-->
+		</div>
+	</div>
+	<!--{ / }-->
+
+</div>
+<!-- LIST -->
+
+<script type="text/javascript">
+$(window).load(function(){
+	//location 경로 재지정
+	$('.hashtagSelector').attr('onclick', $('.hashtagSelector').attr('onclick').replace(/location/g, 'parent.location'));
+	var showPath = parent.document.location.pathname;
+	if (showPath.charAt(0) == '/')	{
+		showPath = showPath.substring(1);
+	}
+	var showType = showPath.split("/");
+	if(showType[0] === 'm' || showType[0] === 'm2'){
+		$('a').each(function(){
+			$(this).attr("onclick", "javascript:parent.location.href='/"+showType[0]+"/goods/view.php?goodsno=" + $(this).attr('data-goodsno')+"'");
+		});
+		$('.hashtagSelector').each(function(){
+			$('.hashtagSelector').attr("onclick", "javascript:parent.location.href='/"+showType[0]+"/goods/goods_hashtag_list.php?hashtag=" + $(this).attr('data-name')+"'");
+		});
+	}
+
+	var iframeHeight = parseInt($('body').height()) + 20;
+	//iframe height 조정
+	$('#' + $("#hashtagWidgetID").val(), parent.document).height(iframeHeight);
+});
+</script>
+</body>
+</html>

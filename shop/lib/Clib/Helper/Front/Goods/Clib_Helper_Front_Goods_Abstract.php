@@ -11,6 +11,10 @@ class Clib_Helper_Front_Goods_Abstract extends Clib_Helper_Abstract
 
 	public function getGoodsCollection($params)
 	{
+		//해시태그 페이지
+		if($params['hashtagPage'] === 'y'){
+			Clib_Application::setHashtagPage();
+		}
 		$collection = Clib_Application::getCollectionClass('goods');
 		$collection = $this->prepareGoodsCollection($collection, $params);
 		$collection->load();
@@ -33,6 +37,11 @@ class Clib_Helper_Front_Goods_Abstract extends Clib_Helper_Abstract
 	public function prepareGoodsCollection($collection, $params)
 	{
 		global $cfg_soldout, $cfgMobileShop;
+		
+		//해시태그 페이지
+		if(Clib_Application::isHashtagPage()){
+			$collection->addFilter('goods_hashtag.hashtag', $params['hashtag'], '=');
+		}
 
 		// 페이지
 		$collection->setCurrentPage($params['page']);
@@ -58,25 +67,48 @@ class Clib_Helper_Front_Goods_Abstract extends Clib_Helper_Abstract
 			}
 		}
 
-		if ($params['category']) {
-
-			if ( ! $params['category'] instanceof Clib_Model_Category_Category) {
-				$params['category'] = $this->getCategoryModel($params['category']);
-			}
-
-			$collection->setCategoryFilter($params['category']->getId());
-
-			foreach ($params['category']->getExcludeCategoryCollection() as $exclude) {
-
-				if ($_level = Clib_Application::session()->getMemberLevel()) {
-					// 카테고리 접근 권한보다 낮은 등급의 회원은, 하위 카테고리의 상품까지 숨김
-					if ($_level < $exclude->getLevel()) {
-						$collection->addFilter('goods_link.category', Clib_Application::database()->wildcard($exclude->getId(), 1), 'not like');
+	//해시태그 페이지 카테고리 권한 노출체크
+		if(Clib_Application::isHashtagPage()){
+			$notCategory = array();
+			$res = Clib_Application::database()->query("SELECT category, level, level_auth, auth_step FROM ".GD_CATEGORY." WHERE level <> 0");
+			if($res){
+				while($hashtagCategory = Clib_Application::database()->fetch($res)){
+					if($hashtagCategory['level_auth'] == '1' || $hashtagCategory['level_auth'] == '2') {
+						$notCategory[$hashtagCategory['category']]['category'] = $hashtagCategory['category'];
+						$notCategory[$hashtagCategory['category']]['level'] = $hashtagCategory['level'];
 					}
 				}
-				else {
-					// 비회원은 해당카테고리만 숨김
-					$collection->addFilter('goods_link.category', $exclude->getId(), '<>');
+			}
+
+			if(count($notCategory) > 0){
+				foreach($notCategory as $notCategoryNumber){
+					if (Clib_Application::session()->getMemberLevel() < $notCategoryNumber['level']){
+						$collection->addFilter('goods_link.category', $notCategoryNumber['category'], 'not like');
+					}
+				}
+			}
+		}
+		else {
+			if ($params['category']) {
+
+				if ( ! $params['category'] instanceof Clib_Model_Category_Category) {
+					$params['category'] = $this->getCategoryModel($params['category']);
+				}
+
+				$collection->setCategoryFilter($params['category']->getId());
+
+				foreach ($params['category']->getExcludeCategoryCollection() as $exclude) {
+
+					if ($_level = Clib_Application::session()->getMemberLevel()) {
+						// 카테고리 접근 권한보다 낮은 등급의 회원은, 하위 카테고리의 상품까지 숨김
+						if ($_level < $exclude->getLevel()) {
+							$collection->addFilter('goods_link.category', Clib_Application::database()->wildcard($exclude->getId(), 1), 'not like');
+						}
+					}
+					else {
+						// 비회원은 해당카테고리만 숨김
+						$collection->addFilter('goods_link.category', $exclude->getId(), '<>');
+					}
 				}
 			}
 		}
@@ -1149,7 +1181,10 @@ class Clib_Helper_Front_Goods_Abstract extends Clib_Helper_Abstract
 		else {
 			$goodsModel['tts_url'] = '';
 		}
-
+		
+		//해시태그명
+		$goodsModel['hashtag'] = $goodsModel->getHashtag('goodsView');
+		
 		Clib_Application::storage()->set('opt', $opt);
 		Clib_Application::storage()->set('opt1img', $opt1img);
 		Clib_Application::storage()->set('addopt', $addopt);
@@ -1167,7 +1202,7 @@ class Clib_Helper_Front_Goods_Abstract extends Clib_Helper_Abstract
 
 	protected function setGoodsCollectionAttributes($collection, $category)
 	{
-		global $cfg_soldout,$displayCfg;
+		global $cfg_soldout,$displayCfg,$db;
 
 		if (method_exists($category, 'getConfig')) {
 			$lstcfg = $category->getConfig();
@@ -1177,7 +1212,13 @@ class Clib_Helper_Front_Goods_Abstract extends Clib_Helper_Abstract
 		}
 
 		$list = array();
-
+	
+		if(Clib_Application::isHashtagPage()){
+			$category_collection = Clib_Application::getCollectionClass('category');
+			$category_collection->addExpressionFilter("level <> 0");
+			$category_collection->load();
+		}
+		
 		foreach ($collection as $item) {
 
 			$item['brandnm'] = $item->getBrandName();
@@ -1205,12 +1246,30 @@ class Clib_Helper_Front_Goods_Abstract extends Clib_Helper_Abstract
 
 			### 아이콘
 			$item['icon'] = $this->getIconHtml($item);
-
+			
+			//해시태그 페이지  - cateogry 정보 획득
+			if(Clib_Application::isHashtagPage()){
+				$category = null;
+				$goods_link_collection = $item->getCategory();
+			
+				foreach($category_collection as $category_model) {
+					foreach($goods_link_collection as $goods_link) {
+						if($category_model->getData('category') == $goods_link->getData('category')) {
+							$category = $category_model;
+							break;
+						}
+					}
+					if($category instanceof Clib_Model_Category_Category) {
+						break;
+					}
+				}
+			}
+				
 			if ($category instanceof Clib_Model_Category_Category) {
 				$item['auth_step'] = $category->getAuthStep();
 				$item['level'] = $category->getLevel();
 			}
-
+			
 			// 상품할인 가격 표시
 			if ($displayCfg['displayType'] === 'discount') {
 				$discountModel = '';
@@ -1303,6 +1362,9 @@ class Clib_Helper_Front_Goods_Abstract extends Clib_Helper_Abstract
 			if ($item['is_open_price'] === false) {
 				$item['price'] = '';
 			}
+			
+			//해시태그명
+			$item['hashtag'] = $item->getHashtag('goodsList');
 
 		}
 

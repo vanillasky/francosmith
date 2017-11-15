@@ -36,6 +36,7 @@ $r_page_num = array(20,40,60,80);
 		$pg = $goodsCollection->getPaging();
 	} else {
 		$mainAutoSort = Core::loader('mainAutoSort');
+		$hashtag = Core::loader('hashtag');
 		$sortNum = "sort".$cfg_step[4]['sort_type']."_".$cfg_step[4]['select_date'];
 		list($add_table, $add_where, $add_order) = $mainAutoSort->getSortTerms($cfg_step[4]['categoods'], $cfg_step[4]['price'], $cfg_step[4]['stock_type'], $cfg_step[4]['stock_amount'], $cfg_step[4]['regdt'], $sortNum);
 
@@ -85,6 +86,9 @@ $r_page_num = array(20,40,60,80);
 					$data['goodsDiscountPrice'] = $data['price'];
 				}
 			}
+			
+			$data['hashtag'] = $hashtag->getHashtagList('goodsList', array('goodsno' => $data['goodsno']));
+			
 			$_loop[] = $data;
 		}
 		$loop = $_loop;

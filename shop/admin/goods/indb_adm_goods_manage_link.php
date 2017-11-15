@@ -9,6 +9,7 @@ $qfile = new qfile();
 $upload = new upload_file;
 $Goods = Core::loader('Goods');
 $goodsSort = Core::loader('GoodsSort');
+$hashtag = Core::loader('hashtag');
 
 $_POST[sub] = trim($_POST[sub]);
 
@@ -27,7 +28,7 @@ function delGoodsImg($str)
 }
 
 function delGoods($goodsno){
-	global $db;
+	global $db, $hashtag;
 	$data = $db->fetch("select * from ".GD_GOODS." where goodsno='{$goodsno}'");
 
 	foreach (array('img_i','img_l','img_m','img_s','img_mobile') as $key) {
@@ -42,6 +43,10 @@ function delGoods($goodsno){
 	$db->query("delete from ".GD_MEMBER_WISHLIST." where goodsno='{$goodsno}'");
 	$db->query("delete from ".GD_SHOPTOUCH_GOODS." where goodsno='{$goodsno}'");
 
+	//해시태그 삭제
+	if(!is_object($hashtag)) $hashtag = Core::loader('hashtag');
+	$hashtag->deleteGoods($goodsno);
+	
 	### 네이버 지식쇼핑 상품엔진
 	naver_goods_runout($goodsno);
 	
@@ -59,7 +64,7 @@ function delGoods($goodsno){
 
 function copyGoods($goodsno){
 
-	global $db,$Goods,$goodsSort;
+	global $db,$Goods,$goodsSort, $hashtag;
 	static $imgIdx = 0;
 
 	$_dir	= "../../data/goods/";
@@ -192,6 +197,10 @@ function copyGoods($goodsno){
 	}
 	foreach (array_keys($maxSortIncrease) as $category) $goodsSort->increaseSortMax($category);
 
+	//해시태그 복사
+	if(!is_object($hashtag)) $hashtag = Core::loader('hashtag');
+	$hashtag->copyGoods($goodsno, $cGoodsno);
+	
 	### 계정용량 계산
 	setDu('goods');
 

@@ -352,6 +352,12 @@ class Clib_Controller_Admin_Goods extends Clib_Controller_Admin_Abstract
 			Clib_Application::request()->set('returnUrl', $_SERVER['HTTP_REFERER']);
 		}
 
+		//상품 해시태그
+		$this->_requests['hashtag'] = array(
+			'hashtagNo' => $post['hashtagNo'],
+			'hashtagName' => $post['hashtagName'],
+			'hashtagDelName' => $post['hashtagDelName'],
+		);
 	}
 
 	private function _checkGoodsImage($type)
@@ -1089,7 +1095,11 @@ class Clib_Controller_Admin_Goods extends Clib_Controller_Admin_Abstract
 				$qr->save();
 			}
 
-
+			if(!is_object($db)){
+				$db = Clib_Application::database();
+			}
+			$hashtag = Core::loader('hashtag');
+			$hashtag->saveGoodsList($this->_getRequest('hashtag'), $goods->getId());
 
 			// commit;
 			Clib_Application::database()->commit();

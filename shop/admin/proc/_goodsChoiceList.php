@@ -1,4 +1,5 @@
 <?php
+$SET_HTML_DEFINE = true;
 include '../_header.popup.php';
 include '../../lib/page.class.php';
 
@@ -18,6 +19,7 @@ $params = array(
 	'soldout' => Clib_Application::request()->get('soldout'),
 	'brandno' => Clib_Application::request()->get('brandno'),
 	'sort' => Clib_Application::request()->get('sort', 'goodsno desc'),
+	'hashtag' => str_replace(" ", "_", trim(Clib_Application::request()->get('hashtag'))),
 );
 
 // 상품 목록
@@ -73,7 +75,8 @@ table.goodsChoice-admin-list-table .price {overflow:visible; white-space:nowrap;
 </style>
 <script type="text/javascript" src="../goods/js/goods_list.js"></script>
 <script type="text/javascript" src="../js/adm_form.js"></script>
-
+<link href="<?php echo $cfg['rootDir']; ?>/lib/js/jquery-ui-1.10.4.custom.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="<?php echo $cfg['rootDir']; ?>/proc/hashtag/hashtagControl.js?actTime=<?php echo time(); ?>"></script>
 
 <form class="admin-form" method="get" name="frmList" id="el-admin-goods-search-form" action="./_goodsChoiceList.php">
 <input type="hidden" name="sort" value="<?=Clib_Application::request()->get('sort')?>">
@@ -120,6 +123,12 @@ table.goodsChoice-admin-list-table .price {overflow:visible; white-space:nowrap;
 					echo sprintf('<label>%s%s</label> ',$tag, $label);
 				}
 				?>
+			</td>
+		</tr>
+		<tr>
+			<th>해시태그</th>
+			<td colspan="3">
+			<div style="border: 1px #BDBDBD solid; width: 170px; height: 20px;">#<?php echo $searchForm->getTag('hashtag'); ?></div>
 			</td>
 		</tr>
 		<tr id="displayTr1">
@@ -263,5 +272,6 @@ Event.observe(document, 'dom:loaded', function(){
 	nsAdminGoodsList.sortInit('<?=Clib_Application::request()->get('sort')?>');
 	nsAdminForm.init($('el-admin-goods-search-form'));
 });
+jQuery(document).ready(HashtagInputListController);
 </script>
 <?php include '../_footer.popup.php'; ?>

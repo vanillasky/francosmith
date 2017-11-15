@@ -230,6 +230,9 @@ class Clib_Helper_Front_Goods_Mobile extends Clib_Helper_Front_Goods_Abstract
 					$item['goodsImage'] = goodsimgMobile($img_l_arr[0], 100);
 				}
 			}
+			
+			//해시태그명
+			$item['hashtag'] = $item->getHashtag('goodsList');
 		}
 
 		return $collection;
