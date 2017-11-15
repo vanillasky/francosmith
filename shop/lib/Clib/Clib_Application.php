@@ -14,6 +14,8 @@ class Clib_Application
 
 	//해시태그 페이지 여부
 	private static $hashtagPage = false;
+	//가이디드 셀링 페이지 여부
+	private static $guidedSellingPage = false;
 	
 	/**
 	 * 형식화된 클래스 이름을 리턴

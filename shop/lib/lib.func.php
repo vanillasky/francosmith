@@ -249,6 +249,11 @@ $r_table = array(
 	//hashtag
 	'gd_hashtag',
 	'gd_hashtag_statistics',
+	
+	//가이디드 셀링
+	'gd_guidedSelling',
+	'gd_guidedSelling_unit',
+	'gd_guidedSelling_unitDetail',
 
 );
 
@@ -5618,6 +5623,106 @@ function checkPatchPgStandard($pgCode)
 	$skin_std = dirname(__FILE__) . '/../data/skin/'.$cfg['tplSkin'].'/order/card/' . $pgCode . '_std.htm';
 	if (file_exists($file_std) === false || file_exists($skin_std) === false) {
 		return false;
+	}
+
+	return true;
+}
+
+// 관리자 로그 조회 - 로그파일의 리스트에 뿌려줄 내용 배열로 저장
+function logSearchData($path, $array, $chkarray){
+	$fp = fopen($path,'r');
+	$fr = fread($fp,filesize($path));
+	$logContent = array_filter(explode('=============',$fr));
+	sort($logContent);
+
+	foreach ($logContent as $k => $v) {
+		$REQUEST_TIME_KEY = "";
+		$logLineContent = array_filter(explode(PHP_EOL,$v));
+
+		foreach ($logLineContent as $value) {
+			$logExt = explode('=>',$value);
+			parse_str($logExt[1],$data);
+			switch ($logExt[0]) {
+				case "*SERVER":
+					$SCRIPT_FILENAME = explode('/',$data['SCRIPT_FILENAME']);
+					$SCRIPT_FILENAME = array_slice($SCRIPT_FILENAME,-2);
+					$REQUEST_TIME = str_replace('.','-',$data['REQUEST_TIME']);
+					if (!isset($chkarray[@implode($SCRIPT_FILENAME,'/')])) break;
+					if (!$REQUEST_TIME) break;
+					$REQUEST_TIME_KEY = strtotime($REQUEST_TIME);
+					if (is_array($array[$REQUEST_TIME_KEY])) $REQUEST_TIME_KEY .= "_".$k;
+
+					$array[$REQUEST_TIME_KEY] = array('REQUEST_TIME' => $REQUEST_TIME,'SCRIPT_FILENAME' => @implode($SCRIPT_FILENAME,'/'),'REMOTE_ADDR' => $data['REMOTE_ADDR'],);
+					break;
+				case "*SESSION":
+					$array[$REQUEST_TIME_KEY] = array_merge($array[$REQUEST_TIME_KEY],array('adminId' => $data['adminId'],));
+					break;
+				case "*POST":
+					if ($data['mode']) $array[$REQUEST_TIME_KEY] = array_merge($array[$REQUEST_TIME_KEY],array('mode' => $data['mode'],));
+					if ($data['type']) $array[$REQUEST_TIME_KEY] = array_merge($array[$REQUEST_TIME_KEY],array('type' => $data['type'],));
+					if ($data['ord_status']) $array[$REQUEST_TIME_KEY] = array_merge($array[$REQUEST_TIME_KEY],array('ord_status' => $data['ord_status'],));
+					if ($data['goodstype']) $array[$REQUEST_TIME_KEY] = array_merge($array[$REQUEST_TIME_KEY],array('goodstype' => $data['goodstype'],));
+					if ($data['func']) $array[$REQUEST_TIME_KEY] = array_merge($array[$REQUEST_TIME_KEY],array('func' => $data['func'],));
+					if ($data['process']) $array[$REQUEST_TIME_KEY] = array_merge($array[$REQUEST_TIME_KEY],array('process' => $data['process'],));
+					break;
+				case "*GET":
+					if ($data['mode']) $array[$REQUEST_TIME_KEY] = array_merge($array[$REQUEST_TIME_KEY],array('mode' => $data['mode'],));
+					if ($data['type']) $array[$REQUEST_TIME_KEY] = array_merge($array[$REQUEST_TIME_KEY],array('type' => $data['type'],));
+					if ($data['ord_status']) $array[$REQUEST_TIME_KEY] = array_merge($array[$REQUEST_TIME_KEY],array('ord_status' => $data['ord_status'],));
+					if ($data['goodstype']) $array[$REQUEST_TIME_KEY] = array_merge($array[$REQUEST_TIME_KEY],array('goodstype' => $data['goodstype'],));
+					if ($data['func']) $array[$REQUEST_TIME_KEY] = array_merge($array[$REQUEST_TIME_KEY],array('func' => $data['func'],));
+					if ($data['process']) $array[$REQUEST_TIME_KEY] = array_merge($array[$REQUEST_TIME_KEY],array('process' => $data['process'],));
+					break;
+			}
+		}
+	}
+	return $array;
+}
+
+// 관리자 로그아웃 로그 남기기
+function member_logout( $m_id ){
+	$log_msg = "";
+	$log_msg .= date('Y-m-d H:i:s') . "\t";
+	$log_msg .= $_SERVER['REMOTE_ADDR'] . "\t";
+	$log_msg .= $m_id . "\n";
+
+	error_log($log_msg, 3, $tmp = dirname(__FILE__) . "/../log/logout_" . date('Ym') . ".log");
+	@chmod( $tmp, 0707 );
+}
+
+/**
+ * 지번, 도로명주소 시/도 비교
+ * @author workingby
+ * @param string $jibunAddress 지번주소
+ * @param string $smsroadAddress 도로명주소
+ * @return boolean
+ * true - 일치, 패스
+ * false - 불일치
+ */
+function checkAddressSido($jibunAddress, $roadAddress)
+{
+	//지번, 도로명 주소중 하나라도 없는 경우 패스
+	if(!trim($jibunAddress) || !trim($roadAddress)){
+		return true;
+	}
+
+	$jibunSido = $roadSido = '';
+	$checkSido = array('강원'=>'강원도', '경기'=>'경기도', '경남'=>'경상남도', '경북'=>'경상북도', '광주'=>'광주광역시', '대구'=>'대구광역시', '대전'=>'대전광역시', '부산'=>'부산광역시', '서울'=>'서울특별시', '세종'=>'세종특별자치시', '울산'=>'울산광역시', '인천'=>'인천광역시', '전남'=>'전라남도', '전북'=>'전라북도', '제주'=>'제주특별자치도', '충남'=>'충청남도', '충북'=>'충청북도');
+	$revertCheckSido = array_flip($checkSido);
+
+	$jibunSido = trim(current(explode(" ", $jibunAddress)));
+	$roadSido = trim(current(explode(" ", $roadAddress)));
+
+	//지번, 도로명주소의 시/도 가 모두 존재할 경우 체크
+	if($jibunSido && $roadSido){
+		//지번, 도로명 주소의 '시/도'가 동일한 경우 패스
+		if($jibunSido === $roadSido){
+			return true;
+		}
+		//서울-서울특별시, 서울특별시-서울 같은 교차 데이터 허용
+		if($checkSido[$jibunSido] !== $roadSido && $revertCheckSido[$jibunSido] !== $roadSido){
+			return false;
+		}
 	}
 
 	return true;

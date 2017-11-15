@@ -201,7 +201,43 @@ class Clib_Collection implements IteratorAggregate, Countable
 		}
 
 	}
-
+	
+	public function addExpressionFreeJoinFilter($expression, $chain = 'and')
+	{
+		$split = preg_split('/\s/', $expression, - 1, PREG_SPLIT_NO_EMPTY);
+	
+		$expression = array();
+	
+		foreach ($split as $str) {
+			$tmp = $this->parseDotNotation($str);
+			if ( ! is_null($tmp['targetModel'])) {
+				$targetModelNameArray = array();
+				$modelFilePath = '';
+	
+				$targetModelNameArray = explode("_", $tmp['targetModel']);
+				$modelFilePath = dirname(__FILE__)."/Model/".$targetModelNameArray[2]."/".$tmp['targetModel'].".php";
+				if(is_file($modelFilePath)){
+					$tmp['targetModel'] = Clib_Application::getAlias($tmp['targetModel']);
+				}
+				else {
+					list($tmp['targetModel']) = explode('.', $str);
+				}
+	
+				$expression[] = implode('.', $tmp);
+			}
+			else {
+				$expression[] = $str;
+			}
+		}
+	
+		$this->filters['_'][] = array(
+				'expression' => implode(' ', $expression),
+				'chain' => $chain
+		);
+	
+		return $this;
+	}
+	
 	public function addExpressionFilter($expression, $chain = 'and')
 	{
 		$split = preg_split('/\s/', $expression, - 1, PREG_SPLIT_NO_EMPTY);

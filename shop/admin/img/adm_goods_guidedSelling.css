@@ -1,0 +1,166 @@
+::-webkit-input-placeholder { color: #999999; }
+:-moz-placeholder { color: #999999; }
+::-moz-placeholder { color: #999999; }
+:-ms-input-placeholder { color: #999999; }
+
+/* 가이디드 셀링 만들기 */
+.guidedSelling-layout { width: 970px; }
+.guidedSelling-layout .guidedSelling-top { width: 100%; }
+.guidedSelling-layout .guidedSelling-contents {
+	width: 1000px;
+	min-height: 30px;
+	margin-top: 20px;
+}
+.guidedSelling-layout .guidedSelling-bottom {
+	width: 100%;
+	text-align: center;
+	margin-top: 40px;
+}
+.guidedSelling-layout .guidedSelling-contents .guidedSelling-questionArea {
+	width: 1000px;
+	border: 2px solid #cccccc;
+	height: auto;
+	padding-top: 10px;
+	margin-bottom: 30px;
+}
+.guidedSelling-layout .guidedSelling-contents .guidedSelling-questionArea .guidedSelling-subjectArea {
+	border: 1px dashed #cccccc;
+	width: 868px;
+	margin: auto;
+	text-align: center;
+	float: left;
+	margin-left: 10px;
+	height: 43px;
+}
+.guidedSelling-layout .guidedSelling-contents .guidedSelling-questionArea .guidedSelling-subjectArea input {
+	width: 860px;
+	height: 40px;
+	border: none;
+	padding-left: 5px;
+	text-align: center;
+	font-size: 14px;
+	line-height: 45px;
+}
+.guidedSelling-layout .guidedSelling-contents .guidedSelling-questionArea .guidedSelling_deleteArea img {
+	float: left;
+	margin-left: 5px;
+}
+.guidedSelling-layout .guidedSelling-contents .guidedSelling-questionArea .guidedSelling-selectArea {
+	width: 950px;
+	margin: 20px 10px 10px 10px;
+	float: left;
+}
+.guidedSelling-layout .guidedSelling-contents .guidedSelling-questionArea .guidedSelling-selectArea select { height: 22px; }
+.guidedSelling-layout .guidedSelling-contents .guidedSelling-questionArea .guidedSelling-selectArea .guidedSelling-selectAreaInfo1{ margin-bottom: 10px; color:#878787; }
+.guidedSelling-layout .guidedSelling-contents .guidedSelling-questionArea .guidedSelling-itemArea {
+	width: 950px;
+	margin: 10px;
+	border: 1px dashed #cccccc;
+	height: auto;
+	overflow-y: hidden;
+	padding: 5px 0 5px 0;
+}
+.guidedSelling-layout .guidedSelling-contents .guidedSelling-questionArea .guidedSelling-itemArea .guidedSelling-addAnswer { clear: both; margin-left: 5px; }
+.guidedSelling-layout .guidedSelling-contents .guidedSelling-questionArea .guidedSelling-itemArea .guidedSelling-addAnswerType2 { margin: 0 0 10px 10px; }
+.guidedSelling-layout .guidedSelling-contents .guidedSelling-questionArea .guidedSelling-itemArea .guidedSelling-backgroundImageBtnArea { float: right; clear: both; margin-right: 5px; }
+.guidedSelling-layout .guidedSelling-contents .guidedSelling-questionArea .guidedSelling-itemArea .guidedSellingItem { float: left; margin-left: 5px; }
+.guidedSelling-layout .guidedSelling-contents .guidedSelling-questionArea .guidedSelling-itemArea .guidedSellingItem .guidedSelling_imageArea {
+	width: 183px;
+	height: 183px;
+	background-repeat: no-repeat;
+}
+.guidedSelling-layout .guidedSelling-contents .guidedSelling-questionArea .guidedSelling-itemArea .guidedSellingItem .guidedSelling_imageArea .guidedSelling_answerDeleteArea {
+	position: absolute;
+	margin-left: 144px;
+}
+.guidedSelling-layout .guidedSelling-contents .guidedSelling-questionArea .guidedSelling-itemArea .guidedSellingItem .guidedSelling_imageArea .guidedSelling_imageBtn {
+	position: absolute;
+}
+.guidedSelling-layout .guidedSelling-contents .guidedSelling-questionArea .guidedSelling-itemArea .guidedSellingItem .guidedSelling_imageArea .guidedSelling_hashtagNameArea {
+	width: 181px;
+	height: 20px;
+	position: absolute;
+	margin-top: 161px;
+	color: #ffffff;
+	text-align: center;
+}
+.guidedSelling-layout .guidedSelling-contents .guidedSelling-questionArea .guidedSelling-itemArea .guidedSellingItem .guidedSelling_hashtagNameArea .hashtagInputListSearch {
+	border: none;
+	width: 165px;
+	padding-left: 4px;
+}
+.guidedSelling-layout .guidedSelling-contents .guidedSelling-questionArea .guidedSelling-itemArea .guidedSellingItem .guidedSelling_confirmArea { width: 183px; text-align: center; margin: 5px 0 5px 0;}
+.guidedSelling-layout .guidedSelling-contents .guidedSelling-questionArea .guidedSelling-itemArea .guidedSellingItemText {
+	margin: 8px;
+	width: 446px;
+	height: 50px;
+	display: block;
+}
+.guidedSelling-layout .guidedSelling-contents .guidedSelling-questionArea .guidedSelling-itemArea .guidedSellingItemText .guidedSellingTextArea {
+	float: left;
+	height: 50px;
+	background: url('../../img/background_black.png') no-repeat;
+	width: 346px;
+	padding-left: 5px;
+}
+.guidedSelling-layout .guidedSelling-contents .guidedSelling-questionArea .guidedSelling-itemArea .guidedSellingItemText .guidedSellingTextArea .guidedSelling_hashtagNameArea {
+	border: 1px #BDBDBD solid;
+	width: 246px;
+	height: 30px;
+	background-color: white;
+	float: left;
+	margin: 9px 0 0 5px;
+	padding-left: 3px;
+}
+.guidedSelling-layout .guidedSelling-contents .guidedSelling-questionArea .guidedSelling-itemArea .guidedSellingItemText .guidedSellingTextArea .guidedSelling_hashtagNameArea .hashtagInputListSearch {
+	border: none;
+	width: 226px;
+	height: 28px;
+}
+.guidedSelling-layout .guidedSelling-contents .guidedSelling-questionArea .guidedSelling-itemArea .guidedSellingItemText .guidedSellingTextArea .guidedSelling_liArea { float: left; margin-top: 16px; color: white; }
+.guidedSelling-layout .guidedSelling-contents .guidedSelling-questionArea .guidedSelling-itemArea .guidedSellingItemText .guidedSellingTextArea .guidedSelling_answerDeleteArea { float: left; margin: 13px 0 0 10px; }
+.guidedSelling-layout .guidedSelling-contents .guidedSelling-questionArea .guidedSelling-itemArea .guidedSellingItemText .guidedSelling_confirmArea { float: left; margin-left: 5px; line-height: 40px;}
+.guidedSelling-layout .guidedSelling-contents .guidedSelling-questionArea .guidedSelling-infoArea { width: 980px; margin: 10px; }
+.guidedSelling-layout .guidedSelling-contents .guidedSelling-questionArea .guidedSelling-infoArea a { font-weight: bold; color: #627dce; }
+
+/* 가이디드 셀링 리스트 */
+.guidedSellingList-layout { width: 100%; }
+.guidedSellingList-layout .guidedSellingList-effect {
+	font-family: dotum;
+	font-size: 13px;
+	border: 4px solid #dce1e1;
+	border-collapse: collapse;
+	margin-bottom: 10px;
+	padding: 10px 0 10px 10px;
+	height: 130px;
+}
+.guidedSellingList-layout .guidedSellingList-effect .guidedSellingList-effect-imgArea {
+	float: left;
+	height: 130px;
+	padding-top: 45px;
+}
+.guidedSellingList-layout .guidedSellingList-effect .guidedSellingList-effect-textArea {
+	float: left;
+	margin-left: 20px;
+}
+.guidedSellingList-layout .guidedSellingList-effect .guidedSellingList-effect-textArea .guidedSellingList-effect-subject {
+	color: red;
+	font-weight: bold;
+	font-size: 15px;
+	margin-bottom: 10px;
+}
+.guidedSellingList-layout .guidedSellingList-effect .guidedSellingList-effect-textArea .guidedSellingList-effect-content {
+
+}
+.guidedSellingList-layout .guidedSellingList-write { margin: 10px 0 20px 0; text-align: center; }
+.guidedSellingList-layout .guidedSellingList-listArea table tr td { text-align: center; }
+.guidedSellingList-layout .guidedSellingList-skinPatchInfo {
+	border: 1px solid #cccccc;
+	height: 30px;
+	line-height:30px;
+	margin-bottom: 20px;
+	width: 99%;
+	padding: 3px;
+	color: red;
+	font-weight: bold;
+}

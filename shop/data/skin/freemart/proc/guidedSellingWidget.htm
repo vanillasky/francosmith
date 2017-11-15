@@ -1,0 +1,106 @@
+{*** 가이드 셀링 위젯 | proc/guidedSellingWidget.php ***}
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=euc-kr">
+<title>guided selling widget</title>
+<script type="text/javascript" src="{jQueryPath}"></script>
+<style>
+html, body { margin:0px 0px 0px 0px; min-height: 100%;}
+.guidedSelling_layout { background-color: #f4f4f4; width: 100%; text-align: center; padding-bottom: 30px;}
+.guidedSelling_layout .guidedSellingUserPC-questionArea { font:20px Dotum; font-weight: bold; color: #252525; padding: 40px 0 30px 0; }
+.guidedSelling_layout .guidedSellingUserPC-itemArea { padding-bottom: 40px; }
+.guidedSelling_layout .guidedSellingUserPC-itemArea .guidedSellingUserPC-item {
+	display: inline-block;
+	cursor: pointer;
+}
+.guidedSelling_layout .guidedSellingUserPC-itemArea .guidedSellingUserPC-item .guidedSellingUserPC-hashtagArea {
+	position: relative;
+	font: 14px Dotum;
+	color: #ffffff;
+	margin-top: -35px;
+	height: 34px;
+	line-height: 34px;
+	text-align: center;
+	width: 100%;
+	background: url('/shop/admin/img/background_gray.png') repeat-x;
+}
+.guidedSelling_layout .guidedSellingUserPCtext-questionArea { font:20px Dotum; font-weight: bold; color: #252525; padding: 40px 0 30px 0; }
+.guidedSelling_layout .guidedSellingUserPCtext-itemArea { margin: 0 30px 0 30px; padding: 0 0 0 50px; }
+.guidedSelling_layout .guidedSellingUserPCtext-itemArea .guidedSellingUserPCtext-item {
+	height: 50px;
+	background: url('/shop/admin/img/background_black.png') no-repeat;
+	width: 340px;
+	margin-bottom: 10px;
+	padding-left: 5px;
+	cursor: pointer;
+}
+.guidedSelling_layout .guidedSellingUserPCtext-itemArea .guidedSellingUserPCtext-item .guidedSellingUserPCtext-hashtagArea {
+	font: 14px Dotum;
+	color: #ffffff;
+	float: left;
+	margin-left: 30px;
+	line-height: 50px;
+}
+</style>
+</head>
+
+<body>
+<input type="hidden" name="guided_no" id="guided_no" value="{guided_no}" />
+<input type="hidden" name="guided_widgetId" id="guided_widgetId" value="{guided_widgetId}" />
+
+<div id="guidedSelling_layout" class="guidedSelling_layout" <!--{? guidedSelling_backgroundColor}-->style="background-color: #{guidedSelling_backgroundColor};"<!--{ / }-->>
+	<!--{ ? displayType === 'i' }-->
+		<div>
+			<div class='guidedSellingUserPC-questionArea'>{questionName}</div>
+			<div class='guidedSellingUserPC-itemArea'>
+				<!--{ @ answerList }-->
+				<div class='guidedSellingUserPC-item'>
+					<img src="{.pcImageUrl}" border="0" class="hand guidedSellingUserPC-item-img" onclick="javascript:parent.location.href='../goods/goods_guidedSelling_list.php?guided_no={guided_no}&step=2&hashtagName[]={=urlencode(.detail_hashtagName)}';" />
+					<div class='guidedSellingUserPC-hashtagArea'>#{.detail_hashtagName}</div>
+				</div>
+				<!--{ / }-->
+			</div>
+		</div>
+	<!--{ : displayType === 't' }-->
+		<div>
+			<div class='guidedSellingUserPCtext-questionArea'>{questionName}</div>
+			<div class='guidedSellingUserPCtext-itemArea' <!--{? backgroundImageUrl}-->style="background: url('{backgroundImageUrl}') no-repeat; background-size: 100% 100%; padding: 40px 0 40px 50px;"<!--{ / }-->>
+				<!--{ @ answerList }-->
+				<div class='guidedSellingUserPCtext-item' onclick="javascript:parent.location.href='../goods/goods_guidedSelling_list.php?guided_no={guided_no}&step=2&hashtagName[]={=urlencode(.detail_hashtagName)}';">
+					<div class='guidedSellingUserPCtext-hashtagArea'>#{.detail_hashtagName}</div>
+				</div>
+				<!--{ / }-->
+			</div>
+		</div>
+	<!--{ : }-->
+	<!--{ / }-->
+</div>
+
+<script type="text/javascript">
+jQuery(window).load(function(){
+	var preview = '{preview}';
+	if(preview === 'y'){
+		jQuery(".guidedSellingUserPC-item-img, .guidedSellingUserPCtext-item").attr('onclick', '').unbind('click');
+	}
+
+	imageSizeArray = new Array();
+	imageSizeArray[2] = 230;
+	imageSizeArray[3] = 230;
+	imageSizeArray[4] = 210;
+	imageSizeArray[5] = 174;
+
+	var maxImageSize = imageSizeArray[jQuery(".guidedSellingUserPC-item img").length];
+	jQuery('.guidedSellingUserPC-itemArea img').each(function(){
+		jQuery(this).css("width", maxImageSize);
+		jQuery(this).css("height", maxImageSize);
+	});
+
+	setTimeout(function(){
+		var iframeHeight = parseInt(jQuery('body').height());
+
+		jQuery('#' + jQuery("#guided_widgetId").val(), parent.document).height(iframeHeight);
+	}, 100);
+});
+</script>
+</body>
+</html>

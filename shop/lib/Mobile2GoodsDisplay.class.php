@@ -1222,6 +1222,9 @@ class Mobile2GoodsDisplay
 		$item_cnt = $req_arr['item_cnt'];
 		$view_type = $req_arr['view_type'];
 		$sort_type = $req_arr['sort_type'];
+		$hashtagPage = $req_arr['hashtagPage'];
+		$guidedSellingPage = $req_arr['guidedSellingPage'];
+		$hashtag = iconv('utf-8', 'euc-kr', $req_arr['hashtag']);
 
 		if($view_type == 'gallery') {
 			$number = $cfgMobileDispCategory['disp_goods_count'] - ($cfgMobileDispCategory['disp_goods_count'] % 3);
@@ -1275,6 +1278,7 @@ class Mobile2GoodsDisplay
 				'sort' => $order_by,
 				'item_cnt' => $item_cnt,
 				'hashtagPage' => $hashtagPage,
+				'guidedSellingPage' => $guidedSellingPage,
 				'hashtag' => $hashtag,
 			);
 
@@ -1298,6 +1302,7 @@ class Mobile2GoodsDisplay
 				'category' => $category,
 				'item_cnt' => $item_cnt,
 				'hashtagPage' => $hashtagPage,
+				'guidedSellingPage' => $guidedSellingPage,
 				'hashtag' => $hashtag,
 			);
 		}

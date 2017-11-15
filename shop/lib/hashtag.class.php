@@ -318,7 +318,7 @@ class hashtag
 	 * @return boolean
 	 * @date 2016-10-05
 	 */
-	private function checkHashtag($hashtag)
+	public function checkHashtag($hashtag)
 	{
 		list($cnt) = $this->db->fetch("SELECT COUNT(*) as cnt FROM ".GD_HASHTAG_STATISTICS." WHERE hashtag='".$hashtag."' LIMIT 1");
 		if((int)$cnt > 0){
@@ -685,7 +685,7 @@ class hashtag
 	 * @return string $hashtag
 	 * @date 2016-10-05
 	 */
-	private function setHashtag($hashtag)
+	public function setHashtag($hashtag)
 	{
 		$hashtag = preg_replace ("/[#\&\+\-%@=\/\\\:;,\.'\"\^`~|\!\?\*$#<>()\[\]\{\}]/i", "", trim($hashtag));
 		$hashtag = preg_replace("/\s/", "_", $hashtag);
@@ -1546,13 +1546,13 @@ class hashtag
 	/**
 	 * SNS PC
 	 * @author workingby <bumyul2000@godo.co.kr>
-	 * @param void
+	 * @param string $guidedSellingPage
 	 * @return string $snsBtn
-	 * @date 2016-10-05
+	 * @date 2016-10-05, 2016-11-24
 	 */
-	public function getSnsBtn()
+	public function getSnsBtn($guidedSellingPage='')
 	{
-		global $snsCfg, $_SERVER, $_GET, $cfg;
+		global $snsCfg, $_SERVER, $_GET, $cfg, $guidedSelling;
 
 		$snsBtn = '';
 		$hashtagConfig = array();
@@ -1564,13 +1564,35 @@ class hashtag
 			include_once '../lib/sns.class.php';
 			$sns = new SNS();
 
-			//해시태그 SNS
-			$goodsHashtagurl = 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['PHP_SELF'] . '?hashtag=' . urlencode($_GET['hashtag']);
-			$args = array(
-				'shopnm' => $cfg['shopName'],
-				'goodsnm' => $_GET['hashtag'],
-				'goodsurl' => $goodsHashtagurl,
-			);
+			if($guidedSellingPage === 'y'){
+				//가이디드 셀링 SNS
+				$hashtagParameter = array();
+				if(count($_GET['hashtagName']) > 0){
+					foreach($_GET['hashtagName'] as $hashtagName){
+						$hashtagParameter[] = "hashtagName[]=".urlencode($hashtagName);
+					}
+				}
+				$goodsGuidedSellingUrl = 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['PHP_SELF'] . '?guided_no='.$_GET['guided_no'].'&step='.$_GET['step'].'&'.implode("&", $hashtagParameter);
+				if(is_object($guidedSelling)){
+					$guidedData = $guidedSelling->getGuidedSellingData($_GET['guided_no']);
+				}
+				$goodsnm = ($guidedData['guided_subject']) ? $guidedData['guided_subject'] : 'GUIDED SELLING';
+				$args = array(
+					'shopnm' => $cfg['shopName'],
+					'goodsnm' => $goodsnm,
+					'goodsurl' => $goodsGuidedSellingUrl,
+				);
+			}
+			else {
+				//해시태그 SNS
+				$goodsHashtagurl = 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['PHP_SELF'] . '?hashtag=' . urlencode($_GET['hashtag']);
+				$args = array(
+					'shopnm' => $cfg['shopName'],
+					'goodsnm' => $_GET['hashtag'],
+					'goodsurl' => $goodsHashtagurl,
+				);
+			}
+
 			$snsRes = call_user_func_array(array($sns, 'get_post_btn'), array($args, ''));
 			// 페이스북에 사용될 meta tag
 			$snsBtn = $snsRes['btn'];
@@ -1582,13 +1604,13 @@ class hashtag
 	/**
 	 * SNS MOBILE
 	 * @author workingby <bumyul2000@godo.co.kr>
-	 * @param void
+	 * @param string $guidedSellingPage
 	 * @return string $snsBtn
 	 * @date 2016-10-05
 	 */
-	public function getMobileSnsBtn()
+	public function getMobileSnsBtn($guidedSellingPage='')
 	{
-		global $snsCfg, $_SERVER, $_GET, $cfg;
+		global $snsCfg, $_SERVER, $_GET, $cfg, $guidedSelling;
 
 		$snsBtn = '';
 		$hashtagConfig = $msgKakao = $msg_kakaoStory = array();
@@ -1599,14 +1621,38 @@ class hashtag
 
 			include_once dirname(__FILE__).'/../lib/sns.class.php';
 			$sns = new SNS();
-			$goodsHashtagUrl = 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['PHP_SELF'] . '?hashtag=' . urlencode($_GET['hashtag']);
-			$args = array(
-				'shopnm' => $cfg['shopName'],
-				'goodsnm' => $_GET['hashtag'],
-				'goodsurl' => $goodsHashtagUrl,
-				'img' => '',
-				'img_l' => ''
-			);
+			if($guidedSellingPage === 'y'){
+				$hashtagParameter = array();
+				if(count($_GET['hashtagName']) > 0){
+					foreach($_GET['hashtagName'] as $hashtagName){
+						$hashtagParameter[] = "hashtagName[]=".urlencode($hashtagName);
+					}
+				}
+
+				$goodsGuidedSellingUrl = 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['PHP_SELF'] . '?guided_no='.$_GET['guided_no'].'&step='.$_GET['step'].'&'.implode("&", $hashtagParameter);
+				if(is_object($guidedSelling)){
+					$guidedData = $guidedSelling->getGuidedSellingData($_GET['guided_no']);
+				}
+				$goodsnm = ($guidedData['guided_subject']) ? $guidedData['guided_subject'] : 'GUIDED SELLING';
+				$args = array(
+					'shopnm' => $cfg['shopName'],
+					'goodsnm' => $goodsnm,
+					'goodsurl' => $goodsGuidedSellingUrl,
+					'img' => '',
+					'img_l' => ''
+				);
+			}
+			else {
+				$goodsHashtagUrl = 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['PHP_SELF'] . '?hashtag=' . urlencode($_GET['hashtag']);
+					$args = array(
+					'shopnm' => $cfg['shopName'],
+					'goodsnm' => $_GET['hashtag'],
+					'goodsurl' => $goodsHashtagUrl,
+					'img' => '',
+					'img_l' => ''
+				);
+			}
+
 			$snsRes = call_user_func_array(array($sns, 'get_post_btn_mobile'), array($args, 'm'));
 			$snsBtn = $snsRes['btn'];
 

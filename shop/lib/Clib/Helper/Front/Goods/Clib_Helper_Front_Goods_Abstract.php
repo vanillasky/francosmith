@@ -15,6 +15,10 @@ class Clib_Helper_Front_Goods_Abstract extends Clib_Helper_Abstract
 		if($params['hashtagPage'] === 'y'){
 			Clib_Application::setHashtagPage();
 		}
+		//가이디드셀링 페이지
+		if($params['guidedSellingPage'] === 'y'){
+			Clib_Application::setGuidedSellingPage();
+		}
 		$collection = Clib_Application::getCollectionClass('goods');
 		$collection = $this->prepareGoodsCollection($collection, $params);
 		$collection->load();
@@ -42,6 +46,41 @@ class Clib_Helper_Front_Goods_Abstract extends Clib_Helper_Abstract
 		if(Clib_Application::isHashtagPage()){
 			$collection->addFilter('goods_hashtag.hashtag', $params['hashtag'], '=');
 		}
+		//가이디드 셀링 페이지
+		if(Clib_Application::isGuidedSellingPage()){
+			$hashtagArray = array();
+			if(is_string($params['hashtag'])){
+				parse_str($params['hashtag'], $hashtagArray);
+			}
+			else {
+				$hashtagArray = $params['hashtag'];
+			}
+			$hashtagCount = count($hashtagArray);
+		
+		
+			if($hashtagCount === 1){
+				$guidedSellingQuery = "goods.goodsno IN (SELECT goodsno FROM ".GD_HASHTAG." WHERE hashtag='".$hashtagArray[0]."' AND goodsno > 0)";
+			}
+			else if($hashtagCount > 1){
+				$index = 'a';
+				$guidedSellingQuery = "goods.goodsno IN (SELECT a.goodsno FROM ".GD_HASHTAG." AS a ";
+				foreach($hashtagArray as $key => $hashtagName){
+					$preIndex = $index;
+					if($key === 0) continue;
+		
+					$index++;
+					$guidedSellingQuery .= " INNER JOIN ";
+					$guidedSellingQuery .= " (SELECT goodsno FROM ".GD_HASHTAG." WHERE hashtag='".$hashtagName."') AS ".$index;
+					$guidedSellingQuery .= " ON ".$preIndex.".goodsno = ".$index.".goodsno";
+				}
+				$guidedSellingQuery .= " WHERE a.hashtag='".$hashtagArray[0]."' AND a.goodsno>0)";
+			}
+			else {
+				$guidedSellingQuery = '';
+			}
+		
+			$collection->addExpressionFreeJoinFilter($guidedSellingQuery, 'AND');
+		}
 
 		// 페이지
 		$collection->setCurrentPage($params['page']);
@@ -67,8 +106,8 @@ class Clib_Helper_Front_Goods_Abstract extends Clib_Helper_Abstract
 			}
 		}
 
-	//해시태그 페이지 카테고리 권한 노출체크
-		if(Clib_Application::isHashtagPage()){
+		//해시태그 페이지 카테고리 권한 노출체크
+		if(Clib_Application::isHashtagPage() || Clib_Application::isGuidedSellingPage()){
 			$notCategory = array();
 			$res = Clib_Application::database()->query("SELECT category, level, level_auth, auth_step FROM ".GD_CATEGORY." WHERE level <> 0");
 			if($res){
@@ -1213,7 +1252,7 @@ class Clib_Helper_Front_Goods_Abstract extends Clib_Helper_Abstract
 
 		$list = array();
 	
-		if(Clib_Application::isHashtagPage()){
+		if(Clib_Application::isHashtagPage() || Clib_Application::isGuidedSellingPage()){
 			$category_collection = Clib_Application::getCollectionClass('category');
 			$category_collection->addExpressionFilter("level <> 0");
 			$category_collection->load();
