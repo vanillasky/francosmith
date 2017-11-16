@@ -2136,6 +2136,126 @@ while($rdopt = $db ->fetch($res)){
 	</table>
 <!-- E: 상품 배송정보/배송비 -->
 
+<!-- S: 네이버쇼핑 3.0 설정 -->
+	<h2 class="title">네이버쇼핑 3.0 설정 <a href="javascript:manual('<?=$guideUrl?>board/view.php?id=product&no=3');"><img src="../img/btn_q.gif" border="0" align="absmiddle" hspace="2" /></a></h2>
+
+	<table class="admin-form-table" style="border:2px solid green;">
+	<tr>
+		<th>네이버쇼핑 노출 여부</th>
+		<td colspan="3">
+			<?
+			foreach ($form->getTag('naver_shopping_yn') as $label => $tag) {
+				echo sprintf('<label>%s%s</label> ',$tag, $label);
+			}
+			?>
+			<p class="help">
+			기존 네이버 쇼핑 설정 > 네이버 쇼핑 상품 노출 설정에서 노출 카테고리를 설정하였던 고객님들은 <a href="../naver/naver_shopping_setting.php" target="_blank">[네이버 쇼핑 상품 설정]</a>에서<br>
+			마이그레이션 후 해당 설정이 가능합니다.
+			</p>
+		</td>
+	</tr>
+	<tr>
+		<th>수입 및 제작 여부 <img src="../img/icons/icon_qmark.gif" style="vertical-align:middle;cursor:pointer;" class="godo-tooltip" tooltip="<p><span class=&quot;blue&quot;>해당 상품 필수 항목으로, 누락 시 네이버 클린프로그램이 적용되어 패널티 처리됩니다.</p>"></th>
+		<td>
+			<?=$form->getTag('naver_import_flag')?>
+		</td>
+		<th>판매방식 구분 <img src="../img/icons/icon_qmark.gif" style="vertical-align:middle;cursor:pointer;" class="godo-tooltip" tooltip="<p><span class=&quot;blue&quot;>해당 상품 필수 항목으로, 누락 시 네이버 클린프로그램이 적용되어 패널티 처리됩니다.</p>"></th>
+		<td>
+			<?=$form->getTag('naver_product_flag')?>
+		</td>
+	</tr>
+	<tr>
+		<th>주요 사용 연령대</th>
+		<td>
+			<?php
+			foreach ($form->getTag('naver_age_group') as $label => $tag) {
+				echo sprintf('<label>%s%s</label> ',$tag, $label);
+			}
+			?>
+		</td>
+		<th>주요 사용 성별</th>
+		<td>
+			<?=$form->getTag('naver_gender')?>
+		</td>
+	</tr>
+	<tr>
+		<th>속성 정보</th>
+		<td colspan="3">
+			<div style="width:100%;padding-right:100px;box-sizing:border-box;">
+				<div class="field-wrapper" style="float:left;">
+					<?=$form->getTag('naver_attribute', array('style' => 'width:100%;')); ?>
+				</div>
+				<div style="float:left;margin:2px -100px 0 5px;">
+					<span class="inputSize:{target:'naver_attribute',max:500}"</span>
+				</div>
+				<div style="clear:both;"></div>
+			</div>
+			<p class="help">
+			상품의 속성 정보에 대하여 ‘^’로 구분하여 입력합니다.<br>
+			예) 서울^1개^오션뷰^2명^주중^조식포함^무료주차^와이파이
+			</p>
+		</td>
+	</tr>
+	<tr>
+		<th>검색 태그</th>
+		<td colspan="3">
+			<div style="width:100%;padding-right:100px;box-sizing:border-box;">
+				<div class="field-wrapper" style="float:left;">
+					<?=$form->getTag('naver_search_tag', array('style' => 'width:100%;')); ?>
+				</div>
+				<div style="float:left;margin:2px -100px 0 5px;">
+					<span class="inputSize:{target:'naver_search_tag',max:100}"</span>
+				</div>
+				<div style="clear:both;"></div>
+			</div>
+			<p class="help">
+			상품의 검색태그에 대하여 띄어쓰기 없이 ‘ | ’ (Vertical bar)로 구분하여 입력합니다.<br>
+			예) 물방울패턴원피스|2016S/S신상원피스|결혼식아이템|여친룩
+			</p>
+		</td>
+	</tr>
+	<tr>
+		<th>네이버 카테고리 ID</th>
+		<td colspan="3">
+			<div style="width:30%;padding-right:100px;box-sizing:border-box;">
+				<div class="field-wrapper" style="float:left;">
+					<?=$form->getTag('naver_category', array('style' => 'width:100%;')); ?>
+				</div>
+				<div style="float:left;margin:2px -100px 0 5px;">
+					<span class="inputSize:{target:'naver_category',max:8}"</span>
+				</div>
+				<div style="clear:both;"></div>
+			</div>
+			<p class="help">
+			해당하는 카테고리에 매칭하는데 도움이 됩니다.<br>
+			네이버쇼핑의 전체 카테고리 리스트는 <a href="https://adcenter.shopping.naver.com/main.nhn" target="_blank">[네이버쇼핑 쇼핑파트너존]</a>에서 다운로드할 수 있습니다.
+			</p>
+		</td>
+	</tr>
+	<tr>
+		<th>가격 비교 페이지 ID</th>
+		<td colspan="3">
+			<div style="width:30%;padding-right:100px;box-sizing:border-box;">
+				<div class="field-wrapper" style="float:left;">
+					<?=$form->getTag('naver_product_id', array('style' => 'width:100%;')); ?>
+				</div>
+				<div style="float:left;margin:2px -100px 0 5px;">
+					<span class="inputSize:{target:'naver_product_id',max:50}"</span>
+				</div>
+				<div style="clear:both;"></div>
+			</div>
+			<p class="help">
+			네이버 가격비교 페이지 ID를 입력할 경우 네이버 가격비교 추천에 도움이 됩니다.<br>
+			</p>
+			예) http://shopping.naver.com/detail/detail.nhn?nv_mid=<font color="red">8535546055</font>&cat_id=50000151
+			<p class="help">
+			자세한 내용은 매뉴얼을 참고하여 주시기 바랍니다.
+			</p>
+		</td>
+	</tr>
+	</table>
+<!-- E: 네이버쇼핑 3.0 설정 -->
+
 <!-- S: 관리 메모 -->
 	<h2 class="title">관리 메모 <a href="javascript:manual('<?=$guideUrl?>board/view.php?id=product&no=3');"><img src="../img/btn_q.gif" border="0" align="absmiddle" hspace="2" /></a></h2>
 	<div class="field-wrapper">
