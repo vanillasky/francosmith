@@ -402,4 +402,14 @@ class Clib_Application
 	{
 		return self::$hashtagPage;
 	}
+	
+	public static function setGuidedSellingPage($bool = true)
+	{
+		self::$guidedSellingPage = $bool;
+	}
+	
+	public static function isGuidedSellingPage()
+	{
+		return self::$guidedSellingPage;
+	}
 }

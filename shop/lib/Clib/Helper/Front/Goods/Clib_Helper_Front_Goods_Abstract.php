@@ -106,7 +106,7 @@ class Clib_Helper_Front_Goods_Abstract extends Clib_Helper_Abstract
 			}
 		}
 
-		//해시태그 페이지 카테고리 권한 노출체크
+		//해시태그 페이지, 가이디드 셀링 페이지 카테고리 권한 노출체크
 		if(Clib_Application::isHashtagPage() || Clib_Application::isGuidedSellingPage()){
 			$notCategory = array();
 			$res = Clib_Application::database()->query("SELECT category, level, level_auth, auth_step FROM ".GD_CATEGORY." WHERE level <> 0");
@@ -1287,10 +1287,10 @@ class Clib_Helper_Front_Goods_Abstract extends Clib_Helper_Abstract
 			$item['icon'] = $this->getIconHtml($item);
 			
 			//해시태그 페이지  - cateogry 정보 획득
-			if(Clib_Application::isHashtagPage()){
+			if(Clib_Application::isHashtagPage() || Clib_Application::isGuidedSellingPage()){
 				$category = null;
 				$goods_link_collection = $item->getCategory();
-			
+
 				foreach($category_collection as $category_model) {
 					foreach($goods_link_collection as $goods_link) {
 						if($category_model->getData('category') == $goods_link->getData('category')) {
