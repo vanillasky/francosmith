@@ -934,7 +934,12 @@ switch($mode){
 		$upd_arr['stock_type'] = $_POST['stock_type'];
 		$upd_arr['stock_amount'] = @implode(",",$_POST['stock_amount']);
 		$upd_arr['regdt'] = $_POST['regdt'];
-
+		
+		if(trim($_POST['hashtagName'])){
+			$hashtag = Core::loader('hashtag');
+			$upd_arr['hashtagName'] = $hashtag->setHashtag($_POST['hashtagName']);
+		}
+		
 		$upd_arr['tpl'] = $_POST['tpl'];
 
 		## 배너 더미 이미지 삭제 ##
@@ -1196,9 +1201,8 @@ switch($mode){
 
 		if ($upd_arr['sort_type'] != '1') {
 			$mainAutoSort = Core::loader('mainAutoSort');
-			$mobile_categoods = array_filter(explode(",",$upd_arr['mobile_categoods']));
 
-			$mainAutoSort -> setMainAutoSort($upd_arr['sort_type'], $upd_arr['select_date'], $mobile_categoods);
+			$mainAutoSort -> setMainAutoSort($upd_arr['sort_type'], $upd_arr['select_date'], $upd_arr['hashtagName']);
 		}
 		
 		if ($_SERVER['HTTP_REFERER']) {

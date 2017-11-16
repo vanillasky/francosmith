@@ -38,13 +38,25 @@ try {
 	} else {
 		$mainAutoSort = Core::loader('mainAutoSort');
 		$hashtag = Core::loader('hashtag');
-		$sortNum = "sort".$cfg_step[0]['sort_type']."_".$cfg_step[0]['select_date'];
-		list($add_table, $add_where, $add_order) = $mainAutoSort->getSortTerms($cfg_step[0]['categoods'], $cfg_step[0]['price'], $cfg_step[0]['stock_type'], $cfg_step[0]['stock_amount'], $cfg_step[0]['regdt'], $sortNum);
+
+		//현재 사용중인 테이블
+		$mainAutoSort_useTable = $mainAutoSort->getUseTable($cfg_step[0]['sort_type']);
+		//최대 상품수
+		$mainAutoSort_sortLimit = $mainAutoSort->getSortLimit();
+		//해시태그 자동진열
+		if((string)$cfg_step[0]['sort_type'] === '5'){
+			$sortNum = $mainAutoSort_useTable.".auto_goodsno DESC";
+		}
+		else {
+			$sortNum = "sort".$cfg_step[0]['sort_type']."_".$cfg_step[0]['select_date'];
+		}
+		$orderby = 'order by '.$sortNum;
+		list($add_table, $add_where, $add_group) = $mainAutoSort->getSortTerms($cfg_step[0], $sortNum);
 
 		$page_num = $_GET['page_num'] ? $_GET['page_num'] : $r_page_num[0];
 		$page = $_GET['page'] ? $_GET['page'] : 1;
 		$_pg = new Page($page,$page_num);
-		list($cnt) = $db->fetch("SELECT COUNT(*) FROM (SELECT ".GD_GOODS.".goodsno FROM ".$mainAutoSort->use_table." {$add_table} WHERE ".GD_GOODS.".open AND link {$add_where} {$add_order} LIMIT ".$mainAutoSort->sort_limit.") gd_sort_cnt");
+		list($cnt) = $db->fetch("SELECT COUNT(*) FROM (SELECT ".GD_GOODS.".goodsno FROM ".$mainAutoSort_useTable." {$add_table} WHERE ".GD_GOODS.".open AND link {$add_where} {$add_order} LIMIT ".$mainAutoSort_sortLimit.") gd_sort_cnt");
 
 		$query = "
 			SELECT
@@ -53,14 +65,14 @@ try {
 				SELECT
 					".GD_GOODS.".*,".GD_GOODS_OPTION.".stock,".GD_GOODS_OPTION.".price,".GD_GOODS_OPTION.".consumer
 				FROM
-					".$mainAutoSort->use_table."
+					".$mainAutoSort_useTable."
 					{$add_table}
 				WHERE
 					".GD_GOODS.".open
 					AND link
 					{$add_where}
-				{$add_order}
-				LIMIT ".$mainAutoSort->sort_limit."
+					{$add_group} {$orderby}
+				LIMIT ".$mainAutoSort_sortLimit."
 			) gd_sort
 			".($_GET['sort'] ? "ORDER BY ".(strstr($_GET['sort'],'reserve') ? str_replace('reserve','goods_reserve',$_GET['sort']) : $_GET['sort']) : "")."
 			LIMIT ".(($page-1)*$page_num).",".$page_num."

@@ -64,7 +64,9 @@ function saveAll()
 	var iframes = document.getElementsByName("ifrm_form[]"); 
 	for(i=0; i<iframes.length; i++) {
 		saveResult = iframes[i].contentWindow.modTimeout();
-		if (!saveResult) return;
+		if (saveResult === false) {
+			break;
+		}
 	}
 }
 

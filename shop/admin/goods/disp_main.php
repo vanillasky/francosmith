@@ -5,8 +5,10 @@ include "../_header.php";
 include "../../conf/design.main.php";
 @include "../../conf/design_main.".$cfg['tplSkinWork'].".php";
 
-
 $mainAutoSort = Core::loader('mainAutoSort');
+
+//최대 상품수
+$mainAutoSort_sortLimit = $mainAutoSort->getSortLimit();
 
 $query = "
 select
@@ -27,20 +29,31 @@ while ($data=$db->fetch($res)) $loop[$data[mode]][] = $data;
 foreach ($cfg_step as $k=>$v) {
 	$add_table = $add_query = '';
 	if ($v['sort_type'] != '1') {
-		list($add_table, $add_where, $add_order) = $mainAutoSort->getSortTerms($v['categoods'], $v['price'], $v['stock_type'], $v['stock_amount'], $v['regdt'], 'sort'.$v['sort_type']."_".$v['select_date']);
+		//현재 사용중인 테이블
+		$mainAutoSort_useTable = $mainAutoSort->getUseTable($v['sort_type']);
+
+		if((string)$v['sort_type'] === '5'){
+			$sortNum = $mainAutoSort_useTable.".auto_goodsno DESC";
+		}
+		else {
+			$sortNum = 'sort'.$v['sort_type']."_".$v['select_date'];
+		}
+		$orderby = 'order by '.$sortNum;
+
+		list($add_table, $add_where, $add_group) = $mainAutoSort->getSortTerms($v, $sortNum);
 
 		$query = "
-			SELECT 
-				".$mainAutoSort->use_table.".goodsno,".GD_GOODS.".goodsnm,".GD_GOODS.".img_s
-			FROM 
-				".$mainAutoSort->use_table."
+			SELECT
+				".GD_GOODS.".goodsno,".GD_GOODS.".goodsnm,".GD_GOODS.".img_s
+			FROM
+				".$mainAutoSort_useTable."
 				".$add_table."
 			where
 				".GD_GOODS.".open AND ".GD_GOODS_OPTION.".link=1
 				".$add_where."
-			".$add_order."
+				".$add_group." ".$orderby."
 			limit
-				".$mainAutoSort->sort_limit."
+				".$mainAutoSort_sortLimit."
 		";
 
 		$res = $db->query($query);
@@ -65,6 +78,7 @@ $ar_sort_type = array(1 => '직접진열');
 $ar_sort_type[] = '인기순(판매금액)';
 $ar_sort_type[] = '인기순(판매개수)';
 $ar_sort_type[] = '상품평가순';
+$ar_sort_type[] = '해시태그';
 
 // 기본 설정값 지정
 foreach ($cfg_step as $k => $v) {
@@ -76,6 +90,11 @@ foreach($ar_display_type as $_k => $_v) {
 	if (empty($cfg_step[$k]['dOpt'.$_k])) $cfg_step[$k]['dOpt'.$_k] = 1;
 }}
 ?>
+<script type="text/javascript" src="<?php echo $cfg['rootDir']; ?>/lib/js/jquery-1.10.2.min.js"></script>
+<script type="text/javascript" src="<?php echo $cfg['rootDir']; ?>/lib/js/jquery-ui.js"></script>
+<link href="<?php echo $cfg['rootDir']; ?>/lib/js/jquery-ui-1.10.4.custom.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="<?php echo $cfg['rootDir']; ?>/proc/hashtag/hashtagControl.js?actTime=<?php echo time(); ?>"></script>
+<script type="text/javascript">jQuery.noConflict();</script>
 <script src="../../lib/js/categoryBox.js"></script>
 <script>
 
@@ -278,19 +297,24 @@ foreach($ar_display_type as $_k => $_v) {
 			}}
 		});
 	}
-		function sort_type_view(idx) {
+	function sort_type_view(idx) {
 		var value = $$("input:checked[name='sort_type["+idx+"]']")[0].value;
 		var tpl_value = $$("input:checked[name='tpl["+idx+"]']").length > 0 ? $$("input:checked[name='tpl["+idx+"]']")[0].value : '';
-		var gList_disp = sList_disp = mList_disp1 = mList_disp2 = '';
+		var gList_disp = sList_disp = mList_disp1 = mList_disp2 = hList_disp = '';
 
 		if (tpl_value == 'tpl_07') {
 			gList_disp = sList_disp = mList_disp = 'none';
 		} else {
-			if (value == 1) {
+			if (parseInt(value) == 1) {
+				mList_disp = hList_disp = 'none';
 				sList_disp = gList_disp = '';
-				mList_disp = 'none';
-			} else {
-				gList_disp = 'none';
+			}
+			else if(parseInt(value) == 5){ //해시태그
+				mList_disp = gList_disp = 'none';
+				sList_disp = hList_disp = '';
+			}
+			else {
+				gList_disp = hList_disp = 'none';
 				sList_disp = mList_disp = '';
 			}
 		}
@@ -298,22 +322,91 @@ foreach($ar_display_type as $_k => $_v) {
 		$('gList_' + idx).setStyle({display:gList_disp});
 		$('step' + idx + 'X').setStyle({display:gList_disp});
 		$('sList_' + idx).setStyle({display:sList_disp});
-		$$('.mList_' + idx).each(function(e,key){
-			e.setStyle({display:mList_disp});
-		});
+
+		if(tpl_value == 'tpl_07'){
+			$$('.mList_' + idx).each(function(e,key){
+				e.setStyle({display:mList_disp});
+			});
+			$$('.hList_' + idx).each(function(e,key){
+				e.setStyle({display:hList_disp});
+			});
+		}
+		else {
+			if(parseInt(value) == 5){ //해시태그
+				$$('.mList_' + idx).each(function(e,key){
+					e.setStyle({display:mList_disp});
+				});
+				$$('.hList_' + idx).each(function(e,key){
+					e.setStyle({display:hList_disp});
+				});
+			}
+			else {
+				$$('.hList_' + idx).each(function(e,key){
+					e.setStyle({display:hList_disp});
+				});
+				$$('.mList_' + idx).each(function(e,key){
+					e.setStyle({display:mList_disp});
+				});
+			}
+		}
 	}
 	function disp_main_save() {
+		var hashtagName = new Array();
 		var ret = true;
+		var idx = 0;
 		$$("input[type=checkbox][name^='chk']").each(function(e){
 			key = e.name.replace(/[^0-9]/g,'');
-			if (e.checked === true && $$("input:checked[name='sort_type["+key+"]']")[0].value != '1') {
-				if (!$$("input[name='categoods["+key+"][]']").length && ret === true) {
-					alert("진열 대상 카테고리를 선택해 주세요.");
-					document.getElementsByName('step_categoods['+key+'][]')[0].focus();
-					ret = false;
+			if(e.checked === true){
+				switch($$("input:checked[name='sort_type["+key+"]']")[0].value){
+					case '2' : case '3' : case '4' :
+						if (!$$("input[name='categoods["+key+"][]']").length && ret === true) {
+							alert("진열 대상 카테고리를 선택해 주세요.");
+							document.getElementsByName('step_categoods['+key+'][]')[0].focus();
+							ret = false;
+						}
+					break;
+
+					case '5' :
+						if (!$$("input[name='hashtagName["+key+"]']")[0].value) {
+							alert("해시태그를 입력해 주세요.");
+							document.getElementsByName('hashtagName['+key+']')[0].focus();
+							ret = false;
+						}
+						hashtagName[idx] = {key:key, value:$$("input[name='hashtagName["+key+"]']")[0].value};
+						idx++;
+					break;
+
+					default :
+
+					break;
 				}
 			}
 		});
+
+		//해시태그 유효성 체크
+		if(ret === true && hashtagName.length > 0){
+			var ajaxHashtag = new Ajax.Request('../../proc/hashtag/ajax.getHashtagData.php', {
+				method: "post",
+				asynchronous : false,
+				parameters : {
+                    'mode' : 'checkLiveHashtag',
+                    'hashtagName' : JSON.stringify(hashtagName)
+                },
+				onComplete: function(res) {
+					var dataArray = new Array();
+					dataArray = res.responseText.split("|");
+
+					var hashtagData = eval("("+dataArray[1]+")");
+
+					if(hashtagData !== ''){
+						alert('존재하지 않는 해시태그 입니다.');
+						$$("input[name='hashtagName["+hashtagData+"]']")[0].focus();
+						ret = false;
+					}
+				}
+			});
+		}
+
 		if (ret === false) return false;
 		else {
 			var width = document.body.scrollWidth;
@@ -339,6 +432,8 @@ foreach($ar_display_type as $_k => $_v) {
 xmp.extra-display-form-tplsrc {margin:0;font-size:11px;}
 .add_categoods_box {float:left; background:#f3f3f3; padding:5px; margin-top:5px; display:block; clear:both;}
 #onLoading-hide-layer {position:absolute; z-index:100; top:0; left:0; width:100%; height:100%; text-align:center; background:rgb(68, 81, 91); filter:alpha(opacity=70); opacity:0.7; display:none;}
+.hashtagInputText { border: 1px #BDBDBD solid; width: 170px; float: left; height: 18px; }
+.hashtagInputText input { border: none; height: 16px; width: 150px; }
 </style>
 <div id="onLoading-hide-layer"><img src="../img/admin_progress.gif" id="onLoading-img" /></div>
 <!-- 세부설정 소스 -->
@@ -519,7 +614,13 @@ xmp.extra-display-form-tplsrc {margin:0;font-size:11px;}
 		<? foreach ($ar_sort_type as $key => $value){?>
 		<label><input type="radio" name="sort_type[#{i}]" value="<?=$key?>" <?=$key == 1 ? "checked" : ""?> onclick="sort_type_view('#{i}')"><?=$value?></label>
 		<? } ?><br />
-		<font class=extext>* 디스플레이유형을 ‘탭 진열형‘으로 선택한 경우 직접진열 기준만 사용할 수 있습니다.<br />* 인기순 및 상품평가순 으로 진열 시 상품은 최대 <?=$mainAutoSort->sort_limit?>개 까지만 진열이 됩니다.</font>
+		<font class=extext>* 디스플레이유형을 ‘탭 진열형‘으로 선택한 경우 직접진열 기준만 사용할 수 있습니다.<br />* 인기순 및 상품평가순 으로 진열 시 상품은 최대 <?=$mainAutoSort_sortLimit?>개 까지만 진열이 됩니다.</font>
+		</td>
+	</tr>
+	<tr class="hList_#{i}" style="display:none;">
+		<td>진열 대상<br />해시태그 설정</td>
+		<td>
+			<div class="hashtagInputText">#<input type="text" name="hashtagName[#{i}]" class="hashtagInputListSearch" maxlength="20" /></div>
 		</td>
 	</tr>
 	<tr class="mList_#{i}" style="display:none;">
@@ -540,7 +641,7 @@ xmp.extra-display-form-tplsrc {margin:0;font-size:11px;}
 			<div id="add_categoods_area_#{i}"></div>
 		</td>
 	</tr>
-	<tr class="mList_#{i}" style="display:none;">
+	<tr class="mList_#{i} hList_#{i}" style="display:none;">
 		<td>진열 대상 추가조건</td>
 		<td>
 			<a onclick="more_terms('#{i}')" class="hand"><img src="../img/disp_btn_open.gif" id="more_terms_btn_#{i}" /></a><br />
@@ -584,7 +685,7 @@ xmp.extra-display-form-tplsrc {margin:0;font-size:11px;}
 			</table>
 		</td>
 	</tr>
-	<tr class="mList_#{i}" style="display:none;">
+	<tr class="mList_#{i} hList_#{i}" style="display:none;">
 		<td>진열 상품</td>
 		<td>
 			<span class="extext">* 관리자 로그인 시 설정 기준으로 진열될 상품이 변경됩니다. (미진열 상품은 제외됩니다.) </span><br />
@@ -678,7 +779,13 @@ for ($i=0;$i<5;$i++){
 	<? foreach ($ar_sort_type as $key => $value){?>
 		<label><input type="radio" name="sort_type[<?=$i?>]" value="<?=$key?>" <?=$checked[sort_type][$i][$key]?> onclick="sort_type_view('<?=$i?>')"><?=$value?></label>
 	<? } ?><br />
-	<font class=extext>* 디스플레이유형을 ‘탭 진열형‘으로 선택한 경우 직접진열 기준만 사용할 수 있습니다.<br />* 인기순 및 상품평가순 으로 진열 시 상품은 최대 <?=$mainAutoSort->sort_limit?>개 까지만 진열이 됩니다.</font>
+	<font class=extext>* 디스플레이유형을 ‘탭 진열형‘으로 선택한 경우 직접진열 기준만 사용할 수 있습니다.<br />* 인기순 및 상품평가순 으로 진열 시 상품은 최대 <?=$mainAutoSort_sortLimit?>개 까지만 진열이 됩니다.</font>
+	</td>
+</tr>
+<tr class="hList_<?php echo $i; ?>">
+	<td>진열 대상<br />해시태그 설정</td>
+	<td>
+		<div class="hashtagInputText">#<input type="text" name="hashtagName[<?php echo $i; ?>]" value="<?php echo $cfg_step[$i]['hashtagName']; ?>" class="hashtagInputListSearch" maxlength="20" /></div>
 	</td>
 </tr>
 <tr class="mList_<?=$i?>">
@@ -749,7 +856,7 @@ for ($i=0;$i<5;$i++){
 		</table>
 	</td>
 </tr>
-<tr class="mList_<?=$i?>">
+<tr class="mList_<?=$i?> hList_<?php echo $i; ?>">
 	<td>진열 상품</td>
 	<td>
 		<span class="extext">* 관리자 로그인 시 설정 기준으로 진열될 상품이 변경됩니다. (미진열 상품은 제외됩니다.) </span><br />
@@ -872,7 +979,13 @@ for ($i=0;$i<5;$i++){
 			<? foreach ($ar_sort_type as $key => $value){?>
 				<label><input type="radio" name="sort_type[<?=$i?>]" value="<?=$key?>" <?=$checked[sort_type][$i][$key]?> onclick="sort_type_view('<?=$i?>')"><?=$value?></label>
 			<? } ?><br />
-			<font class=extext>* 디스플레이유형을 ‘탭 진열형‘으로 선택한 경우 직접진열 기준만 사용할 수 있습니다.<br />* 인기순 및 상품평가순 으로 진열 시 상품은 최대 <?=$mainAutoSort->sort_limit?>개 까지만 진열이 됩니다.</font>
+			<font class=extext>* 디스플레이유형을 ‘탭 진열형‘으로 선택한 경우 직접진열 기준만 사용할 수 있습니다.<br />* 인기순 및 상품평가순 으로 진열 시 상품은 최대 <?=$mainAutoSort_sortLimit?>개 까지만 진열이 됩니다.</font>
+			</td>
+		</tr>
+		<tr class="hList_<?php echo $i; ?>">
+			<td>진열 대상<br />해시태그 설정</td>
+			<td>
+				<div class="hashtagInputText">#<input type="text" name="hashtagName[<?php echo $i; ?>]" value="<?php echo $cfg_step[$i]['hashtagName']; ?>" class="hashtagInputListSearch" maxlength="20" /></div>
 			</td>
 		</tr>
 		<tr class="mList_<?=$i?>">
@@ -898,7 +1011,7 @@ for ($i=0;$i<5;$i++){
 				<? }} ?>
 			</td>
 		</tr>
-		<tr class="mList_<?=$i?>" style="display:none;">
+		<tr class="mList_<?=$i?> hList_<?php echo $i; ?>" style="display:none;">
 			<td>진열 대상 추가조건</td>
 			<td>
 				<a onclick="more_terms('<?=$i?>')" class="hand"><img src="../img/disp_btn_<?=array_filter($cfg_step[$i]['price']) || array_filter($cfg_step[$i]['stock_amount']) || $cfg_step[$i]['regdt'] ? "close" :"open"?>.gif" id="more_terms_btn_<?=$i?>" /></a><br />
@@ -907,8 +1020,8 @@ for ($i=0;$i<5;$i++){
 				<tr>
 					<td>진열 상품가격</td>
 					<td>
-						<input type=text name="price[<?=$i?>][]" onkeydown="onlynumber()" size="15" class="ar"> 원 -
-						<input type=text name="price[<?=$i?>][]" onkeydown="onlynumber()" size="15" class="ar"> 원
+						<input type=text name="price[<?=$i?>][]" onkeydown="onlynumber()" size="15" value="<?php echo $cfg_step[$i]['price'][0]; ?>" class="ar"> 원 -
+						<input type=text name="price[<?=$i?>][]" onkeydown="onlynumber()" size="15" value="<?php echo $cfg_step[$i]['price'][1]; ?>" class="ar"> 원
 					</td>
 				</tr>
 				<tr>
@@ -917,8 +1030,8 @@ for ($i=0;$i<5;$i++){
 						<label><input name="stock_type[<?=$i?>]" value="product" type="radio" checked />상품재고(품목재고 합)</label>
 						<label><input name="stock_type[<?=$i?>]" value="item" type="radio"  />품목재고</label>
 						<div>
-							<input type=text name="stock_amount[<?=$i?>][]" onkeydown="onlynumber()" size="15" class="ar"> 개 -
-							<input type=text name="stock_amount[<?=$i?>][]" onkeydown="onlynumber()" size="15" class="ar"> 개
+							<input type=text name="stock_amount[<?=$i?>][]" onkeydown="onlynumber()" size="15" value="<?php echo $cfg_step[$i]['stock_amount'][0]; ?>" class="ar"> 개 -
+							<input type=text name="stock_amount[<?=$i?>][]" onkeydown="onlynumber()" size="15" value="<?php echo $cfg_step[$i]['stock_amount'][1]; ?>" class="ar"> 개
 						</div>
 
 						<p class="help">
@@ -942,7 +1055,7 @@ for ($i=0;$i<5;$i++){
 				</table>
 			</td>
 		</tr>
-		<tr class="mList_<?=$i?>">
+		<tr class="mList_<?=$i?> hList_<?php echo $i; ?>">
 			<td>진열 상품</td>
 			<td>
 				<span class="extext">* 관리자 로그인 시 설정 기준으로 진열될 상품이 변경됩니다. (미진열 상품은 제외됩니다.) </span><br />
@@ -1053,6 +1166,10 @@ function more_terms(num){
 		$('more_terms_btn_'+num).writeAttribute('src','../img/disp_btn_open.gif');
 	}
 }
+</script>
+
+<script type="text/javascript">
+jQuery(document).ready(HashtagInputListController);
 </script>
 
 

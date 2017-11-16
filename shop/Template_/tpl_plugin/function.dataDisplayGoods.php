@@ -17,13 +17,25 @@ function dataDisplayGoods( $mode, $img='img_s', $limit=0 ){
 	$mainAutoSort = Core::loader('mainAutoSort');
 	$hashtag = Core::loader('hashtag');
 	
-	if ($GLOBALS['tpl']->var_['']['connInterpark']) $where .= "and b.inpk_prdno!=''";
+	//현재 사용중인 테이블
+	$mainAutoSort_useTable = $mainAutoSort->getUseTable($cfg_step[$mode]['sort_type']);
+	//최대 상품수
+	$mainAutoSort_sortLimit = $mainAutoSort->getSortLimit();
+	
+if ($GLOBALS['tpl']->var_['']['connInterpark']) $where .= "and b.inpk_prdno!=''";
 	if (isset($GLOBALS['tpl']->var_['']['id'])) $GLOBALS['tpl']->var_['']['id'] = '';
 
 	if (!$cfg_step[$mode]['sort_type'] || $cfg_step[$mode]['sort_type'] == '1') {
 		$orderby = 'order by a.sort';
-	} else {
-		$sortNum = $mainAutoSort->use_table.".sort".$cfg_step[$mode]['sort_type']."_".$cfg_step[$mode]['select_date'];
+	}
+	else if((string)$cfg_step[$mode]['sort_type'] === '5'){
+		//자동진열 - 해시태그
+		$sortNum = $mainAutoSort_useTable.".auto_goodsno DESC";
+		$orderby = 'order by '.$sortNum;
+	}
+	else {
+		//자동진열 - 인기순, 상품평가순
+		$sortNum = $mainAutoSort_useTable.".sort".$cfg_step[$mode]['sort_type']."_".$cfg_step[$mode]['select_date'];
 		$orderby = 'order by '.$sortNum;
 	}
 
@@ -75,14 +87,14 @@ function dataDisplayGoods( $mode, $img='img_s', $limit=0 ){
 		";
 		if ( $limit > 0 ) $query .= " limit " . $limit;
 	} else {
-		list($add_table, $add_where, $add_order) = $mainAutoSort->getSortTerms($cfg_step[$mode]['categoods'], $cfg_step[$mode]['price'], $cfg_step[$mode]['stock_type'], $cfg_step[$mode]['stock_amount'], $cfg_step[$mode]['regdt'], $sortNum);
+	list($add_table, $add_where, $add_group) = $mainAutoSort->getSortTerms($cfg_step[$mode], $sortNum);
 
 		$query = "
-		SELECT 
+		SELECT
 			*,".GD_GOODS.".$img img_s
 			$_add_field
 		FROM
-			".$mainAutoSort->use_table."
+			".$mainAutoSort_useTable."
 			{$add_table}
 			left join ".GD_GOODS_BRAND." ON ".GD_GOODS.".brandno=".GD_GOODS_BRAND.".sno
 		WHERE
@@ -90,13 +102,13 @@ function dataDisplayGoods( $mode, $img='img_s', $limit=0 ){
 			AND link
 			{$where}
 			{$add_where}
-		GROUP BY ".$mainAutoSort->use_table.".goodsno {$orderby}
+		{$add_group} {$orderby}
 		";
 		if ($limit > 0) {
-			if ($limit > $mainAutoSort->sort_limit) $query .= " limit " . $mainAutoSort->sort_limit;
+			if ($limit > $mainAutoSort_sortLimit) $query .= " limit " . $mainAutoSort_sortLimit;
 			else $query .= " limit " . $limit;
 		} else {
-			$query .= " limit " . $mainAutoSort->sort_limit;
+			$query .= " limit " . $mainAutoSort_sortLimit;
 		}
 	}
 

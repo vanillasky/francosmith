@@ -67,6 +67,30 @@ try {
 		case 'addLiveUser' :
 			$resultArray = $hashtag->saveHashtagLiveUser($_POST);
 		break;
+
+		//관리모드 > 상품 > 메인페이지 상품진열 (실시간 해시태그 체크)
+		case 'checkLiveHashtag':
+			$resultArray = array('result'=>'success', 'data'=>'');
+
+			$hashtagNameArray = array();
+			$hashtagNameArray = gd_json_decode(stripslashes($_POST['hashtagName']));
+			$hashtagNameArray = array_filter($hashtagNameArray);
+
+			if(count($hashtagNameArray) > 0){
+				foreach($hashtagNameArray as $dataArray){
+					$hashtagName = '';
+					$checkResult = false;
+
+					$hashtagName = $hashtag->setHashtag($dataArray['value']);
+					$checkResult = $hashtag->checkHashtag($hashtagName);
+					if($checkResult === true){
+						//사용불가
+						$resultArray['data'] = $dataArray['key'];
+						break;
+					}
+				}
+			}
+		break;
 	}
 
 	if($resultArray['result'] !== 'success'){

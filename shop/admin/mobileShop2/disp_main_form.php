@@ -41,6 +41,7 @@ $ar_sort_type = array(1 => '직접진열');
 $ar_sort_type[] = '인기순(판매금액)';
 $ar_sort_type[] = '인기순(판매개수)';
 $ar_sort_type[] = '상품평가순';
+$ar_sort_type[] = '해시태그';
 
 $checked['chk'][$design_data['chk']] = 'checked';
 $checked['tpl'][$design_data['tpl']] = 'checked';
@@ -94,20 +95,40 @@ switch($design_data['tpl']) {
 				}
 			}
 		} else {
-			list($add_table, $add_where, $add_order) = $mainAutoSort->getSortTerms($mobile_categoods_arr, $price_arr, $design_data['stock_type'], $stock_amount_arr, $design_data['regdt'], 'sort'.$design_data['sort_type']."_".$design_data['select_date']);
+			//현재 사용중인 테이블
+			$mainAutoSort_useTable = $mainAutoSort->getUseTable($design_data['sort_type']);
+
+			if((string)$design_data['sort_type'] === '5'){
+				$sortNum = $mainAutoSort_useTable.".auto_goodsno DESC";
+			}
+			else {
+				$sortNum = 'sort'.$design_data['sort_type']."_".$design_data['select_date'];
+			}
+			$orderby = 'order by '.$sortNum;
+
+			$mainAutoSortDataArray = array();
+			$mainAutoSortDataArray = $design_data;
+			$new_mainAutoSortDataArray = array(
+				'categoods' => $mobile_categoods_arr,
+				'price' => $price_arr,
+				'stock_amount' => $stock_amount_arr,
+			);
+			$mainAutoSortDataArray = array_merge((array)$mainAutoSortDataArray, (array)$new_mainAutoSortDataArray);
+
+			list($add_table, $add_where, $add_group) = $mainAutoSort->getSortTerms($mainAutoSortDataArray, $sortNum);
 
 			$display_query = "
-				SELECT 
-					".$mainAutoSort->use_table.".goodsno,".GD_GOODS.".goodsnm,".GD_GOODS.".img_s, ".GD_GOODS_OPTION.".price
-				FROM 
-					".$mainAutoSort->use_table."
+				SELECT
+					".GD_GOODS.".goodsno,".GD_GOODS.".goodsnm,".GD_GOODS.".img_s, ".GD_GOODS_OPTION.".price
+				FROM
+					".$mainAutoSort_useTable."
 					".$add_table."
 				where
 					".GD_GOODS.".open AND ".GD_GOODS_OPTION.".link=1
 					".$add_where."
-				".$add_order."
+					".$add_group." ".$orderby."
 				limit
-					".$mainAutoSort->sort_limit."
+					".$mainAutoSort_sortLimit."
 			";
 			$res_display = $db->_select($display_query);
 			$auto_loop = $res_display;
@@ -123,8 +144,14 @@ switch($design_data['tpl']) {
 
 xmp.extra-display-form-tplsrc {margin:0;font-size:11px;}
 .add_categoods_box {float:left; background:#f3f3f3; padding:5px; margin-top:5px; display:block; clear:both;}
+.hashtagInputText { border: 1px #BDBDBD solid; width: 170px; float: left; height: 18px; }
+.hashtagInputText input { border: none; height: 16px; width: 150px; }
 </style>
-
+<script type="text/javascript" src="<?php echo $cfg['rootDir']; ?>/lib/js/jquery-1.10.2.min.js"></script>
+<script type="text/javascript" src="<?php echo $cfg['rootDir']; ?>/lib/js/jquery-ui.js"></script>
+<link href="<?php echo $cfg['rootDir']; ?>/lib/js/jquery-ui-1.10.4.custom.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="<?php echo $cfg['rootDir']; ?>/proc/hashtag/hashtagControl.js?actTime=<?php echo time(); ?>"></script>
+<script type="text/javascript">jQuery.noConflict();</script>
 <script type="text/javascript">
 <?php if ($mobileGoodsDisplay) { ?>
 var autoDisplayGuideElement = window.parent.window.document.getElementById("auto-display-guide");
@@ -216,10 +243,17 @@ function delCate(name, tr_id) {
 function setTplType(tpl_no) {
 	var display_type_value = $$("input:checked[name='display_type']").length > 0 ? $$("input:checked[name='display_type']")[0].value : '';
 	var sort_type_value = $$("input:checked[name='sort_type']").length > 0 ? $$("input:checked[name='sort_type']")[0].value : '';
-	var sort_type_view = display_type_view = 'none';
+	var sort_type_view = display_type_view = sort_type_view_type5 ='none';
 
-	if (sort_type_value != 1) sort_type_view = '';
-	if (sort_type_value == 1) display_type_view = '';
+	if(parseInt(sort_type_value) == 1){
+		display_type_view = '';
+	}
+	else if(parseInt(sort_type_value) == 5){
+		sort_type_view_type5 = '';
+	}
+	else {
+		sort_type_view = '';
+	}
 	
 	$('line-cnt').style.display = 'none';
 	$('disp-cnt').style.display = 'none';
@@ -253,6 +287,9 @@ function setTplType(tpl_no) {
 			$$('.auto_main_sort_tr').each(function(e){
 				e.setStyle({display:'none'});
 			});
+			$$('.auto_main_sort_type5_tr').each(function(e){
+				e.setStyle({display:'none'});
+			});
 			break;
 		case 'tpl_06' :
 			$('display-type').style.display = display_type_view;
@@ -261,9 +298,22 @@ function setTplType(tpl_no) {
 			$('sort_type_tr').style.display = '';
 			setDisabled($('display-type'), false);
 			setDisabled($('banner-height'), false);
-			$$('.auto_main_sort_tr').each(function(e){
-				e.setStyle({display:sort_type_view});
-			});
+			if(parseInt(sort_type_value) === 5){
+				$$('.auto_main_sort_tr').each(function(e){
+					e.setStyle({display:sort_type_view});
+				});
+				$$('.auto_main_sort_type5_tr').each(function(e){
+					e.setStyle({display:sort_type_view_type5});
+				});
+			}
+			else {
+				$$('.auto_main_sort_type5_tr').each(function(e){
+					e.setStyle({display:sort_type_view_type5});
+				});
+				$$('.auto_main_sort_tr').each(function(e){
+					e.setStyle({display:sort_type_view});
+				});
+			}
 			break;
 		case 'tpl_07' :
 			$('banner-width').style.display = '';
@@ -279,18 +329,66 @@ function setTplType(tpl_no) {
 			$$('.auto_main_sort_tr').each(function(e){
 				e.setStyle({display:'none'});
 			});
+			$$('.auto_main_sort_type5_tr').each(function(e){
+				e.setStyle({display:'none'});
+			});
 			break;
+		case 'tpl_08' :
+			$('line-cnt').style.display = '';
+			$('disp-cnt').style.display = '';
+			$('display-type').style.display = display_type_view;
+			$('sort_type_tr').style.display = '';
+			$('more-view-line').style.display = '';
+			$('more-view-disp').style.display = '';
+			$('stan-view-line').style.display = 'none';
+			$('stan-view-disp').style.display = 'none';
+			$('more-comment').style.display = '';
+			setDisabled($('line-cnt'), false);
+			setDisabled($('disp-cnt'), false);
+			setDisabled($('display-type'), false);
+			if(parseInt(sort_type_value) === 5){
+				$$('.auto_main_sort_tr').each(function(e){
+					e.setStyle({display:sort_type_view});
+				});
+				$$('.auto_main_sort_type5_tr').each(function(e){
+					e.setStyle({display:sort_type_view_type5});
+				});
+			}
+			else {
+				$$('.auto_main_sort_type5_tr').each(function(e){
+					e.setStyle({display:sort_type_view_type5});
+				});
+				$$('.auto_main_sort_tr').each(function(e){
+					e.setStyle({display:sort_type_view});
+				});
+			}
+			break;	
 		default :
 			$('line-cnt').style.display = '';
 			$('disp-cnt').style.display = '';
 			$('display-type').style.display = display_type_view;
 			$('sort_type_tr').style.display = '';
+			$('stan-view-line').style.display = '';
+			$('stan-view-disp').style.display = '';
 			setDisabled($('line-cnt'), false);
 			setDisabled($('disp-cnt'), false);
 			setDisabled($('display-type'), false);
-			$$('.auto_main_sort_tr').each(function(e){
-				e.setStyle({display:sort_type_view});
-			});
+			if(parseInt(sort_type_value) === 5){
+				$$('.auto_main_sort_tr').each(function(e){
+					e.setStyle({display:sort_type_view});
+				});
+				$$('.auto_main_sort_type5_tr').each(function(e){
+					e.setStyle({display:sort_type_view_type5});
+				});
+			}
+			else {
+				$$('.auto_main_sort_type5_tr').each(function(e){
+					e.setStyle({display:sort_type_view_type5});
+				});
+				$$('.auto_main_sort_tr').each(function(e){
+					e.setStyle({display:sort_type_view});
+				});
+			}
 			break;
 	}
 
@@ -470,21 +568,72 @@ function delDesignForm(idx) {
 function modDesignForm() {
 
 	var elem = document.getElementById("form");
+	var submitStatus = true;
+
 	if(chkForm(elem)) {
-		if ($$("input[type=checkbox][name='chk']")[0].checked === true && $$("input:checked[name='sort_type']")[0].value != '1') {
-			if (!$$("input[name='mobile_categoods[]']").length) {
-				alert("진열 대상 카테고리를 선택해 주세요.");
-				document.getElementsByName('step_mobile_categoods[]')[0].focus();
-				return;
-			} else {
-				var width = document.body.scrollWidth;
-				var height = document.body.scrollHeight;
-				var imgPosition = document.body.scrollTop + (document.body.clientHeight/2 - 58);
-				$('onLoading-hide-layer').setStyle({width:width+'px',height:height+'px',display:'block'});
-				$('onLoading-img').setStyle({margin:imgPosition+'px 0 0 0'});
+		if($$("input[type=checkbox][name='chk']")[0].checked === true){
+			switch($$("input:checked[name='sort_type']")[0].value){
+				case '2': case '3': case '4':
+					if (!$$("input[name='mobile_categoods[]']").length) {
+						alert("진열 대상 카테고리를 선택해 주세요.");
+						document.getElementsByName('step_mobile_categoods[]')[0].focus();
+						submitStatus = false;
+						return false;
+					}
+				break;
+
+				case '5':
+					if (!$$("input[name='hashtagName']")[0].value) {
+						alert("해시태그를 입력해 주세요.");
+						document.getElementsByName('hashtagName')[0].focus();
+						submitStatus = false;
+						return false;
+					}
+
+					var hashtagName = new Array();
+					hashtagName[0] = {key:1, value:$$("input[name='hashtagName']")[0].value};
+
+					var ajaxHashtag = new Ajax.Request('../../proc/hashtag/ajax.getHashtagData.php', {
+						method: "post",
+						asynchronous : false,
+						parameters : {
+							'mode' : 'checkLiveHashtag',
+							'hashtagName' : JSON.stringify(hashtagName)
+						},
+						onComplete: function(res) {
+							var dataArray = new Array();
+							dataArray = res.responseText.split("|");
+
+							var hashtagData = eval("("+dataArray[1]+")");
+							if(hashtagData !== ''){
+								alert('존재하지 않는 해시태그 입니다.');
+								$$("input[name='hashtagName']")[0].focus();
+								submitStatus = false;
+							}
+						}
+					});
+				break;
+
+				default:
+
+				break;
 			}
 		}
-		elem.submit();
+
+		if(submitStatus === true){
+			var width = document.body.scrollWidth;
+			var height = document.body.scrollHeight;
+			var imgPosition = document.body.scrollTop + (document.body.clientHeight/2 - 58);
+			$('onLoading-hide-layer').setStyle({width:width+'px',height:height+'px',display:'block'});
+			$('onLoading-img').setStyle({margin:imgPosition+'px 0 0 0'});
+
+			elem.submit();
+
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 }
 
@@ -512,8 +661,13 @@ function modTimeout()
 	if (!chkForm(formElement)) {
 		return false;
 	}
-	setTimeout(function() { modDesignForm() }, 500);
-	return true;
+
+	if(modDesignForm() === false){
+		return false;
+	}
+	else {
+		return true;
+	}
 }
 
 function imgLoadErr(obj) {
@@ -523,23 +677,41 @@ function imgLoadErr(obj) {
 function sort_type_view(value){
 	var tpl_value = $$("input:checked[name='tpl']").length > 0 ? $$("input:checked[name='tpl']")[0].value : '';
 	var display_type_value = $$("input:checked[name='display_type']").length > 0 ? $$("input:checked[name='display_type']")[0].value : '';
-	var auto_main_sort_view = display_type_goodslist_view = 'none';
+	var auto_main_sort_view = display_type_goodslist_view = auto_main_sort_view_type5 = 'none';
 
 	if (tpl_value != 'tpl_05' && tpl_value != 'tpl_07') {
-		if (value == 1) {
+		if (parseInt(value) == 1) {
 			display_type_goodslist_view = '';
-		} else {
+		}
+		else if(parseInt(value) == 5){
+			auto_main_sort_view_type5 = '';
+		}
+		else {
 			auto_main_sort_view = '';
 		}
 	}
-	
+
 	$('display-type').style.display = display_type_goodslist_view;
-	$$('.auto_main_sort_tr').each(function(e,key){
-		e.setStyle({display:auto_main_sort_view});
-	});
+	if(parseInt(value) === 5){
+		$$('.auto_main_sort_tr').each(function(e,key){
+			e.setStyle({display:auto_main_sort_view});
+		});
+		$$('.auto_main_sort_type5_tr').each(function(e,key){
+			e.setStyle({display:auto_main_sort_view_type5});
+		});
+	}
+	else {
+		$$('.auto_main_sort_type5_tr').each(function(e,key){
+			e.setStyle({display:auto_main_sort_view_type5});
+		});
+		$$('.auto_main_sort_tr').each(function(e,key){
+			e.setStyle({display:auto_main_sort_view});
+		});
+	}
 
 	setFrameHeight();
 }
+
 
 function mobile_addCate(name,idx) {
 	var cate = document.getElementsByName("step_"+name+"[]");
@@ -670,7 +842,7 @@ function more_terms(){
 		<? foreach ($ar_sort_type as $key => $value){?>
 		<label><input type="radio" name="sort_type" value="<?=$key?>" <?=$checked['sort_type'][$key]?> onclick="sort_type_view('<?=$key?>')"><?=$value?></label>
 		<? } ?><br />
-		<font class=extext>* 디스플레이유형을 ‘탭 진열형‘으로 선택한 경우 직접진열 기준만 사용할 수 있습니다.<br />* 인기순 및 상품평가순 으로 진열 시 상품은 최대 <?=$mainAutoSort->sort_limit?>개 까지만 진열이 됩니다.</font>
+		<font class=extext>* 디스플레이유형을 ‘탭 진열형‘으로 선택한 경우 직접진열 기준만 사용할 수 있습니다.<br />* 인기순 및 상품평가순 으로 진열 시 상품은 최대 <?=$mainAutoSort_sortLimit?>개 까지만 진열이 됩니다.</font>
 	</td>
 </tr>
 <tr id="display-type">
@@ -859,10 +1031,16 @@ function more_terms(){
 		</div>
 	</td>
 </tr>
+<tr class="auto_main_sort_type5_tr">
+	<td>진열 대상<br />해시태그 설정</td>
+	<td>
+		<div class="hashtagInputText">#<input type="text" name="hashtagName" value="<?php echo $design_data['hashtagName']; ?>" class="hashtagInputListSearch" maxlength="20" /></div>
+	</td>
+</tr>
 <tr class="auto_main_sort_tr" style="display:none;">
 	<td>진열 상품선정 기간</td>
 	<td>
-		최근 
+		최근
 		<select name="select_date">
 		<option value="7" <?=$selected['select_date'][7]?>>7일</option>
 		<option value="15" <?=$selected['select_date'][15]?>>15일</option>
@@ -884,7 +1062,7 @@ function more_terms(){
 		</div>
 	</td>
 </tr>
-<tr class="auto_main_sort_tr" style="display:none;">
+<tr class="auto_main_sort_tr auto_main_sort_type5_tr" style="display:none;">
 	<td>진열 대상 추가조건</td>
 	<td>
 		<a onclick="more_terms('<?=$i?>')" class="hand"><img src="../img/disp_btn_<?=array_filter($cfg_step[$i]['price']) || array_filter($cfg_step[$i]['stock_amount']) || $cfg_step[$i]['regdt'] ? "close" :"open"?>.gif" id="more_terms_btn" /></a><br />
@@ -928,7 +1106,7 @@ function more_terms(){
 		</table>
 	</td>
 </tr>
-<tr class="auto_main_sort_tr">
+<tr class="auto_main_sort_tr auto_main_sort_type5_tr">
 	<td>진열 상품</td>
 	<td>
 	<font class=extext>* 관리자 로그인 시 설정 기준으로 진열될 상품이 변경됩니다. (미진열 상품은 제외됩니다.) </font><br />
@@ -942,3 +1120,7 @@ function more_terms(){
 </tr>
 </table>
 </form>
+
+<script type="text/javascript">
+jQuery(document).ready(HashtagInputListController);
+</script>

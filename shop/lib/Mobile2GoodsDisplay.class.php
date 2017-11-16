@@ -227,7 +227,12 @@ class Mobile2GoodsDisplay
 		$cfg_step_key = array_keys($cfg_step);
 		$displaySequence = $this->getDisplaySequence($mdesignNo);
 		$cfg_step_arr = $cfg_step[$cfg_step_key[$displaySequence-1]];
-
+		
+		//현재 사용중인 테이블
+		$mainAutoSort_useTable = $mainAutoSort->getUseTable($cfg_step_arr['sort_type']);
+		//최대 상품수
+		$mainAutoSort_sortLimit = $mainAutoSort->getSortLimit();
+		
 		if (!$cfg_step_arr['sort_type'] || $cfg_step_arr['sort_type'] == 1) {
 			if ($cfg['shopMainGoodsConf'] == 'E') {
 				$where = ' AND gd.tplSkin = "'.$cfg['tplSkin'].'" ';
@@ -238,8 +243,14 @@ class Mobile2GoodsDisplay
 
 			$orderby = "order by gd.sort ASC";
 		} else {
-			$sortNum = $mainAutoSort->use_table.".sort".$cfg_step_arr['sort_type']."_".$cfg_step_arr['select_date'];
-			$orderby = 'order by '.$sortNum.' ASC';
+			if((int)$cfg_step_arr['sort_type'] === 5){
+				$sortNum = $mainAutoSort_useTable.".auto_goodsno";
+				$orderby = 'order by '.$sortNum.' DESC';
+			}
+			else {
+				$sortNum = $mainAutoSort_useTable.".sort".$cfg_step_arr['sort_type']."_".$cfg_step_arr['select_date'];
+				$orderby = 'order by '.$sortNum.' ASC';
+			}
 		}
 
 		// 품절 상품 제외
@@ -273,21 +284,21 @@ class Mobile2GoodsDisplay
 				$orderby
 			", strval($cfg_step_key[$displaySequence-1]));
 		} else {
-			list($add_table, $add_where, $add_order) = $mainAutoSort->getSortTerms($cfg_step_arr['categoods'], $cfg_step_arr['price'], $cfg_step_arr['stock_type'], $cfg_step_arr['stock_amount'], $cfg_step_arr['regdt'], $sortNum);
- 
+			list($add_table, $add_where, $add_group) = $mainAutoSort->getSortTerms($cfg_step_arr, $sortNum);
+
 			$goodsDisplayQuery = $this->_dbo->_query_print("
 				SELECT
-					".$mainAutoSort->use_table.".goodsno, gd_goods.goodsnm, gd_goods.img_mobile, gd_goods.img_l, gd_goods.img_m, gd_goods.use_mobile_img, gd_goods.img_w, gd_goods.strprice, gd_goods_option.price, gd_goods_option.consumer, gd_goods.runout, gd_goods.usestock, gd_goods.totstock, gd_goods.use_only_adult, gd_goods.speach_description_useyn, gd_goods.speach_description, gd_goods.use_goods_discount $_add_field
+					gd_goods.goodsno, gd_goods.goodsnm, gd_goods.img_mobile, gd_goods.img_l, gd_goods.img_m, gd_goods.use_mobile_img, gd_goods.img_w, gd_goods.strprice, gd_goods_option.price, gd_goods_option.consumer, gd_goods.runout, gd_goods.usestock, gd_goods.totstock, gd_goods.use_only_adult, gd_goods.speach_description_useyn, gd_goods.speach_description, gd_goods.use_goods_discount $_add_field
 				FROM
-					".$mainAutoSort->use_table."
+					".$mainAutoSort_useTable."
 					{$add_table}
 				WHERE
 					gd_goods_option.link=1
 					".($isAdmin ? "" : "AND gd_goods.open_mobile")."
 					{$where}
 					{$add_where}
-				GROUP BY ".$mainAutoSort->use_table.".goodsno $orderby
-				LIMIT ".$mainAutoSort->sort_limit."
+			{$add_group} $orderby
+				LIMIT ".$mainAutoSort_sortLimit."
 			", strval($cfg_step_key[$displaySequence-1]));
 		}
 
@@ -445,12 +456,19 @@ class Mobile2GoodsDisplay
 	}
 	
 	function getMobileMainDisplayGoods($req_arr) {
+		global $cfgMobileShop;
+		
 		@include dirname(__FILE__). "/../../shop/conf/config.soldout.php";
 
 		$config = Core::loader('config');
 		$cfg = $config->load('config');
 		$mainAutoSort = Core::loader('mainAutoSort');
 		$hashtag = Core::loader('hashtag');
+		
+		//현재 사용중인 테이블
+		$mainAutoSort_useTable = $mainAutoSort->getUseTable($req_arr['sort_type']);
+		//최대 상품수
+		$mainAutoSort_sortLimit = $mainAutoSort->getSortLimit();
 		
 		if (is_file(dirname(__FILE__). "/../../shop/conf/config.soldout.php"))
 			include dirname(__FILE__). "/../../shop/conf/config.soldout.php";
@@ -471,7 +489,12 @@ class Mobile2GoodsDisplay
 			else
 				$orderby = "order by md.sort ASC";
 		} else {
-			$sortNum = $mainAutoSort->use_table.".sort".$req_arr['sort_type']."_".$req_arr['select_date'];
+			if((string)$req_arr['sort_type'] === '5'){
+				$sortNum = $mainAutoSort_useTable.".auto_goodsno DESC";
+			}
+			else {
+				$sortNum = $mainAutoSort_useTable.".sort".$req_arr['sort_type']."_".$req_arr['select_date'];
+			}
 			$orderby = "ORDER BY ".$sortNum;
 		}
 
@@ -906,25 +929,25 @@ class Mobile2GoodsDisplay
 
 			}
 		} else {
-			list($add_table, $add_where, $add_order) = $mainAutoSort->getSortTerms($req_arr['mobile_categoods'], $req_arr['price'], $req_arr['stock_type'], $req_arr['stock_amount'], $req_arr['regdt'], $sortNum);
- 
+			list($add_table, $add_where, $add_group) = $mainAutoSort->getSortTerms($req_arr, $sortNum);
+			
 			$tmp_query = "
-				SELECT
-					".$mainAutoSort->use_table.".goodsno, gd_goods.goodsnm, gd_goods.img_i, gd_goods.img_s, gd_goods.img_m, gd_goods.img_l, gd_goods.use_mobile_img, gd_goods.img_w, gd_goods.img_pc_w, gd_goods.strprice, gd_goods_option.price, gd_goods_option.consumer, gd_goods.runout, gd_goods.usestock, gd_goods.totstock, gd_goods.use_only_adult, gd_goods.speach_description_useyn, gd_goods.speach_description, gd_goods.use_goods_discount $_add_field
-				FROM
-					".$mainAutoSort->use_table."
-					{$add_table}
-				WHERE
-					gd_goods.open_mobile
-					$where
-					{$add_where}
-				GROUP BY ".$mainAutoSort->use_table.".goodsno $orderby
-				LIMIT ".$mainAutoSort->sort_limit."
+			SELECT
+			gd_goods.goodsno, gd_goods.goodsnm, gd_goods.img_i, gd_goods.img_s, gd_goods.img_m, gd_goods.img_l, gd_goods.use_mobile_img, gd_goods.img_w, gd_goods.img_pc_w, gd_goods.strprice, gd_goods_option.price, gd_goods_option.consumer, gd_goods.runout, gd_goods.usestock, gd_goods.totstock, gd_goods.use_only_adult, gd_goods.speach_description_useyn, gd_goods.speach_description, gd_goods.use_goods_discount $_add_field
+			FROM
+			".$mainAutoSort_useTable."
+			{$add_table}
+			WHERE
+			gd_goods.open_mobile
+			$where
+			{$add_where}
+			$add_group $orderby
+			LIMIT ".$mainAutoSort_sortLimit."
 				";
 			
 			$display_query = $this->_dbo->_query_print($tmp_query, $req_arr['mdesign_no'], $req_arr['display_type']);
 			$tmp_display = $this->_dbo->_select($display_query);
-
+			
 			//DB Cache 사용 141030
 			$dbCache = Core::loader('dbcache')->setLocation('mobile_display');
 
@@ -1294,7 +1317,7 @@ class Mobile2GoodsDisplay
 			);
 		}
 		else {
-			$params = array(
+		$params = array(
 				'page' => $page,
 				'page_num' => $number,
 				'keyword' => $kw,
@@ -1305,6 +1328,19 @@ class Mobile2GoodsDisplay
 				'guidedSellingPage' => $guidedSellingPage,
 				'hashtag' => $hashtag,
 			);
+			if($guidedSellingPage === 'y'){
+				// GROUP BY 처리를 위해서 기존의 객체를 변경함
+				$params['resetRelationShip'] = array(
+					'categories' => array(
+						'modelName' => 'goods_link',
+						'isCollection' => true,
+						'foreignColumn' => 'goodsno',
+						'deleteCascade' => true,
+						'withoutGroup' => false,
+					),
+				);
+			}
+			
 		}
 
 		// 상품 목록

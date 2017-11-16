@@ -567,14 +567,22 @@ switch ($mode){
 		'chk','title','tpl','img','size','page_num','cols','e_step',
 		'dOpt1','dOpt2','dOpt3','dOpt4','dOpt5','dOpt6','dOpt7','dOpt8','dOpt9','dOpt10','dOpt11',
 		'tabNum','tabName1','tabName2','tabName3','tabName4','tabName5','tabName6','tabName7',
-		'alphaRate','sort_type','select_date','categoods','price','stock_type','stock_amount','regdt'
+		'alphaRate','sort_type','select_date','categoods','price','stock_type','stock_amount','regdt', 'hashtagName'		
 		);
 
+		if(is_file('../../lib/hashtag.class.php')){
+			$hashtag = Core::loader('hashtag');
+		}
+		
 		$qfile->open($file);
 		$qfile->write("<? \n");
 		foreach ($_POST['page_num'] as $k=>$v){
 			$qfile->write("\$cfg_step[$k] = array( \n");
 			foreach($save_keys as $key) {
+				if($key === 'hashtagName' && is_object($hashtag)){
+					$_POST[$key][$k] = $hashtag->setHashtag($_POST[$key][$k]);
+				}
+
 				if ($key != 'e_step') {
 					if (($key == 'categoods' || $key == 'price' || $key == 'stock_amount') && count($_POST[$key][$k])>0) {
 						$qfile->write("'$key' => array(");
@@ -641,7 +649,7 @@ switch ($mode){
 			} else {
 				$mainAutoSort = Core::loader('mainAutoSort');
 				
-				$mainAutoSort -> setMainAutoSort($_POST['sort_type'][$k], $_POST['select_date'][$k], $_POST['categoods'][$k], $_POST['price'][$k], $_POST['stock_type'][$k], $_POST['stock_amount'][$k], $_POST['regdt'][$k]);
+				$mainAutoSort->setMainAutoSort($_POST['sort_type'][$k], $_POST['select_date'][$k], $_POST['hashtagName'][$k]);
 			}
 		}
 

@@ -4,6 +4,8 @@ include '../lib/page.class.php';
 include '../conf/config.pay.php';
 $soldoutConfigPage = dirname(__FILE__) . '/../conf/config.soldout.php';
 $snsConfigPage = dirname(__FILE__) . '/../conf/sns.cfg.php';
+$displayConfigPage = dirname(__FILE__) . '/../conf/config.display.php';
+if(is_file($displayConfigPage)) include $displayConfigPage;
 if(is_file($soldoutConfigPage)) include $soldoutConfigPage;
 if(is_file($snsConfigPage)) include $snsConfigPage;
 
@@ -78,7 +80,17 @@ try {
 		'page_num' => Clib_Application::request()->get('page_num', 12), //목록수
 		'guidedSellingPage' => 'y', //가이디드 셀렝 페이지 여부
 		'hashtag' => Clib_Application::request()->get('hashtagName'), //해시태그 명
-		'sort' => Clib_Application::request()->get('sort', 'goods.goodsno'), //정렬
+		'sort' => Clib_Application::request()->get('sort', 'goods.regdt desc'), //정렬
+		// GROUP BY 처리를 위해서 기존의 객체를 변경함
+		'resetRelationShip' => array(
+			'categories' => array(
+				'modelName' => 'goods_link',
+				'isCollection' => true,
+				'foreignColumn' => 'goodsno',
+				'deleteCascade' => true,
+				'withoutGroup' => false,
+			),
+		),
 	);
 	//목록수
 	$selected['page_num'][$params['page_num']] = "selected";
