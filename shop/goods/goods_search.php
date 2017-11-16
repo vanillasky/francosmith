@@ -13,6 +13,7 @@ if (class_exists('validation') && method_exists('validation', 'xssCleanArray')) 
 }
 
 $goodsDiscountModel = Clib_Application::getModelClass('goods_discount');
+$hashtag = Core::loader('hashtag');
 
 if (is_file(dirname(__FILE__) . "/../conf/config.soldout.php"))
 	include dirname(__FILE__) . "/../conf/config.soldout.php";
