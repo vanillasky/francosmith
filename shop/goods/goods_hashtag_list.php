@@ -4,6 +4,8 @@ include '../lib/page.class.php';
 include '../conf/config.pay.php';
 $soldoutConfigPage = dirname(__FILE__) . '/../conf/config.soldout.php';
 $snsConfigPage = dirname(__FILE__) . '/../conf/sns.cfg.php';
+$displayConfigPage = dirname(__FILE__) . '/../conf/config.display.php';
+if(is_file($displayConfigPage)) include $displayConfigPage;
 if(is_file($soldoutConfigPage)) include $soldoutConfigPage;
 if(is_file($snsConfigPage)) include $snsConfigPage;
 
