@@ -221,7 +221,15 @@ $replyTotal = $db->count_($replyRes);
 <?
 $i = 0;
 while ($data=$db->fetch($res)){
-
+	// 부정태그 방지
+	if (class_exists('validation') && method_exists('validation', 'xssCleanArray')) {
+		$data = validation::xssCleanArray($data, array(
+				validation::DEFAULT_KEY => 'html',
+				'subject' => array('html', 'ent_quotes'),
+				'contents' => array('html', 'ent_quotes'),
+		));
+	}
+	
 	if ( empty($data['m_no']) ) $data['m_id'] = $data['name']; // 비회원명
 	else {
 		list( $data[m_id],$data[phone],$data[mobile],$data[dormant_regDate] ) = $db->fetch("select m_id,phone,mobile, dormant_regDate from ".GD_MEMBER." where m_no='$data[m_no]'" );

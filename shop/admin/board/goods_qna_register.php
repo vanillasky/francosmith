@@ -6,7 +6,13 @@ if ($_GET[mode]=="modify" || $_GET[mode]=="reply"){
 	$data = $db->fetch("SELECT QA.*,MB.m_id FROM ".GD_GOODS_QNA." AS QA LEFT JOIN ".GD_MEMBER." AS MB ON QA.m_no = MB.m_no where QA.sno='" . $_GET['sno'] . "'",1);
 	$checked['secret'] = "";
 	if($data['secret'])$checked['secret'] = " checked";
-
+	if (class_exists('validation') && method_exists('validation', 'xssCleanArray')) {
+		$data = validation::xssCleanArray($data, array(
+				validation::DEFAULT_KEY => 'html',
+				'subject' => array('html', 'ent_quotes'),
+				'contents' => array('html', 'ent_quotes'),
+		));
+	}
 	if ( $_GET[mode]=="reply" ){
 		$data['subject'] = '';
 		$data['contents'] = '';

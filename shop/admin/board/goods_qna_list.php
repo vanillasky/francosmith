@@ -208,6 +208,13 @@ while ($data=$db->fetch($res)){
 
 		list( $data[replecnt] ) = $db->fetch("select count(*) from ".GD_GOODS_QNA." where sno != parent and parent='$data[sno]'");
 	}
+	if (class_exists('validation') && method_exists('validation', 'xssCleanArray')) {
+		$data = validation::xssCleanArray($data, array(
+				validation::DEFAULT_KEY => 'html',
+				'subject' => array('html', 'ent_quotes'),
+				'contents' => array('html', 'ent_quotes'),
+		));
+	}
 	?>
 
 	<?if ( $data[sno] == $data[parent] ){ // Áú¹®?>

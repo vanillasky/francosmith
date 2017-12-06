@@ -69,6 +69,7 @@ final class Sessions {
 			$this->reset_sessionID( $_GET['sess_id'] );
 
 		ini_set( "session.gc_maxlifetime", $this->config['lifetime'] );
+		ini_set('session.cookie_httponly', true);
 
 		session_start();
 

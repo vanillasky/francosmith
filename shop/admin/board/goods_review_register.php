@@ -4,6 +4,15 @@ include "../_header.popup.php";
 
 if ($_GET['mode']=="modify"  || $_GET['mode']=="reply"){
 	$data = $db->fetch("select *, if(sno = parent and m_no > 0 , 'Y' , 'N') as apply, if(sno = parent and m_no > 0 and emoney = 0 , 'Y' , 'N') as apply2 from ".GD_GOODS_REVIEW." where sno='" . $_GET['sno'] . "'",1);
+	// 부정태그 방지
+	if (class_exists('validation') && method_exists('validation', 'xssCleanArray')) {
+		$data = validation::xssCleanArray($data, array(
+				validation::DEFAULT_KEY => 'html',
+				'subject' => array('html', 'ent_quotes'),
+				'contents' => array('html', 'ent_quotes'),
+		));
+	}
+	
 	$data['subject']	= htmlspecialchars( $data['subject'] );
 	$data['contents']	= htmlspecialchars( $data['contents'] );
 

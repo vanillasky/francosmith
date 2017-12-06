@@ -4,7 +4,15 @@ include "../_header.popup.php";
 
 if ($_GET[mode]=="modify" || $_GET[mode]=="reply"){
 	$data = $db->fetch("select * from ".GD_MEMBER_QNA." where sno='" . $_GET['sno'] . "'",1);
-
+	
+	if (class_exists('validation') && method_exists('validation', 'xssCleanArray')) {
+		$data = validation::xssCleanArray($data, array(
+				validation::DEFAULT_KEY => 'text',
+				'subject' => array('html', 'ent_quotes'),
+				'contents' => array('html', 'ent_quotes'),
+		));
+	}
+	
 	if ( $_GET[mode]=="reply" ){
 		$data['subject'] = '';
 		$data['contents'] = '';

@@ -39,6 +39,14 @@ if($data['secret'])$checked['secret'] = " checked";
 $query = "SELECT b.goodsnm, b.img_s, c.price FROM ".GD_GOODS." b LEFT JOIN ".GD_GOODS_OPTION." c ON b.goodsno = c.goodsno AND link and go_is_deleted <> '1' and go_is_display = '1' WHERE b.goodsno = '" . $data['goodsno'] . "'";
 list( $data['goodsnm'], $data['img_s'], $data['price'] ) = $db->fetch($query);
 if($mode != 'qnaReply') $data['contents'] = nl2br($data['contents']);
+
+if (class_exists('validation') && method_exists('validation', 'xssCleanArray')) {
+	$data = validation::xssCleanArray($data, array(
+			validation::DEFAULT_KEY => 'text',
+			'subject' => array('html', 'ent_quotes'),
+			'contents' => array('html', 'ent_quotes'),
+	));
+}
 ?>
 <script>
 	function fnOpenSMSSelector(el) {

@@ -178,7 +178,15 @@ $replyTotal = $db->count_($replyRes);
 <?
 $i = 0;
 while ($data=$db->fetch($res)){
-
+	
+	if (class_exists('validation') && method_exists('validation', 'xssCleanArray')) {
+		$data = validation::xssCleanArray($data, array(
+				validation::DEFAULT_KEY => 'text',
+				'subject' => array('html', 'ent_quotes'),
+				'contents' => array('html', 'ent_quotes'),
+		));
+	}
+	
 	list( $data[m_id], $data[dormant_regDate] ) = $db->fetch("select m_id, dormant_regDate from ".GD_MEMBER." where m_no='$data[m_no]'" );
 
 	if ( $data[sno] == $data[parent] ){ // Áú¹®

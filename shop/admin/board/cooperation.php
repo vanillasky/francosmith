@@ -174,7 +174,15 @@ $res = $db->query($pg->query);
 <tr><td class=rnd colspan=10></td></tr>
 <?
 while ($data=$db->fetch($res)){
-	?>
+	if (class_exists('validation') && method_exists('validation', 'xssCleanArray')) {
+		$data = validation::xssCleanArray($data, array(
+				validation::DEFAULT_KEY => 'text',
+				'title' => array('html', 'ent_quotes'),
+				'name' => array('html', 'ent_quotes'),
+		));
+	}	
+	
+?>
 <INPUT TYPE="hidden" NAME="code" VALUE="<?echo($data['sno'])?>">
 <tr><td height=4 colspan=10></td></tr>
 <tr height=25 align="center">

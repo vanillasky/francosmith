@@ -14,6 +14,17 @@ if (!$_GET[mode]) $_GET[mode] = "register";
 if ($_GET[mode]=="modify"){
 	$data = $db->fetch("select * from ".GD_COOPERATION." where sno='" . $_GET['sno'] . "'",1);
 	$data['reply'] = htmlspecialchars( $data['reply'] );
+	
+	if (class_exists('validation') && method_exists('validation', 'xssCleanArray')) {
+		$data = validation::xssCleanArray($data, array(
+				validation::DEFAULT_KEY => 'text',
+				'title' => array('html', 'ent_quotes'),
+				'name' => array('html', 'ent_quotes'),
+				'email' => array('html', 'ent_quotes'),
+				'reply' => array('html', 'ent_quotes'),
+				'content' => array('html', 'ent_quotes'),
+		));
+	}
 }
 ?>
 
