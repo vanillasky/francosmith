@@ -50,6 +50,16 @@ if (is_file(dirname(__FILE__) . "/../conf/config.soldout.php"))
 if(!$set['emoney']['cut'])$set['emoney']['cut']=0;
 $set['emoney']['base'] = pow(10,$set['emoney']['cut']);
 
+//상품 상세보기 시 SQL Injection 방어
+if (class_exists('validation')) {
+	$validation = new validation();
+	if (method_exists($validation, 'check_digit')) {
+		if ($_GET['goodsno'] != null && $validation->check_digit($_GET['goodsno']) === false) {
+			$_GET['goodsno'] = null;
+		}
+	}
+}
+
 //상품리뷰개수
 list ($review_count) = $db->fetch("select count(*) as cnt from gd_goods_review where goodsno = '".$goodsno."'");
 //상품문의개수
